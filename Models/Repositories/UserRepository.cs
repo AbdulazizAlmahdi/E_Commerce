@@ -21,6 +21,11 @@ namespace E_commerce.Models.Repositories
             throw new NotImplementedException();
         }
 
+        public void Delete(User entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public User Find(int ID)
         {
             throw new NotImplementedException();

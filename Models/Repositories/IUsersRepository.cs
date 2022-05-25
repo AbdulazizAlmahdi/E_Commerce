@@ -11,7 +11,8 @@ namespace E_commerce.Models.Repositories
         TEntity Find(int ID);
         void Add(TEntity entity);
         void Update(TEntity entity);
-        TEntity Delete(int ID);
+        TEntity Delete(int ID); 
+        void Delete(TEntity entity);
 
     }
 }

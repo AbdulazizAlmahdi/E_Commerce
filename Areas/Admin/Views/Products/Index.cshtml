@@ -15,7 +15,7 @@
         <div class="card" dir="rtl">
             <!--جزء م فوق جدول البيانات-->
             <div dir="ltr" style="margin-top:20px;">
-                <a class=" btn btn-primary">+اضافة منتج </a>
+                <a asp-action="Create" class=" btn btn-primary">+اضافة منتج </a>
                 <label style="padding-left:15%;direction:rtl;">
                     <input type="search" class="form-control" placeholder="بحث">
                 </label>
@@ -63,7 +63,7 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>تعديل</a>
+                                       <i class="bx bx-edit-alt me-1">@Html.ActionLink("Delete","Delete",new { ID=pro.Id})</i>
                                         <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> حذف</a>
                                     </div>
                                 </div>

@@ -16,7 +16,18 @@ namespace E_commerce.Models.Repositories
 
         public void Add(Product entity)
         {
-            throw new NotImplementedException();
+            db.Products.Add(entity);
+            db.SaveChanges();
+        }
+
+
+        public void Delete(Product product)
+        {
+           
+            db.Products.Remove(product);
+            db.SaveChanges();
+
+           
         }
 
         public Product Delete(int ID)
@@ -26,7 +37,7 @@ namespace E_commerce.Models.Repositories
 
         public Product Find(int ID)
         {
-            throw new NotImplementedException();
+            return db.Products.FirstOrDefault(p => p.Id == ID);
         }
 
         public IList<Product> List()
