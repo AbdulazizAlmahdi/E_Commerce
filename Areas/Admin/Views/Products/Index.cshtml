@@ -1,0 +1,114 @@
+﻿@model List<E_commerce.Models.Product>
+    <!-- / Menu -->
+<!-- Layout container -->
+
+<div class="layout-page">
+    <!-- Content wrapper -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div dir="rtl">
+            <h5 class="card-header">ادارة المنتجات</h5>
+            <hr />
+        </div>
+        <a dir="ltr" href="">رجوع</a>
+        <!-- Basic Bootstrap Table -->
+
+        <div class="card" dir="rtl">
+            <!--جزء م فوق جدول البيانات-->
+            <div dir="ltr" style="margin-top:20px;">
+                <a class=" btn btn-primary">+اضافة منتج </a>
+                <label style="padding-left:15%;direction:rtl;">
+                    <input type="search" class="form-control" placeholder="بحث">
+                </label>
+                
+                    عرض <label>
+                        <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
+                            <option value="7">7</option>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="75">75</option>
+                            <option value="100">100</option>
+                        </select>
+                    </label> منتجات
+               
+
+            </div>
+           
+            <!--جزء م فوق جدول البيانات-->
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead class="table-border">
+                        <tr>
+                            <th><strong>الرقم</strong></th>
+                            <th>اسم المنتج</th>
+                            <th>الكمية</th>
+                            <th>الوحدة</th>
+                            <th>العنوان</th>
+                            <th>السعر</th>
+                            <th>الاجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @*@foreach (Product product in Model)
+                        {*@
+                        @foreach (var pro in Model){
+
+                        <tr>
+
+                            <td>@pro.Id</td>
+                            <td>hjgfj</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>تعديل</a>
+                                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> حذف</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                            }
+
+
+                            @*<td>@product.Id</td>
+            <td>@product.NameAr</td>
+            <td><strong>@product.Id</strong></td>
+            <td><strong>@product.NameAr</strong></td>
+            <td><strong>@product.Id</strong></td>
+            <td><strong>@product.NameAr</strong></td>*@
+                          
+                         @*}*@
+                                        </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                        إظهار 0 إلى 0 من 0 مدخلات
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6" dir="ltr">
+                    <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                        <ul class="pagination">
+                            <li class="paginate_button page-item next disabled" id="DataTables_Table_0_next">
+                                <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">التالي</a>
+                            </li>
+                            <li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
+                                <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">السابق</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ Basic Bootstrap Table -->
+    </div>
+    <!-- / Content -->
+</div>
+
+
+

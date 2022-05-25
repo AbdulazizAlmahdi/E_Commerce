@@ -1,0 +1,71 @@
+﻿@model UserFilterViewModel
+<!-- / Menu -->
+<!-- Layout container -->
+<div class="layout-page">
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4>
+                Users /
+            </h4>
+
+
+        </div>
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+
+            <!-- Basic Bootstrap Table -->
+            <div class="card">
+                <div class="card-header border-bottom">
+                    <h5 class="card-title">Search Filter</h5>
+                </div>
+
+                <div class="card-datatable table-responsive">
+                    <table class="datatables-users table border-top">
+                        <thead>
+                            <tr>
+                                <th><strong>الرقم</strong></th>
+                                <th>الاسم</th>
+                                <th>المسمى الوظيفي</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (User user in Model.Users)
+                            {
+                <tr>
+                    <td><strong>@user.Id</strong></td>
+                    <td>@user.Name</td>
+                    <td>@user.Place.Name</td>
+                    <td>
+                        <div class="dropdown">
+                            <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>تعديل</a>
+                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> حذف</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--/ Basic Bootstrap Table -->
+        </div>
+        <!--Pagination-->
+        <div class="w-100 text-center">
+            <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+                 page-class="btn" page-class-normal="btn-outline-dark"
+                 page-class-selected="btn-primary" class="btn-group pull-right m-1">
+            </div>
+        </div>
+        <!--Pagination-->
+        <!-- / Content -->
+    </div>
+</div>
+
