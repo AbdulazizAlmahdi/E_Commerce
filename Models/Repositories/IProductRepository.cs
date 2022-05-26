@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Models.Repositories
 {
-    public interface IUsersRepository<TEntity>
+    public interface IProductRepository<TEntity>
     {
-        IQueryable<User> Users { get; }
+        IQueryable<Product> Products { get; }
 
-        //IList<TEntity> List();
+        IList<TEntity> List();
         TEntity Find(int ID);
         void Add(TEntity entity);
         void Update(TEntity entity);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -17,6 +18,7 @@ namespace E_commerce.Models
         public string NameAr { get; set; }
         public string NameEn { get; set; }
         public string Report { get; set; }
+        [Column(TypeName = "decimal(8, 2)")]
         public decimal Price { get; set; }
         public string DetailsAr { get; set; }
         public string DetailsEn { get; set; }

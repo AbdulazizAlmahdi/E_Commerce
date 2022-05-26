@@ -33,7 +33,7 @@ namespace E_commerce
                 options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB"));
             });
 
-            services.AddScoped<IUsersRepository<Product>, ProductRepository>();
+            services.AddScoped<IProductRepository<Product>, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

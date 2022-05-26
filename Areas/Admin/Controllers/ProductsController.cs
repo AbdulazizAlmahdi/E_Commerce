@@ -11,9 +11,9 @@ namespace E_commerce.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductsController : Controller
     {
-        IUsersRepository<Product> products;
+        IProductRepository<Product> products;
 
-        public ProductsController(IUsersRepository<Product> repository)
+        public ProductsController(IProductRepository<Product> repository)
         {
             products = repository;
         }
