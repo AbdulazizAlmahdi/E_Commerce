@@ -5,10 +5,12 @@ using System.Linq;
 
 namespace E_commerce.Models.Repositories
 {
-    public class ProductRepository : IUsersRepository<Product>
+    public class ProductRepository : IProductRepository
     {
         public readonly WebContext db;
 
+
+        
         public ProductRepository(WebContext ctx)
         {
             db = ctx;
@@ -20,7 +22,6 @@ namespace E_commerce.Models.Repositories
             db.SaveChanges();
         }
 
-
         public void Delete(Product product)
         {
            
@@ -30,21 +31,23 @@ namespace E_commerce.Models.Repositories
            
         }
 
-        public Product Delete(int ID)
-        {
-            throw new NotImplementedException();
-        }
-
         public Product Find(int ID)
         {
-            return db.Products.FirstOrDefault(p => p.Id == ID);
+            return db.Products.Include(u => u.Category).FirstOrDefault(a=>a.Id==ID);
         }
 
-        public IList<Product> List()
+        public IEnumerable<Category> GetCategories()
         {
-            return this.db.Products.Include(u => u.Category).ToList();
+            return db.Categories;
+        }
+
+        public IEnumerable<Product> List()
+        {
+            return  db.Products.Include(u => u.Category);
 
         }
+
+       
 
         public void Update(Product entity)
         {

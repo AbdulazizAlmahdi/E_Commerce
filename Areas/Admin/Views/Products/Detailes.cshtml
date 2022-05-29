@@ -2,10 +2,11 @@
 <!--نموذج حذف منتج جديد -->
 <div class="layout-page">
 
+
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-            <form asp-action="ConfirmDelete" dir="rtl" style="padding-right:30px;">
+            <form asp-action="Detailes"  dir="rtl" style="padding-right:30px;">
                 <div class="row">
 
                     <div class="col">
@@ -14,7 +15,7 @@
                     </div>
                     <div class="col">
                         <label for="defaultFormControlInput" class="control-label"> رق الصنف</label>
-                        <select asp-for="Product.Category" asp-items="@Model.GetCategory" class="form-control"></select>
+                        <select asp-for="Product.Category" asp-items="@Model.GetCategory"  class="form-control"></select>
                     </div>
                     <div class="col">
                         <label for="defaultFormControlInput" class="control-label"> اسم المنتج</label>
