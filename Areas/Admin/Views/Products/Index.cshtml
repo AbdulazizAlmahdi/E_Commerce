@@ -1,5 +1,15 @@
-﻿@model ProductViewModel
-    <!-- / Menu -->
+﻿@model IEnumerable<E_commerce.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    PagingInfo pagingInfo = new PagingInfo();
+    int pageNo = 0;
+    if (ViewBag.PagingInfo != null)
+    {
+        pagingInfo = ViewBag.PagingInfo;
+        pageNo = pagingInfo.CurrentPage;
+    }
+}    <!-- / Menu -->
 <!-- Layout container -->
 
 <div class="layout-page">
@@ -54,7 +64,7 @@
                         <tbody class="table-border-bottom-0">
                             @*@foreach (Product product in Model)
                     {*@
-                            @foreach (Product product in Model.Products)
+                            @foreach (Product product in Model)
                             {
 
                                 <tr>
@@ -83,15 +93,13 @@
                         </tbody>
                     </table>
                 </div>
-               
-                <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
-                     page-class="btn" page-class-normal="btn-outline-dark"
-                     page-class-selected="btn-primary" class="btn-group pull-right m-1">
-                </div>
+
+                <partial name="_pagination" model="@pagingInfo" />
+
             </div>
             <!-- / Content -->
         </div>
 
     </div>
-    
-    </div>
+
+</div>
