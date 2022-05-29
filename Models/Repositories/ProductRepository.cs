@@ -5,7 +5,11 @@ using System.Linq;
 
 namespace E_commerce.Models.Repositories
 {
+<<<<<<< HEAD
     public class ProductRepository : IProductRepository
+=======
+    public class ProductRepository : IProductRepository<Product>
+>>>>>>> d91aedd9e2654f83d75f7f3ecd5e51d44d00eca5
     {
         public readonly WebContext db;
 
@@ -15,6 +19,8 @@ namespace E_commerce.Models.Repositories
         {
             db = ctx;
         }
+
+        public IQueryable<Product> Products => throw new NotImplementedException();
 
         public void Add(Product entity)
         {

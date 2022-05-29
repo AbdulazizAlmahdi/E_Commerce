@@ -7,7 +7,9 @@ namespace E_commerce.Models.Repositories
 {
     public interface IUsersRepository<TEntity>
     {
-        IList<TEntity> List();
+        IQueryable<User> Users { get; }
+
+        //IList<TEntity> List();
         TEntity Find(int ID);
         void Add(TEntity entity);
         void Update(TEntity entity);

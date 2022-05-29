@@ -9,8 +9,13 @@ namespace E_commerce.Models.Repositories
 {
     public class UserRepository : IUsersRepository<User>
     {
-        WebContext db=new WebContext();
-        
+        WebContext context;
+        public UserRepository(WebContext db)
+        {
+            this.context = db;
+        }
+        public IQueryable<User> Users => context.Users.Include(u => u.Place).Include(u => u.Phone);
+
         public void Add(User entity)
         {
             throw new NotImplementedException();
@@ -31,10 +36,10 @@ namespace E_commerce.Models.Repositories
             throw new NotImplementedException();
         }
 
-        public IList<User> List()
-        {
-            return this.db.Users.Include(u=>u.Place).Include(u=>u.Phone).ToList();
-        }
+        //public IList<User> List()
+        //{
+        //    return this.context.Users.Include(u => u.Place).Include(u => u.Phone).ToList();
+        //}
 
         public void Update(User entity)
         {

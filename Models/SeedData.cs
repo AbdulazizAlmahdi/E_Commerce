@@ -99,7 +99,7 @@ namespace E_commerce.Models
             }
             if (!webContext.Phones.Any())
             {
-                for(int i = 0; i < 50; i++)
+                for(int i = 0; i < 500; i++)
                 {
 
                     webContext.AddRange(
@@ -117,7 +117,7 @@ namespace E_commerce.Models
             if (!webContext.Users.Any())
             {
                 
-                for (int i = 0; i < 50; i++)
+                for (int i = 0; i < 500; i++)
                 {
                     Phone phone = webContext.Phones.Single(r => r.Number == "+96777711111"+i.ToString());
                     Place place = webContext.Places.Single(r => r.Name == "taiz");

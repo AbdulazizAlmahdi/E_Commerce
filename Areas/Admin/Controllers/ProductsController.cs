@@ -14,12 +14,18 @@ namespace E_commerce.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductsController : Controller
     {
+<<<<<<< HEAD
         IProductRepository products;
         public int PageSize = 6;
 
         public ProductsController(IProductRepository repository) => this.products = repository;
        
         public IActionResult Index(int pageNumber = 1)
+=======
+        IProductRepository<Product> products;
+
+        public ProductsController(IProductRepository<Product> repository)
+>>>>>>> d91aedd9e2654f83d75f7f3ecd5e51d44d00eca5
         {
             var product= products.List().OrderBy(u => u.Id)
                 .Skip((pageNumber - 1) * PageSize)
