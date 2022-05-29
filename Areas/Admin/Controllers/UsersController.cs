@@ -28,25 +28,6 @@ namespace e_commerce.Areas.Admin.Controllers
             this.ViewBag.PagingInfo = pagingInfo;
             return View(data);
         }
-        //public IActionResult Index(int pageNumber=1)
-        //{
-
-        //    var user = users.Users.OrderBy(u => u.Id)
-        //        .Skip((pageNumber - 1) * PageSize)
-        //        .Take(PageSize);
-
-        //    var vm = new UserFilterViewModel
-        //    {
-        //        PagingInfo = new PagingInfo
-        //        {
-        //            CurrentPage = pageNumber,
-        //            ItemsPerPage = PageSize,
-        //            TotalItems = users.Users.Count()
-        //        },
-        //        Users = user
-        //    };
-
-        //    return View(vm);
-        //}
+        
     }
 }

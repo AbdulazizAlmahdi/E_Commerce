@@ -27,13 +27,54 @@
                 <div class="card-header border-bottom">
                     <h5 class="card-title">Search Filter</h5>
                 </div>
-                <button class="dt-button add-new btn btn-primary w-px-200 m-1" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser">
-                    <span>
-                        <i class="bx bx-plus me-0 me-lg-2"></i>
-                        <span class="d-none d-lg-inline-block">Add New User</span>
-                    </span>
-                </button>
+                <div class="row p-2">
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" tabindex="0"
+                                aria-controls="DataTables_Table_0" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasAddUser">
+                            <i class="bx bx-plus me-0 me-lg-2"></i>
+                            <span class="d-none d-lg-inline-block">Add New User</span>
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <section class="w-100">
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control" id="advanced-search-input"
+                                       placeholder="phrase in:field1,field2"/>
+                                <button class="btn btn-primary" id="advanced-search-button" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
 
+                            <div id="datatable-advanced-search"></div>
+                        </section>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="d-flex w-px-150">
+                            <label>Show</label>
+                            <select
+                                    name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                    class="form-select">
+                                <option value="7">7</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="75">75</option>
+                                <option value="100">100</option>
+                            </select> <label>entries</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2 justify-content-end">
+                      <div class="justify-content-end">
+                          <button class="btn btn-primary" tabindex="0"
+                                  aria-controls="DataTables_Table_0" type="button" data-bs-toggle="offcanvas"
+                                  data-bs-target="#offcanvasAddUser">
+                              <i class="bx bx-filter me-0 me-lg-2"></i>
+                              <span class="d-none d-lg-inline-block">Filter</span>
+                          </button>
+                      </div>
+                    </div>
+                </div>
                 <div class="card-datatable ">
                     <table class="table table-striped">
                         <thead>
@@ -53,12 +94,15 @@
                                     <td>@user.Place.Name</td>
                                     <td>
                                         <div class="dropdown">
-                                            <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
+                                            <button type="button" class="btn dropdown-toggle hide-arrow p-0"
+                                            data-bs-toggle="dropdown">
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>تعديل</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> حذف</a>
+                                                <a class="dropdown-item" href="javascript:void(0);"><i
+                                                    class="bx bx-edit-alt me-1"></i>تعديل</a>
+                                                <a class="dropdown-item" href="javascript:void(0);"><i
+                                                    class="bx bx-trash me-1"></i> حذف</a>
                                             </div>
                                         </div>
                                     </td>
@@ -73,4 +117,3 @@
         </div>
     </div>
 </div>
-
