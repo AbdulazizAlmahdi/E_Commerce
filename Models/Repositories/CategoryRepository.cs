@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Models.Repositories
 {
-    public class CategoryRepository : IUsersRepository<Category>
+    public class CategoryRepository : ICategoryRepositry
     {
         public readonly WebContext db;
 
@@ -20,6 +20,7 @@ namespace E_commerce.Models.Repositories
         {
             db.Categories.Add(entity);
             db.SaveChanges();
+            
         }
 
         public Category Delete(int ID)
@@ -37,14 +38,18 @@ namespace E_commerce.Models.Repositories
             throw new NotImplementedException();
         }
 
-        public IList<Category> List()
+        public IEnumerable<Category> List()
         {
-            throw new NotImplementedException();
+            return db.Categories;
         }
 
         public void Update(Category entity)
         {
             throw new NotImplementedException();
         }
+    }
+
+    public interface ICategoryRepositry<T>
+    {
     }
 }

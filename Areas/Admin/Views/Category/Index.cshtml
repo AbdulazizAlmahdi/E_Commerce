@@ -1,1 +1,40 @@
-﻿<h5>sddddd</h5>
+﻿@model IEnumerable<Category>
+<div class="layout-page">
+    <div class="content-wrapper">
+        <div class="col-sm-12">
+
+            <a asp-action="Create" class=" btn btn-primary">+اضافة صنف </a></div>
+        <div class="table-responsive text-nowrap">
+
+
+            <table class="table">
+                <thead class="table-border">
+                    <tr>
+                        <th><strong>الرقم</strong></th>
+                        <th>اسم الصنف</th>
+                        <th>تاريخ الاضافه</th>
+                        <th>اسم الصنف</th>
+                        <th>اسم الصنف</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (Category category in Model)
+                    {
+
+                        <tr>
+
+                            <td>@category.Id</td>
+                            <td>@category.Name</td>
+                            <td>@category.CreatedAt</td>
+
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>

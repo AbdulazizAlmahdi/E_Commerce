@@ -1,10 +1,38 @@
-﻿<form>
+﻿@model Category
+<div class="layout-page">
+    <div class="content-wrapper">
+        <form asp-action="Create" method="post" dir="rtl" style="padding-right:30px;">
+            <div class="row">
+                <div class="col">
+                    <label for="defaultFormControlInput" class="control-label"> اسم الصنف</label>
+                    <input asp-for="Name" type="text" class="form-control" id="defaultFormControlInput" placeholder="فواكة-خضروات" aria-describedby="defaultFormControlHelp">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label for="defaultFormControlInput" class="control-label"> تاريخ الاضافه</label>
+                    <input asp-for="CreatedAt"  class="form-control" id="defaultFormControlInput" aria-describedby="defaultFormControlHelp" readonly>
+                    <span asp-validation-for="CreatedAt" class="text-danger"></span>
+
+                </div>
+
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary data-submit me-1 me-sm-3">Create</button>
+                    <button asp-action="Index" class="btn btn-outline-secondary">Back</button>
+                </div>
+
+            </div>
+        </form>
+
+
+    </div>
+    </div>
+@*<form asp-action="Create" method="post">
     <div>
         <label>name</label>
-        <input type="text" value="Categoryname" />
-        <input type="datetime" value="@DateTime.Now"/>
+        <input asp-for="Name"  />
+        <input asp-for="CreatedAt" value="@DateTime.Now" readonly />
     </div>
 
-
-
-</form>
+     z
+<
+</form>*@

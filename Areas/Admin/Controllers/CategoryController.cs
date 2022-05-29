@@ -15,10 +15,17 @@ namespace E_commerce.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
+        ICategoryRepositry   categories;
+        public CategoryController(ICategoryRepositry repository)
+        {
+            categories = repository;
+        } 
         // GET: CategoryController
         public ActionResult Index()
+           
         {
-            return View();
+            var Categroy = categories.List();
+            return View(Categroy);
         }
 
         // GET: CategoryController/Details/5
@@ -30,16 +37,20 @@ namespace E_commerce.Areas.Admin.Controllers
         // GET: CategoryController/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new Category
+            {
+                CreatedAt = DateTime.Now
+            });
         }
 
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Category category)
         {
             try
             {
+                categories.Add(category);
                 return RedirectToAction(nameof(Index));
             }
             catch

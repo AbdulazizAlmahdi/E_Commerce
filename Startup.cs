@@ -29,11 +29,13 @@ namespace E_commerce
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<WebContext>(options => options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB")));
             services.AddScoped<IUsersRepository<User>, UserRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICategoryRepositry, CategoryRepository>();
             services.AddDbContext<WebContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB"));
             });
 
-            services.AddScoped<IProductRepository , ProductRepository>();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
