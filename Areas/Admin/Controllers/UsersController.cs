@@ -23,10 +23,15 @@ namespace e_commerce.Areas.Admin.Controllers
                 page = 1;
             int Count = users.Users.Count();
             var pagingInfo = new PagingInfo(Count, page, pageSize);
+            pagingInfo.PageName = "Users";
           int  recSkip = (page - 1) * pageSize;
             var data = users.Users.Skip(recSkip).Take(pagingInfo.ItemsPerPage).ToList();
             this.ViewBag.PagingInfo = pagingInfo;
             return View(data);
+        }
+        public IActionResult Create()
+        {           
+            return View();
         }
         
     }

@@ -13,7 +13,7 @@ namespace E_commerce.Models
         public int TotalPages { get; set; }
         public int StartPage { get; set; }
         public int EndPage { get; set; }
-
+        public string PageName { get; set; }
         public PagingInfo() { }
         public PagingInfo(int totalItems, int page, int pageSize = 10)
         {
