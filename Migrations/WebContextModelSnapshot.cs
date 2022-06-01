@@ -304,7 +304,7 @@ namespace E_commerce.Migrations
                         .HasColumnName("ID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -314,7 +314,7 @@ namespace E_commerce.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Number");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedBy")
@@ -560,18 +560,18 @@ namespace E_commerce.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("Created_at");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CreatedByUserID")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("DeletedByUserID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -587,11 +587,11 @@ namespace E_commerce.Migrations
                         .HasColumnType("int")
                         .HasColumnName("PlaceID");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("UpdatedByUserID")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserStatusId")
                         .HasColumnType("int")
@@ -602,6 +602,12 @@ namespace E_commerce.Migrations
                         .HasColumnName("UsersID");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserID");
+
+                    b.HasIndex("DeletedByUserID");
+
+                    b.HasIndex("UpdatedByUserID");
 
                     b.HasIndex(new[] { "PhoneId" }, "IX_Users_PhoneID")
                         .IsUnique();
@@ -860,6 +866,14 @@ namespace E_commerce.Migrations
 
             modelBuilder.Entity("E_commerce.Models.User", b =>
                 {
+                    b.HasOne("E_commerce.Models.User", "CreatedByUser")
+                        .WithMany("CreatedByInverseUsers")
+                        .HasForeignKey("CreatedByUserID");
+
+                    b.HasOne("E_commerce.Models.User", "DeletedByUser")
+                        .WithMany("DeletedInverseUsers")
+                        .HasForeignKey("DeletedByUserID");
+
                     b.HasOne("E_commerce.Models.Phone", "Phone")
                         .WithOne("User")
                         .HasForeignKey("E_commerce.Models.User", "PhoneId")
@@ -872,6 +886,10 @@ namespace E_commerce.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("E_commerce.Models.User", "UpdatedByUser")
+                        .WithMany("UpdatedInverseUsers")
+                        .HasForeignKey("UpdatedByUserID");
+
                     b.HasOne("E_commerce.Models.UserStatus", "UserStatus")
                         .WithMany("Users")
                         .HasForeignKey("UserStatusId")
@@ -882,9 +900,15 @@ namespace E_commerce.Migrations
                         .WithMany("InverseUsers")
                         .HasForeignKey("UsersId");
 
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("DeletedByUser");
+
                     b.Navigation("Phone");
 
                     b.Navigation("Place");
+
+                    b.Navigation("UpdatedByUser");
 
                     b.Navigation("Users");
 
@@ -949,6 +973,8 @@ namespace E_commerce.Migrations
 
                     b.Navigation("Comments");
 
+                    b.Navigation("CreatedByInverseUsers");
+
                     b.Navigation("CreatedCategories");
 
                     b.Navigation("CreatedPayments");
@@ -958,6 +984,8 @@ namespace E_commerce.Migrations
                     b.Navigation("CreatedPurchases");
 
                     b.Navigation("DeletedCategories");
+
+                    b.Navigation("DeletedInverseUsers");
 
                     b.Navigation("DeletedPayments");
 
@@ -974,6 +1002,8 @@ namespace E_commerce.Migrations
                     b.Navigation("RolesUsers");
 
                     b.Navigation("UpdatedCategories");
+
+                    b.Navigation("UpdatedInverseUsers");
 
                     b.Navigation("UpdatedPayments");
 

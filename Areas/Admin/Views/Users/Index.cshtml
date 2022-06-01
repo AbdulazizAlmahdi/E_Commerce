@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<E_commerce.Models.User>
 
 @{
+    User userInput = new User();
     ViewData["Title"] = "Index";
     PagingInfo pagingInfo = new PagingInfo();
     int pageNo = 0;
@@ -66,75 +67,12 @@
                         </div>
 
                         <div class="col-md-3 justify-content-end">
-                            <button type="button" data-bs-toggle="modal" class="btn btn-primary  d-block"
-                                style="margin-right: auto !important;" data-bs-target="#addNewCCModal">
+                            <a type="button" asp-action="Create" class="btn btn-primary  d-block"
+                                style="margin-right: auto !important;" >
                                 <i class="bx bx-plus me-0 me-lg-2"></i>
                                 <span class="d-none d-lg-inline-block">إضافة مستخدم</span>
-                            </button>
-                        </div>
-                        <!-- Add New User Modal -->
-                        <div class="modal fade" id="addNewCCModal" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-                                <div class="modal-content p-3 p-md-5">
-                                    <div class="modal-body">
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                        <div class="text-center mb-4">
-                                            <h3>إضافة مستخدم جديد</h3>
-                                        </div>
-                                        <form id="addNewCCForm" class="row g-3" onsubmit="return false">
-                                            <div class="col-12">
-                                                <label class="form-label w-100" for="modalAddCard">الاسم</label>
-                                                <div class="input-group input-group-merge">
-                                                    <input id="modalAddCard" name="modalAddCard" class="form-control"
-                                                        type="text" placeholder="محمد أحمد عبد الله"
-                                                        aria-describedby="modalAddCard2" />
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <label class="form-label w-100" for="modalAddCard">رقم الهاتف</label>
-                                                <div class="input-group input-group-merge">
-                                                    <input id="modalAddCard" name="modalAddCard" class="form-control"
-                                                        type="number" placeholder="777-000-000"
-                                                        aria-describedby="modalAddCard2" />
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <label class="form-label" for="modalPermission">الصلاحيات</label>
-                                                <select id="modalPermission" name="modalPermission"
-                                                    class="form-select" data-allow-clear="true">
-                                                    <option value="">Select</option>
-                                                    <option value="Australia">Australia</option>
-                                                    <option value="Bangladesh">Bangladesh</option>
-                                                    <option value="Belarus">Belarus</option>
-                                                    <option value="Brazil">Brazil</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <label class="form-label" for="modalPlace">المنطقة</label>
-                                                <select id="modalPlace" name="modalPlace"
-                                                    class="form-select" data-allow-clear="true">
-                                                    <option value="">Select</option>
-                                                    <option value="Australia">Australia</option>
-                                                    <option value="Bangladesh">Bangladesh</option>
-                                                    <option value="Belarus">Belarus</option>
-                                                    <option value="Brazil">Brazil</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-12 text-center mt-4">
-                                                <button type="submit" class="btn btn-primary me-1 me-sm-3">حفظ</button>
-                                                <button type="reset" class="btn btn-label-secondary btn-reset"
-                                                    data-bs-dismiss="modal" aria-label="Close">
-                                                    الغاء
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ Add New User Modal -->
+                            </a>
+                        </div>               
                     </div>
                 <div class="card-datatable ">
                     <table class="table table-striped">

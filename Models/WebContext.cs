@@ -400,6 +400,18 @@ namespace E_commerce.Models
                 entity.HasOne(d => d.Users)
                     .WithMany(p => p.InverseUsers)
                     .HasForeignKey(d => d.UsersId);
+
+                entity.HasOne(d => d.CreatedByUser)
+                    .WithMany(p => p.CreatedByInverseUsers)
+                    .HasForeignKey(d => d.CreatedByUserID);
+
+                entity.HasOne(d => d.UpdatedByUser)
+                 .WithMany(p => p.UpdatedInverseUsers)
+                 .HasForeignKey(d => d.UpdatedByUserID);
+
+                entity.HasOne(d => d.DeletedByUser)
+                 .WithMany(p => p.DeletedInverseUsers)
+                 .HasForeignKey(d => d.DeletedByUserID);
             });
 
             modelBuilder.Entity<UserStatus>(entity =>

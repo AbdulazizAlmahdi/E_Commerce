@@ -28,7 +28,8 @@ namespace E_commerce
             services.AddControllersWithViews();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<WebContext>(options => options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB")));
-            services.AddScoped<IUsersRepository<User>, UserRepository>();
+            services.AddScoped<IRepository<User>, UserRepository>();
+            services.AddScoped<IRepository<Place>, PlaceRepository>();
             services.AddScoped<IProductRepository<Product>, ProductRepository>();
             services.AddScoped<ICategoryRepositry, CategoryRepository>();
             services.AddDbContext<WebContext>(options => {

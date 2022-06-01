@@ -27,8 +27,8 @@ namespace E_commerce.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -120,12 +120,12 @@ namespace E_commerce.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedByUserID = table.Column<int>(type: "int", nullable: true),
+                    UpdatedByUserID = table.Column<int>(type: "int", nullable: true),
+                    DeletedByUserID = table.Column<int>(type: "int", nullable: true),
                     UserStatusID = table.Column<int>(type: "int", nullable: false),
                     PhoneID = table.Column<int>(type: "int", nullable: false),
                     PlaceID = table.Column<int>(type: "int", nullable: false),
@@ -146,6 +146,24 @@ namespace E_commerce.Migrations
                         principalTable: "Places",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Users_Users_CreatedByUserID",
+                        column: x => x.CreatedByUserID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Users_Users_DeletedByUserID",
+                        column: x => x.DeletedByUserID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Users_Users_UpdatedByUserID",
+                        column: x => x.UpdatedByUserID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Users_Users_UsersID",
                         column: x => x.UsersID,
@@ -667,6 +685,16 @@ namespace E_commerce.Migrations
                 column: "UsersID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_CreatedByUserID",
+                table: "Users",
+                column: "CreatedByUserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_DeletedByUserID",
+                table: "Users",
+                column: "DeletedByUserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_PhoneID",
                 table: "Users",
                 column: "PhoneID",
@@ -676,6 +704,11 @@ namespace E_commerce.Migrations
                 name: "IX_Users_PlaceID",
                 table: "Users",
                 column: "PlaceID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UpdatedByUserID",
+                table: "Users",
+                column: "UpdatedByUserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_UsersID",

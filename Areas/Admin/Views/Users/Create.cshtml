@@ -1,5 +1,59 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model E_commerce.ViewModel.UserViewModel
+
 @{
+    ViewData["Title"] = "Create";
 }
+<div class="layout-page" dir="rtl">
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4>
+                Users /
+            </h4>
+        </div>
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <!-- Basic -->
+            <div class="card mb-4">
+                <h5 class="card-header">إضافة مستخدم</h5>
+                <div class="card-body demo-vertical-spacing demo-only-element">
+                    <form id="addNewCCForm" class="row g-3" asp-action="Create">
+                        <div class="col-12">
+                            <label class="form-label w-100" for="modalAddCard">الاسم</label>
+                            <div class="input-group input-group-merge">
+                                <input id="modalAddCard" asp-for="user.Name"  class="form-control" type="text"
+                                    placeholder="محمد أحمد عبد الله" aria-describedby="modalAddCard2" />
+                            </div>
+                        </div>
+                        <input type="hidden" value="1" asp-for="user.UserStatusId" />
+                        <div class="col-12">
+                            <label class="form-label w-100" for="modalAddCard">رقم الهاتف</label>
+                            <div class="input-group input-group-merge">
+                                <input id="modalAddCard" asp-for="user.Phone.Number" class="form-control" type="number"
+                                    placeholder="777-000-000" aria-describedby="modalAddCard2" />
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="modalPermission">الصلاحيات</label>
+                            <select id="modalPermission" name="modalPermission" class="form-select"
+                                data-allow-clear="true">
+                                <option value="">Select</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Bangladesh">Bangladesh</option>
+                                <option value="Belarus">Belarus</option>
+                                <option value="Brazil">Brazil</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label" for="modalPlace">المنطقة</label>
+                            <select id="modalPlace"  asp-for="user.PlaceId" class="form-select" data-allow-clear="true" asp-items="@(new SelectList(Model.places, "Id", "Name"))"></select>
+                        </div>
+                        <div class="col-12 text-center mt-4">
+                            <button type="submit" value="Create" class="btn btn-primary me-1 me-sm-3">حفظ</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

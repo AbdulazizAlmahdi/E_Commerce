@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Models.Repositories
 {
-    public interface IUsersRepository<TEntity>
+    public interface IRepository<TEntity>
     {
-        IQueryable<User> Users { get; }
+        IQueryable<TEntity> entities { get; }
 
         //IList<TEntity> List();
         TEntity Find(int ID);
