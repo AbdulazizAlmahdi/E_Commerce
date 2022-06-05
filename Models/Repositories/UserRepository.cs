@@ -34,7 +34,16 @@ namespace E_commerce.Models.Repositories
 
         public User Find(int ID)
         {
-            throw new NotImplementedException();
+            var user = context.Users.SingleOrDefault(a => a.Id == ID);
+
+            return user;
+        }
+
+        public User Find(string Text)
+        {
+            var user = context.Users.SingleOrDefault(a => a.Name == Text);
+
+            return user;
         }
 
         //public IList<User> List()

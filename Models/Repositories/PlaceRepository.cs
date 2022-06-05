@@ -35,6 +35,12 @@ namespace E_commerce.Models.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Place Find(string Text)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Place entity)
         {
             throw new NotImplementedException();

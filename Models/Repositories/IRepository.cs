@@ -11,6 +11,7 @@ namespace E_commerce.Models.Repositories
 
         //IList<TEntity> List();
         TEntity Find(int ID);
+        TEntity Find(String Text);
         void Add(TEntity entity);
         void Update(TEntity entity);
         TEntity Delete(int ID); 

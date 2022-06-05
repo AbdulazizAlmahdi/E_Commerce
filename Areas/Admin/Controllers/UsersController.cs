@@ -36,7 +36,7 @@ namespace e_commerce.Areas.Admin.Controllers
         }
         public IActionResult Create()
         {
-            var model = new UserViewModel {
+            var model = new UserViewModel {           
                 places = places.entities.ToList()
             };
             return View(model);
@@ -55,6 +55,18 @@ namespace e_commerce.Areas.Admin.Controllers
             //     return View("Error", new ErrorViewModel { RequestId = ex.Message });
             // }
         }
-        
+        public IActionResult getUser(string q)
+        {
+            IEnumerable<SelectListItem> usersList = Enumerable.Empty<SelectListItem>();
+            if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
+                usersList = users.entities.Where(u => u.Name.Contains(q)).Select(
+                    u => new SelectListItem
+                    {
+                        Text = u.Name,
+                        Value = u.Id
+                    }
+                    );
+            return Json(new { items = usersList });
+        }
     }
 }
