@@ -33,6 +33,8 @@ namespace E_commerce
             services.AddScoped<IRepository<Phone>, PhoneRepository>();
             services.AddScoped<IProductRepository<Product>, ProductRepository>();
             services.AddScoped<ICategoryRepositry, CategoryRepository>();
+            services.AddScoped<IHelpRepository, HelpRepository>();
+
             services.AddDbContext<WebContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB"));
             });
