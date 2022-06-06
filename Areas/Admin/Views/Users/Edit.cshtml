@@ -1,7 +1,7 @@
 ﻿@model E_commerce.ViewModel.UserViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
 <script>
@@ -46,7 +46,7 @@
             <div class="card mb-4">
                 <h5 class="card-header">إضافة مستخدم</h5>
                 <div class="card-body demo-vertical-spacing demo-only-element">
-                    <form id="addNewCCForm" class="row g-3" asp-action="Create">
+                    <form id="addNewCCForm" class="row g-3" asp-action="Edit">
                         <div class="col-12">
                             <label class="form-label w-100" for="modalAddCard">الاسم</label>
                             <div class="input-group input-group-merge">
@@ -55,10 +55,11 @@
                             </div>
                         </div>
                         <input type="hidden" value="1" asp-for="user.UserStatusId" />
+                        <input type="hidden" asp-for="user.Id" />
                         <div class="col-12">
                             <label class="form-label w-100" for="modalAddCard">رقم الهاتف</label>
                             <div class="input-group input-group-merge">
-                                <input id="modalAddCard" asp-for="user.Phone.Number" class="form-control" type="number"
+                                <input id="modalAddCard" asp-for="user.Phone.Number" class="form-control" type="text"
                                        placeholder="777-000-000" aria-describedby="modalAddCard2" />
                             </div>
                         </div>
@@ -96,11 +97,11 @@
 
                         <div class="col-12">
                             <label class="form-label" for="modalPlace">المنطقة</label>
-                             <select id="modalPlace" asp-for="user.PlaceId" class="form-select" data-allow-clear="true"
-                                asp-items="@(new SelectList(Model.places, "Id", "Name"))"></select> 
+                            <select id="modalPlace" asp-for="user.PlaceId" class="form-select" data-allow-clear="true"
+                                    asp-items="@(new SelectList(Model.places, "Id", "Name"))"></select>
                         </div>
                         <div class="col-12 text-center mt-4">
-                            <button type="submit" value="Create" class="btn btn-primary me-1 me-sm-3">حفظ</button>
+                            <button type="submit" value="Edit" class="btn btn-primary me-1 me-sm-3">تعديل</button>
                         </div>
                     </form>
                 </div>
@@ -108,4 +109,5 @@
         </div>
     </div>
 </div>
+
 

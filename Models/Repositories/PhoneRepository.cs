@@ -7,39 +7,37 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Models.Repositories
 {
-    public class UserRepository : IRepository<User>
+    public class PhoneRepository : IRepository<Phone>
     {
         WebContext context;
-        public UserRepository(WebContext db)
+        public PhoneRepository(WebContext db)
         {
             this.context = db;
         }
-        public IQueryable<User> entities => context.Users.Include(u => u.Place).Include(u => u.Phone);
+        public IQueryable<Phone> entities => context.Phones;
 
-        public void Add(User entity)
+        public void Add(Phone entity)
         {
             context.Add(entity);
             context.SaveChanges();
         }
+      
         public void Delete(int id)
         {
-            var user = Find(id);
-            context.Users.Remove(user);
-            context.SaveChanges();
+            throw new NotImplementedException();
         }
 
-        public User Find(int ID)
-        {
-            var user = context.Users.Include(u => u.Place).Include(u => u.Phone).SingleOrDefault(a => a.Id == ID);
 
-            return user;
+        public Phone Find(string Text)
+        {
+            var phone = context.Phones.SingleOrDefault(a => a.Number == Text);
+
+            return phone;
         }
 
-        public User Find(string Text)
+        public Phone Find(int ID)
         {
-            var user = context.Users.SingleOrDefault(a => a.Name == Text);
-
-            return user;
+            throw new NotImplementedException();
         }
 
         //public IList<User> List()
@@ -47,7 +45,7 @@ namespace E_commerce.Models.Repositories
         //    return this.context.Users.Include(u => u.Place).Include(u => u.Phone).ToList();
         //}
 
-        public void Update(User entity)
+        public void Update(Phone entity)
         {
             context.Update(entity);
             context.SaveChanges();

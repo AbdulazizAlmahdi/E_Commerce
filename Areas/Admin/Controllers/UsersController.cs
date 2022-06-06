@@ -15,11 +15,13 @@ namespace e_commerce.Areas.Admin.Controllers
     {
        private IRepository<User> users;
        private IRepository<Place> places;
+       private IRepository<Phone> phone;
 
 
-        public UsersController(IRepository<User> usersRepository, IRepository<Place> placesRepository) {
+        public UsersController(IRepository<User> usersRepository, IRepository<Place> placesRepository, IRepository<Phone> phoneRepository) {
            this.users = usersRepository; 
               this.places = placesRepository;
+              this.phone = phoneRepository;
         } 
         public IActionResult Index(int page=1)
         {
@@ -44,18 +46,19 @@ namespace e_commerce.Areas.Admin.Controllers
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public IActionResult Create(UserViewModel userViewModel)
-        {           
-            // try{
+        {
+            try
+            {
+                userViewModel.user.CreatedAt = DateTime.Now;
                     users.Add(userViewModel.user);
                     return RedirectToAction("Index");
-              
-            // }
-            // catch(Exception ex)
-            // {
-            //     return View("Error", new ErrorViewModel { RequestId = ex.Message });
-            // }
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new ErrorViewModel { RequestId = ex.Message });
+            }
         }
-        public IActionResult getUser(string q)
+        public IActionResult GetUser(string q)
         {
             IEnumerable<SelectListItem> usersList = Enumerable.Empty<SelectListItem>();
             if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
@@ -67,6 +70,37 @@ namespace e_commerce.Areas.Admin.Controllers
                     }
                     );
             return Json(new { items = usersList });
+        }
+        public IActionResult Edit(int id)
+        {
+            
+            var model = new UserViewModel
+            {
+                user = users.Find(id),
+                places = places.entities.ToList()
+            };
+            return View(model);
+        }
+    
+    [HttpPost]
+    //[ValidateAntiForgeryToken]
+    public IActionResult Edit(UserViewModel userViewModel)
+    {
+        try
+        {
+            userViewModel.user.UpdatedAt = DateTime.Now;
+            users.Update(userViewModel.user);
+            return RedirectToAction("Index");
+            }
+        catch (Exception ex)
+        {
+            return View("Error", new ErrorViewModel { RequestId = ex.Message });
+        }
+    }
+        public ActionResult Delete(int id)
+        {
+            users.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace E_commerce.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public string Password { get; set; }
+        public string? Password { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
@@ -28,7 +28,7 @@ namespace E_commerce.Models
         public int? DeletedByUserID { get; set; }
         public int UserStatusId { get; set; }
         public int PhoneId { get; set; }
-        public int PlaceId { get; set; }
+        public int? PlaceId { get; set; }
         public int? UsersId { get; set; }
         public virtual User CreatedByUser { get; set; }
         public virtual User UpdatedByUser { get; set; }
@@ -46,7 +46,6 @@ namespace E_commerce.Models
         public virtual ICollection<User> UpdatedInverseUsers { get; set; }
         public virtual ICollection<User> DeletedInverseUsers { get; set; }
         public virtual ICollection<RolesUser> RolesUsers { get; set; }
-
         public virtual ICollection<Category> CreatedCategories { get; set; }
         public virtual ICollection<Category> UpdatedCategories { get; set; }
         public virtual ICollection<Category> DeletedCategories { get; set; }

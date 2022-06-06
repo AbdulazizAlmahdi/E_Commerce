@@ -21,12 +21,7 @@ namespace E_commerce.Models.Repositories
                  throw new NotImplementedException();
         }
 
-        public Place Delete(int ID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Place entity)
+        public void Delete(int ID)
         {
             throw new NotImplementedException();
         }
@@ -45,5 +40,7 @@ namespace E_commerce.Models.Repositories
         {
             throw new NotImplementedException();
         }
+
+     
     }
 }

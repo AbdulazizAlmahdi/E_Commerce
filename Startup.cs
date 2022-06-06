@@ -30,6 +30,7 @@ namespace E_commerce
             services.AddDbContext<WebContext>(options => options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB")));
             services.AddScoped<IRepository<User>, UserRepository>();
             services.AddScoped<IRepository<Place>, PlaceRepository>();
+            services.AddScoped<IRepository<Phone>, PhoneRepository>();
             services.AddScoped<IProductRepository<Product>, ProductRepository>();
             services.AddScoped<ICategoryRepositry, CategoryRepository>();
             services.AddDbContext<WebContext>(options => {

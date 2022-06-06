@@ -96,14 +96,34 @@
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn dropdown-toggle hide-arrow p-0"
-                                            data-bs-toggle="dropdown">
+                                                    data-bs-toggle="dropdown">
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                    class="bx bx-edit-alt me-1"></i>تعديل</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                    class="bx bx-trash me-1"></i> حذف</a>
+                                                <a class="dropdown-item" asp-action="Edit" asp-route-id="@user.Id">
+                                                    <i class="bx bx-edit-alt me-1"></i>تعديل
+                                                </a>
+                                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    <i class="bx bx-trash me-1"></i> حذف
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ...
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a  class="btn btn-light" data-bs-dismiss="modal">Close</a>
+                                                        <a  class="btn btn-danger" asp-action="Delete" asp-route-id="@user.Id">Confirmation Delete</a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
