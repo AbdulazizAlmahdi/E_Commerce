@@ -1,0 +1,98 @@
+﻿@model IEnumerable<E_commerce.Models.Help>
+
+@{
+    ViewData["Title"] = "Index";
+    PagingInfo pagingInfo = new PagingInfo();
+    int pageNo = 0;
+    if (ViewBag.PagingInfo != null)
+    {
+        pagingInfo = ViewBag.PagingInfo;
+        pageNo = pagingInfo.CurrentPage;
+    }
+}    <!-- / Menu -->
+<!-- Layout container -->
+
+<div class="layout-page">
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div dir="rtl">
+                <h5 class="card-header">ادارة الطلبات</h5>
+                <hr />
+            </div>
+            <a dir="ltr" href="">رجوع</a>
+            <!-- Basic Bootstrap Table -->
+
+            <div class="card" dir="rtl">
+                <!--جزء م فوق جدول البيانات-->
+                <div dir="ltr" style="margin-top:20px;">
+                    <a asp-action="Create" class=" btn btn-primary">+اضافة منتج </a>
+                    <label style="padding-left:15%;direction:rtl;">
+                        <input type="search" class="form-control" placeholder="بحث">
+                    </label>
+                    <div class="dataTables_length" id="DataTables_Table_0_length">
+                        <label>
+                            Show
+                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_Product" class="form-select">
+                                <option value="7">7</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="75">75</option>
+                                <option value="100">100</option>
+                            </select>
+                            entries
+                        </label>
+                    </div>
+                </div>
+
+                <!--جزء م فوق جدول البيانات-->
+                <div class="table-responsive text-nowrap">
+                    <table class="table">
+                        <thead class="table-border">
+                            <tr>
+                                <th><strong>الرقم</strong></th>
+                                <th>اسم الصنف</th>
+                                <th>اسم المنتج</th>
+                                <th>الكمية</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @*@foreach (Product product in Model)
+                                {*@
+                            @foreach (Help help in Model)
+                            {
+
+                                <tr>
+
+                                    <td>@help.Id</td>
+                                    <td>@help.Subject</td>
+                                    <td>@help.Details</td>
+                                    <td>@help.Phone.Number</td>
+
+                                    @*<td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <i class="bx bx-edit-alt me-1">@Html.ActionLink("التفاصيل", "Delete", new { ID = product.Id })</i>
+                                                <i class="bx bx-edit-alt me-1">@Html.ActionLink("حذف", "Detailes", new { ID = product.Id })</i>
+                                            </div>
+                                        </div>
+                                    </td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <partial name="_pagination" model="@pagingInfo" />
+
+            </div>
+            <!-- / Content -->
+        </div>
+
+    </div>
+
+</div>

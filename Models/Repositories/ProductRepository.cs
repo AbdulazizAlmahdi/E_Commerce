@@ -27,10 +27,8 @@ namespace E_commerce.Models.Repositories
 
         public void Delete(Product product)
         {
-
             context.Products.Remove(product);
             context.SaveChanges();
-
            
         }
 
@@ -48,8 +46,6 @@ namespace E_commerce.Models.Repositories
         {
             return context.Categories;
         }
-
-    
 
         public void Update(Product entity)
         {
