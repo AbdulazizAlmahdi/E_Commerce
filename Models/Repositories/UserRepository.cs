@@ -14,7 +14,7 @@ namespace E_commerce.Models.Repositories
         {
             this.context = db;
         }
-        public IQueryable<User> entities => context.Users.Include(u => u.Place).Include(u => u.Phone);
+        public IQueryable<User> entities => context.Users.Include(u => u.Place).Include(u => u.Phone).Include(u => u.UserStatus);
 
         public void Add(User entity)
         {

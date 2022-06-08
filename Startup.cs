@@ -52,7 +52,7 @@ namespace E_commerce
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseDefaultFiles();
             app.UseRouting();
 
             app.UseAuthorization();

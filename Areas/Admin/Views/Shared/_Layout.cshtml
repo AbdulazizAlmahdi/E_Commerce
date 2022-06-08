@@ -43,8 +43,8 @@
     <link rel="stylesheet" href="~/Admin/assets/vendor/libs/flatpickr/flatpickr.css" />
     <link rel="stylesheet" href="~/select2.css" />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.js"></script>
+    <script src="~/Admin/assets/js/jquery.min.js"></script>
+<script src="~/Admin/assets/js/chosen.jquery.js"></script>
 
     <!-- Page CSS -->
     <!-- Helpers -->
@@ -120,13 +120,13 @@
 
             <ul class="menu-inner py-1">
                 <!-- Dashboards -->
-                <li class="menu-item open active">
+                <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Dashboards">Dashboards</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item active">
+                        <li class="menu-item">
                             <a href="index.html" class="menu-link">
                                 <div data-i18n="Analytics">Analytics</div>
                             </a>
@@ -140,15 +140,15 @@
                 </li>
 
                 <!-- Layouts -->
-                <li class="menu-item">
+                <li class="menu-item open active">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-layout"></i>
                         <div data-i18n="Users And Permission">Users And Permission</div>
                     </a>
 
                     <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="layouts-collapsed-menu.html" class="menu-link">
+                        <li class="menu-item active">
+                            <a  href="~/admin/users" class="menu-link">
                                 <div data-i18n="Users">Users</div>
                             </a>
                         </li>

@@ -10,5 +10,6 @@ namespace E_commerce.ViewModel
     {
         public User user { get; set; }
         public List<Place> places { get; set; }
+
     }
 }

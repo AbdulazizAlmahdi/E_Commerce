@@ -30,7 +30,7 @@ namespace E_commerce.Models.Repositories
 
         public Phone Find(string Text)
         {
-            var phone = context.Phones.SingleOrDefault(a => a.Number == Text);
+            var phone = context.Phones.Include(u=>u.User).SingleOrDefault(a => a.Number == Text);
 
             return phone;
         }
