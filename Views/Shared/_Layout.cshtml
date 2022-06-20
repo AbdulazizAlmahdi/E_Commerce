@@ -1,49 +1,320 @@
-﻿﻿
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html dir="rtl">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> @ViewData["Title"] - e_commerce</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/all.min.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!--<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap" rel="stylesheet" />-->
+    <!--call fonts-->
+    <link rel="stylesheet" href="~/css/fonts.css">
+    <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="~/css/e_commerce.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <!-- start navbar-->
+    <nav class="navbar d-block navbar-expand-lg  sticky-top  ">
+        <div class=" container ">
+            <a class="navbar-brand text-white" href="#">Logo</a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse  " id="navbarSupportedContent">
+                <ul class="navbar-nav me-5 mb-2 mb-lg-0 d-none d-lg-flex">
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" href="#">
+                            <i class="fa-brands fa-facebook fa-lg  rounded-circle p-2"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa-brands fa-whatsapp fa-lg  rounded-circle p-2"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa-brands fa-twitter fa-lg  rounded-circle p-2"></i>
+                        </a>
+                    </li>
+
+                </ul>
+                @{ 
+                    string search = ViewBag.Search;
+                }
+           
+                <form class="search  mx-auto" action="/" method="get" >
+                    <input class="form-control me-2 rounded-pill" type="search" placeholder="ابحث هنا" name="search" aria-label="Search">
+                </form>
+
+                <ul class="navbar-nav justify-content-center  px-5">
+                    @if (ViewBag.userS == null || ViewBag.userS == "")
+                    {
+                        <li class="nav-item d-none ">
+                            <a class="nav-link active" aria-current="page" href="/Basket">
+                                <i class="fa-solid fa-cart-shopping fa-lg  rounded-circle"></i>السلة
+                                <span class="badge  rounded-pill">4</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Login">
+                                <i class="fa-solid fa-user fa-lg  rounded-circle "></i>
+                                تسجل الدخول
+                            </a>
+                        </li>
+
+                        <li class="nav-item d-none ">
+                            <a class="nav-link active" aria-current="page" href="/Home/Logout">
+                                <i class="a-solid fa-right-from-bracket fa-lg  rounded-circle"></i>تسجيل الخروج
+
+                            </a>
+                        </li>
+                        <li class="nav-item btn-group ">
+                            <a class="nav-link dropdown-toggle " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-globe fa-lg  rounded-circle "></i>
+                                اللغة
+                            </a>
+                            <ul class="dropdown-menu  shangelanguage dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+                                <hr style="border:solid 1px #13A200 ;">
+                                <li><a class="dropdown-item " href="#">  عربي</a></li>
+                                <li><a class="dropdown-item" href="#">  English</a></li>
+                                <hr style="border:solid 1px #13A200 ;">
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/Basket">
+                                <i class="fa-solid fa-cart-shopping fa-lg  rounded-circle"></i>السلة
+                                <span class="badge  rounded-pill">4</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item  btn-group myacount ">
+                            <img src="imgs/nader.png" class="rounded-circle" style="width:35px ; height: 35px;" alt="myprofileimage">
+                            <a class="nav-link dropdown-toggle " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                حسابي
+                            </a>
+                            <ul class="dropdown-menu  dropdown-menu-colo-light fs-6 " aria-labelledby="dropdownMenuButton2">
+                                <li class="dropdown-item myacountname  ">
+                                    <img src="~/imgs/nader.png" class="rounded-circle" style="width:35px ; height: 35px;" alt="myprofileimage">
+                                    <span>@ViewBag.userS</span>
+
+                                </li>
+                                <hr style="border:solid 1px #13A200 ;">
+                                <li>
+                                    <a class="dropdown-item mt-2 " href="/Userinfo">
+                                        <i class="fa-solid fa-user fa-lg  rounded-circle "></i>
+                                        بياناتي الشخصية
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/Userinfo">
+                                        <i class="fa-solid fa-line-chart fa-lg  rounded-circle "></i>
+                                        نشاطي
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/Home/Logout">
+                                        <i class="fa-solid fa-sign-out fa-lg  rounded-circle "></i>
+                                        تسجيل الخروج
+                                    </a>
+                                </li>
+                                <hr style="border:solid 1px #13A200 ;">
+                            </ul>
+                        </li>
+
+                        <li class="nav-item btn-group ">
+                            <a class="nav-link dropdown-toggle " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-globe fa-lg  rounded-circle "></i>
+                                اللغة
+                            </a>
+                            <ul class="dropdown-menu  shangelanguage dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+                                <hr style="border:solid 1px #13A200 ;">
+                                <li><a class="dropdown-item " href="#">  عربي</a></li>
+                                <li><a class="dropdown-item" href="#">  English</a></li>
+                                <hr style="border:solid 1px #13A200 ;">
+                            </ul>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+        <div class=" mb-0 mt-1">
+            <nav class=" nav1 d-block   ">
+                <ul class=" navbar1 nav justify-content-center gap-lg-5  ">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/autions">المزادات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/AboutUs">من نحن</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/help">طلب مساعدة</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </nav>
+
+    <!-- end navbar-->
+    <!-- start navbar categories in homr  page-->
+
+    @RenderBody()
+
+    
+
+    <!-- start footer-->
+    <footer class=" ">
+        <div class="footer pt-5 pb-2  text-center text-md-start">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">e_commerce</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+                <div class="row pb-0">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="info mb-5">
+                            <h5> <a class="navbar-brand  " href="#">Logo</a></h5>
+                            <p class=" lh-lg  mb-2">
+                                عبارة عن منصة إليكترونية مخصصة لبيع وشراء وترويج
+                                المنتجات الزراعية والحيوانية المختلفة ومستلزماتها.
+                                يقدم الموقع خدمات المزاد العلني للعملاء
+                                والذي يتيح لهم تصفح المزادات والاشتراك بها وفق شروط محددة.
+                            </p>
+                            <p class="footertime">
+                                يمكـــنكم التواصــــــــل معنا خلال 24 ساعة على مدار الاسبــــــــــــوع
+                                ويمكنكم تصفح المنتجات والمزادات وطلب أي منتج
+                                وفي حالة كان معكم استفسارات او مقترحات يمكنكم التواصل معنا
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-2">
+                        <div class="links">
+                            <h5 class="">روابط</h5>
+                            <ul class=" nader list-unstyled lh-lg">
+                                <li>
+                                    <a class="d-block  nav-link" href="#">الرئيسية</a>
+                                </li>
+                                <li>
+                                    <a class="d-block  nav-link" href="#">الشروط والاحكام</a>
+                                </li>
+                                <li>
+                                    <a class="d-block  nav-link" href="#">سياسة الخصوصية </a>
+                                </li>
+                                <li>
+                                    <a class="d-block  nav-link" href="#"> سياسة الاستخدام</a>
+                                </li>
+                                <li>
+                                    <a class="d-block  nav-link" href="#">الشحن والتسليم </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-2">
+                        <div class="links">
+                            <h5>روابط اخرى</h5>
+                            <ul class="list-unstyled lh-lg ">
+                                <li>
+                                    <a class="d-block  nav-link" href="#">المنتجات</a>
+                                </li>
+                                <li>
+                                    <a class="d-block nav-link" href="#">المزادات</a>
+                                </li>
+                                <li>
+                                    <a class="d-block  nav-link" href="#">طلب مساعدة</a>
+                                </li>
+                                <li>
+                                    <a class="d-block  nav-link" href="#">تواصل معنا</a>
+                                </li>
+                                <li>
+                                    <a class="d-block  nav-link" href="#">تسجيل الدخول</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 ">
+                        <div class=" links contact ">
+                            <h5 class="">تواصل معنا</h5>
+                            <ul class=" list-group  list-unstyled  text-start  ">
+                                <li>
+                                    <a class="d-block  nav-link  " href="#">
+
+                                        <i class="fa-solid fa-location-dot fa-xl  rounded-circle "></i>
+                                        الجمهورية اليمنية. الاتحاد التعوني الزراعي
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="d-block  nav-link" href="#">
+                                        <i class="fa-brands fa-linkedin fa-lg  rounded-circle "></i>
+                                        info@ahdd.come
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="d-block  nav-link" href="#">
+                                        <i class="fa-solid fa-phone fa-lg  rounded-circle "></i>
+                                        00967770555555
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav justify-content-center  rounded-pill mt-4">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">
+                                        <i class="fa-brands fa-facebook fa-lg  rounded-circle p-1"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <i class="fa-brands fa-whatsapp fa-lg  rounded-circle p-1"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <i class="fa-brands fa-twitter fa-lg  rounded-circle p-1"></i>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-@RenderBody()
-</main>
-</div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2022 - e_commerce - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-</footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+        </div>
+
+        <div class="copyright  text-center pt-4 pb-4 ">
+            جميع الحقــــــــــــوق محفوظة لدى الاتحاد الزراعــــي    <i class="fa-solid fa-copyright"></i>     2022
+        </div>
+
+
+    </footer>
+    <!-- end footer-->
+
+
+
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/all.min.js"></script>
+    <script src="~/js/jquery-3.6.0.min.js"></script>
+    <script src="~/js/ScriptScrollMenu.js"></script>
+    <script src="~/js/Basket.js"></script>
+    <script src="~/js/ModelNotice.js"></script>
+    <script src="~/js/Validation.js"></script>
+    <script src="../js/UserinfoC2C.js"></script>
 </body>
 </html>
+
+
+
+
+@await RenderSectionAsync("Scripts", required: false)

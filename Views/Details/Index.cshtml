@@ -1,0 +1,182 @@
+﻿
+    <title>تفاصيل المنتج</title>
+    <link rel="stylesheet" href="../css/Details.css">
+
+    <div class="details container  mt-4  ">
+        <div class="row  ">
+
+            @{
+
+                Product product = ViewBag.Product;
+
+            }
+            @if (product != null)
+            {
+                <div class="col-lg-9 col-md-9 col-sm-12 main  ">
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class=" col divinfo   m-3  ">
+                                    <div class="row">
+                                        <div class="col-8   ">
+                                            <div class="row">
+                                                <h5 class="fs-3 pt-3"><span>@product.NameAr</span></h5>
+                                                <div class="col-6">
+
+                                                    <div class="">
+                                                        <p><i class="fa-solid fa-square-check me-2"></i>الاتحاد التعاوني الزراعي</p>
+                                                    </div>
+                                                    <div class="">
+                                                        <p><i class="fa-solid fa-location-dot me-2"></i>ذمار- قاع جهران</p>
+                                                    </div>
+                                                    <div class=" star">
+                                                        <i class="fa-solid fa-star active"></i>
+                                                        <i class="fa-solid fa-star active"></i>
+                                                        <i class="fa-solid fa-star active"></i>
+                                                        <i class="fa-solid fa-star"></i>
+
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col-6">
+
+                                                    <div class="">
+                                                        <p> <span class="me-2">@product.Quantity</span>@product.Unit</p>
+                                                    </div>
+                                                    <div class="">
+                                                        <p><i class="fa-solid fa-eye me-2"></i><span>@product.Views</span></p>
+                                                    </div>
+                                                    <div class="">
+                                                        <p>@product.Duration</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col divinfoprice  m-2   ">
+
+                                            <div class="row justify-content-between ">
+                                                <div class="col">
+                                                    <h5 class="fs-1  pt-5 pb-md-2 pb-lg-3"> <span>@product.Price</span>  </h5>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-between ">
+                                                <div class="col">
+                                                    <p class="">خصم % <span>@product.Discount</span></p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class=""><span>ريال</span></p>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12   m-3 ">
+                                    <div class="row">
+                                        <div class="col ">
+                                            <p>
+                                                <span>
+                                                    @product.DetailsAr
+
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col clearfix">
+                                            <button id="liveToastBtn" type="button" class=" btn float-end btAddToBasket me-3  px-lg-5 px-md-3   py-0 ">
+                                                <h5 class="pt-2 ">
+                                                    اضافة الى السلة
+                                                </h5>
+                                            </button>
+                                            <div class="position-fixed top-0 start-0 p-3">
+                                                <div id="liveToast" class="toast " style="border-radius: 1rem ;" role="alert" aria-live="assertive" aria-atomic="true">
+
+                                                    <div class="toast-body text-center pt-3" style="border-radius:1rem;">
+                                                        <p class="fs-5 ">
+                                                            تم اضافة المنتج الى السلة
+                                                            <button type="button" class="    float-end  rounded-circle" data-bs-dismiss="toast" aria-label="Close">
+                                                                <i class="fa-solid fa-close  fs-4"></i>
+                                                            </button>
+
+                                                        </p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12">
+                            <img src="../imgs/tomato.png" class=" img-fluid mb-3 " alt="">
+                        </div>
+                        <div class="col-12 ">
+                            <img src="../imgs/tomato.png" class=" img-fluid mb-3 " alt="">
+                        </div>
+                        <div class="col m-2">
+
+                            <div class=" comment p-3 ">
+                                <p><i class="fa-solid fa-user me-2"></i> محمد علي </p>
+                                <hr>
+                                <p>
+                                    ممكن فيديو عن المنتج ؟
+                                </p>
+
+                            </div>
+                            <div class="">
+                                <form class="  needs-validation  mt-5  mx-1 " novalidate>
+                                    <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " id="validationTextarea" placeholder=" اكتب تعليقك هنا" required></textarea>
+                                    <div class="valid-feedback">
+                                        Please enter a message in the textarea.
+                                    </div>
+                                    <button class=" btAddComment btn  fs-5 me-3  px-lg-5 px-md-3   py-0  " type="submit"> ارسال</button>
+                                </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+            <div class="col-lg-3 col-md-3 col-sm-12   ">
+
+                <div class="related p-3 mb-3">
+                    <div class="row">
+                        <p class=" fs-5 mt-2 ">
+                            اعلانات مشابهة
+                        </p>
+                        @foreach (Product item in ViewBag.ProductList)
+                        {
+                            <div class="col-6  ">
+                                
+                                <a href="/Details?id=@item.Id" title="@item.NameAr" class="text-decoration-none">
+                                    <div class="card">
+                                        <img src="../imgs/tomato.png" class=" img-fluid  mb-1 " alt="">
+                                        <h6 class="text-center ">@item.DetailsAr</h6>
+                                    </div>
+                                </a>
+                                </div>
+                            
+                        }
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        
+        
+        </div>
+
+
+    </div>

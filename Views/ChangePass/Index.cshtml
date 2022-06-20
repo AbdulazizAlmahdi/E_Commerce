@@ -1,0 +1,79 @@
+﻿    <title>تغيير كلمة المرور</title>
+    <link rel="stylesheet" href="../css/ChangePass.css">
+
+<div class="container mt-4 ">
+    <div class="row">
+        <div class="  col-sm-12 col-md-6 col-lg-6  mt-lg-5 pt-lg-2 ">
+            <div class=" changepass  text-center m-auto mt-sm-0 mt-lg- m-md-0 ">
+                <div class=" changepassTopDiv py-2  pe-2  p-sm-2  p-lg-2 p-md-1  ">
+                    <h4 class="pt-1 pt-lg-2 pt-sm-2 pt-md-1 text-white fs-2 ">تغيير كلمة المرور </h4>
+                </div>
+
+                <br />
+                <br />
+                @if (ViewBag.Error != null)
+                {
+                    <div style="color:red">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                @if (ViewBag.Success != null)
+                {
+                    <h3 style="color:green">
+                        @ViewBag.Success
+                    </h3>
+                    <script>
+                        setInterval(function () { window.location.replace("/Userinfo"); }, 3000);
+                    </script>
+                }
+
+                <form class="  needs-validation  mt-5  mx-4 py-2" novalidate method="post" action="/ChangePass">
+
+                    <input type="password" class="form-control my-2 my-sm-2 my-md-2 my-lg-3" placeholder=" كلمة المرور القديمة" id="validationCustom01" name="oldPass" value="" required>
+                    @if (ViewBag.ErrorOldPass != null)
+                    {
+                        <div style="color:red">
+                            @ViewBag.ErrorOldPass
+                        </div>
+                    }
+
+                    <input type="password" class="form-control my-2 my-sm-2 my-md-2 my-lg-3" placeholder=" كلمة المرور الجديدة" id="validationCustom01" name="newPass" value="" required>
+                    @if (ViewBag.ErrorNewPass != null)
+                    {
+                        <div style="color:red">
+                            @ViewBag.ErrorNewPass
+                        </div>
+                    }
+
+                    <input type="password" class="form-control my-2 my-sm-2 my-md-2 my-lg-3" placeholder=" تأكيد كلمة المرور" id="validationCustom01" name="newPass2" value="" required>
+                    @if (ViewBag.ErrorNewPass2 != null)
+                    {
+                        <div style="color:red">
+                            @ViewBag.ErrorNewPass2
+                        </div>
+                    }
+
+                    <div class="   ">
+                        <button class=" btnsubmit btn  fs-5 w-100   " type="submit"> تغيير</button>
+                    </div>
+                    <div class="row py-2 py-lg-4 py-sm-2 py-md-2 ">
+
+
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 ">
+            <div>
+                <img src="../imgs/check.png" class=" img-fluid " alt="">
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>

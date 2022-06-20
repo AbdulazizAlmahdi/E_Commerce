@@ -1,0 +1,72 @@
+﻿@model IEnumerable<E_commerce.Models.Custome.AutionsProduct>
+    <title> المزادات</title>
+    <link rel="stylesheet" href="../css/Aution.css">
+
+<div class="container-fluid Aution">
+    <div class="DivAution container">
+        <div class=" btn btnAution my-4  p-2  text-center">
+            <h5 class=" pt-2 ">
+                المزادات الفعالة
+            </h5>
+
+        </div>
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <a href="/DetailsAution?id=@item.Auctions.Id" class="text-decoration-none">
+                        <div class="card">
+                            <img src="../imgs/tomato.png" class=" img-fluid card-img-top" alt="tomato">
+                            <div class="card-body">
+
+                                <div class="row justify-content-center my-1">
+                                    <div class="col">
+                                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Products.NameAr)</h5>
+                                    </div>
+                                    <div class="col autionTime m-1 ">
+                                        <p>
+                                            يبدأ السعر من
+                                            <br />
+                                            <span>@Html.DisplayFor(modelItem => item.Auctions.StartPrice) ريال</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center my-1">
+                                    <div class="col ">
+                                        <p class="pt-2">@Html.DisplayFor(modelItem => item.Products.Quantity) @Html.DisplayFor(modelItem => item.Products.Unit)</p>
+                                    </div>
+                                    <div class="col autionTime m-1">
+                                        <p>
+                                            <span>@Html.DisplayFor(modelItem => item.Auctions.StartDate)</span>
+                                            <br>
+                                            <span>@Html.DisplayFor(modelItem => item.Auctions.EndDate)</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center my-1">
+                                    <div class="col">
+                                        <p class="pt-2  ">
+                                            <i class="fa-solid fa-location-dot me-2"></i>
+                                            ذمار- قاع جهران
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="pt-2">7 ايام</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+
+
+
+            }
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,121 @@
+﻿<title>تسجيل حساب</title>
+<link rel="stylesheet" href="../css/SignIn.css">
+
+<div class="container mt-4 ">
+    <div class="row">
+        <div class="  col-sm-12 col-md-6 col-lg-6  ">
+            <div class=" sigin  text-center m-auto mt-sm-0 mt-lg-5 m-md-0 ">
+                <div class=" siginTopDiv  py-2  pe-2 p-sm-2  p-lg-2 p-md-1  ">
+                    <h4 class="pt-1 pt-lg-2 pt-sm-2 pt-md-1 text-white fs-2 ">انشاء حساب</h4>
+                </div>
+
+               
+
+                <form class="  needs-validation  mt-5 mt-sm-5 mt-md-1   mt-lg-5 mx-4" action="/register" method="post" novalidate>
+
+                    @{
+                        bool success = ViewBag.success != null;
+                        string error = ViewBag.Error;
+
+                        string phoneOrg = ViewBag.PhoneOrg;
+                        string nameOrg = ViewBag.NameOrg;
+                        string addressOrg = ViewBag.AddressOrg;
+                    }
+
+                    @if (success)
+                    {
+                    <script>
+                            setInterval(function () { window.location.replace("/Check?phone=+@phoneOrg"); }, 3000);
+                    </script>
+
+                        <h1>تمت عمليه التسجيل بنجاح</h1>
+                    }
+
+
+                    @if (error != null)
+                    {
+                        <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="رقم الهاتف" id="validationCustom01" value="@phoneOrg" name="phone" required pattern="[0-9]+">
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="رقم الهاتف" id="validationCustom01" value="" name="phone" required pattern="[0-9]+">
+                    }
+                    @if (error != null)
+                    {
+                        <div style="color:red">
+                            @error
+                        </div>
+                    }
+
+                    <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-item" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    بيانات اضافية
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    @if (error != null)
+                                    {
+                                        <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder=" الاسم" id="validationCustom01" value="@nameOrg" name="name">
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder=" الاسم" id="validationCustom01" name="name">
+
+                                    }
+                                    @if (error != null)
+                                    {
+                                        <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder=" العنوان" id="validationCustom01" value="@addressOrg" name="address">
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder=" العنوان" id="validationCustom01" name="address">
+                                    }
+                                    <input type="password" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="كلمة المرور" id="validationCustom01" name="password">
+                                    <input type="password" class="form-control mb-2 mb-md-2 mb-sm-2 mb-lg-4" placeholder="تأكيد  كلمة المرور" id="validationCustom05" name="password2">
+                                    <div class="invalid-feedback">
+                                        Please provide a valid password.
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="   ">
+                        <button class=" btnsubmit btn  fs-5 w-100   " type="submit"> انشاء حساب</button>
+                    </div>
+                    <div class="row py-2 py-lg-4 py-sm-2 py-md-2 ">
+
+                        <div class="col">
+                            <P>
+                                لديك حساب؟
+                                <a href="/Login" class=" linksginup text-decoration-none fs-6  ">تسجيل الدخول</a>
+                            </P>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6  ">
+            <div>
+                <img src="../imgs/sign.png" class=" img-fluid " alt="">
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+@*
+<script>
+                            setInterval(function () { window.location.replace("/Login?phone="+@phoneOrg); }, 3000);
+</script>
+*@

@@ -1,9 +1,264 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-   
-}
+﻿@model IEnumerable<E_commerce.Models.Product>
+    <title>الرئيسية</title>
+<div class="home">
+    <div class=" container">
+        <div class=" hometab container-fluid rounded-pill  d-block ">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+            <div class="dropdown  clearfix ScrollMenu   container d-inline-block ">
+                <button class="btn  menu_btn float-start rounded-pill" onclick="scroll_l()">
+                    <i class="fa-solid fa-caret-right"></i>
+                </button>
+                <button class=" btn  menu_btn float-end rounded-pill " onclick="scroll_r()">
+                    <i class="fa-solid fa-caret-left"></i>
+                </button>
+                <div class="row   scrollitem rounded-pill ">
+                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
+                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            العسل والزبيب
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item active" href="#">عسل بلدي</a></li>
+                            <li><a class="dropdown-item" href="#">زبيب رازقي</a></li>
+                            <li><a class="dropdown-item" href="#">عسل مراعي</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
+                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            العسل والزبيب
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item active" href="#">عسل بلدي</a></li>
+                            <li><a class="dropdown-item" href="#">زبيب رازقي</a></li>
+                            <li><a class="dropdown-item" href="#">عسل مراعي</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
+                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            المحاصيل الزراعية
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item active" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
+                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            الثروة الحيوانية
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item active" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
+                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            المعدات الزراعة
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item active" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
+                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            البن اليمني
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item active" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
+                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            العسل والزبيب
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item active" href="#">عسل بلدي</a></li>
+                            <li><a class="dropdown-item" href="#">زبيب رازقي</a></li>
+                            <li><a class="dropdown-item" href="#">عسل مراعي</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
+                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            الاجبان والالبان
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item active" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                    <div class=" col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
+                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            المكسرات والبهارات
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item active" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
+                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            البذور والاسمدة
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item active" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active  rounded-pill">
+                    <img src="imgs/backgrond_slid1.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption">
+                        <h3 class="  py-3">مرحبا بكم في السوق المركزي الالكتروني  </h3>
+                        <P class="py-2  d-sm-none d-md-none d-lg-block ">
+                            هنا تجدون خيرات وطننا الغالي
+                            .. من ثمار وخضر طازجة وبن يمني
+                            وعسل بلدي بدرجة أولى<br>
+                            والالبان والاجبان وكل
+                            المحاصيل الزراعية
+                            , وهنا نوفر مساحة خاصة للمزارع
+                            ونوفر له الخدمات الزراعية
+
+                        </P>
+                        <P>
+                            سجل دخولك واستمتع بالعروض
+                        </P>
+                        <a href="pages/Login.html" class=" text-decoration-none  ">
+                            <button type="button" class="btn btncarousel rounded-pill p-auto  px-sm-3  py-sm-1 px-md-5  py-md-1 px-lg-5  py-lg-1">اشتري الان</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="carousel-item rounded-pill">
+                    <img src="imgs/backgrond_slid2.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption ">
+                        <h3 class="  py-3">المزاد الاسبوعي </h3>
+                        <P class="py-2  d-sm-none d-md-none d-lg-block ">
+                            الان يمكنك الدخول للمزاد
+                            والحصول على أجود المنتجات
+
+                        </P>
+                        <P>
+                            سجل دخولك واستمتع بالعروض
+                        </P>
+                        <a href="pages/Login.html" class=" text-decoration-none  ">
+                            <button type="button" class="btn btncarousel rounded-pill p-auto  px-sm-3  py-sm-1 px-md-5  py-md-1 px-lg-5  py-lg-1"> اشترك الان</button>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="carousel-item rounded-pill">
+                    <img src="imgs/backgrond_slid3.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption rounded-pill ">
+                        <h3 class="  py-3">ترقبوا العروض الحصرية والقائمة</h3>
+                        <P class="py-2  d-sm-none d-md-none d-lg-block ">
+                            اشتري واحصل على خصومات قد تصل الى %50
+                        </P>
+                        <p>
+                            سجل دخولك واستمتع بالعروض
+                        </p>
+                        <a href="pages/Login.html" class=" text-decoration-none  ">
+                            <button type="button" class="btn btncarousel rounded-pill p-auto  px-sm-3  py-sm-1 px-md-5  py-md-1 px-lg-5  py-lg-1">اشتري الان</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <i class="fa-solid fa-circle-chevron-right fa-xl rounded-circle " aria-hidden="true"></i>
+
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <i class="fa-solid fa-circle-chevron-left fa-xl rounded-circle " aria-hidden="true"></i>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+
+        <div class="DivProduct container">
+            <div class=" btn btnProduct my-4  p-2  text-center">
+                <h5 class=" pt-2 fs-4 ">
+                    المنتجات الفعالة
+                </h5>
+
+            </div>
+
+            <div class="row">
+
+                @if (Model == null || Model.Count() == 0)
+                {
+                <h1>لايوجد منتجات</h1>
+                }
+
+                @foreach (var product in Model)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <a href="/Details?id=@product.Id" class="text-decoration-none">
+                            <div class="card">
+                                <img src="imgs/tomato.png" class=" img-fluid card-img-top" alt="tomato">
+                                <div class="card-body">
+                                    <h5 class="card-title">@Html.DisplayFor(modelItem => product.NameAr)</h5>
+                                    <div class="row justify-content-center">
+                                        <div class="col">
+                                            <p class="pt-2">@Html.DisplayFor(modelItem => product.Quantity) @Html.DisplayFor(modelItem => product.Unit)</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="price p-2 ">@Html.DisplayFor(modelItem => product.Price) ريال</p>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col star">
+                                            <i class="fa-solid fa-star active"></i>
+                                            <i class="fa-solid fa-star active"></i>
+                                            <i class="fa-solid fa-star active"></i>
+                                            <i class="fa-solid fa-star"></i>
+
+                                        </div>
+                                        <div class="col">
+                                            @if (product.Status)
+                                            {
+                                                <p><i class="fa-solid fa-square-check me-2"></i>الاتحاد التعاوني الزراعي</p>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col">
+                                            @if (false)
+                                            {
+                                                <p><i class="fa-solid fa-location-dot me-2"></i>ذمار- قاع جهران</p>
+                                            }
+                                            <p><i class="fa-solid fa-location-dot me-2"></i>@Html.DisplayFor(modelItem => product.DetailsAr)</p>
+                                        </div>
+                                        <div class="col">
+                                            <p>@Html.DisplayFor(modelItem => product.CreatedAt)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
 </div>

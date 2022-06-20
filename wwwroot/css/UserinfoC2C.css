@@ -1,0 +1,104 @@
+/* import fonts from fonts.css file */ 
+@import url(././fonts.css);
+
+:root {
+    --green-color-dark: #031900;
+    --green-color-light: #CEE9CB;
+    --green-color:#13A200;
+    --green-color2-d: #118C00;
+    --body-color:#F9F7F7;
+    --red-color: #ff3150;
+    --yellow-color: #ffc400;
+    --section-color: #eff7fa;
+  }
+/*start body style*/
+body{
+  direction: rtl;
+  font-family: "NaderFont","Roboto",sans-serif;
+  background-color: var(--body-color);
+
+}
+/*start body style*/
+.divMain{
+    background-color: var(--body-color);
+}
+.persnalinfo{
+    background-color: var(--green-color-light);
+    border-radius: 1rem;
+    color: var(--green-color);
+}
+.persnalinfo .imgDiv,
+.persnalinfo .left_p_Div{
+    background-color: white;
+    border-radius: 1rem;
+}
+.persnalinfo button{
+    background-color: var(--green-color);
+    color: white;
+    border: solid var(--green-color2-d) 3px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.navbarmenu button {
+    background-color: white;
+    color: var(--green-color);
+    border: solid var(--green-color2-d) 1px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.persnalinfo button:hover,
+.persnalinfo button:focus,
+.persnalinfo button:active,
+.navbarmenu button:hover,
+.navbarmenu button:focus{
+    background-color: var(--green-color2-d);
+    color: white;
+    
+}
+
+/* state style model*/
+.modal .modal-content{
+    border-radius: 1rem 1rem 0rem 0rem;
+}
+.modal .modal-header{
+    background-color: var(--green-color);
+    border-radius: 1rem 1rem 0rem 0rem;
+    color: white;
+}
+.modal .modal-header svg{
+    color:var(--green-color);
+
+}
+
+
+
+.navbarmenu{
+    background-color: white;
+    border-radius: 1rem;
+
+}
+.divTable{
+    
+    overflow-x: auto;
+    overflow-y: auto;
+    height: fit-content;
+    max-height: 28rem;        /*max-height: 66.4vh;*/
+}
+.table{
+    background-color: white;
+    border-radius: 1rem 1rem 0rem 0rem;
+}
+.table thead{
+    background-color: var(--green-color);
+    color: white;
+    
+}
+.divTable table{
+    display: none;
+}
+.table thead .thStart{
+    border-radius: 0rem 1rem 0rem 0rem;
+}
+.table thead .thEnd{
+    border-radius: 1rem 0rem 0rem 0rem;
+}

@@ -5,6 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Views\AboutUs\Index.cshtml" />
+    <None Include="Views\AddProduct\Index.cshtml" />
+    <None Include="Views\Autions\Index.cshtml" />
+    <None Include="Views\Basket\Index.cshtml" />
+    <None Include="Views\ChangePass\Index.cshtml" />
+    <None Include="Views\ChangePhone\Index.cshtml" />
+    <None Include="Views\Check\Index.cshtml" />
+    <None Include="Views\DetailsAution\Index.cshtml" />
+    <None Include="Views\Details\Index.cshtml" />
+    <None Include="Views\Help\Index.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Login\Index.cshtml" />
+    <None Include="Views\Userinfo\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.12">
       <PrivateAssets>all</PrivateAssets>
@@ -16,6 +32,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>
