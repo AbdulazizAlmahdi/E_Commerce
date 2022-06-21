@@ -1,0 +1,318 @@
+/* import fonts from fonts.css file */ 
+@import url(./fonts.css);
+
+
+:root {
+    --green-color-dark: #031900;
+    --green-color-light: #CEE9CB;
+    --green-color:#13A200;
+    --green-color2-d: #118C00;
+    --body-color:#F9F7F7;
+    --red-color: #ff3150;
+    --yellow-color: #ffc400;
+    --section-color: #eff7fa;
+  }
+/*start body style*/
+body{
+  direction: rtl;
+  font-family: "NaderFont","Roboto",sans-serif;
+  background-color: var(--body-color);
+}
+/*start body style*/
+
+/* Start Navbar */
+.navbar {
+  background-color: var(--green-color-dark);
+  font-weight: bold;
+}
+.navbar .navbar-nav .nav-link {
+  color: white;
+}
+.navbar .navbar-nav .badge{
+  background-color: var(--green-color);
+}
+.navbar .navbar-nav .nav-link.active,
+.navbar .navbar-nav .nav-link:focus,
+.navbar .navbar-nav .nav-link:hover {
+  color: var(--green-color);
+}
+
+.navbar .search svg {
+  color: var(--green-color);
+}
+.navbar ul svg{
+  margin-left: 1em;
+}
+.navbar .navbar-toggler {
+  color: white;
+  font-size: 25px;
+  border-color: white;
+}
+.navbar .navbar-toggler:focus {
+  box-shadow: none;
+}
+.navbar .navbar-toggler[aria-expanded="true"] {
+  border-color: var(--green-color);
+}
+
+.shangelanguage .dropdown-item{
+  color: var(--green-color);
+  font-weight: bold;
+}
+
+.shangelanguage .dropdown-item:hover{
+  background-color: var(--green-color);
+  color: white;
+}
+
+.shangelanguage .dropdown-item:active{
+  background-color: var(--green-color);
+  color: white;
+}
+
+
+
+
+
+
+
+.myacount .dropdown-item{
+  color: var(--green-color);
+  font-weight: bold;
+}
+
+.myacount .dropdown-item:hover{
+  background-color: var(--green-color);
+  color: white;
+}
+
+.myacount .dropdown-item:active{
+  background-color: var(--green-color);
+  color: white;
+}
+.myacount .myacountname,
+.myacount .myacountname:hover{
+  background-color: var(--green-color-light);
+  color: var(--green-color);
+}
+
+.myacount hr{
+  background-color: #13A200;
+  size: 3px;
+}
+
+
+
+/* End Navbar */
+
+  /* Start Navbar1 */
+.nav1 {
+    background-color: var(--green-color-light);
+  }
+  .nav1 .navbar1 .nav-link {
+    color: black;
+  }
+  .nav1 .navbar1 .nav-link.active,
+  .nav1 .navbar1 .nav-link:focus,
+  .nav1 .navbar1 .nav-link:hover {
+    color: var(--green-color);
+  }
+ 
+
+
+  
+  /* End Navbar1 */
+
+.home{
+
+  height: auto;
+  border: var(--green-color-dark) 2px solid;
+}
+.hometab{
+  display: inline-block;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 1em;
+  background-color: var(--green-color-light);
+}
+.hometab .button{
+  padding: 0;
+  background-color: #ffffff;
+}
+
+
+.dropdown .dropdown-menu-colo-light{
+  background-color: var(--green-color-light);
+}
+.dropdown .btn-color{
+  background-color: white;
+}
+.dropdown .btn-color:focus,
+.dropdown .btn-color:hover,
+.dropdown .active{
+  background-color: var(--green-color);
+  color: white;
+}
+.dropdown .dropdown-item:hover{
+  background-color: white;
+  color: #13A200;
+}
+.dropdown .dropdown-item:active{
+  background-color: var(--green-color);
+  color: white;
+}
+.ScrollMenu{
+margin-top: 4px;
+
+} 
+
+.menu_btn:hover{
+  background-color: var(--green-color);
+  color: white;
+}
+
+.ScrollMenu >.row>.rowcolumn{
+  display:inline-block;
+    scroll-behavior: smooth;
+}
+.ScrollMenu > .row {
+  display: block;
+  overflow:hidden;
+  white-space: nowrap;
+}
+
+
+/* satrt carousel slid */
+.carousel .active{
+background-color: var(--green-color);
+}
+.carousel .carousel-control-prev svg,
+.carousel .carousel-control-next svg{
+  width: 30px;
+  height: 30px;
+  color: var(--green-color);
+  background-color: white;
+  
+}
+.slide .slide_buttom_button:hover{
+  background-color: var(--green-color);
+}
+.carousel-caption .btncarousel{
+  background-color: var(--green-color-dark);
+  border: solid var(--green-color) 3px;
+  color: var(--green-color);
+  text-decoration: none;
+  
+}
+
+
+.carousel-caption .btncarousel:hover,
+.carousel-caption .btncarousel:focus{
+  background-color: var(--green-color);
+  color: white;
+}
+.carousel-item h3{
+  font-weight: bolder;
+}
+.carousel-item p{
+  font-weight: 500;
+}
+
+.DivProduct .btnProduct{
+  background-color: var(--green-color2-d);
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  
+}
+.card .price {
+    background-color: var(--green-color-light);
+    color: var(--green-color);
+}
+.card {
+  color:var(--green-color-dark);
+  border-radius: 1em ;
+  border-style:  double;
+  border: white double 4px;
+}
+.card img{
+  border-radius: 1em 1em  0em 0em;
+}
+.card .star {
+  color:#BCBCBC ;
+}
+.card .star .active{
+  color:#FFE622 ;
+}
+.card .fa-square-check {
+  color: var(--green-color);
+
+}
+
+
+  /* Start Footer */
+.footer {
+  background-color: var(--green-color-light);
+  color: #000000;
+}
+.footer .links a{
+  color: var(--green-color-dark);
+}
+.footer .copyright > span {
+  color: var(--green-color);
+}
+.footer .copyright div span {
+  color: var(--yellow-color);
+}
+.footer .contact ul svg {
+  margin-left: 1em;
+  width: 30px;
+  height: 30px;
+  color: var(--green-color-dark);
+  
+}
+.footer h5{
+  color: var(--green-color);
+}
+.footer .footertime{
+  color: var(--green-color);
+  border-top:solid 2px black;
+  padding-top: 1em;
+}
+.footer .links  a .active,
+.footer .links  a:focus,
+.footer .links a svg:hover,
+.footer .links a :hover {
+  color: var(--green-color);
+}
+.contact .nav{
+  background-color: var(--green-color-dark);
+ 
+}
+
+.footer .contact ul .nav-item svg{
+  margin-left: 0em;
+  width: 25px;
+  height: 25px;
+  color: white;
+}
+
+.contact .nav .nav-item .nav-link.active,
+.contact .nav  .nav-item .nav-link:focus,
+.contact .nav  .nav-item  svg:hover,
+.contact.nav  .nav-item .nav-link:hover {
+  color: var(--green-color);
+}
+.copyright{
+  
+  background-color: var(--green-color-dark);
+  color: white;
+  font-family: "NaderFont";
+  font-weight: bold;
+}
+
+.footer .container{
+    border-bottom:solid 2px var(--green-color-dark);
+}
+/* End Footer */
+  

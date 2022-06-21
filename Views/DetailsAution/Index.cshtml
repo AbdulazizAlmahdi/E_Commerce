@@ -1,0 +1,242 @@
+﻿<title>تفاصيل المزاد</title>
+<link rel="stylesheet" href="../css/Details.css">
+
+
+<div class="details detailsaution container  mt-4  bg-white py-2">
+
+    <div class="  divinfo   my-2  ">
+
+        @{
+
+            E_commerce.Models.Custome.AutionsProduct auction = ViewBag.Auction;
+
+        }
+        @if (auction != null)
+        {
+        <div class="row">
+
+                <div class="  col-sm-6 col-md-4 col-lg-4     ">
+                    <div class=" m-2 p-2 ">
+                        
+                        <h5 class="fs-2 "><span>@auction.Products.NameAr</span></h5>
+                        <div class="">
+                            <p><i class="fa-solid fa-square-check me-2"></i>الاتحاد التعاوني الزراعي</p>
+                        </div>
+                        <div class="">
+                            <p><i class="fa-solid fa-location-dot me-2"></i>ذمار- قاع جهران</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class=" col-sm-6 col-md-4 col-lg-4    ">
+                    <div class="m-2 p-2 bg-white divinfocolorwhite">
+                        <div class="row justify-content-center">
+                            <div class="col">
+                                <p> <span class="me-2">50</span>@auction.Products.Unit</p>
+                            </div>
+                            <div class="col  mx-2 ">
+                                <p>
+                                    تاريخ المزاد:
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center ">
+                            <div class="col ">
+                                <p class=""><span class="me-2">@auction.Products.Duration</span>ايام</p>
+
+                            </div>
+                            <div class="col  ">
+                                <p>
+                                    <span>
+                                        @auction.Auctions.StartDate
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center ">
+                            <div class="col">
+                                <p><i class="fa-solid fa-eye me-2"></i><span>293</span></p>
+                            </div>
+                            <div class="col">
+                                <p class=""><span>@auction.Auctions.EndDate</span></p>
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-center ">
+                            <div class="col">
+                                <div class=" star">
+                                    <i class="fa-solid fa-star active"></i>
+                                    <i class="fa-solid fa-star active"></i>
+                                    <i class="fa-solid fa-star active"></i>
+                                    <i class="fa-solid fa-star"></i>
+
+                                </div>
+                            </div>
+                            @*<div class="col">
+                                <p class=""><span>10:30 ص</span></p>
+                            </div>*@
+
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-sm-6 col-md-4 col-lg-4      ">
+                    <div class=" m-2 p-2 bg-white divinfocolorwhite  ">
+
+
+                        <div class="row justify-content-between ">
+                            <div class="col">
+                                <p>يبدأ المزاد بمبلغ</p>
+                                <h5 class="fs-1  pt-5 pb-md-2 pb-lg-3"> <span>@auction.Auctions.StartPrice</span>  </h5>
+                                <div class="col">
+                                    <p class=""><span>ريال</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class=" moreInfo my-4  ">
+        <div class="row">
+            <div class="col ">
+                <p>
+                    <span>
+                        طماط محمي درجة أولى من مزارع صعدة منطقة قــــــــــــــاع مران
+
+                    </span>
+                </p>
+            </div>
+            <div class="col clearfix">
+                <button type="button" class=" btn float-end btAddToBasket me-3  px-lg-5 px-md-3   py-0 "
+                        data-bs-toggle="modal" data-bs-target="#autoinParticipant">
+                    <h5 class="pt-2 ">
+                        المشاركة في المزاد
+                    </h5>
+                </button>
+
+                <!-- share in the aution form  -->
+                <div class="modal fade   " id="autoinParticipant" tabindex="-1" aria-labelledby="addproductLabel" aria-hidden="true">
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header   ">
+                                <h5 class="modal-title text-center " id="autoinParticipantLabel">  اتمام عملية المزايد</h5>
+                                <button type="button " class=" bg-white rounded-circle" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fa-solid fa-close p-1 fs-4"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="  needs-validation  mt-5 mt-sm-5 mt-md-1   mt-lg-5 mx-4" novalidate>
+                                    <label class="">رقم هاتفك:</label>
+                                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder="00967770331586" id="validationCustom01" value="" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid input.
+                                    </div>
+                                    <label class="">العنوان :</label>
+                                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder="" id="validationCustom01" value="" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid input.
+                                    </div>
+                                    <label class="">العنوان :</label>
+                                    <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " id="validationTextarea" placeholder=" الرسالة" required></textarea>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid input.
+                                    </div>
+
+                                    <div class="   ">
+                                        <button id="cuccessNotice" class=" btnsubmit btn  fs-5 w-100   " type="submit"> تاكيد المشاركة</button>
+                                    </div>
+
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- message success share in the aution form  -->
+                <div id="cuccessDiv" class="  text-center cuccessDiv position-fixed top-0 start-0 m-4   ">
+                    <div class="alert fs-5 alert-dismissible fade show  float-end " role="alert">
+                        <div class="row justify-content-center">
+                            <div class="col ">
+
+                            </div>
+                            <div class="col closesvg ">
+
+                                <button id="btnClose" type="button " class=" rounded-circle float-end" data-dismiss="alert" aria-label="Close">
+                                    <i class="fa-solid fa-close p-1 fs-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="pt-4">تم ارسال طلبك بنجاح سيتم التواصل معك في اقرب وقت</p>
+
+                        <div class="row justify-content-center">
+                            <div class="col ">
+                                <p>
+                                    رقم الطلب :<span>11495</span>
+                                </p>
+                            </div>
+                            <div class="col ">
+                                <i class="fa-solid fa-copy float-end  "></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row ">
+        <div class="col-lg-9 col-md-9 col-sm-12 main ">
+            <div class="row">
+                <div class="col-12">
+                    <img src="../imgs/tomato.png" class=" img-fluid mb-3 " alt="">
+                </div>
+                <div class="col-12 ">
+                    <img src="../imgs/tomato.png" class=" img-fluid mb-3 " alt="">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class=" comment p-3 ">
+        <p><i class="fa-solid fa-user me-2"></i> محمد علي </p>
+        <hr>
+        <p>
+            ممكن فيديو عن المنتج ؟
+        </p>
+
+    </div>
+    <div class="">
+        <form class="  needs-validation  mt-5  mx-1 " novalidate>
+            <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " id="validationTextarea" placeholder=" اكتب تعليقك هنا" required></textarea>
+            <div class="valid-feedback">
+                Please enter a message in the textarea.
+            </div>
+            <button class=" btAddComment btn  fs-5 me-3  px-lg-5 px-md-3   py-0  " type="submit"> ارسال</button>
+        </form>
+    </div>
+</div>

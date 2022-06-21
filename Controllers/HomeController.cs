@@ -1,4 +1,6 @@
-﻿using E_commerce.Models;
+﻿using E_commerce.Migrations;
+using E_commerce.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,27 +9,48 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace e_commerce.Controllers
+namespace E_commerce.Controllers
 {
+   
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        WebContext db;
+        public HomeController(WebContext db)
         {
-            _logger = logger;
+            this.db = db;
         }
 
-        public IActionResult Index(int pageNumber)
+        public IActionResult Index([FromQuery]string search)
         {
-          
+            List<Product> products;
 
-            return View();
+            if (search != null)
+                products = db.Products.Where(prod =>
+                prod.Status == true
+                && (prod.NameAr.Trim().Contains(search.Trim())
+                || prod.DetailsAr.Trim().Contains(search.Trim()))
+                ).ToList();
+            else
+                products = db.Products.Where(prod => prod.Status == true).ToList();
+
+            ViewBag.userS = HttpContext.Session.GetString("userNameS");
+
+            return View(products);
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("userNameS");
+
+            return Redirect("/home");
+        }
         public IActionResult Privacy()
         {
-            return View();
+            List<Help> help = db.Helps.ToList();
+            List<Phone> users = db.Phones.ToList();
+
+            return View(users);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -35,5 +58,7 @@ namespace e_commerce.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        
     }
 }

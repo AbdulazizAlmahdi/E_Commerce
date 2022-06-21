@@ -1,0 +1,172 @@
+/* import fonts from fonts.css file */ 
+@import url(././fonts.css);
+
+:root {
+    --green-color-dark: #031900;
+    --green-color-light: #CEE9CB;
+    --green-color:#13A200;
+    --green-color2-d: #118C00;
+    --body-color:#F9F7F7;
+    --red-color: #ff3150;
+    --yellow-color: #ffc400;
+    --section-color: #eff7fa;
+  }
+/*start body style*/
+body{
+  direction: rtl;
+  font-family: "NaderFont","Roboto",sans-serif;
+  background-color: var(--body-color);
+}
+/*start body style*/
+.detailsaution{
+    border-radius: 1em;
+}
+.details .main,
+.details .related
+{
+    background-color: white;
+    border-radius: 1em;
+}
+
+.related .card{
+    background-color:var(--green-color-light);
+}
+
+
+
+.details .divinfo {
+    background-color: var(--green-color-light);
+    border-radius: 1rem;
+    color: var(--green-color-dark);
+}
+.divinfo .divinfocolorwhite{
+    border-radius: 1rem;
+}
+.details .star {
+    color:#BCBCBC ;
+  }
+.details .star .active{
+    color:#FFE622 ;
+  }
+.details .divinfo .divinfoprice{
+    background-color: white;
+    border-radius: 1rem;
+
+}
+
+.details .btAddToBasket{
+    background-color: var(--green-color);
+    color: white;
+    border-radius: 10px;
+}
+.details .btAddToBasket:hover,
+.details .btAddToBasket:active{
+    background-color: var(--green-color2-d);
+    color: white;
+    border-radius: 10px;
+
+}
+.details .btAddToBasket:focus{
+    background-color: #8B8B8B;
+}
+
+.details button{
+    background-color: var(--green-color);
+    color: white;
+    border: solid var(--green-color2-d) 3px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.details button:hover,
+.details button:active{
+    background-color: var(--green-color2-d);
+    color: white;
+    
+}
+
+/* state style model*/
+.modal .modal-content{
+    border-radius: 1rem 1rem 0rem 0rem;
+}
+.modal .modal-header{
+    background-color: var(--green-color);
+    border-radius: 1rem 1rem 0rem 0rem;
+    color: white;
+}
+.modal .modal-header svg{
+    color:var(--green-color);
+
+}
+.modal input,
+textarea{
+    border-radius: 10px;
+}
+
+.details .cuccessDiv{
+    display:none;
+    background-color: var(--green-color);
+    border-radius: 1rem;
+    color: white;
+}
+
+
+.details .comment{
+    background-color: var(--green-color-light);
+    border-radius: 1rem;
+}
+.details .comment svg{
+    color: white;
+}
+.details .comment form textarea{
+   
+    border-radius: 1rem;
+}
+.details .btAddComment{
+    background-color: var(--green-color);
+    color: white;
+    border-radius: 10px;
+}
+.details .btAddComment:hover,
+.details .btAddComment:focus,
+.details .btAddComment:active{
+    background-color: var(--green-color2-d);
+    color: white;
+    border-radius: 10px;
+
+}
+.toast-body{
+    background-color: var(--green-color);
+    color: white;
+}
+.toast-body button{
+    background-color: white;
+    color: var(--green-color);
+    border: 2px solid white;
+}
+.toast-body button:hover{
+    background-color: var(--green-color);
+    color: white;
+    
+}
+
+.cuccessDiv button{
+    background-color: white;
+    color: var(--green-color);
+    border: 2px solid white;
+    
+}
+.cuccessDiv button:hover{
+    background-color: var(--green-color2-d);
+    color: white;
+
+}
+
+
+
+.toast{
+    border-radius: 1rem;
+}
+
+
+
+

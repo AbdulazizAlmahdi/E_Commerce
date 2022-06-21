@@ -1,0 +1,197 @@
+﻿@model IEnumerable<E_commerce.Models.Product>
+    <title>سلة المشتريات</title>
+    <link rel="stylesheet" href="~/css/Basket.css">
+
+<div class="main">
+    <div class="basket container my-4 ">
+
+
+
+
+        <div class="row    divTopbutton pt-3">
+            <div class="col ">
+                <button type="button" class="float-start px-5 btnColor " disabled>
+                    <p class=" fs-4 pt-2 mt-1 ">
+                        السلة/
+                    </p>
+                </button>
+
+            </div>
+            <div class="col puyproduct">
+                <button type="button" class="float-end px-4 btnColor"
+                        data-bs-toggle="modal" data-bs-target="#basketParticipant">
+                    <p class=" fs-4  pt-2 mt-1">
+                        اتمام عملية الشراء
+                    </p>
+                </button>
+
+                <!-- complete puy product  -->
+                <div class="modal fade   " id="basketParticipant" tabindex="-1" aria-labelledby="payproductLabel" aria-hidden="true">
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header   ">
+                                <h5 class="modal-title text-center " id="autoinParticipantLabel">  اتمام عملية الشراء</h5>
+                                <button type="button" class=" bg-white rounded-circle " data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fa-solid fa-close p-1 fs-4 "></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="  needs-validation  mt-5 mt-sm-5 mt-md-1   mt-lg-5 mx-4" novalidate>
+                                    <label class="">رقم هاتفك:</label>
+                                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder="00967770331586" id="validationCustom01" value="" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid input.
+                                    </div>
+                                    <label class="">العنوان :</label>
+                                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder="" id="validationCustom01" value="" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid input.
+                                    </div>
+                                    <label class="">العنوان :</label>
+                                    <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " id="validationTextarea" placeholder=" الرسالة" required></textarea>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid input.
+                                    </div>
+
+                                    <div class="   ">
+                                        <button id="cuccessNotice" class=" btnsubmit btn  fs-5 w-100   " type="submit"> تاكيد الشراء</button>
+                                    </div>
+
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- message success share in the aution form  -->
+
+                <div id="cuccessDiv" class="   text-center cuccessDiv position-fixed top-0 start-0 m-4   ">
+                    <div class="alert fs-5 alert-dismissible fade show  pb-0 float-end " role="alert">
+                        <div class="row justify-content-center">
+                            <div class="col-6 ">
+                                <p class="">
+                                    تم ارسال طلبك بنجاح سيتم التواصل معك في اقرب وقت
+
+                                </p>
+                            </div>
+                            <div class="col-6 closesvg  ">
+
+                                <button id="btnClose" type="button " class="  rounded-circle float-end" data-dismiss="alert" aria-label="Close">
+                                    <i class="fa-solid fa-close p-1 fs-5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="table-responsive pt-5">
+            <table id="basketTable" class="table fs-5">
+                <thead>
+                    <tr>
+                        <th scope="col">المنتج</th>
+                        <th scope="col">اسم المنتج</th>
+                        <th scope="col">الوحدة</th>
+                        <th scope="col">السعر</th>
+                        <th scope="col" class="text-right">
+                            <span id="amount">المقدار</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="productImg">
+                                <div class="imgPro">
+                                    <img src="../imgs/tomato.png" alt="">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p>طماطم</p>
+                        </td>
+                        <td>
+                            <div class="button-container fs-4 ">
+                                <button class="cartQtyPlus " type="button" value="+"> + </button>
+                                <input type="text" name="qty" min="0" class="qty form-control ">
+                                <button class="cartQtyMinus" type="button" value="-">- </button>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" value="100" class="price form-control " disabled>
+                        </td>
+                        <td>
+                            <span id="amount" class="amount">0</span>
+                            ريال
+
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="productImg">
+                                <div class="imgPro">
+                                    <img src="../imgs/tomato.png" alt="">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p>طماطم</p>
+                        </td>
+                        <td>
+                            <div class="button-container fs-4 ">
+                                <button class="cartQtyPlus " type="button" value="+"> + </button>
+                                <input type="text" name="qty" min="0" class="qty form-control ">
+                                <button class="cartQtyMinus" type="button" value="-">- </button>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" value="50" class="price form-control " disabled>
+                        </td>
+                        <td>
+                            <span id="amount" class="amount">0</span>
+                            ريال
+
+                        </td>
+
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                        </td>
+                        <td align="right">
+                            <strong>
+                                الاجمالي= <span id="total" class="total"> 0</span>   ريال
+
+                            </strong>
+                        </td>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+        </div>
+    </div>
+</div>

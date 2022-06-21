@@ -1,0 +1,16 @@
+
+
+/* @font-face */ 
+
+@font-face{
+    font-family: "Roboto";
+    src: '../fonts/Roboto/Roboto-Regular.ttf';
+}
+@font-face{
+    font-family: "NaderFont";
+    src: '../fonts/NaderFont/Cadillac-Sans-Arabic-Medium.ttf';
+}
+@font-face{
+    font-family: "Hekaya";
+    src: '../fonts/Hekaya/FFHekaya-Light.otf';
+}

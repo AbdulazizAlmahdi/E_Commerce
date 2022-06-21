@@ -1,0 +1,75 @@
+﻿<title>تسجيل الدخول</title>
+<link rel="stylesheet" href="../css/Login.css">
+
+<div class="container mt-4 ">
+    <div class="row">
+        <div class="  col-sm-12 col-md-6 col-lg-6  ">
+            <div class=" login  text-center m-auto mt-sm-0 mt-lg-5 m-md-0 ">
+                <div class=" loginTopDiv py-2  pe-2  p-sm-2  p-lg-2 p-md-1  ">
+                    <h4 class="pt-1 pt-lg-2 pt-sm-2 pt-md-1 text-white fs-2 ">تسجيل الدخول</h4>
+                </div>
+                <p class="mb-5 mb-md-0 mb-sm-5 mb-lg-5   pt-3 ">
+                    قم بتسجيل الدخول للموقع عبر ادخال رقم الهاتف أو اسم المستخدم
+                    وكلمة المرور
+                </p>
+
+
+                <form class="  needs-validation  mt-5 mt-sm-5 mt-md-1   mt-lg-5 mx-4" action="/login" method="post" novalidate>
+
+                    @{
+                        string error = ViewBag.Error;
+
+                        string phoneOrg = ViewBag.PhoneOrg;
+                    }
+                    
+
+                    @if (error != null)
+                    {                                                                                     
+                        <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="رقم الهاتف" id="validationCustom01" value="@phoneOrg" name="phone" required maxlength="9"min="9" pattern="[0-9]+">
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="رقم الهاتف" id="validationCustom01" value="" name="phone" required maxlength="9"min="9" pattern="[0-9]+">
+                    }
+                    @if (error != null)
+                    {
+                        <div style="color:red">
+                            @error
+                        </div>
+                    }
+
+                    <input type="password" class="form-control mb-2 mb-md-2 mb-sm-2 mb-lg-4" placeholder="كلمة المرور" id="validationCustom05" value="" name="password" required>
+
+                    <div class="   ">
+                        <button class=" btnsubmit btn  fs-5 w-100   " type="submit">تسجيل الدخول</button>
+                    </div>
+                    <div class="row py-2 py-lg-4 py-sm-2 py-md-2 ">
+                        <div class="col">
+
+                            <a href="#" class=" linksginup text-decoration-none fs-6   ">نسيت كلمة المرور؟</a>
+
+                        </div>
+                        <div class="col">
+                            <P>
+                                لايوجد لديك حساب؟
+                                <a href="/register" class=" linksginup text-decoration-none fs-6  ">انشاء</a>
+                            </P>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 ">
+            <div>
+                <img src="../imgs/login2.png" class=" img-fluid " alt="">
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+//return Redirect("/home");

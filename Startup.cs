@@ -39,6 +39,10 @@ namespace E_commerce
                 options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB"));
             });
 
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromDays(1);//You can set Time   
+            });
+
             services.AddScoped<IProductRepository<Product>, ProductRepository>();
         }
 
@@ -54,6 +58,7 @@ namespace E_commerce
             app.UseStaticFiles();
             app.UseDefaultFiles();
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 
@@ -62,10 +67,14 @@ namespace E_commerce
                 endpoints.MapControllerRoute(
                    name: "areas",
                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+
+                endpoints.MapControllerRoute(
+                   name: "default",
+                   pattern: "{controller=Home}/{action=Index}/{id?}");
+                //endpoints.MapGet("/", async context =>
+                //{
+                //    await context.Response.WriteAsync("Hello World!");
+                //});
             });
 
             SeedData.Seeddb(webContext);

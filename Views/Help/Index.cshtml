@@ -1,0 +1,111 @@
+﻿    <title>طلب مساعدة</title>
+
+
+<link rel="stylesheet" href="../css/Help.css">
+<div class="container mt-4 ">
+    <div class="row">
+        <div class=" col   ">
+            <div class=" help  text-center m-auto mt-sm-0 mt-lg- m-md-0 ">
+                <div class=" helpTopDiv py-2  pe-2  p-sm-2  p-lg-2 p-md-1  ">
+                    <h4 class="pt-1 pt-lg-2 pt-sm-2 pt-md-1 text-white fs-2 ">طلب مساعدة</h4>
+                </div>
+                <p class=" topPragraph mb-5 mb-md-0 mb-sm-5 mb-lg-5   pt-3 m-3 ">
+                    في حال واجهتكم مشكلة في الموقع أو في عمليات الشراء عبرالموقع
+                    أو في حال كانت لديكم شكاوى أو مقترحات او اي استفسارات
+                    نحن بقربكم تواصل معنا
+                </p>
+
+               
+                <form class="needs-validation  mt-5  mx-4" action="/help" method="post" novalidate>
+
+                    @{
+                        string phone = ViewBag.Phone;
+                        string subject = ViewBag.Subject;
+                        string details = ViewBag.Details;
+
+                        string phoneOrg = ViewBag.PhoneOrg;
+                        string subjectOrg = ViewBag.SubjectOrg;
+                        string detailsOrg = ViewBag.DetailsOrg;
+                    }
+
+
+                    @if (@ViewBag.Success != null)
+                    {
+                        <div class="alert alert-success">
+                            @ViewBag.Success
+                        </div>
+                    }
+
+
+                    @if (!string.IsNullOrEmpty(ViewBag.userS)) // login
+                    {
+                        <input type="text" disabled class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder=" رقم الهاتف" id="validationCustom01" value="@phoneOrg" pattern="[0-9]+">
+                        <input type="hidden" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder=" رقم الهاتف" id="validationCustom01" value="@phoneOrg" name="phone">
+                    }
+                    else
+                    {
+                        @if (phone != null || subject != null || details != null)
+                        {
+                            <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder=" رقم الهاتف" id="validationCustom01" value="@phoneOrg" name="phone" required pattern="[0-9]+">
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder=" رقم الهاتف" id="validationCustom01" value="" name="phone" required pattern="[0-9]+">
+                        }
+
+                        @if (phone != null)
+                        {
+                            <div style="color:red">
+                                @phone
+                            </div>
+                        }
+                    }
+
+
+                    @if (phone != null || subject != null || details != null)
+                    {
+                        <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder="  الموضوع" id="validationCustom01" value="@subjectOrg" name="subject" required>
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder="  الموضوع" id="validationCustom01" value="" name="subject" required>
+                    }
+
+                    @if (subject != null)
+                    {
+                        <div style="color:red">
+                            @subject
+                        </div>
+                    }
+
+                    @if (phone != null || subject != null || details != null)
+                    {
+                        <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " id="validationTextarea" placeholder=" الرسالة" name="details" required>@detailsOrg</textarea>
+                    }
+                    else
+                    {
+                        <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " id="validationTextarea" placeholder=" الرسالة" name="details" required></textarea>
+                    }
+
+                    @if (details != null)
+                    {
+                        <div style="color:red">
+                            @details
+                        </div>
+                    }
+
+                    <div class="  py-5 ">
+                        <button class=" btnsubmit btn  fs-5 w-100   " type="submit">ارسال</button>
+                    </div>
+
+                </form>
+                
+              
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>

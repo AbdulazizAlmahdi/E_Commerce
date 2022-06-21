@@ -1,0 +1,168 @@
+﻿    <title> اضافة منتج</title>
+    <link rel="stylesheet" href="../css/addproduct.css">
+
+    <div class=" addpeoduct container mt-4 ">
+        <div class=" product  text-center m-auto mt-sm-0 mt-lg-5 m-md-0 ">
+            <div class=" productTopDiv py-2  pe-2  p-sm-2  p-lg-2 p-md-1  ">
+                <h4 class="pt-1 pt-lg-2 pt-sm-2 pt-md-1 text-white fs-2 ">اضافة منتج</h4>
+            </div>
+            <p class=" mb-5 mb-md-0 mb-sm-5 mb-lg-5  p-3 fs-5 ">
+                في حال واجهتكم مشكلة في الموقع أو في عمليات الشراء عبرالموقع<br>
+
+                أو في حال كانت لديكم شكاوى أو مقترحات او اي استفسارات <br>
+
+                نحن بقربكم تواصل معنا<br>
+
+            </p>
+
+            <form class="  needs-validation    m-5" action="/addproduct" method="post" novalidate>
+
+                @{
+                    bool success = ViewBag.success != null;
+
+                    string productName = ViewBag.ProductName;
+                    string price = ViewBag.Price;
+                    string quantity = ViewBag.Quantity;
+                    string unit = ViewBag.Unit;
+                    string address = ViewBag.Address;
+                    string details = ViewBag.Details;
+
+                    string productNameOrg = ViewBag.ProductNameOrg;
+                    string priceOrg = ViewBag.PriceOrg;
+                    string quantityOrg = ViewBag.QuantityOrg;
+                    string unitOrg = ViewBag.UnitOrg;
+                    string addressOrg = ViewBag.AddressOrg;
+                    string detailsOrg = ViewBag.DetailsOrg;
+                }
+
+                @if (success)
+                {
+                    <script>
+                        setInterval(function () { window.location.replace("/Userinfo"); }, 3000);
+                    </script>
+
+                    <h1>تمت عملية الاضافة بنجاح</h1>
+                }
+
+
+                <select class="form-select w-100">
+                    <option>nader1</option>
+                    <option>nader2</option>
+                    <option selected>nader3</option>
+                </select>
+
+                @if (productName != null || price != null || quantity != null || unit != null || address != null || details != null)
+                {
+                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="اسم المنتج" id="validationCustom01" value="@productNameOrg" name="productName" required>
+                }
+                else
+                {
+                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="اسم المنتج" id="validationCustom01" name="productName" required>
+                }
+                @if (productName != null)
+                {
+                    <div style="color:red">
+                        @productName
+                    </div>
+                }
+
+
+                @if (productName != null || price != null || quantity != null || unit != null || address != null || details != null)
+                {
+                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="السعر" id="validationCustom01" value="@priceOrg" name="price" required pattern="[0-9]+">
+                }
+                else
+                {
+                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="السعر" id="validationCustom01" name="price" required pattern="[0-9]+">
+                }
+                @if (price != null)
+                {
+                    <div style="color:red">
+                        @price
+                    </div>
+                }
+
+
+                @if (productName != null || price != null || quantity != null || unit != null || address != null || details != null)
+                {
+                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="الكمية" id="validationCustom01" value="@quantityOrg" name="quantity" required pattern="[0-9]+">
+                }
+                else
+                {
+                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="الكمية" id="validationCustom01" name="quantity" required pattern="[0-9]+">
+                }
+                @if (quantity != null)
+                {
+                    <div style="color:red">
+                        @quantity
+                    </div>
+                }
+
+
+                @if (productName != null || price != null || quantity != null || unit != null || address != null || details != null)
+                {
+                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="الوحدة" id="validationCustom01" value="@unitOrg" name="unit" required>
+                }
+                else
+                {
+                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="الوحدة" id="validationCustom01" name="unit" required>
+                }
+                @if (unit != null)
+                {
+                    <div style="color:red">
+                        @unit
+                    </div>
+                }
+
+
+                @if (productName != null || price != null || quantity != null || unit != null || address != null || details != null)
+                {
+                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="العنوان" id="validationCustom01" value="@addressOrg" name="address" required>
+                }
+                else
+                {
+                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="العنوان" id="validationCustom01" name="address" required>
+                }
+                @if (address != null)
+                {
+                    <div style="color:red">
+                        @address
+                    </div>
+                }
+
+
+                <input type="date" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder="تاريخ انتهاء عرض المنتج" id="validationCustom01" name="date" required>
+
+
+                @if (productName != null || price != null || quantity != null || unit != null || address != null || details != null)
+                {
+                    <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " placeholder="التفاصيل" id="validationTextarea" name="details" required>@detailsOrg</textarea>
+                }
+                else
+                {
+                    <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " placeholder="التفاصيل" id="validationTextarea" name="details" required></textarea>
+                }
+                @if (details != null)
+                {
+                    <div style="color:red">
+                        @details
+                    </div>
+                }
+
+                <div class=" imgDiv   w-100   form-control text-start ">
+                    <p class=" ps-2 fs-4 mt-1">
+                        اضف صورة
+                    </p>
+                    <img class="img-fluid " src="../imgs/camera.png" alt="">
+                </div>
+
+
+                <div class="   ">
+                    <button class=" btnsubmit btn  fs-5 w-100   my-3 " type="submit"> ارسال</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>

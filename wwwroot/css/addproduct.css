@@ -1,0 +1,80 @@
+/* import fonts from fonts.css file */ 
+@import url(././fonts.css);
+
+:root {
+    --green-color-dark: #031900;
+    --green-color-light: #CEE9CB;
+    --green-color:#13A200;
+    --green-color2-d: #118C00;
+    --body-color:#F9F7F7;
+    --red-color: #ff3150;
+    --yellow-color: #ffc400;
+    --section-color: #eff7fa;
+  }
+/*start body style*/
+body{
+  direction: rtl;
+  font-family: "NaderFont","Roboto",sans-serif;
+  background-color: var(--body-color);
+}
+/*start body style*/
+.addpeoduct{
+    background-color: var(--body-color);
+    color: var(--green-color);
+}
+.product{
+    background-color: white;
+    border-radius: 1em;
+}
+.product  .productTopDiv{
+    background-color: var(--green-color);
+    border-radius: 1em 1em 0em 0em;
+}
+
+.product form input{
+    border-radius: 10px;
+}
+.product .form-select{
+    border-radius: 10px;
+}
+.product textarea{
+    border-radius: 10px;
+}
+
+
+.product .imgDiv {
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+}
+.product .photo button{
+    background-image: url("../imgs/camera.png");
+}
+
+
+
+
+.product .linksginup{
+    color:var(--green-color);
+    font-weight: bold;
+}
+.product .btnsubmit{
+    background-color: var(--green-color);
+    color: white;
+    border-radius: 10px;
+    border: var(--green-color) double 3px;
+    
+}
+.product .btnsubmit:hover,
+.product .btnsubmit:focus,
+.product .btnsubmit :active
+{
+    background-color: var(--green-color2-d);
+    color: white;
+    border-radius: 10px;
+}
+.addpeoduct .ScrollMenu button{
+    color: var(--green-color);
+}
+.ScrollMenu .menu_btn:hover{
+    color: white;
+}

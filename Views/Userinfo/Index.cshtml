@@ -1,0 +1,371 @@
+﻿<title>الصفحة الشخصية</title>
+
+<link rel="stylesheet" href="../css/UserinfoC2C.css">
+
+<div class=" divMain container-fluid  pt-2 pb-5">
+
+    <div class=" persnalinfo container mt-5">
+        <div class="row">
+            <div class="col-lg-6  col-md-6">
+                <div class="  m-4  ">
+                    <div class=" imgDiv  align-content-center p-2 d-inline-block">
+                        <img class="img-fluid " src="../imgs/user.png" alt="">
+                    </div>
+                    <div class=" row row-cols-2  pt-3">
+
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <p class=" ">
+                                الاسم:
+                                <span class="">@ViewBag.userS</span>
+                            </p>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <p class="">
+                                رقم التلفون:
+                                <span class="">@ViewBag.phoneS</span>
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="col-lg-6  col-md-6 ">
+                <div class=" row   left_p_Div m-4 p-4">
+                    <div class="col-12">
+                        <p>
+                            نوع المستخدم:
+                            <span class=""> مجاني </span>
+                        </p>
+                    </div>
+                    <div class="col-12">
+                        <p>
+                            العنوان:
+                            <span class="">@ViewBag.userAddress</span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-6 col-md-6  m-4 ">
+                <a href="/addproduct"><button class=" m-2 px-2 py-1">اضافة منتج</button></a>
+                <button class=" m-2 px-2 py-1" data-bs-toggle="modal" data-bs-target="#editModle">تعديل البيانات الشخصية</button>
+                <a href="/changepass"><button class=" m-2 px-2 py-1">تغيير كلمة المرور</button></a>
+                <a href="/changephone"><button class=" m-2 px-2 py-1">تغيير رقم الهاتف</button></a>
+                <!-- Modal edit personal info -->
+                <!--modal-dialog modal-dialog-centered-->
+                <div class="modal fade" id="editModle" tabindex="-1" aria-labelledby="addproductLabel">
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header   ">
+                                <h5 class="modal-title text-center " id="editModalLabel">تعديل البيانات الشخصية</h5>
+                                <button type="button" class=" bg-white rounded-circle" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fa-solid fa-close p-1 fs-4"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="  needs-validation  mt-5 mt-sm-5 mt-md-1   mt-lg-5 mx-4" novalidate method="post">
+
+
+                                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" id="validationCustom01" value="@ViewBag.userS" name="newName" required>
+
+                                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" id="validationCustom01" value="@ViewBag.userAddress" name="newAddress" required>
+
+                                    <div class="   ">
+                                        <button class=" btnsubmit btn  fs-5 w-100   " type="submit">تعديل</button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!--start menu tab-->
+    <div class=" navbarmenu  container my-2 py-2 ">
+        <nav class=" ">
+            <ul class="  nav justify-content-center gap-2 ">
+                <li class="nav-item mx-2">
+                    <button id="btnStop" class="px-2 py-1">اعلانات تم ايقافها</button>
+                </li>
+                <li class="nav-item mx-2">
+                    <button id="btnSold" class="px-2 py-1 ">اعلانات تم بيعها</button>
+                </li>
+                <li class="nav-item mx-2">
+                    <button id="btnActive" class=" px-2 py-1">اعلانات فعالة</button>
+                </li>
+                <li class="nav-item mx-2">
+                    <button id="btnPurchased" class="px-2 py-1 ">طلبات تم شرائها</button>
+                </li>
+                <li class="nav-item mx-2">
+                    <button id="btnOrder" class="px-2 py-1 ">طلبات الشراء</button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!--end menu tab-->
+    <!--start table details data-->
+    <div class="divTable container pb-4">
+        <table id="tableStop" class="table   container  table-borderless  ">
+            <thead class="tableHead sticky-top ">
+                <tr>
+                    <th class="thStart" scope="col">رقم الاعلان</th>
+                    <th scope="col">اسم الاعلان</th>
+                    <th scope="col">السعر</th>
+                    <th scope="col">الكمية</th>
+                    <th scope="col">الوحدة</th>
+                    <th scope="col">الصنف</th>
+                    <th class="thEnd" scope="col">المشاهدات</th> 
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="tableSold" class="table  container  table-borderless   ">
+            <thead class="tableHead sticky-top">
+                <tr>
+                    <th class="thStart" scope="col">رقم الاعلان</th>
+                    <th scope="col">اسم الاعلان</th>
+                    <th scope="col">السعر</th>
+                    <th scope="col">الكمية</th>
+                    <th scope="col">الوحدة</th>
+                    <th scope="col">الصنف</th>
+                    <th class="thEnd" scope="col">المشاهدات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="tableActive" class="table  container  table-borderless ">
+            <thead class="tableHead sticky-top">
+                <tr>
+                    <th class="thStart" scope="col">رقم الاعلان</th>
+                    <th scope="col">اسم الاعلان</th>
+                    <th scope="col">السعر</th>
+                    <th scope="col">الكمية</th>
+                    <th scope="col">الوحدة</th>
+                    <th scope="col">الصنف</th>
+                    <th class="thEnd" scope="col">المشاهدات</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>  
+                    <td>
+                        <button class="nav-link dropdown-toggle " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-globe fa-lg  rounded-circle "></i>
+                            
+                        </button>
+                        <ul class="dropdown-menu  shangelanguage dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+                            
+                            <li><a class="dropdown-item " href="#">  عربي</a></li>
+                            <li><a class="dropdown-item" href="#">  English</a></li>
+                            
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="tablePurchased" class="table  container  table-borderless ">
+            <thead class="tableHead sticky-top">
+                <tr>
+                    <th class="thStart" scope="col">رقم الاعلان</th>
+                    <th scope="col">اسم الاعلان</th>
+                    <th scope="col">السعر</th>
+                    <th scope="col">الكمية</th>
+                    <th scope="col">الوحدة</th>
+                    <th scope="col">الصنف</th>
+                    <th class="thEnd" scope="col">المشاهدات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="tableOrder" class="table  container  table-borderless ">
+            <thead class="tableHead sticky-top">
+                <tr>
+                    <th class="thStart" scope="col">رقم الاعلان</th>
+                    <th scope="col">اسم الاعلان</th>
+                    <th scope="col">السعر</th>
+                    <th scope="col">الكمية</th>
+                    <th scope="col">الوحدة</th>
+                    <th scope="col">الصنف</th>
+                    <th class="thEnd" scope="col">المشاهدات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">5</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--end table details data-->
+</div>
+
