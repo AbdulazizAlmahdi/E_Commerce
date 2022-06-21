@@ -16,7 +16,7 @@ namespace e_commerce.Areas.Admin.Controllers
        private IRepository<User> users;
        private IRepository<Place> places;
        private IRepository<Phone> phone;
-
+        int UserID = 5;
 
         public UsersController(IRepository<User> usersRepository, IRepository<Place> placesRepository, IRepository<Phone> phoneRepository) {
            this.users = usersRepository; 
@@ -28,18 +28,18 @@ namespace e_commerce.Areas.Admin.Controllers
             const int pageSize = 10;
             if (page < 1)
                 page = 1;
-            int Count = users.entities.Count();
+            int Count = users.show(UserID).Count();
             var pagingInfo = new PagingInfo(Count, page, pageSize);
             pagingInfo.PageName = "Users";
           int  recSkip = (page - 1) * pageSize;
-            var data = users.entities.Skip(recSkip).Take(pagingInfo.ItemsPerPage).ToList();
+            var data = users.show(UserID).Skip(recSkip).Take(pagingInfo.ItemsPerPage).ToList();
             this.ViewBag.PagingInfo = pagingInfo;
             return View(data);
         }
         public IActionResult Create()
         {
-            var model = new UserViewModel {           
-                places = places.entities.ToList()
+            var model = new UserViewModel {
+                places = places.show(null).ToList()
             };
             return View(model);
         }
@@ -62,7 +62,7 @@ namespace e_commerce.Areas.Admin.Controllers
         {
             IEnumerable<SelectListItem> usersList = Enumerable.Empty<SelectListItem>();
             if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-                usersList = users.entities.Where(u => u.Name.Contains(q)).Select(
+                usersList = users.show(null).Where(u => u.Name.Contains(q)).Select(
                     u => new SelectListItem
                     {
                         Text = u.Name,
@@ -77,7 +77,7 @@ namespace e_commerce.Areas.Admin.Controllers
             var model = new UserViewModel
             {
                 user = users.Find(id),
-                places = places.entities.ToList()
+                places = places.show(null).ToList()
             };
             return View(model);
         }

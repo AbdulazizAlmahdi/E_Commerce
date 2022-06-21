@@ -14,7 +14,7 @@ namespace E_commerce.Models.Repositories
         {
             this.context = db;
         }
-        public IQueryable<Phone> entities => context.Phones;
+        public IQueryable<Phone> show(int? id) => context.Phones;
 
         public void Add(Phone entity)
         {

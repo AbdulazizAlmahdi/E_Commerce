@@ -7,8 +7,7 @@ namespace E_commerce.Models.Repositories
 {
     public interface IRepository<TEntity>
     {
-        IQueryable<TEntity> entities { get; }
-
+         IQueryable<TEntity> show(int? ID);
         //IList<TEntity> List();
         TEntity Find(int ID);
         TEntity Find(String Text);

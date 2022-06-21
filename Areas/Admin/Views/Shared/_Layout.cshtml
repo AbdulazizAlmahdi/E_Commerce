@@ -56,8 +56,9 @@
 </head>
 
 <body>
-    <!-- Layout wrapper -->
+ <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
+      <div class="">
 
         <!-- Menu -->
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
@@ -677,6 +678,14 @@
     </div>
     @RenderBody()
 
+   </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+
+      <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+      <div class="drag-target"></div>
+    </div>
     <!-- / Layout wrapper -->
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->

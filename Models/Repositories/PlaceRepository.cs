@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace E_commerce.Models.Repositories
@@ -14,7 +15,7 @@ namespace E_commerce.Models.Repositories
         {
             this.context = db;
         }
-        public IQueryable<Place> entities => context.Places;
+        public IQueryable<Place> show(int? id) => context.Places;
 
         public void Add(Place entity)
         {
