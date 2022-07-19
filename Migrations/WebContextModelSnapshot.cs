@@ -311,7 +311,7 @@ namespace E_commerce.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Number")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Number");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -321,6 +321,10 @@ namespace E_commerce.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Number" }, "IX_Phone_Number")
+                        .IsUnique()
+                        .HasFilter("[Number] IS NOT NULL");
 
                     b.ToTable("Phones");
                 });
@@ -558,6 +562,8 @@ namespace E_commerce.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedAt")
@@ -574,16 +580,19 @@ namespace E_commerce.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PhoneId")
+                        .HasMaxLength(50)
                         .HasColumnType("int")
                         .HasColumnName("PhoneID");
 
-                    b.Property<int>("PlaceId")
+                    b.Property<int?>("PlaceId")
                         .HasColumnType("int")
                         .HasColumnName("PlaceID");
 
@@ -882,9 +891,7 @@ namespace E_commerce.Migrations
 
                     b.HasOne("E_commerce.Models.Place", "Place")
                         .WithMany("Users")
-                        .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PlaceId");
 
                     b.HasOne("E_commerce.Models.User", "UpdatedByUser")
                         .WithMany("UpdatedInverseUsers")

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 #nullable disable
 
 namespace E_commerce.Models
@@ -13,6 +14,10 @@ namespace E_commerce.Models
         }
 
         public int Id { get; set; }
+        [Required(ErrorMessage = "اسم المنطقة مطلوب")]
+        [StringLength(50, ErrorMessage = "اسم المنطقة لا يزيد عن 50 حرف")]
+        [Display(Name = "اسم المنطقة")]
+        [Column(TypeName = "nvarchar(max)")]
         public string Name { get; set; }
         public int? PlaceId { get; set; }
 

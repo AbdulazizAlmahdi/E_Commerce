@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 #nullable disable
 
 namespace E_commerce.Models
@@ -13,6 +14,10 @@ namespace E_commerce.Models
         }
 
         public int Id { get; set; }
+        [Required(ErrorMessage = "رقم الهاتف مطلوب")]
+        [StringLength(50, ErrorMessage = "رقم الهاتف لا يزيد عن 15 رقم")]
+        [Display(Name = "رقم الهاتف")]
+        [Column(TypeName = "nvarchar(max)")]
         public string Number { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }

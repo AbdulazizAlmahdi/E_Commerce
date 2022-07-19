@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
 namespace E_commerce.Models
 {
+    [Table("Users")]
     public partial class User
     {
         public User()
@@ -17,8 +19,18 @@ namespace E_commerce.Models
         }
 
         public int Id { get; set; }
+        [Required(ErrorMessage = "الاسم مطلوب")]
+        [StringLength(50, ErrorMessage = "الاسم لا يزيد عن 50 حرف")]
+        [Display(Name = "الاسم")]
+        [Column(TypeName = "nvarchar(max)")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "العنوان مطلوب")]
+        [StringLength(50, ErrorMessage = "العنوان لا يزيد عن 50 حرف")]
+        [Display(Name = "العنوان")]
+        [Column(TypeName = "nvarchar(max)")]        
         public string Address { get; set; }
+        [Display(Name = "كلمة المرور")]
+        [Column(TypeName = "nvarchar(max)")]
         public string Password { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
@@ -29,6 +41,8 @@ namespace E_commerce.Models
         public int UserStatusId { get; set; }
         public int PhoneId { get; set; }
         public int? PlaceId { get; set; }
+        [Display(Name = "المستخدم الاعلى")]
+        [Column(TypeName = "int")]
         public int? UsersId { get; set; }
         public virtual User CreatedByUser { get; set; }
         public virtual User UpdatedByUser { get; set; }

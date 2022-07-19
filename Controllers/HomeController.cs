@@ -1,4 +1,4 @@
-﻿using E_commerce.Migrations;
+﻿//using E_commerce.Migrations;
 using E_commerce.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

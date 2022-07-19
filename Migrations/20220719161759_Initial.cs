@@ -26,7 +26,7 @@ namespace E_commerce.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Number = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -117,8 +117,8 @@ namespace E_commerce.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", maxLength: 50, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -127,8 +127,8 @@ namespace E_commerce.Migrations
                     UpdatedByUserID = table.Column<int>(type: "int", nullable: true),
                     DeletedByUserID = table.Column<int>(type: "int", nullable: true),
                     UserStatusID = table.Column<int>(type: "int", nullable: false),
-                    PhoneID = table.Column<int>(type: "int", nullable: false),
-                    PlaceID = table.Column<int>(type: "int", nullable: false),
+                    PhoneID = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    PlaceID = table.Column<int>(type: "int", nullable: true),
                     UsersID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -145,7 +145,7 @@ namespace E_commerce.Migrations
                         column: x => x.PlaceID,
                         principalTable: "Places",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Users_Users_CreatedByUserID",
                         column: x => x.CreatedByUserID,
@@ -611,6 +611,13 @@ namespace E_commerce.Migrations
                 name: "IX_Payments_UpdatedByUserID",
                 table: "Payments",
                 column: "UpdatedByUserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Phone_Number",
+                table: "Phones",
+                column: "Number",
+                unique: true,
+                filter: "[Number] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Places_PlaceID",

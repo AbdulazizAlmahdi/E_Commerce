@@ -1,0 +1,108 @@
+﻿@model E_commerce.ViewModel.UserViewModel
+
+@{
+    Layout = null;
+
+}
+<script type="text/javascript">
+
+    $.fn.select2.defaults.set("dropdownParent", $('#select'));
+    $(document).ready(function () {
+        $("#childUsers").select2({
+            ajax: {
+                url: '/Admin/Users/GetUser',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: $.map(data.items, function (item) {
+                            console.log(item);
+                            
+                            return {
+                                id: item.id,
+                                text: item.text,
+                            };
+                        }),
+                    };
+                },
+                cache: true,
+                onError: function (err) {
+                    console.log(err);
+                }
+            },
+            minimumInputLength: 1,
+            placeholder: "حدد المستخدم",
+        });
+    });
+</script>
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <!-- Basic -->
+    <div class=" mb-4">
+        <form id="addNewCCForm" class="row g-3" asp-action="CreateOrEdit" asp-route-id="@Model.user.Id"
+            onsubmit="return jQueryAjaxPost(this)" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" value="1" asp-for="@Model.user.UserStatusId" />
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard" asp-for="@Model.user.Name"></label>
+                <div class="input-group input-group-merge">
+                    <input id="modalAddCard" asp-for="@Model.user.Name" class="form-control" type="text"
+                        placeholder="محمد أحمد عبد الله" aria-describedby="modalAddCard2" />                   
+                </div>
+                <span asp-validation-for="@Model.user.Name" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard" asp-for="@Model.user.Phone.Number"></label>
+                <div class="input-group input-group-merge">
+                    <input id="modalAddCard" asp-for="@Model.user.Phone.Number" class="form-control" type="number"
+                        placeholder="777-000-000" aria-describedby="modalAddCard2" />
+                </div>
+                                    <span asp-validation-for="@Model.user.Phone.Number" class="text-danger"></span>
+            </div>
+            <div class="col-12" id="select">
+                <label class="form-label" for="modalPermission" asp-for="@Model.user.UsersId"></label>
+                <select id="childUsers" asp-for="@Model.user.UsersId" name="modalPermission" class="form-select block" name="UsersId">
+                </select>
+            </div>
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard" asp-for="@Model.user.Address"></label>
+                <div class="input-group input-group-merge">
+                    <input id="modalAddCard" asp-for="@Model.user.Address" class="form-control" type="text"
+                        placeholder="صنعاء - بني الحارث - قرية النجيبة" aria-describedby="modalAddCard2" />                   
+                </div>
+                 <span asp-validation-for="@Model.user.Address" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard" asp-for="@Model.user.Password"></label>
+                <div class="input-group input-group-merge">
+                    <input id="modalAddCard" asp-for="@Model.user.Password" class="form-control" type="text"
+                        placeholder="Test@124ot4mm" aria-describedby="modalAddCard2" />
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="form-label" for="modalPermission">الصلاحيات</label>
+                <select multiple id="modalPermission" name="modalPermission" class="form-select" data-allow-clear="true">
+                    <option value="">حدد صلاحية المستخدم</option>
+                    <option value="Australia">مندوب</option>
+                    <option value="Bangladesh">اضافة منتجات المخازن</option>
+                    <option value="Belarus">ادارة العملاء</option>
+                    <option value="Brazil">الدعم</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <label class="form-label" asp-for="@Model.user.Place.Name"></label>
+                <select id="modalPlace" asp-for="@Model.user.PlaceId" class="form-select" data-allow-clear="true"
+                    asp-items="@(new SelectList(Model.places, "Id", "Name"))"></select>
+            </div>
+            <div class="d-grid gap-2">
+                <input type="submit" value="Submit" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
