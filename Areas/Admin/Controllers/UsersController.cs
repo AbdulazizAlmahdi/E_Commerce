@@ -2,6 +2,8 @@
 using E_commerce.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Session;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,26 +18,27 @@ namespace e_commerce.Areas.Admin.Controllers
        private IRepository<User> users;
        private IRepository<Place> places;
        private IRepository<Phone> phone;
-        int UserID = 5;
 
         public UsersController(IRepository<User> usersRepository, IRepository<Place> placesRepository, IRepository<Phone> phoneRepository) {
            this.users = usersRepository; 
               this.places = placesRepository;
               this.phone = phoneRepository;
         } 
-        public IActionResult Index(int page=1)
+        public IActionResult Index(int page=1,String name= "")
         {
+            int UserID = int.Parse(HttpContext.Session.GetString("_UserId")??"5");
             const int pageSize = 10;
             if (page < 1)
                 page = 1;
-            int Count = users.show(UserID).Count();
+            int Count = users.show(UserID, name).Count();
             var pagingInfo = new PagingInfo(Count, page, pageSize);
             pagingInfo.PageName = "Users";
           int  recSkip = (page - 1) * pageSize;
-            var data = users.show(UserID).Skip(recSkip).Take(pagingInfo.ItemsPerPage).ToList();
+            var data = users.show(UserID, name).Skip(recSkip).Take(pagingInfo.ItemsPerPage).ToList();
             this.ViewBag.PagingInfo = pagingInfo;
             return View(data);
         }
+        
         public IActionResult Create()
         {
             var model = new UserViewModel {
@@ -62,7 +65,7 @@ namespace e_commerce.Areas.Admin.Controllers
         {
             IEnumerable<SelectListItem> usersList = Enumerable.Empty<SelectListItem>();
             if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-                usersList = users.show(null).Where(u => u.Name.Contains(q)).Select(
+                usersList = users.show(5).Where(u => u.Name.Contains(q)).Select(
                     u => new SelectListItem
                     {
                         Text = u.Name,
@@ -82,6 +85,13 @@ namespace e_commerce.Areas.Admin.Controllers
             return View(model);
         }
     
+    [HttpPost]
+    //[ValidateAntiForgeryToken]
+    public IActionResult Search()
+    {
+
+        return Index(1,"");
+    }
     [HttpPost]
     //[ValidateAntiForgeryToken]
     public IActionResult Edit(UserViewModel userViewModel)

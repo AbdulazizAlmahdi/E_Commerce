@@ -2,11 +2,14 @@
 
 @{
     ViewData["Title"] = "Create";
-}
+    Layout = null;
 
-<script>
+}
+<script type="text/javascript">
+
+    $.fn.select2.defaults.set("dropdownParent", $('#select'));
     $(document).ready(function () {
-        $("#test_id").select2({
+        $("#childUsers").select2({
             ajax: {
                 url: '/Admin/Users/GetUser',
                 data: function (params) {
@@ -25,87 +28,73 @@
                         }),
                     };
                 },
-                    cache: true,
+                cache: true,
             },
-            minimumInputLength: 4,
+            minimumInputLength: 2,
             placeholder: "-- Select --",
             allowClear: true,
         });
     });
 </script>
-<div class="layout-page" dir="rtl">
-    <!-- Content wrapper -->
-    <div class="content-wrapper">
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <h4>
-                المستخدمين/اضافة/
-            </h4>
-        </div>
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Basic -->
-            <div class="card mb-4">
-                <h5 class="card-header">إضافة مستخدم</h5>
-                <div class="card-body demo-vertical-spacing demo-only-element">
-                    <form id="addNewCCForm" class="row g-3" asp-action="Create">
-                        <div class="col-12">
-                            <label class="form-label w-100" for="modalAddCard">الاسم</label>
-                            <div class="input-group input-group-merge">
-                                <input id="modalAddCard" asp-for="user.Name" class="form-control" type="text"
-                                       placeholder="محمد أحمد عبد الله" aria-describedby="modalAddCard2" />
-                            </div>
-                        </div>
-                        <input type="hidden" value="1" asp-for="user.UserStatusId" />
-                        <div class="col-12">
-                            <label class="form-label w-100" for="modalAddCard">رقم الهاتف</label>
-                            <div class="input-group input-group-merge">
-                                <input id="modalAddCard" asp-for="user.Phone.Number" class="form-control" type="number"
-                                       placeholder="777-000-000" aria-describedby="modalAddCard2" />
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label" for="modalPermission">المستخدم الأعلى</label>
-                            <select id="test_id" asp-for="user.UsersId" name="modalPermission" class="form-select" style="width: 100% !important;"
-                                    data-allow-clear="true">
-                            </select>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label w-100" for="modalAddCard">العنوان</label>
-                            <div class="input-group input-group-merge">
-                                <input id="modalAddCard" asp-for="user.Address" class="form-control" type="text"
-                                       placeholder="صنعاء - بني الحارث - قرية النجيبة" aria-describedby="modalAddCard2" />
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label w-100" for="modalAddCard">كلمة المرور</label>
-                            <div class="input-group input-group-merge">
-                                <input id="modalAddCard" asp-for="user.Password" class="form-control" type="text"
-                                       placeholder="Test@124ot4mm" aria-describedby="modalAddCard2" />
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label" for="modalPermission">الصلاحيات</label>
-                            <select id="modalPermission" name="modalPermission" class="form-select"
-                                    data-allow-clear="true">
-                                <option value="">Select</option>
-                                <option value="Australia">Australia</option>
-                                <option value="Bangladesh">Bangladesh</option>
-                                <option value="Belarus">Belarus</option>
-                                <option value="Brazil">Brazil</option>
-                            </select>
-                        </div>
 
-                        <div class="col-12">
-                            <label class="form-label" for="modalPlace">المنطقة</label>
-                             <select id="modalPlace" asp-for="user.PlaceId" class="form-select" data-allow-clear="true"
-                                asp-items="@(new SelectList(Model.places, "Id", "Name"))"></select> 
-                        </div>
-                        <div class="col-12 text-center mt-4">
-                            <button type="submit" value="Create" class="btn btn-primary me-1 me-sm-3">حفظ</button>
-                        </div>
-                    </form>
+<div class="container-xxl flex-grow-1 container-p-y">
+    <!-- Basic -->
+    <div class=" mb-4">
+        <form id="addNewCCForm" class="row g-3" asp-action="Create">
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard">الاسم</label>
+                <div class="input-group input-group-merge">
+                    <input id="modalAddCard" asp-for="user.Name" class="form-control" type="text"
+                        placeholder="محمد أحمد عبد الله" aria-describedby="modalAddCard2" />
                 </div>
             </div>
-        </div>
+            <input type="hidden" value="1" asp-for="user.UserStatusId" />
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard">رقم الهاتف</label>
+                <div class="input-group input-group-merge">
+                    <input id="modalAddCard" asp-for="user.Phone.Number" class="form-control" type="number"
+                        placeholder="777-000-000" aria-describedby="modalAddCard2" />
+                </div>
+            </div>
+            <div class="col-12"  id="select">
+                <label class="form-label" for="modalPermission">المستخدم الأعلى</label>
+                <select id="childUsers" asp-for="user.UsersId" name="modalPermission" class="form-select block"
+                     data-allow-clear="true">
+                </select>
+            </div>
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard">العنوان</label>
+                <div class="input-group input-group-merge">
+                    <input id="modalAddCard" asp-for="user.Address" class="form-control" type="text"
+                        placeholder="صنعاء - بني الحارث - قرية النجيبة" aria-describedby="modalAddCard2" />
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="form-label w-100" for="modalAddCard">كلمة المرور</label>
+                <div class="input-group input-group-merge">
+                    <input id="modalAddCard" asp-for="user.Password" class="form-control" type="text"
+                        placeholder="Test@124ot4mm" aria-describedby="modalAddCard2" />
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="form-label" for="modalPermission">الصلاحيات</label>
+                <select id="modalPermission" name="modalPermission" class="form-select" data-allow-clear="true">
+                    <option value="">Select</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Bangladesh">Bangladesh</option>
+                    <option value="Belarus">Belarus</option>
+                    <option value="Brazil">Brazil</option>
+                </select>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label" for="modalPlace">المنطقة</label>
+                <select id="modalPlace" asp-for="user.PlaceId" class="form-select" data-allow-clear="true"
+                    asp-items="@(new SelectList(Model.places, "Id", "Name"))"></select>
+            </div>
+            <div class="col-12 text-center mt-4">
+                <button type="submit" value="Create" class="btn btn-primary me-1 me-sm-3">حفظ</button>
+            </div>
+        </form>
     </div>
 </div>
-

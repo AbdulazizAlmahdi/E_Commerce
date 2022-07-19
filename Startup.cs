@@ -3,6 +3,7 @@ using E_commerce.Models.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Session;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,13 +36,18 @@ namespace E_commerce
             services.AddScoped<ICategoryRepositry, CategoryRepository>();
             services.AddScoped<IHelpRepository, HelpRepository>();
 
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             services.AddDbContext<WebContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB"));
             });
 
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromDays(1);//You can set Time   
-            });
+           
 
             services.AddScoped<IProductRepository<Product>, ProductRepository>();
         }

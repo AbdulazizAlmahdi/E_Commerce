@@ -15,7 +15,7 @@ namespace E_commerce.Models.Repositories
         {
             this.context = db;
         }
-        public IQueryable<Place> show(int? id) => context.Places;
+        public IQueryable<Place> show(int? id,String name) => context.Places;
 
         public void Add(Place entity)
         {

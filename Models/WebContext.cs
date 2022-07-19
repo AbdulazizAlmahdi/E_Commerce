@@ -228,8 +228,11 @@ namespace E_commerce.Models
             modelBuilder.Entity<Phone>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
-
+                //TODO unique phone number
                 entity.Property(e => e.Number).HasColumnName("Number");
+
+                entity.HasIndex(e => e.Number, "IX_Phone_Number")
+                    .IsUnique();
             });
 
             modelBuilder.Entity<Place>(entity =>
