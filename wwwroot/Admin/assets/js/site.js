@@ -19,7 +19,7 @@ jQueryAjaxPost = form => {
             contentType: false,
             processData: false,
             success: function (res) {
-                console.log("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"+res.isValid);
+                console.log("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd " + res.isValid + res.html+" dddddddddddddddddddddd");
                 if (res.isValid) {
                     $('#view-all').html(res.html)
                     $('#form-modal .modal-body').html('');

@@ -15,29 +15,17 @@ namespace E_commerce.Models.Repositories
             this.context = db;
         }
         //public IQueryable<User> show(int? ID) => context.Users.Where(u=>u.UsersId == 5||u.Id==5).SelectMany(x => x.InverseUsers).Include(u => u.Place).Include(u => u.Phone).Include(u => u.UserStatus);
-        public IQueryable<User> show(int? ID,String name= "")
+        public IQueryable<User> show(int? ID, String name = "")
         {
-            return GetChild(ID??0, name).AsQueryable();
+            return GetChild(ID ?? 0, name).AsQueryable();
         }
-        List<User> GetChild(int id,String name="")
+        List<User> GetChild(int id, String name = "")
         {
-            var users = context.Users.Where(x => (x.UsersId == id || x.Id == id) &&x.Name.Contains(name)).Include(u => u.Place).Include(u => u.Phone).Include(u => u.UserStatus).ToList();
+            var users = context.Users.Where(x => (x.UsersId == id || x.Id == id) && x.Name.Contains(name)).Include(u => u.Place).Include(u => u.Phone).Include(u => u.UserStatus).ToList();
 
             var childUsers = users.AsEnumerable().Union(
-                                        context.Users.AsEnumerable().Where(x => x.UsersId == id).SelectMany(y => GetChild(y.Id,name))).ToList();
+                                        context.Users.AsEnumerable().Where(x => x.UsersId == id).SelectMany(y => GetChild(y.Id, name))).ToList();
             return childUsers;
-
-            //var users = context.Users.Where(x => x.UsersId == id).Include(u => u.Place).Include(u => u.Phone).Include(u => u.UserStatus).ToList();
-            //List<User> temp = new List<User>();
-            //if (users.Count == 0) return users;
-            //foreach (var user in users)
-            //{
-            //    var x = GetChild(user.Id);
-            //    if (x.Count != 0)
-            //        temp.AddRange(x);
-
-            //}
-            //return temp;
 
         }
 

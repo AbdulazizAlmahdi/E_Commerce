@@ -29,16 +29,6 @@ namespace e_commerce.Areas.Admin.Controllers
         }
         public IActionResult Index(int page = 1, String name = "")
         {
-
-            // const int pageSize = 10;
-            // if (page < 1)
-            //     page = 1;
-            // int Count = users.show(UserID, name).Count();
-            // var pagingInfo = new PagingInfo(Count, page, pageSize);
-            // pagingInfo.PageName = "Users";
-            // int recSkip = (page - 1) * pageSize;
-            // var data = users.show(UserID, name).Skip(recSkip).Take(pagingInfo.ItemsPerPage).ToList();
-            // this.ViewBag.PagingInfo = pagingInfo;
             return View(getAllUsers(page, name));
         }
         [NoDirectAccess]
@@ -50,8 +40,9 @@ namespace e_commerce.Areas.Admin.Controllers
                 var model = new UserViewModel
                 {
                     places = places.show(null).ToList(),
-                    user=new User{
-                        Id=0
+                    user = new User
+                    {
+                        Id = 0
                     },
 
                 };
@@ -61,7 +52,9 @@ namespace e_commerce.Areas.Admin.Controllers
             {
                 var model = new UserViewModel
                 {
-                    places = places.show(null).ToList()
+                    places = places.show(null).ToList(),
+                    user = users.Find(id),
+
                 };
                 return View(model);
             }
@@ -70,45 +63,47 @@ namespace e_commerce.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id,UserViewModel userViewModel,string UsersId)
+        public IActionResult CreateOrEdit(int id, UserViewModel userViewModel, string UsersId)
         {
             if (ModelState.IsValid)
             {
-                 if (id == 0)
-                 {
-                    try{
-                       userViewModel.user.UsersId = Convert.ToInt32(UsersId);
-                    userViewModel.user.CreatedAt = DateTime.Now;
-                    users.Add(userViewModel.user);
-                    }catch(Exception e){
-                        Console.WriteLine(e.Message);
+                try
+                {
+                    if (id == 0)
+                    {
+
+                        userViewModel.user.UsersId = Convert.ToInt32(UsersId);
+                        userViewModel.user.CreatedAt = DateTime.Now;
+                        users.Add(userViewModel.user);
+
+                    }
+                    else
+                    {
+                        userViewModel.user.UsersId = Convert.ToInt32(UsersId);
+                        userViewModel.user.UpdatedAt = DateTime.Now;
+                        users.Update(userViewModel.user);
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    //edit user
+                    Console.WriteLine(e.Message);
                 }
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", getAllUsers()) });
 
             }
             else
             {
-                 return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", userViewModel) });
-            }
-        }
+                var model = new UserViewModel
+                {
+                    places = places.show(null).ToList(),
+                    user = new User
+                    {
+                        Id = 0
+                    },
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(/*[Bind("Id,Name")]*/ UserViewModel userViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-
-                userViewModel.user.CreatedAt = DateTime.Now;
-                users.Add(userViewModel.user);
-                return RedirectToAction(nameof(Index));
+                };
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
             }
-            return View(userViewModel);
         }
         public IActionResult GetUser(string q)
         {
@@ -123,48 +118,16 @@ namespace e_commerce.Areas.Admin.Controllers
                     );
             return Json(new { items = usersList });
         }
-        public IActionResult Edit(int id)
-        {
 
-            var model = new UserViewModel
-            {
-                user = users.Find(id),
-                places = places.show(null).ToList()
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult Search()
-        {
-
-            return Index(1, "");
-        }
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult Edit(UserViewModel userViewModel)
-        {
-            try
-            {
-                userViewModel.user.UpdatedAt = DateTime.Now;
-                users.Update(userViewModel.user);
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                return View("Error", new ErrorViewModel { RequestId = ex.Message });
-            }
-        }
         public ActionResult Delete(int id)
         {
             users.Delete(id);
             return RedirectToAction("Index");
         }
-         private IEnumerable<User> getAllUsers(int page=1,string name="")
-    {
-       int UserID = int.Parse(HttpContext.Session.GetString("_UserId") ?? "1");
-        const int pageSize = 10;
+        private IEnumerable<User> getAllUsers(int page = 1, string name = "")
+        {
+            int UserID = int.Parse(HttpContext.Session.GetString("_UserId") ?? "1");
+            const int pageSize = 10;
             if (page < 1)
                 page = 1;
             int Count = users.show(UserID, name).Count();
@@ -174,8 +137,8 @@ namespace e_commerce.Areas.Admin.Controllers
             var data = users.show(UserID, name).Skip(recSkip).Take(pagingInfo.ItemsPerPage).ToList();
             this.ViewBag.PagingInfo = pagingInfo;
             return data;
-    }
+        }
     }
 
-  
+
 }
