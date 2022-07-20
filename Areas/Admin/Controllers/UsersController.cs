@@ -42,7 +42,6 @@ namespace e_commerce.Areas.Admin.Controllers
                     places = places.show(null).ToList(),
                     user = new User
                     {
-                        Id = 0
                     },
 
                 };
@@ -78,15 +77,16 @@ namespace e_commerce.Areas.Admin.Controllers
 
                     }
                     else
-                    {
+                    {             
                         userViewModel.user.UsersId = Convert.ToInt32(UsersId);
+                        userViewModel.user.Id = Convert.ToInt32(id);
                         userViewModel.user.UpdatedAt = DateTime.Now;
                         users.Update(userViewModel.user);
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    Console.WriteLine(e.InnerException.Message);
                 }
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", getAllUsers()) });
 
