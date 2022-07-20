@@ -22,6 +22,7 @@ namespace e_commerce
             {
                 IViewEngine viewEngine = controller.HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
                 ViewEngineResult viewResult = viewEngine.FindView(controller.ControllerContext, viewName, false);
+
                 ViewContext viewContext = new ViewContext(
                     controller.ControllerContext,
                     viewResult.View,

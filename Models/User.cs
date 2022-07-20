@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
+
 
 #nullable disable
 
@@ -17,11 +21,11 @@ namespace E_commerce.Models
             InverseUsers = new HashSet<User>();
             RolesUsers = new HashSet<RolesUser>();
         }
-
+        [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "الاسم مطلوب")]
         [StringLength(50, ErrorMessage = "الاسم لا يزيد عن 50 حرف")]
-        [Display(Name = "الاسم")]
+        [DisplayName("الاسم")]
         [Column(TypeName = "nvarchar(max)")]
         public string Name { get; set; }
         [Required(ErrorMessage = "العنوان مطلوب")]
@@ -32,8 +36,11 @@ namespace E_commerce.Models
         [Display(Name = "كلمة المرور")]
         [Column(TypeName = "nvarchar(max)")]
         public string Password { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? CreatedAt { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? UpdatedAt { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? DeletedAt { get; set; }
         public int? CreatedByUserID { get; set; }
         public int? UpdatedByUserID { get; set; }

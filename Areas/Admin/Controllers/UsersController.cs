@@ -77,7 +77,7 @@ namespace e_commerce.Areas.Admin.Controllers
                  if (id == 0)
                  {
                     try{
-                    userViewModel.user.UsersId = Convert.ToInt32(UsersId);
+                       userViewModel.user.UsersId = Convert.ToInt32(UsersId);
                     userViewModel.user.CreatedAt = DateTime.Now;
                     users.Add(userViewModel.user);
                     }catch(Exception e){
