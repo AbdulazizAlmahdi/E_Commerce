@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 #nullable disable
 
 namespace E_commerce.Models
@@ -14,17 +16,14 @@ namespace E_commerce.Models
         }
 
         public int Id { get; set; }
-        [Required(ErrorMessage = "رقم الهاتف مطلوب")]
-        [StringLength(50, ErrorMessage = "رقم الهاتف لا يزيد عن 15 رقم")]
-        [Display(Name = "رقم الهاتف")]
-        [Column(TypeName = "nvarchar(max)")]
         public string Number { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public string UpdatedBy { get; set; }
-        public string CreatedBy { get; set; }
-
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual User User { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual ICollection<Help> Helps { get; set; }
     }
 }

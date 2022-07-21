@@ -23,7 +23,7 @@
             @if (Model.CurrentPage < Model.TotalPages)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="@Model.PageName" asp-action="Index" asp-route-page="@(Model.CurrentPage+1)"> Next </a>
+                    <a class="page-link" asp-controller="@Model.PageName" onclick="showInPopup('@Url.Action("CreateOrEdit","Users","@(Model.CurrentPage+1)",Context.Request.Scheme)')"> Next </a>
                 </li>
                 <li class="page-item">
                     <a class="page-link" asp-controller="@Model.PageName" asp-action="Index" asp-route-page="@(Model.TotalPages)"> Last </a>

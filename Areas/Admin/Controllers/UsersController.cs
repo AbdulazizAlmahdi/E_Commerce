@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using E_commerce.Models.ViewModels;
 using E_commerce.ViewModel;
 using E_commerce;
+using System.Linq.Dynamic.Core;
 using static e_commerce.Helper;
 
 namespace e_commerce.Areas.Admin.Controllers
@@ -27,9 +28,9 @@ namespace e_commerce.Areas.Admin.Controllers
             this.places = placesRepository;
             this.phone = phoneRepository;
         }
-        public IActionResult Index(int page = 1, String name = "")
+        public IActionResult Index()
         {
-            return View(getAllUsers(page, name));
+            return View();
         }
         [NoDirectAccess]
         public IActionResult CreateOrEdit(int id = 0)
@@ -137,6 +138,41 @@ namespace e_commerce.Areas.Admin.Controllers
             var data = users.show(UserID, name).Skip(recSkip).Take(pagingInfo.ItemsPerPage).ToList();
             this.ViewBag.PagingInfo = pagingInfo;
             return data;
+        }
+
+        public IActionResult GetUserData()
+        {
+            try
+            {
+                var draw = Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();
+                var length = Request.Form["length"].FirstOrDefault();
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+                var customerData = users.show(1);
+                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+                {
+                    customerData = customerData.OrderBy(sortColumn + " " + sortColumnDirection);
+                }
+                if (!string.IsNullOrEmpty(searchValue))
+                {
+                    customerData = customerData.Where(m => m.Name.Contains(searchValue)
+                                                || m.Address.Contains(searchValue));
+                }
+                recordsTotal = customerData.Count();
+                var data = customerData.Skip(skip).Take(pageSize).ToList();
+                var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+                return Ok(jsonData);
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 
