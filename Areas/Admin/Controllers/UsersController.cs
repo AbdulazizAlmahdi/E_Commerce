@@ -78,7 +78,7 @@ namespace e_commerce.Areas.Admin.Controllers
 
                     }
                     else
-                    {             
+                    {
                         userViewModel.user.UsersId = Convert.ToInt32(UsersId);
                         userViewModel.user.Id = Convert.ToInt32(id);
                         userViewModel.user.UpdatedAt = DateTime.Now;
@@ -119,11 +119,39 @@ namespace e_commerce.Areas.Admin.Controllers
                     );
             return Json(new { items = usersList });
         }
-
         public ActionResult Delete(int id)
         {
+
+            if (id == 0)
+            {
+                var model = new UserViewModel
+                {
+                    places = places.show(null).ToList(),
+                    user = new User
+                    {
+                    },
+
+                };
+                return View(model);
+            }
+            else
+            {
+                var model = new UserViewModel
+                {
+                    places = places.show(null).ToList(),
+                    user = users.Find(id),
+
+                };
+                return View(model);
+            }
+        }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var user = users.Find(id);
             users.Delete(id);
-            return RedirectToAction("Index");
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", getAllUsers()) });
         }
         private IEnumerable<User> getAllUsers(int page = 1, string name = "")
         {

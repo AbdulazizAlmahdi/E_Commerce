@@ -1,113 +1,15 @@
-﻿@model E_commerce.ViewModel.UserViewModel
-
+﻿
 @{
     ViewData["Title"] = "Edit";
 }
 
-<script>
-    $(document).ready(function () {
-        $("#test_id").select2({
-            ajax: {
-                url: '/Admin/Users/GetUser',
-                data: function (params) {
-                    return {
-                        q: params.term
-                    };
-                },
-                processResults: function (data, params) {
-                    return {
-                        results: $.map(data.items, function (item) {
-                            console.log(item);
-                            return {
-                                id: item.value,
-                                text: item.text
-                            };
-                        }),
-                    };
-                },
-                    cache: true,
-            },
-            minimumInputLength: 4,
-            placeholder: "-- Select --",
-            allowClear: true,
-        });
-    });
-</script>
-<div class="layout-page">
-    <!-- Content wrapper -->
-    <div class="content-wrapper">
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <h4>
-                المستخدمين/تعديل/
-            </h4>
-        </div>
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Basic -->
-            <div class="card mb-4">
-                <h5 class="card-header">إضافة مستخدم</h5>
-                <div class="card-body demo-vertical-spacing demo-only-element">
-                    <form id="addNewCCForm" class="row g-3" asp-action="Edit">
-                        <div class="col-12">
-                            <label class="form-label w-100" for="modalAddCard">الاسم</label>
-                            <div class="input-group input-group-merge">
-                                <input id="modalAddCard" asp-for="user.Name" class="form-control" type="text"
-                                       placeholder="محمد أحمد عبد الله" aria-describedby="modalAddCard2" />
-                            </div>
-                        </div>
-                        <input type="hidden" value="1" asp-for="user.UserStatusId" />
-                        <input type="hidden" asp-for="user.Id" />
-                        <div class="col-12">
-                            <label class="form-label w-100" for="modalAddCard">رقم الهاتف</label>
-                            <div class="input-group input-group-merge">
-                                <input id="modalAddCard" asp-for="user.Phone.Number" class="form-control" type="text"
-                                       placeholder="777-000-000" aria-describedby="modalAddCard2" />
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label" for="modalPermission">المستخدم الأعلى</label>
-                            <select id="test_id" asp-for="user.UsersId" name="modalPermission" class="form-select" style="width: 100% !important;"
-                                    data-allow-clear="true">
-                            </select>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label w-100" for="modalAddCard">العنوان</label>
-                            <div class="input-group input-group-merge">
-                                <input id="modalAddCard" asp-for="user.Address" class="form-control" type="text"
-                                       placeholder="صنعاء - بني الحارث - قرية النجيبة" aria-describedby="modalAddCard2" />
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label w-100" for="modalAddCard">كلمة المرور</label>
-                            <div class="input-group input-group-merge">
-                                <input id="modalAddCard" asp-for="user.Password" class="form-control" type="text"
-                                       placeholder="Test@124ot4mm" aria-describedby="modalAddCard2" />
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label" for="modalPermission">الصلاحيات</label>
-                            <select id="modalPermission" name="modalPermission" class="form-select"
-                                    data-allow-clear="true">
-                                <option value="">Select</option>
-                                <option value="Australia">Australia</option>
-                                <option value="Bangladesh">Bangladesh</option>
-                                <option value="Belarus">Belarus</option>
-                                <option value="Brazil">Brazil</option>
-                            </select>
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label" for="modalPlace">المنطقة</label>
-                            <select id="modalPlace" asp-for="user.PlaceId" class="form-select" data-allow-clear="true"
-                                    asp-items="@(new SelectList(Model.places, "Id", "Name"))"></select>
-                        </div>
-                        <div class="col-12 text-center mt-4">
-                            <button type="submit" value="Edit" class="btn btn-primary me-1 me-sm-3">تعديل</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+<div class="card border-0 p-sm-3 p-2 justify-content-center">
+    <div class="card-header pb-0 bg-white border-0 ">
+        <div class="row"><div class="col ml-auto"><button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div> </div>
+        <p class="font-weight-bold mb-2"> Are you sure you wanna delete this ?</p><p class="text-muted "> This change will reflect in your portal after an hour.</p>
+    </div>
+    <div class="card-body px-sm-4 mb-2 pt-1 pb-0">
+        <div class="row justify-content-end no-gutters"><div class="col-auto"><button type="button" class="btn btn-light text-muted" data-dismiss="modal">Cancel</button></div><div class="col-auto"><button type="button" class="btn btn-danger px-4" data-dismiss="modal">Delete</button></div></div>
     </div>
 </div>
-
 

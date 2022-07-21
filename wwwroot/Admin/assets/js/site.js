@@ -21,19 +21,23 @@ $(document).ready(function () {
         },
         "columnDefs": [{
             "targets": [0],
-            "visible": false,
-            "searchable": false
+            "visible": true,
+            "searchable": true
         }],
         "columns": [
             { "data": "id", "name": "Id", "autoWidth": true },
             { "data": "name", "name": "name", "autoWidth": true },
-            { "data": "place.name", "name": "job name", "autoWidth": true },
-            { "data": "phone.number", "name": "phone", "autoWidth": true },
+            { "data": "place.name", "name": "job name", "autoWidth": true, "orderable": false  },
+            { "data": "phone.number", "name": "phone", "autoWidth": true, "orderable": false },
             { "data": "address", "name": "address", "autoWidth": true },
             { "data": "createdAt", "name": "createdAt", "autoWidth": true },
             { "data": "userStatus.name", "name": "createdAt", "autoWidth": true },
             {
-                "render": function (data, row) { return "<a href='#' class='btn btn-danger' onclick=DeleteCustomer('" + row.id + "'); >Delete</a>"; }
+                "render": function (data, type, row) {
+                    return `<a onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</a>`+
+                    `<span>&nbsp;</span>`+
+                        `<a onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</a>`;
+                }
             },
         ]
     });
@@ -92,3 +96,4 @@ jQueryAjaxDelete = form => {
     //prevent default form submit event
     return false;
 }
+
