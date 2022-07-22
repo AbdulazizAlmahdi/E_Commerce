@@ -61,13 +61,7 @@ namespace E_commerce.Models.Repositories
 
         public void Update(User entity)
         {
-            context.ChangeTracker.TrackGraph(entity, e =>
-            {
-                if (e.Entry.State == EntityState.Modified)
-                {
-                    e.Entry.State = EntityState.Modified;
-                }
-            });
+            context.Update(entity);
             context.SaveChanges();
         }
     }

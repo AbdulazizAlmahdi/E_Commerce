@@ -10,6 +10,9 @@
     })
 }
 $(document).ready(function () {
+    userDatatable();
+});  
+userDatatable = () => {
     $("#customerDatatable").DataTable({
         "processing": true,
         "serverSide": true,
@@ -34,14 +37,15 @@ $(document).ready(function () {
             { "data": "userStatus.name", "name": "createdAt", "autoWidth": true },
             {
                 "render": function (data, type, row) {
-                    return `<a onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</a>`+
+                    return `<button onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</button>`+
                     `<span>&nbsp;</span>`+
-                        `<a onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</a>`;
+                        `<button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</button>`;
                 }
             },
         ]
     });
-});  
+}
+        
 jQueryAjaxPost = form => {
     try {
         $.ajax({
@@ -52,14 +56,31 @@ jQueryAjaxPost = form => {
             processData: false,
             success: function (res) {
                 console.log("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd " + res.isValid + res.html+" dddddddddddddddddddddd");
-                if (res.isValid) {
+                if (res.status=="success") {
                     $('#view-all').html(res.html)
                     $('#form-modal .modal-body').html('');
                     $('#form-modal .modal-title').html('');
                     $('#form-modal').modal('hide');
+                    userDatatable();
+                    $('#successToast .successToastTitle').html("إضافة المستخدم");
+                    $('#successToast .successToastBody').html("تمت إضافة المستخدم بنجاح");
+                    new bootstrap.Toast(document.getElementById('successToast')).show();
+
                 }
-                else
+                else if (res.status=="validation-error") {
                     $('#form-modal .modal-body').html(res.html);
+                }
+                else {
+                    console.log("Error");
+                    $('#view-all').html(res.html)
+                    $('#form-modal .modal-body').html('');
+                    $('#form-modal .modal-title').html('');
+                    $('#form-modal').modal('hide');
+                    userDatatable();
+                    $('#errorToast .errorToastTitle').html("إضافة المستخدم");
+                    $('#errorToast .errorToastBody').html("حدث خطأ أثناء إضافة المستخدم");
+                    new bootstrap.Toast(document.getElementById('errorToast')).show();
+                }
             },
             error: function (err) {
                 console.log(err)

@@ -87,9 +87,9 @@ namespace e_commerce.Areas.Admin.Controllers
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.InnerException.Message);
+                return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "_ViewAll") });
                 }
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", getAllUsers()) });
+                return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "_ViewAll") });
 
             }
             else
@@ -103,22 +103,22 @@ namespace e_commerce.Areas.Admin.Controllers
                     },
 
                 };
-                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
+                return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
             }
         }
-        public IActionResult GetUser(string q)
-        {
-            IEnumerable<SelectListItem> usersList = Enumerable.Empty<SelectListItem>();
-            if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-                usersList = users.show(int.Parse(HttpContext.Session.GetString("_UserId") ?? "1")).Where(u => u.Name.Contains(q)).Select(
-                    u => new SelectListItem
-                    {
-                        Text = u.Name,
-                        Id = u.Id
-                    }
-                    );
-            return Json(new { items = usersList });
-        }
+        //public IActionResult GetUser(string q)
+        //{
+        //    IEnumerable<SelectListItem> usersList = Enumerable.Empty<SelectListItem>();
+        //    if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
+        //        usersList = users.show(int.Parse(HttpContext.Session.GetString("_UserId") ?? "1")).Where(u => u.Name.Contains(q)).Select(
+        //            u => new SelectListItem
+        //            {
+        //                Text = u.Name,
+        //                Id = u.Id
+        //            }
+        //            );
+        //    return Json(new { items = usersList });
+        //}
         public ActionResult Delete(int id)
         {
 
@@ -151,7 +151,7 @@ namespace e_commerce.Areas.Admin.Controllers
         {
             var user = users.Find(id);
             users.Delete(id);
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", getAllUsers()) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", null) });
         }
         private IEnumerable<User> getAllUsers(int page = 1, string name = "")
         {
@@ -181,18 +181,19 @@ namespace e_commerce.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                var customerData = users.show(1);
+                IQueryable<User> usersData = users.show(1);
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
-                    customerData = customerData.OrderBy(sortColumn + " " + sortColumnDirection);
+                    usersData = usersData.OrderBy(sortColumn + " " + sortColumnDirection);
                 }
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    customerData = customerData.Where(m => m.Name.Contains(searchValue)
-                                                || m.Address.Contains(searchValue));
+                    usersData = usersData.Where(m => m.Name.Contains(searchValue)
+                                                || m.Address.Contains(searchValue)
+                                                || m.Phone.Number.Contains(searchValue));
                 }
-                recordsTotal = customerData.Count();
-                var data = customerData.Skip(skip).Take(pageSize).ToList();
+                recordsTotal = usersData.Count();
+                var data = usersData.Skip(skip).Take(pageSize).ToList();
                 var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
                 return Ok(jsonData);
 
