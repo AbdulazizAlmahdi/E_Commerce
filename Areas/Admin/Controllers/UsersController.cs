@@ -43,6 +43,7 @@ namespace e_commerce.Areas.Admin.Controllers
                     places = places.show(null).ToList(),
                     user = new User
                     {
+                        Phone = new Phone(),
                     },
 
                 };
@@ -205,6 +206,5 @@ namespace e_commerce.Areas.Admin.Controllers
             }
         }
     }
-
 
 }
