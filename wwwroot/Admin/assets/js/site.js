@@ -13,9 +13,7 @@ $(document).ready(function () {
     userDatatable();
 });
 userDatatable = () => {
-    console.log("userDatatable");
-
-        $("#customerDatatable").DataTable({
+        $("#userDatatable").DataTable({
             processing: true,
             serverSide: true,
             filter: true,
@@ -25,20 +23,12 @@ userDatatable = () => {
             ordering: true,
             lengthMenu: [7, 10, 25, 50,75,100],
             responsive: false,
-            // dom: 'Blfrtip',
             dom:
                 '<"row"<"col-sm-12"<"col-sm-12"B>>>' + '<"row"<"col-sm-12 col-md-6"l>' + '<"col-sm-12 col-md-6"f>>' +
                 '<"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-            // buttons: [
-            //     { extend: 'copy', className: 'btn btn-primary glyphicon glyphicon-duplicate' },
-            //     { extend: 'csv', className: 'btn btn-primary glyphicon glyphicon-list-alt' },
-            //     { extend: 'excel', className: 'btn btn-primary glyphicon glyphicon-file' },
-            //     { extend: 'pdf', className: 'btn btn-primary glyphicon glyphicon-file' },
-            //     { extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print' }
-            // ],
             buttons: [
                 {
-                    text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Record</span>',
+                    text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة مستخدم</span>',
                     className: 'dt-button create-new btn btn-primary m-2',
                     action: function (e, dt, node, config) {
                         showInPopup('/Admin/Users/CreateOrEdit', 'تعديل المستخدم');
@@ -47,7 +37,7 @@ userDatatable = () => {
                 {
                     extend: 'collection',
                     className: 'class="dt-button buttons-collection btn btn-label-primary dropdown-toggle me-2"',
-                    text: 'Export',
+                    text: 'تصدير',
                     buttons: [
                         {
                         extend: 'copy',
@@ -125,40 +115,6 @@ userDatatable = () => {
                         },
             ]
         });
-
-
-
-    // $("#customerDatatable").DataTable({
-    //     "processing": true,
-    //     "serverSide": true,
-    //     "filter": true,
-    //     "ajax": {
-    //         "url": "/Admin/Users/GetUserData",
-    //         "type": "POST",
-    //         "datatype": "json"
-    //     },
-    //     "columnDefs": [{
-    //         "targets": [0],
-    //         "visible": true,
-    //         "searchable": true
-    //     }],
-    //     "columns": [
-    //         { "data": "id", "name": "Id", "autoWidth": true },
-    //         { "data": "name", "name": "name", "autoWidth": true },
-    //         { "data": "place.name", "name": "job name", "autoWidth": true, "orderable": false  },
-    //         { "data": "phone.number", "name": "phone", "autoWidth": true, "orderable": false },
-    //         { "data": "address", "name": "address", "autoWidth": true },
-    //         { "data": "createdAt", "name": "createdAt", "autoWidth": true },
-    //         { "data": "userStatus.name", "name": "createdAt", "autoWidth": true },
-    //         {
-    //             "render": function (data, type, row) {
-    //                 return `<button onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</button>`+
-    //                 `<span>&nbsp;</span>`+
-    //                     `<button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</button>`;
-    //             }
-    //         },
-    //     ]
-    // });
 }
         
 jQueryAjaxPost = form => {
