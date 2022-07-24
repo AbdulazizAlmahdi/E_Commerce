@@ -11,6 +11,7 @@
 }
 $(document).ready(function () {
     userDatatable();
+    helpDatatable();
 });
 userDatatable = () => {
         $("#userDatatable").DataTable({
@@ -111,6 +112,106 @@ userDatatable = () => {
                                 return `<button onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</button>`+
                                 `<span>&nbsp;</span>`+
                                     `<button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</button>`;
+                            }
+                        },
+            ]
+        });
+}
+helpDatatable = () => {
+        $("#help-datatable").DataTable({
+            processing: true,
+            serverSide: true,
+            filter: true,
+            paging: true,
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            lengthMenu: [7, 10, 25, 50,75,100],
+            responsive: false,
+            dom:
+                '<"row"<"col-sm-12"<"col-sm-12"B>>>' + '<"row"<"col-sm-12 col-md-6"l>' + '<"col-sm-12 col-md-6"f>>' +
+                '<"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+            buttons: [
+                {
+                    text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة مساعدة</span>',
+                    className: 'dt-button create-new btn btn-primary m-2',
+                    action: function (e, dt, node, config) {
+                    },
+                },
+                {
+                    extend: 'collection',
+                    className: 'class="dt-button buttons-collection btn btn-label-primary dropdown-toggle me-2"',
+                    text: 'تصدير',
+                    buttons: [
+                        {
+                        extend: 'copy',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'Copy',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                  
+                    {
+                        extend: 'pdf',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'PDF',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'Excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'CSV',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'Print',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }
+    
+                
+                
+    
+                    ]
+                }
+    
+            ],
+            ajax: {
+                "url": "/Admin/Help/GetHelpData",
+                "type": "POST",
+                "datatype": "json"
+            },
+            columnDefs: [{
+                "targets": [0],
+                "visible": true,
+                "searchable": true
+            }],
+            columns: [
+                { "data": "id", "name": "Id", "autoWidth": true },
+                        { "data": "subject", "name": "Subject", "autoWidth": true, "orderable": false },
+                        { "data": "phone.number", "name": "phone", "autoWidth": true, "orderable": false },
+                        { "data": "createdAt", "name": "createdAt", "autoWidth": true },
+                        {
+                            "render": function (data, type, row) {
+                                return `<button onClick="showInPopup('/Admin/Help/CreateAndEdit/' + ${row.id}, 'عرض الطلب')" class="btn btn-primary btn-sm">عرض الطلب</button>`+
+                                `<span>&nbsp;</span>`+
+                                    `<button onClick="showInPopup('/Admin/Users/Ignore/' + ${row.id}, 'تجاهل الطلب')" class="btn btn-primary btn-sm">تجاهل الطلب</button>`;
                             }
                         },
             ]

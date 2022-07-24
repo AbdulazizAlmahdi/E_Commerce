@@ -17,41 +17,7 @@
             <div class="card  p-4">
                 <div class="card-header border-bottom">
                     <span class="d-none d-lg-inline-block" style="font-size: 20px;">عرض المستخدمين</span>
-                </div>
-                @* <div class="row p-2">
-                    <div class="col-md-2  mt-2 justify-content-end">
-                        <a type="button" onclick="userDatatable()" class="btn btn-primary  d-block"
-                            style="margin-right: auto !important;">
-                            <i class="bx bx-filter me-0 me-lg-2"></i>
-                            <span class="d-none d-lg-inline-block">الفلترة</span>
-                        </a>
-
-                    </div>
-                    <div class="col-md-7  mt-2">
-                        <Form method="post">
-                            <section class="w-100">
-                                <div class="input-group">
-                                    <input type="text" name="name" class="form-control" id="advanced-search-input"
-                                        placeholder="البحث بالاسم" />
-                                    <button class="btn btn-primary" id="advanced-search-button" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-
-                                </div>
-
-                                <div id="datatable-advanced-search"></div>
-                            </section>
-                        </Form>
-                    </div>
-                    <div class="col-md-3  mt-2 d-grid gap-2">
-                        <button type="button" class="btn btn-primary  d-block"
-                            onclick="showInPopup('@Url.Action("CreateOrEdit","Users",null,Context.Request.Scheme)','إضافة مستخدم')">
-                            <i class="bx bx-plus me-0 me-lg-2"></i>
-                            <span class="d-none d-lg-inline-block">إضافة مستخدم</span>
-                        </button>
-
-                    </div>
-                </div> *@
+                </div>        
                 <div id="view-all">
                     @await Html.PartialAsync("_ViewAll", null)
                 </div>
