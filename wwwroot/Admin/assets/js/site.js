@@ -132,9 +132,9 @@ jQueryAjaxPost = form => {
                     $('#form-modal .modal-title').html('');
                     $('#form-modal').modal('hide');
                     userDatatable();
-                    $('#successToast .successToastTitle').html("إضافة المستخدم");
-                    $('#successToast .successToastBody').html("تمت إضافة المستخدم بنجاح");
-                    new bootstrap.Toast(document.getElementById('successToast')).show();
+                    $('#success-toast .success-toast-title').html(res.messgaeTitle);
+                    $('#success-toast .success-toast-body').html(res.messageBody);
+                    new bootstrap.Toast(document.getElementById('success-toast')).show();
 
                 }
                 else if (res.status=="validation-error") {
@@ -147,9 +147,9 @@ jQueryAjaxPost = form => {
                     $('#form-modal .modal-title').html('');
                     $('#form-modal').modal('hide');
                     userDatatable();
-                    $('#errorToast .errorToastTitle').html("إضافة المستخدم");
-                    $('#errorToast .errorToastBody').html("حدث خطأ أثناء إضافة المستخدم");
-                    new bootstrap.Toast(document.getElementById('errorToast')).show();
+                    $('#error-toast .error-toast-title').html(res.messgaeTitle);
+                    $('#error-toast .error-toast-body').html(res.messageBody);
+                    new bootstrap.Toast(document.getElementById('error-toast')).show();
                 }
             },
             error: function (err) {
@@ -163,28 +163,28 @@ jQueryAjaxPost = form => {
     }
 }
 
-jQueryAjaxDelete = form => {
-    if (confirm('Are you sure to delete this record ?')) {
-        try {
-            $.ajax({
-                type: 'POST',
-                url: form.action,
-                data: new FormData(form),
-                contentType: false,
-                processData: false,
-                success: function (res) {
-                    $('#view-all').html(res.html);
-                },
-                error: function (err) {
-                    console.log(err)
-                }
-            })
-        } catch (ex) {
-            console.log(ex)
-        }
-    }
+// jQueryAjaxDelete = form => {
+//     if (confirm('Are you sure to delete this record ?')) {
+//         try {
+//             $.ajax({
+//                 type: 'POST',
+//                 url: form.action,
+//                 data: new FormData(form),
+//                 contentType: false,
+//                 processData: false,
+//                 success: function (res) {
+//                     $('#view-all').html(res.html);
+//                 },
+//                 error: function (err) {
+//                     console.log(err)
+//                 }
+//             })
+//         } catch (ex) {
+//             console.log(ex)
+//         }
+//     }
 
-    //prevent default form submit event
-    return false;
-}
+//     //prevent default form submit event
+//     return false;
+// }
 

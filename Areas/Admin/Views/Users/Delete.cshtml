@@ -1,9 +1,8 @@
-﻿@{
+﻿@model Int32;
+@{
     ViewData["Title"] = "Delete";
     Layout = null;
 }
-
-
 <div class="card-header pb-0 bg-white border-0 ">
     <p class="font-weight-bold mb-2"> هل أنت متأكد أنك تريد حذف هذا؟</p>
     <p class="text-muted "> سينعكس هذا التغيير في حسابك حالاً.</p>
@@ -12,7 +11,12 @@
     <div class="row justify-content-end no-gutters">
         <div class="col-auto"><button type="button" class="btn btn-light text-muted close"
                 data-dismiss="modal">الغاء</button></div>
-        <div class="col-auto"><button type="button" class="btn btn-danger px-4" data-dismiss="modal">حذف</button>
+        <div class="col-auto">
+            <Form asp-action="Delete"
+            onsubmit="return jQueryAjaxPost(this);">
+                <input type="hidden" name="id" value="@Model" />
+                <button type="submit" class="btn btn-danger px-4" data-dismiss="modal">حذف</button>
+            </Form>
         </div>
     </div>
 </div>

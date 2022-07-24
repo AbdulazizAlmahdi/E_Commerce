@@ -76,7 +76,6 @@ namespace e_commerce.Areas.Admin.Controllers
                         userViewModel.user.UsersId = Convert.ToInt32(UsersId);
                         userViewModel.user.CreatedAt = DateTime.Now;
                         users.Add(userViewModel.user);
-
                     }
                     else
                     {
@@ -89,9 +88,9 @@ namespace e_commerce.Areas.Admin.Controllers
                 catch (Exception e)
                 {
                     var exception= e.InnerException.Message;
-                return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "_ViewAll") });
+                return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "_ViewAll"),messgaeTitle=id==0?"إضافة المستخدم":"تعديل المستخدم",messageBody=id==0?"حدث خطأ أثناء إضافة المستخدم":"حدث خطأ أثناء تعديل المستخدم" });
                 }
-                return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "_ViewAll") });
+                return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "_ViewAll"),messgaeTitle=id==0?"إضافة المستخدم":"تعديل المستخدم",messageBody=id==0?"تمت إضافة المستخدم بنجاح":"تم تعديل المستخدم بنجاح"});
 
             }
             else
@@ -121,39 +120,18 @@ namespace e_commerce.Areas.Admin.Controllers
                    );
            return Json(new { items = usersList });
         }
+       
+         [NoDirectAccess]
         public ActionResult Delete(int id)
         {
-
-            if (id == 0)
-            {
-                var model = new UserViewModel
-                {
-                    places = places.show(null).ToList(),
-                    user = new User
-                    {
-                    },
-
-                };
-                return View(model);
-            }
-            else
-            {
-                var model = new UserViewModel
-                {
-                    places = places.show(null).ToList(),
-                    user = users.Find(id),
-
-                };
-                return View(model);
-            }
+            return View(id);
         }
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id,string x)
         {
-            var user = users.Find(id);
             users.Delete(id);
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", null) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", null), messgaeTitle = "حذف المستخدم", messageBody = "تم حذف المستخدم بنجاح" });
         }
         private IEnumerable<User> getAllUsers(int page = 1, string name = "")
         {
