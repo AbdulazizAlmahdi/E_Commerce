@@ -11,39 +11,154 @@
 }
 $(document).ready(function () {
     userDatatable();
-});  
+});
 userDatatable = () => {
-    $("#customerDatatable").DataTable({
-        "processing": true,
-        "serverSide": true,
-        "filter": true,
-        "ajax": {
-            "url": "/Admin/Users/GetUserData",
-            "type": "POST",
-            "datatype": "json"
-        },
-        "columnDefs": [{
-            "targets": [0],
-            "visible": true,
-            "searchable": true
-        }],
-        "columns": [
-            { "data": "id", "name": "Id", "autoWidth": true },
-            { "data": "name", "name": "name", "autoWidth": true },
-            { "data": "place.name", "name": "job name", "autoWidth": true, "orderable": false  },
-            { "data": "phone.number", "name": "phone", "autoWidth": true, "orderable": false },
-            { "data": "address", "name": "address", "autoWidth": true },
-            { "data": "createdAt", "name": "createdAt", "autoWidth": true },
-            { "data": "userStatus.name", "name": "createdAt", "autoWidth": true },
-            {
-                "render": function (data, type, row) {
-                    return `<button onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</button>`+
-                    `<span>&nbsp;</span>`+
-                        `<button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</button>`;
+    console.log("userDatatable");
+
+        $("#customerDatatable").DataTable({
+            processing: true,
+            serverSide: true,
+            filter: true,
+            paging: true,
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            lengthMenu: [7, 10, 25, 50,75,100],
+            responsive: false,
+            // dom: 'Blfrtip',
+            dom:
+                '<"row"<"col-sm-12"<"col-sm-12"B>>>' + '<"row"<"col-sm-12 col-md-6"l>' + '<"col-sm-12 col-md-6"f>>' +
+                '<"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+            // buttons: [
+            //     { extend: 'copy', className: 'btn btn-primary glyphicon glyphicon-duplicate' },
+            //     { extend: 'csv', className: 'btn btn-primary glyphicon glyphicon-list-alt' },
+            //     { extend: 'excel', className: 'btn btn-primary glyphicon glyphicon-file' },
+            //     { extend: 'pdf', className: 'btn btn-primary glyphicon glyphicon-file' },
+            //     { extend: 'print', className: 'btn btn-primary glyphicon glyphicon-print' }
+            // ],
+            buttons: [
+                {
+                    text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Record</span>',
+                    className: 'dt-button create-new btn btn-primary m-2',
+                    action: function (e, dt, node, config) {
+                        showInPopup('/Admin/Users/CreateOrEdit', 'تعديل المستخدم');
+                    },
+                },
+                {
+                    extend: 'collection',
+                    className: 'class="dt-button buttons-collection btn btn-label-primary dropdown-toggle me-2"',
+                    text: 'Export',
+                    buttons: [
+                        {
+                        extend: 'copy',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'Copy',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                  
+                    {
+                        extend: 'pdf',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'PDF',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'Excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'CSV',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'Print',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }
+    
+                
+                
+    
+                    ]
                 }
+    
+            ],
+            ajax: {
+                "url": "/Admin/Users/GetUserData",
+                "type": "POST",
+                "datatype": "json"
             },
-        ]
-    });
+            columnDefs: [{
+                "targets": [0],
+                "visible": true,
+                "searchable": true
+            }],
+            columns: [
+                { "data": "id", "name": "Id", "autoWidth": true },
+                { "data": "name", "name": "name", "autoWidth": true },
+                        { "data": "place.name", "name": "job name", "autoWidth": true, "orderable": false  },
+                        { "data": "phone.number", "name": "phone", "autoWidth": true, "orderable": false },
+                        { "data": "address", "name": "address", "autoWidth": true },
+                        { "data": "createdAt", "name": "createdAt", "autoWidth": true },
+                        { "data": "userStatus.name", "name": "createdAt", "autoWidth": true },
+                        {
+                            "render": function (data, type, row) {
+                                return `<button onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</button>`+
+                                `<span>&nbsp;</span>`+
+                                    `<button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</button>`;
+                            }
+                        },
+            ]
+        });
+
+
+
+    // $("#customerDatatable").DataTable({
+    //     "processing": true,
+    //     "serverSide": true,
+    //     "filter": true,
+    //     "ajax": {
+    //         "url": "/Admin/Users/GetUserData",
+    //         "type": "POST",
+    //         "datatype": "json"
+    //     },
+    //     "columnDefs": [{
+    //         "targets": [0],
+    //         "visible": true,
+    //         "searchable": true
+    //     }],
+    //     "columns": [
+    //         { "data": "id", "name": "Id", "autoWidth": true },
+    //         { "data": "name", "name": "name", "autoWidth": true },
+    //         { "data": "place.name", "name": "job name", "autoWidth": true, "orderable": false  },
+    //         { "data": "phone.number", "name": "phone", "autoWidth": true, "orderable": false },
+    //         { "data": "address", "name": "address", "autoWidth": true },
+    //         { "data": "createdAt", "name": "createdAt", "autoWidth": true },
+    //         { "data": "userStatus.name", "name": "createdAt", "autoWidth": true },
+    //         {
+    //             "render": function (data, type, row) {
+    //                 return `<button onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</button>`+
+    //                 `<span>&nbsp;</span>`+
+    //                     `<button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</button>`;
+    //             }
+    //         },
+    //     ]
+    // });
 }
         
 jQueryAjaxPost = form => {

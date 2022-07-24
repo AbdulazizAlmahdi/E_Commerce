@@ -106,19 +106,19 @@ namespace e_commerce.Areas.Admin.Controllers
                 return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
             }
         }
-        //public IActionResult GetUser(string q)
-        //{
-        //    IEnumerable<SelectListItem> usersList = Enumerable.Empty<SelectListItem>();
-        //    if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-        //        usersList = users.show(int.Parse(HttpContext.Session.GetString("_UserId") ?? "1")).Where(u => u.Name.Contains(q)).Select(
-        //            u => new SelectListItem
-        //            {
-        //                Text = u.Name,
-        //                Id = u.Id
-        //            }
-        //            );
-        //    return Json(new { items = usersList });
-        //}
+        public IActionResult GetUser(string q)
+        {
+           IEnumerable<SelectListItem> usersList = Enumerable.Empty<SelectListItem>();
+           if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
+               usersList = users.show(int.Parse(HttpContext.Session.GetString("_UserId") ?? "1")).Where(u => u.Name.Contains(q)).Select(
+                   u => new SelectListItem
+                   {
+                       Text = u.Name,
+                       Id = u.Id
+                   }
+                   );
+           return Json(new { items = usersList });
+        }
         public ActionResult Delete(int id)
         {
 

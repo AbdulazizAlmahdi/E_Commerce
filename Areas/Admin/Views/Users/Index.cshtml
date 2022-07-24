@@ -11,16 +11,16 @@
         </div>
         <div class="container-xxl flex-grow-1 container-p-y">
             <!-- Toast with Placements -->
-                    @await Html.PartialAsync("_Toast", null)
+            @await Html.PartialAsync("_Toast", null)
             <!-- Toast with Placements -->
             <!-- Basic Bootstrap Table -->
             <div class="card  p-4">
                 <div class="card-header border-bottom">
                     <span class="d-none d-lg-inline-block" style="font-size: 20px;">عرض المستخدمين</span>
                 </div>
-                <div class="row p-2">
+                @* <div class="row p-2">
                     <div class="col-md-2  mt-2 justify-content-end">
-                        <a type="button" asp-action="Search" class="btn btn-primary  d-block"
+                        <a type="button" onclick="userDatatable()" class="btn btn-primary  d-block"
                             style="margin-right: auto !important;">
                             <i class="bx bx-filter me-0 me-lg-2"></i>
                             <span class="d-none d-lg-inline-block">الفلترة</span>
@@ -51,7 +51,7 @@
                         </button>
 
                     </div>
-                </div>
+                </div> *@
                 <div id="view-all">
                     @await Html.PartialAsync("_ViewAll", null)
                 </div>
