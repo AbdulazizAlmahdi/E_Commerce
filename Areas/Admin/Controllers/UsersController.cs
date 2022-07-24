@@ -87,6 +87,7 @@ namespace e_commerce.Areas.Admin.Controllers
                 }
                 catch (Exception e)
                 {
+                    var exception= e.InnerException.Message;
                 return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "_ViewAll") });
                 }
                 return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "_ViewAll") });

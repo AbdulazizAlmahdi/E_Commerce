@@ -61,8 +61,18 @@ namespace E_commerce.Models.Repositories
 
         public void Update(User entity)
         {
-            context.Update(entity);
+            context.Users.Update(entity);
             context.SaveChanges();
+            // var user = context.Users.SingleOrDefault(a => a.Id == entity.Id);
+            // context.Entry(user).CurrentValues.SetValues(entity);
+            // context.Entry(user).State = EntityState.Modified;
+            //  var phones = context.Phones.FirstOrDefault(x => x.Id == entity.Phone.Id);
+            // if (phones != null)
+            // {
+            //     phones.Number = entity.Phone.Number;
+            //     context.Entry(phones).State = EntityState.Modified;
+            // }
+            // context.SaveChanges();            
         }
     }
 }

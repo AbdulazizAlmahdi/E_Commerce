@@ -24,7 +24,7 @@ namespace E_commerce.Models
             RolesUsers = new HashSet<RolesUser>();
         }
         [Key]
-        public int Id { get; set; }
+        public int  Id { get; set; }
         [Required(ErrorMessage = "الاسم مطلوب")]
         [StringLength(50, ErrorMessage = "الاسم لا يزيد عن 50 حرف")]
         [DisplayName("الاسم")]
@@ -46,7 +46,9 @@ namespace E_commerce.Models
         public DateTime? DeletedAt { get; set; }
  
         public int UserStatusId { get; set; }
+        [ForeignKey("PhoneId")]
         public int PhoneId { get; set; }
+        [ForeignKey("PlaceId")]
         public int? PlaceId { get; set; }
         [Display(Name = "المستخدم الاعلى")]
         [Column(TypeName = "int")]

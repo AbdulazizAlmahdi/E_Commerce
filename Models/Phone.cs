@@ -14,7 +14,7 @@ namespace E_commerce.Models
         {
             Helps = new HashSet<Help>();
         }
-
+        [Key]
         public int Id { get; set; }
         [Required (ErrorMessage = "رقم الهاتف مطلوب")]
         [StringLength(15)]

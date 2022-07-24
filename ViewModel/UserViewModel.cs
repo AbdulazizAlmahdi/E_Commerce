@@ -8,7 +8,7 @@ namespace E_commerce.ViewModel
 {
     public class UserViewModel
     {
-        public User user { get; set; }
+        public User user {  get; set; }
         public List<Place> places { get; set; }
 
     }
