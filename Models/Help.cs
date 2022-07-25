@@ -18,6 +18,7 @@ namespace E_commerce.Models
         [Display(Name = "نص الرسالة")]
         public string Details { get; set; }
         public int? PhoneId { get; set; }
+        public bool? status { get; set; }
 
         public virtual Phone Phone { get; set; }
          public DateTime? CreatedAt { get; set; }

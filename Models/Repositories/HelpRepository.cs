@@ -42,7 +42,8 @@ namespace E_commerce.Models.Repositories
 
         public void Update(Help entity)
         {
-            throw new NotImplementedException();
+             context.Helps.Update(entity);
+            context.SaveChanges();
         }
     }
 }

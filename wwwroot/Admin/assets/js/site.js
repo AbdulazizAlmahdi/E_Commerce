@@ -136,6 +136,7 @@ helpDatatable = () => {
                     text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة مساعدة</span>',
                     className: 'dt-button create-new btn btn-primary m-2',
                     action: function (e, dt, node, config) {
+                        showInPopup('/Admin/Help/CreateAndEdit', 'إضافة المساعدة');
                     },
                 },
                 {
@@ -201,9 +202,20 @@ helpDatatable = () => {
                 "targets": [0],
                 "visible": true,
                 "searchable": true
-            }],
+            },
+            {
+                "targets": [1],
+                render : function (data, type, row) {
+                    switch(data) {
+                       case true : return 'تم حل المشكلة'; break;
+                       case false : return 'لم يتم حل المشكلة'; break;
+                       default  : return 'تم حل المشكلة';
+                    }
+                  }
+            },],
             columns: [
-                { "data": "id", "name": "Id", "autoWidth": true },
+                        { "data": "id", "name": "Id", "autoWidth": true },
+                        { "data": "status", "name": "Status", "autoWidth": true, "orderable": false },
                         { "data": "subject", "name": "Subject", "autoWidth": true, "orderable": false },
                         { "data": "phone.number", "name": "phone", "autoWidth": true, "orderable": false },
                         { "data": "createdAt", "name": "createdAt", "autoWidth": true },
@@ -211,7 +223,7 @@ helpDatatable = () => {
                             "render": function (data, type, row) {
                                 return `<button onClick="showInPopup('/Admin/Help/CreateAndEdit/' + ${row.id}, 'عرض الطلب')" class="btn btn-primary btn-sm">عرض الطلب</button>`+
                                 `<span>&nbsp;</span>`+
-                                    `<button onClick="showInPopup('/Admin/Users/Ignore/' + ${row.id}, 'تجاهل الطلب')" class="btn btn-primary btn-sm">تجاهل الطلب</button>`;
+                                    `<button onClick="showInPopup('/Admin/Help/IgnoreOrder/' + ${row.id}, 'تجاهل الطلب')" class="btn btn-primary btn-sm">تجاهل الطلب</button>`;
                             }
                         },
             ]
@@ -232,11 +244,13 @@ jQueryAjaxPost = form => {
                     $('#form-modal .modal-body').html('');
                     $('#form-modal .modal-title').html('');
                     $('#form-modal').modal('hide');
+                    if(res.type=="help")
+                    helpDatatable();
+                    else if(res.type=="user")
                     userDatatable();
                     $('#success-toast .success-toast-title').html(res.messgaeTitle);
                     $('#success-toast .success-toast-body').html(res.messageBody);
                     new bootstrap.Toast(document.getElementById('success-toast')).show();
-
                 }
                 else if (res.status=="validation-error") {
                     $('#form-modal .modal-body').html(res.html);
@@ -247,6 +261,9 @@ jQueryAjaxPost = form => {
                     $('#form-modal .modal-body').html('');
                     $('#form-modal .modal-title').html('');
                     $('#form-modal').modal('hide');
+                    if(res.type=="help")
+                    helpDatatable();
+                    else if(res.type=="user")
                     userDatatable();
                     $('#error-toast .error-toast-title').html(res.messgaeTitle);
                     $('#error-toast .error-toast-body').html(res.messageBody);

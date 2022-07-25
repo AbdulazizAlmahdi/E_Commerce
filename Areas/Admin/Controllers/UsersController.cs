@@ -87,10 +87,10 @@ namespace e_commerce.Areas.Admin.Controllers
                 }
                 catch (Exception e)
                 {
-                    var exception= e.InnerException.Message;
-                return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "_ViewAll"),messgaeTitle=id==0?"إضافة المستخدم":"تعديل المستخدم",messageBody=id==0?"حدث خطأ أثناء إضافة المستخدم":"حدث خطأ أثناء تعديل المستخدم" });
+                    var exception = e.InnerException.Message;
+                    return Json(new { status = "error", type = "user", html = Helper.RenderRazorViewToString(this, "_ViewAll"), messgaeTitle = id == 0 ? "إضافة المستخدم" : "تعديل المستخدم", messageBody = id == 0 ? "حدث خطأ أثناء إضافة المستخدم" : "حدث خطأ أثناء تعديل المستخدم" });
                 }
-                return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "_ViewAll"),messgaeTitle=id==0?"إضافة المستخدم":"تعديل المستخدم",messageBody=id==0?"تمت إضافة المستخدم بنجاح":"تم تعديل المستخدم بنجاح"});
+                return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "_ViewAll"), messgaeTitle = id == 0 ? "إضافة المستخدم" : "تعديل المستخدم", messageBody = id == 0 ? "تمت إضافة المستخدم بنجاح" : "تم تعديل المستخدم بنجاح" });
 
             }
             else
@@ -109,29 +109,37 @@ namespace e_commerce.Areas.Admin.Controllers
         }
         public IActionResult GetUser(string q)
         {
-           IEnumerable<SelectListItem> usersList = Enumerable.Empty<SelectListItem>();
-           if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-               usersList = users.show(int.Parse(HttpContext.Session.GetString("_UserId") ?? "1")).Where(u => u.Name.Contains(q)).Select(
-                   u => new SelectListItem
-                   {
-                       Text = u.Name,
-                       Id = u.Id
-                   }
-                   );
-           return Json(new { items = usersList });
+            IEnumerable<SelectListItem> usersList = Enumerable.Empty<SelectListItem>();
+            if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
+                usersList = users.show(int.Parse(HttpContext.Session.GetString("_UserId") ?? "1")).Where(u => u.Name.Contains(q)).Select(
+                    u => new SelectListItem
+                    {
+                        Text = u.Name,
+                        Id = u.Id
+                    }
+                    );
+            return Json(new { items = usersList });
         }
-       
-         [NoDirectAccess]
+
+        [NoDirectAccess]
         public ActionResult Delete(int id)
         {
             return View(id);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id,string x)
+        public ActionResult Delete(int id, string x)
         {
-            users.Delete(id);
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", null), messgaeTitle = "حذف المستخدم", messageBody = "تم حذف المستخدم بنجاح" });
+            try
+            {
+                users.Delete(id);
+                return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "_ViewAll", null), messgaeTitle = "حذف المستخدم", messageBody = "تم حذف المستخدم بنجاح" });
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = "error", type = "user", html = Helper.RenderRazorViewToString(this, "_ViewAll", null), messgaeTitle = "حذف المستخدم", messageBody = "حدث خطأ أثناء حذف المستخدم" });
+            }
         }
         private IEnumerable<User> getAllUsers(int page = 1, string name = "")
         {

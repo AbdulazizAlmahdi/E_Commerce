@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using static e_commerce.Helper;
+using e_commerce;
 
 namespace E_commerce.Areas.Admin.Controllers
 {
@@ -83,6 +84,23 @@ namespace E_commerce.Areas.Admin.Controllers
             }
         }
 
-
+          [NoDirectAccess]
+        public ActionResult IgnoreOrder(int id)
+        {
+            return View(id);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult IgnoreOrder(int id,string x)
+        {
+            try{                
+            Help help = helpRepository.Find(id);
+            help.status = true;
+            helpRepository.Update(help);
+            return Json(new { status = "success",type="help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "تجاهل طلب المساعدة", messageBody = "تم تجاهل طلب المساعدة" });
+        }catch(Exception ex){
+            return Json(new { status = "error",type="help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "خطأ", messageBody = "حدث خطأ أثناء تجاهل طلب المساعدة" });
+        }
+        }
     }
 }
