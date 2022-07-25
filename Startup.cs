@@ -96,7 +96,7 @@ options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoop
                 //});
             });
 
-            SeedData.Seeddb(webContext);
+            //SeedData.Seeddb(webContext);
         }
     }
 }
