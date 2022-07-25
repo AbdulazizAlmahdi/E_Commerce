@@ -9,13 +9,13 @@
 </div>
 <div class="card-body px-sm-4 mb-2 pt-1 pb-0">
     <div class="row justify-content-end no-gutters">
-        <div class="col-auto"><button type="button" class="btn btn-light text-muted close"
+        <div class="col-auto"><button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
                 data-dismiss="modal">الغاء</button></div>
         <div class="col-auto">
             <Form asp-action="IgnoreOrder"
             onsubmit="return jQueryAjaxPost(this);">
                 <input type="hidden" name="id" value="@Model" />
-                <button type="submit" class="btn btn-danger px-4" data-dismiss="modal">تجاهل</button>
+                <button type="submit" class="btn btn-label-warning" data-dismiss="modal">تجاهل</button>
             </Form>
         </div>
     </div>

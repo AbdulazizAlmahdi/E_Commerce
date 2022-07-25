@@ -17,7 +17,8 @@ namespace E_commerce.Models.Repositories
 
         public void Add(Help entity)
         {
-            throw new NotImplementedException();
+            context.Add(entity);
+            context.SaveChanges();
         }
 
         public void Delete(int ID)

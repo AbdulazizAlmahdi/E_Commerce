@@ -47,7 +47,25 @@ namespace E_commerce.Areas.Admin.Controllers
                 return View(model);
             }
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateAndEdit(HelpViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try{
+                        model.help.CreatedAt = DateTime.Now;
+                        model.help.status = false;
+                        helpRepository.Add(model.help);
+                        return Json(new { status="success",type="help",html=RenderRazorViewToString(this,"HelpTable"), messgaeTitle="إضافة مساعدة", messageBody="تمت إضافة المساعدة بنجاح" });
+                }catch(Exception ex){
+                 return Json(new { status = "error", type = "help", html = Helper.RenderRazorViewToString(this, "HelpTable"), messgaeTitle ="إضافة مساعدة" , messageBody = "حدث خطأ أثناء إضافة مساعدة" });
 
+                }
+                   
+            }
+            return View(model);
+        }
         public IActionResult GetHelpData()
         {
             try
