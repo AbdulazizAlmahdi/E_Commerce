@@ -44,8 +44,7 @@ namespace E_commerce.Models
         public DateTime? UpdatedAt { get; set; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? DeletedAt { get; set; }
- 
-        public int UserStatusId { get; set; }
+        public string Status { get; set; }
         [ForeignKey("PhoneId")]
         public int PhoneId { get; set; }
         [ForeignKey("PlaceId")]
@@ -55,7 +54,6 @@ namespace E_commerce.Models
         public int? UsersId { get; set; }   
         public virtual Phone Phone { get; set; }
         public virtual Place Place { get; set; }
-        public virtual UserStatus UserStatus { get; set; }
         [JsonIgnore]
         [IgnoreDataMember]
         public virtual User Users { get; set; }

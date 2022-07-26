@@ -51,7 +51,7 @@
         <form class="row g-3 needs-validation" asp-action="CreateOrEdit" asp-route-id="@Model.user.Id"
             onsubmit="return jQueryAjaxPost(this);">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" value="1" asp-for="@Model.user.UserStatusId" />
+            <input type="hidden" value="1" asp-for="@Model.user.Status" />
             <input type="hidden" asp-for="@Model.user.Id" name="id"/>
             <input type="hidden" asp-for="@Model.user.Phone.Id"/>
             <input type="hidden" asp-for="@Model.user.CreatedAt"/>

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Migrations
 {
     [DbContext(typeof(WebContext))]
-    [Migration("20220726111956_initial")]
+    [Migration("20220726174152_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,6 +169,9 @@ namespace E_commerce.Migrations
                         .HasColumnType("int")
                         .HasColumnName("PhoneID");
 
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Subject")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -176,9 +179,6 @@ namespace E_commerce.Migrations
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("status")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -538,12 +538,11 @@ namespace E_commerce.Migrations
                         .HasColumnType("int")
                         .HasColumnName("PlaceID");
 
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("UserStatusId")
-                        .HasColumnType("int")
-                        .HasColumnName("UserStatusID");
 
                     b.Property<int?>("UsersId")
                         .HasColumnType("int")
@@ -556,27 +555,9 @@ namespace E_commerce.Migrations
 
                     b.HasIndex(new[] { "PlaceId" }, "IX_Users_PlaceID");
 
-                    b.HasIndex(new[] { "UserStatusId" }, "IX_Users_UserStatusID");
-
                     b.HasIndex(new[] { "UsersId" }, "IX_Users_UsersID");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("E_commerce.Models.UserStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("ID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserStatus");
                 });
 
             modelBuilder.Entity("test_app.Models.Customer", b =>
@@ -773,12 +754,6 @@ namespace E_commerce.Migrations
                         .WithMany("Users")
                         .HasForeignKey("PlaceId");
 
-                    b.HasOne("E_commerce.Models.UserStatus", "UserStatus")
-                        .WithMany("Users")
-                        .HasForeignKey("UserStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("E_commerce.Models.User", "Users")
                         .WithMany("InverseUsers")
                         .HasForeignKey("UsersId");
@@ -788,8 +763,6 @@ namespace E_commerce.Migrations
                     b.Navigation("Place");
 
                     b.Navigation("Users");
-
-                    b.Navigation("UserStatus");
                 });
 
             modelBuilder.Entity("E_commerce.Models.Auction", b =>
@@ -857,11 +830,6 @@ namespace E_commerce.Migrations
                     b.Navigation("Purchase");
 
                     b.Navigation("RolesUsers");
-                });
-
-            modelBuilder.Entity("E_commerce.Models.UserStatus", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

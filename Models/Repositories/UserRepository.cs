@@ -21,7 +21,7 @@ namespace E_commerce.Models.Repositories
         }
         List<User> GetChild(int id,String name="")
         {
-            var users = context.Users.Where(x => (x.UsersId == id || x.Id == id) &&x.Name.Contains(name)).Include(u => u.Place).Include(u => u.Phone).Include(u => u.UserStatus).ToList();
+            var users = context.Users.Where(x => (x.UsersId == id || x.Id == id) &&x.Name.Contains(name)).Include(u => u.Place).Include(u => u.Phone).ToList();
 
             var childUsers = users.AsEnumerable().Union(
                                         context.Users.AsEnumerable().Where(x => x.UsersId == id).SelectMany(y => GetChild(y.Id,name))).ToList();

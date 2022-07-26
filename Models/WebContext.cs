@@ -36,7 +36,6 @@ namespace E_commerce.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RolesUser> RolesUsers { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserStatus> UserStatuses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -315,8 +314,6 @@ namespace E_commerce.Models
 
                 entity.HasIndex(e => e.PlaceId, "IX_Users_PlaceID");
 
-                entity.HasIndex(e => e.UserStatusId, "IX_Users_UserStatusID");
-
                 entity.HasIndex(e => e.UsersId, "IX_Users_UsersID");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
@@ -327,7 +324,6 @@ namespace E_commerce.Models
 
                 entity.Property(e => e.PlaceId).HasColumnName("PlaceID");
 
-                entity.Property(e => e.UserStatusId).HasColumnName("UserStatusID");
 
                 entity.Property(e => e.UsersId).HasColumnName("UsersID");
 
@@ -339,10 +335,6 @@ namespace E_commerce.Models
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.PlaceId);
 
-                entity.HasOne(d => d.UserStatus)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.UserStatusId);
-
                 entity.HasOne(d => d.Users)
                     .WithMany(p => p.InverseUsers)
                     .HasForeignKey(d => d.UsersId);
@@ -350,12 +342,6 @@ namespace E_commerce.Models
            
             });
 
-            modelBuilder.Entity<UserStatus>(entity =>
-            {
-                entity.ToTable("UserStatus");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-            });
 
             OnModelCreatingPartial(modelBuilder);
         }

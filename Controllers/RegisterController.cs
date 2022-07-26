@@ -112,7 +112,7 @@ namespace E_commerce.Controllers
                 Password = password,
                 CreatedAt = DateTime.Now,
                 PlaceId = 3,
-                UserStatusId = 2
+                Status = "active"
             });
 
             db.SaveChanges();

@@ -97,19 +97,6 @@ namespace E_commerce.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserStatus",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserStatus", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -174,7 +161,7 @@ namespace E_commerce.Migrations
                     Subject = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Details = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PhoneID = table.Column<int>(type: "int", nullable: true),
-                    status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -201,7 +188,7 @@ namespace E_commerce.Migrations
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserStatusID = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneID = table.Column<int>(type: "int", nullable: false),
                     PlaceID = table.Column<int>(type: "int", nullable: true),
                     UsersID = table.Column<int>(type: "int", nullable: true)
@@ -227,12 +214,6 @@ namespace E_commerce.Migrations
                         principalTable: "Users",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_UserStatus_UserStatusID",
-                        column: x => x.UserStatusID,
-                        principalTable: "UserStatus",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -553,11 +534,6 @@ namespace E_commerce.Migrations
                 name: "IX_Users_UsersID",
                 table: "Users",
                 column: "UsersID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_UserStatusID",
-                table: "Users",
-                column: "UserStatusID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -612,9 +588,6 @@ namespace E_commerce.Migrations
 
             migrationBuilder.DropTable(
                 name: "Places");
-
-            migrationBuilder.DropTable(
-                name: "UserStatus");
         }
     }
 }

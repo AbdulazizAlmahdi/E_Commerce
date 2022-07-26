@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Models.Repositories
 {
-    public class CategoryRepository : ICategoryRepositry
+    public class CategoryRepository : IRepository<Category>
     {
-        public readonly WebContext db;
+        public readonly WebContext context;
 
 
 
-        public CategoryRepository(WebContext ctx)
+        public CategoryRepository(WebContext context)
         {
-            db = ctx;
+            this.context = context;
         }
         public void Add(Category entity)
         {
-            db.Categories.Add(entity);
-            db.SaveChanges();
+            context.Categories.Add(entity);
+            context.SaveChanges();
             
         }
 
@@ -38,18 +38,31 @@ namespace E_commerce.Models.Repositories
             throw new NotImplementedException();
         }
 
+        public Category Find(string Text)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Category> List()
         {
-            return db.Categories;
+            return context.Categories;
+        }
+
+        public IQueryable<Category> show(int? ID, string name = "")
+        {
+            return context.Categories;
         }
 
         public void Update(Category entity)
         {
             throw new NotImplementedException();
         }
+
+        void IRepository<Category>.Delete(int ID)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public interface ICategoryRepositry<T>
-    {
-    }
+    
 }

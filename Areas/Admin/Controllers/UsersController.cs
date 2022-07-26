@@ -18,13 +18,13 @@ namespace e_commerce.Areas.Admin.Controllers
     [Area("Admin")]
     public class UsersController : Controller
     {
-        private IRepository<User> users;
+        private IRepository<User> usersRepository;
         private IRepository<Place> places;
         private IRepository<Phone> phone;
 
         public UsersController(IRepository<User> usersRepository, IRepository<Place> placesRepository, IRepository<Phone> phoneRepository)
         {
-            this.users = usersRepository;
+            this.usersRepository = usersRepository;
             this.places = placesRepository;
             this.phone = phoneRepository;
         }
@@ -54,7 +54,7 @@ namespace e_commerce.Areas.Admin.Controllers
                 var model = new UserViewModel
                 {
                     places = places.show(null).ToList(),
-                    user = users.Find(id),
+                    user = usersRepository.Find(id),
 
                 };
                 return View(model);
@@ -75,22 +75,22 @@ namespace e_commerce.Areas.Admin.Controllers
 
                         userViewModel.user.UsersId = Convert.ToInt32(UsersId);
                         userViewModel.user.CreatedAt = DateTime.Now;
-                        users.Add(userViewModel.user);
+                        usersRepository.Add(userViewModel.user);
                     }
                     else
                     {
                         userViewModel.user.UsersId = Convert.ToInt32(UsersId);
                         userViewModel.user.Id = Convert.ToInt32(id);
                         userViewModel.user.UpdatedAt = DateTime.Now;
-                        users.Update(userViewModel.user);
+                        usersRepository.Update(userViewModel.user);
                     }
                 }
                 catch (Exception e)
                 {
                     var exception = e.InnerException.Message;
-                    return Json(new { status = "error", type = "user", html = Helper.RenderRazorViewToString(this, "_ViewAll"), messgaeTitle = id == 0 ? "إضافة المستخدم" : "تعديل المستخدم", messageBody = id == 0 ? "حدث خطأ أثناء إضافة المستخدم" : "حدث خطأ أثناء تعديل المستخدم" });
+                    return Json(new { status = "error", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = id == 0 ? "إضافة المستخدم" : "تعديل المستخدم", messageBody = id == 0 ? "حدث خطأ أثناء إضافة المستخدم" : "حدث خطأ أثناء تعديل المستخدم" });
                 }
-                return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "_ViewAll"), messgaeTitle = id == 0 ? "إضافة المستخدم" : "تعديل المستخدم", messageBody = id == 0 ? "تمت إضافة المستخدم بنجاح" : "تم تعديل المستخدم بنجاح" });
+                return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = id == 0 ? "إضافة المستخدم" : "تعديل المستخدم", messageBody = id == 0 ? "تمت إضافة المستخدم بنجاح" : "تم تعديل المستخدم بنجاح" });
 
             }
             else
@@ -111,7 +111,7 @@ namespace e_commerce.Areas.Admin.Controllers
         {
             IEnumerable<SelectListItem> usersList = Enumerable.Empty<SelectListItem>();
             if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-                usersList = users.show(int.Parse(HttpContext.Session.GetString("_UserId") ?? "1")).Where(u => u.Name.Contains(q)).Select(
+                usersList = usersRepository.show(int.Parse(HttpContext.Session.GetString("_UserId") ?? "1")).Where(u => u.Name.Contains(q)).Select(
                     u => new SelectListItem
                     {
                         Text = u.Name,
@@ -132,13 +132,13 @@ namespace e_commerce.Areas.Admin.Controllers
         {
             try
             {
-                users.Delete(id);
-                return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "_ViewAll", null), messgaeTitle = "حذف المستخدم", messageBody = "تم حذف المستخدم بنجاح" });
+                usersRepository.Delete(id);
+                return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable", null), messgaeTitle = "حذف المستخدم", messageBody = "تم حذف المستخدم بنجاح" });
 
             }
             catch (Exception e)
             {
-                return Json(new { status = "error", type = "user", html = Helper.RenderRazorViewToString(this, "_ViewAll", null), messgaeTitle = "حذف المستخدم", messageBody = "حدث خطأ أثناء حذف المستخدم" });
+                return Json(new { status = "error", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable", null), messgaeTitle = "حذف المستخدم", messageBody = "حدث خطأ أثناء حذف المستخدم" });
             }
         }
         private IEnumerable<User> getAllUsers(int page = 1, string name = "")
@@ -147,11 +147,11 @@ namespace e_commerce.Areas.Admin.Controllers
             const int pageSize = 10;
             if (page < 1)
                 page = 1;
-            int Count = users.show(UserID, name).Count();
+            int Count = usersRepository.show(UserID, name).Count();
             var pagingInfo = new PagingInfo(Count, page, pageSize);
             pagingInfo.PageName = "Users";
             int recSkip = (page - 1) * pageSize;
-            var data = users.show(UserID, name).Skip(recSkip).Take(pagingInfo.ItemsPerPage).ToList();
+            var data = usersRepository.show(UserID, name).Skip(recSkip).Take(pagingInfo.ItemsPerPage).ToList();
             this.ViewBag.PagingInfo = pagingInfo;
             return data;
         }
@@ -169,7 +169,7 @@ namespace e_commerce.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                IQueryable<User> usersData = users.show(1);
+                IQueryable<User> usersData = usersRepository.show(1);
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
                     usersData = usersData.OrderBy(sortColumn + " " + sortColumnDirection);

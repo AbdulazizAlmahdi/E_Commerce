@@ -79,24 +79,7 @@ namespace E_commerce.Models
                     );
 
                 webContext.SaveChanges();
-            }
-            if (!webContext.UserStatuses.Any())
-            {
-                webContext.AddRange(
-                    new UserStatus
-                    {
-                        Name = "active",
-
-                    },
-                    new UserStatus
-                    {
-                        Name = "not-active",
-
-                    }
-                    );
-
-                webContext.SaveChanges();
-            }
+            }        
             if (!webContext.Phones.Any())
             {
                 for(int i = 0; i < 500; i++)
@@ -121,7 +104,6 @@ namespace E_commerce.Models
                 {
                     Phone phone = webContext.Phones.Single(r => r.Number == "+96777711111"+i.ToString());
                     Place place = webContext.Places.Single(r => r.Name == "taiz");
-                    UserStatus userStatusOne = webContext.UserStatuses.Single(r => r.Name == "active");
 
                     webContext.AddRange(
                     new User
@@ -131,7 +113,7 @@ namespace E_commerce.Models
                         Password = "abc123",
                         Phone = phone,
                         Place = place,
-                        UserStatus = userStatusOne,
+                        Status = "active",
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     }
