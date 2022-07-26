@@ -207,9 +207,9 @@ helpDatatable = () => {
                 "targets": [1],
                 render : function (data, type, row) {
                     switch(data) {
-                       case true : return 'تم حل المشكلة'; break;
-                       case false : return 'لم يتم حل المشكلة'; break;
-                       default  : return 'تم حل المشكلة';
+                       case "Solved" : return 'تم حل المشكلة'; break;
+                       case "Unsolved" : return 'تم تجاهل المشكلة'; break;
+                       default  : return 'لم يتم حل المشكلة'; break;
                     }
                   }
             },],
@@ -223,6 +223,8 @@ helpDatatable = () => {
                             "render": function (data, type, row) {
                                 return `<button onClick="showInPopup('/Admin/Help/CreateAndEdit/' + ${row.id}, 'عرض الطلب')" class="btn btn-primary btn-sm">عرض الطلب</button>`+
                                 `<span>&nbsp;</span>`+
+                                `<button onClick="showInPopup('/Admin/Help/SolveOrder/' + ${row.id}, 'حل الطلب')" class="btn btn-primary btn-sm">حل الطلب</button>`+
+                                    `<span>&nbsp;</span>`+
                                     `<button onClick="showInPopup('/Admin/Help/IgnoreOrder/' + ${row.id}, 'تجاهل الطلب')" class="btn btn-primary btn-sm">تجاهل الطلب</button>`;
                             }
                         },

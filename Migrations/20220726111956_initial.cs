@@ -3,10 +3,51 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace E_commerce.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
+                    CreatedByUserID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categories_Categories_CreatedByUserID",
+                        column: x => x.CreatedByUserID,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Contact = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customer", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Permissions",
                 columns: table => new
@@ -26,11 +67,9 @@ namespace E_commerce.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Number = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,7 +82,7 @@ namespace E_commerce.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", maxLength: 50, nullable: false),
                     PlaceID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -68,6 +107,42 @@ namespace E_commerce.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserStatus", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameAR = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NameEN = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Report = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
+                    DetailsAR = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DetailsEN = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Views = table.Column<int>(type: "int", nullable: false),
+                    Discount = table.Column<int>(type: "int", nullable: false),
+                    Evaluation = table.Column<int>(type: "int", nullable: false),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CategoryID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,9 +171,12 @@ namespace E_commerce.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Details = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneID = table.Column<int>(type: "int", nullable: true)
+                    Subject = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Details = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PhoneID = table.Column<int>(type: "int", nullable: true),
+                    status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -123,11 +201,8 @@ namespace E_commerce.Migrations
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedByUserID = table.Column<int>(type: "int", nullable: true),
-                    UpdatedByUserID = table.Column<int>(type: "int", nullable: true),
-                    DeletedByUserID = table.Column<int>(type: "int", nullable: true),
                     UserStatusID = table.Column<int>(type: "int", nullable: false),
-                    PhoneID = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    PhoneID = table.Column<int>(type: "int", nullable: false),
                     PlaceID = table.Column<int>(type: "int", nullable: true),
                     UsersID = table.Column<int>(type: "int", nullable: true)
                 },
@@ -147,24 +222,6 @@ namespace E_commerce.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Users_Users_CreatedByUserID",
-                        column: x => x.CreatedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_Users_DeletedByUserID",
-                        column: x => x.DeletedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_Users_UpdatedByUserID",
-                        column: x => x.UpdatedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Users_Users_UsersID",
                         column: x => x.UsersID,
                         principalTable: "Users",
@@ -176,151 +233,6 @@ namespace E_commerce.Migrations
                         principalTable: "UserStatus",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedByUserID = table.Column<int>(type: "int", nullable: true),
-                    UpdatedByUserID = table.Column<int>(type: "int", nullable: true),
-                    DeletedByUserID = table.Column<int>(type: "int", nullable: true),
-                    CategoryID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Categories_Categories_CategoryID",
-                        column: x => x.CategoryID,
-                        principalTable: "Categories",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Categories_Users_CreatedByUserID",
-                        column: x => x.CreatedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Categories_Users_DeletedByUserID",
-                        column: x => x.DeletedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Categories_Users_UpdatedByUserID",
-                        column: x => x.UpdatedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ImagesUser",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    userID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ImagesUser", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ImagesUser_Users_userID",
-                        column: x => x.userID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RolesUsers",
-                columns: table => new
-                {
-                    RolesID = table.Column<int>(type: "int", nullable: false),
-                    UsersID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RolesUsers", x => new { x.RolesID, x.UsersID });
-                    table.ForeignKey(
-                        name: "FK_RolesUsers_Roles_RolesID",
-                        column: x => x.RolesID,
-                        principalTable: "Roles",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RolesUsers_Users_UsersID",
-                        column: x => x.UsersID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NameAR = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NameEN = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Report = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
-                    DetailsAR = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DetailsEN = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Duration = table.Column<int>(type: "int", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Views = table.Column<int>(type: "int", nullable: false),
-                    Discount = table.Column<int>(type: "int", nullable: false),
-                    Evaluation = table.Column<int>(type: "int", nullable: false),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedByUserID = table.Column<int>(type: "int", nullable: true),
-                    UpdatedByUserID = table.Column<int>(type: "int", nullable: true),
-                    DeletedByUserID = table.Column<int>(type: "int", nullable: true),
-                    CategoryID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryID",
-                        column: x => x.CategoryID,
-                        principalTable: "Categories",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Products_Users_CreatedByUserID",
-                        column: x => x.CreatedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Products_Users_DeletedByUserID",
-                        column: x => x.DeletedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Products_Users_UpdatedByUserID",
-                        column: x => x.UpdatedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -343,6 +255,26 @@ namespace E_commerce.Migrations
                         principalTable: "Products",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImagesProduct",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImagesProduct", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ImagesProduct_Products_ProductID",
+                        column: x => x.ProductID,
+                        principalTable: "Products",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -373,21 +305,21 @@ namespace E_commerce.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ImagesProduct",
+                name: "ImagesUser",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProductID = table.Column<int>(type: "int", nullable: true)
+                    userID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ImagesProduct", x => x.ID);
+                    table.PrimaryKey("PK_ImagesUser", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_ImagesProduct_Products_ProductID",
-                        column: x => x.ProductID,
-                        principalTable: "Products",
+                        name: "FK_ImagesUser_Users_userID",
+                        column: x => x.userID,
+                        principalTable: "Users",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -406,9 +338,6 @@ namespace E_commerce.Migrations
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedByUserID = table.Column<int>(type: "int", nullable: true),
-                    UpdatedByUserID = table.Column<int>(type: "int", nullable: true),
-                    DeletedByUserID = table.Column<int>(type: "int", nullable: true),
                     UserID = table.Column<int>(type: "int", nullable: false),
                     ProductID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -422,26 +351,32 @@ namespace E_commerce.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Purchases_Users_CreatedByUserID",
-                        column: x => x.CreatedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Purchases_Users_DeletedByUserID",
-                        column: x => x.DeletedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Purchases_Users_UpdatedByUserID",
-                        column: x => x.UpdatedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Purchases_Users_UserID",
                         column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RolesUsers",
+                columns: table => new
+                {
+                    RolesID = table.Column<int>(type: "int", nullable: false),
+                    UsersID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RolesUsers", x => new { x.RolesID, x.UsersID });
+                    table.ForeignKey(
+                        name: "FK_RolesUsers_Roles_RolesID",
+                        column: x => x.RolesID,
+                        principalTable: "Roles",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RolesUsers_Users_UsersID",
+                        column: x => x.UsersID,
                         principalTable: "Users",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -485,9 +420,6 @@ namespace E_commerce.Migrations
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedByUserID = table.Column<int>(type: "int", nullable: true),
-                    UpdatedByUserID = table.Column<int>(type: "int", nullable: true),
-                    DeletedByUserID = table.Column<int>(type: "int", nullable: true),
                     PurchaseID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -497,24 +429,6 @@ namespace E_commerce.Migrations
                         name: "FK_Payments_Purchases_PurchaseID",
                         column: x => x.PurchaseID,
                         principalTable: "Purchases",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Payments_Users_CreatedByUserID",
-                        column: x => x.CreatedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Payments_Users_DeletedByUserID",
-                        column: x => x.DeletedByUserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Payments_Users_UpdatedByUserID",
-                        column: x => x.UpdatedByUserID,
-                        principalTable: "Users",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -548,24 +462,9 @@ namespace E_commerce.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_CategoryID",
-                table: "Categories",
-                column: "CategoryID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Categories_CreatedByUserID",
                 table: "Categories",
                 column: "CreatedByUserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Categories_DeletedByUserID",
-                table: "Categories",
-                column: "DeletedByUserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Categories_UpdatedByUserID",
-                table: "Categories",
-                column: "UpdatedByUserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ProductID",
@@ -593,31 +492,9 @@ namespace E_commerce.Migrations
                 column: "userID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_CreatedByUserID",
-                table: "Payments",
-                column: "CreatedByUserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Payments_DeletedByUserID",
-                table: "Payments",
-                column: "DeletedByUserID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Payments_PurchaseID",
                 table: "Payments",
                 column: "PurchaseID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Payments_UpdatedByUserID",
-                table: "Payments",
-                column: "UpdatedByUserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Phone_Number",
-                table: "Phones",
-                column: "Number",
-                unique: true,
-                filter: "[Number] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Places_PlaceID",
@@ -630,31 +507,6 @@ namespace E_commerce.Migrations
                 column: "CategoryID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_CreatedByUserID",
-                table: "Products",
-                column: "CreatedByUserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_DeletedByUserID",
-                table: "Products",
-                column: "DeletedByUserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_UpdatedByUserID",
-                table: "Products",
-                column: "UpdatedByUserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Purchases_CreatedByUserID",
-                table: "Purchases",
-                column: "CreatedByUserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Purchases_DeletedByUserID",
-                table: "Purchases",
-                column: "DeletedByUserID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Purchases_ProductID",
                 table: "Purchases",
                 column: "ProductID",
@@ -664,11 +516,6 @@ namespace E_commerce.Migrations
                 name: "IX_Purchases_ProductID1",
                 table: "Purchases",
                 column: "ProductID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Purchases_UpdatedByUserID",
-                table: "Purchases",
-                column: "UpdatedByUserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purchases_UserID",
@@ -692,16 +539,6 @@ namespace E_commerce.Migrations
                 column: "UsersID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_CreatedByUserID",
-                table: "Users",
-                column: "CreatedByUserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_DeletedByUserID",
-                table: "Users",
-                column: "DeletedByUserID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Users_PhoneID",
                 table: "Users",
                 column: "PhoneID",
@@ -711,11 +548,6 @@ namespace E_commerce.Migrations
                 name: "IX_Users_PlaceID",
                 table: "Users",
                 column: "PlaceID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_UpdatedByUserID",
-                table: "Users",
-                column: "UpdatedByUserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_UsersID",
@@ -735,6 +567,9 @@ namespace E_commerce.Migrations
 
             migrationBuilder.DropTable(
                 name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "Customer");
 
             migrationBuilder.DropTable(
                 name: "Helps");
@@ -764,13 +599,13 @@ namespace E_commerce.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "Permissions");
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Phones");

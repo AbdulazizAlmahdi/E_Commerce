@@ -53,16 +53,18 @@ namespace E_commerce.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                try{
-                        model.help.CreatedAt = DateTime.Now;
-                        model.help.status = false;
-                        helpRepository.Add(model.help);
-                        return Json(new { status="success",type="help",html=RenderRazorViewToString(this,"HelpTable"), messgaeTitle="إضافة مساعدة", messageBody="تمت إضافة المساعدة بنجاح" });
-                }catch(Exception ex){
-                 return Json(new { status = "error", type = "help", html = Helper.RenderRazorViewToString(this, "HelpTable"), messgaeTitle ="إضافة مساعدة" , messageBody = "حدث خطأ أثناء إضافة مساعدة" });
+                try
+                {
+                    model.help.CreatedAt = DateTime.Now;
+                    helpRepository.Add(model.help);
+                    return Json(new { status = "success", type = "help", html = RenderRazorViewToString(this, "HelpTable"), messgaeTitle = "إضافة مساعدة", messageBody = "تمت إضافة المساعدة بنجاح" });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { status = "error", type = "help", html = Helper.RenderRazorViewToString(this, "HelpTable"), messgaeTitle = "إضافة مساعدة", messageBody = "حدث خطأ أثناء إضافة مساعدة" });
 
                 }
-                   
+
             }
             return View(model);
         }
@@ -102,23 +104,47 @@ namespace E_commerce.Areas.Admin.Controllers
             }
         }
 
-          [NoDirectAccess]
-        public ActionResult IgnoreOrder(int id)
+        [NoDirectAccess]
+        public ActionResult IgnoreOrder(int? id)
         {
             return View(id);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult IgnoreOrder(int id,string x)
+        public ActionResult IgnoreOrder(int id)
         {
-            try{                
-            Help help = helpRepository.Find(id);
-            help.status = true;
-            helpRepository.Update(help);
-            return Json(new { status = "success",type="help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "تجاهل طلب المساعدة", messageBody = "تم تجاهل طلب المساعدة" });
-        }catch(Exception ex){
-            return Json(new { status = "error",type="help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "خطأ", messageBody = "حدث خطأ أثناء تجاهل طلب المساعدة" });
+            try
+            {
+                Help help = helpRepository.Find(id);
+                help.status = "Unsolved";
+                helpRepository.Update(help);
+                return Json(new { status = "success", type = "help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "تجاهل طلب المساعدة", messageBody = "تم تجاهل طلب المساعدة" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", type = "help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "خطأ", messageBody = "حدث خطأ أثناء تجاهل طلب المساعدة" });
+            }
         }
+        public ActionResult SolveOrder(int? id)
+        {
+            return View(id);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SolveOrder(int id)
+        {
+            try
+            {
+                Help help = helpRepository.Find(id);
+                help.status = "Solved";
+                helpRepository.Update(help);
+                return Json(new { status = "success", type = "help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "حل طلب المساعدة", messageBody = "تم حل طلب المساعدة" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", type = "help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "خطأ", messageBody = "حدث خطأ أثناء حل طلب المساعدة" });
+            }
+        }
+
     }
 }

@@ -140,6 +140,27 @@ namespace E_commerce.Models
                     webContext.SaveChanges();
                 }
             }
+            if (!webContext.Helps.Any())
+            {
+                
+                for (int i = 0; i < 500; i++)
+                {
+                    Phone phone = webContext.Phones.Single(r => r.Number == "+96777711111"+i.ToString());
+
+                    webContext.AddRange(
+                    new Help
+                    {
+                        Subject = RandomString(20),
+                        Details = RandomString(20),
+                        Phone = phone,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow
+                    }
+                    );
+
+                    webContext.SaveChanges();
+                }
+            }
             if (!webContext.Categories.Any())
             {
                 for (int i = 0; i < 10; i++)
