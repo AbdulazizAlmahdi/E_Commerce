@@ -12,6 +12,7 @@
 $(document).ready(function () {
     userDatatable();
     helpDatatable();
+    categoryDatatable();
 });
 userDatatable = () => {
     $("#userDatatable").DataTable({
@@ -140,7 +141,7 @@ helpDatatable = () => {
                 text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة مساعدة</span>',
                 className: 'dt-button create-new btn btn-primary m-2',
                 action: function (e, dt, node, config) {
-                    showInPopup('/Admin/Help/CreateAndEdit', 'إضافة المساعدة');
+                    showInPopup('/Admin/Help/CreateOrEdit', 'إضافة المساعدة');
                 },
             },
             {
@@ -222,7 +223,7 @@ helpDatatable = () => {
             { "data": "createdAt", "name": "createdAt", "autoWidth": true },
             {
                 "render": function (data, type, row) {
-                    return `<button onClick="showInPopup('/Admin/Help/CreateAndEdit/' + ${row.id}, 'عرض الطلب')" class="btn btn-primary btn-sm">عرض الطلب</button>` +
+                    return `<button onClick="showInPopup('/Admin/Help/CreateOrEdit/' + ${row.id}, 'عرض الطلب')" class="btn btn-primary btn-sm">عرض الطلب</button>` +
                         `<span>&nbsp;</span>` +
                         `<button onClick="showInPopup('/Admin/Help/SolveOrder/' + ${row.id}, 'حل الطلب')" class="btn btn-primary btn-sm">حل الطلب</button>` +
                         `<span>&nbsp;</span>` +
@@ -237,57 +238,7 @@ helpDatatable = () => {
     });
 }
 
-jQueryAjaxPost = form => {
-    try {
-        $.ajax({
-            type: 'POST',
-            url: form.action,
-            data: new FormData(form),
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                if (res.status == "success") {
-                    $('#view-all').html(res.html)
-                    $('#form-modal .modal-body').html('');
-                    $('#form-modal .modal-title').html('');
-                    $('#form-modal').modal('hide');
-                    if (res.type == "help")
-                        helpDatatable();
-                    else if (res.type == "user")
-                        userDatatable();
-                    $('#success-toast .success-toast-title').html(res.messgaeTitle);
-                    $('#success-toast .success-toast-body').html(res.messageBody);
-                    new bootstrap.Toast(document.getElementById('success-toast')).show();
-                }
-                else if (res.status == "validation-error") {
-                    $('#form-modal .modal-body').html(res.html);
-                }
-                else {
-                    console.log("Error");
-                    $('#view-all').html(res.html)
-                    $('#form-modal .modal-body').html('');
-                    $('#form-modal .modal-title').html('');
-                    $('#form-modal').modal('hide');
-                    if (res.type == "help")
-                        helpDatatable();
-                    else if (res.type == "user")
-                        userDatatable();
-                    $('#error-toast .error-toast-title').html(res.messgaeTitle);
-                    $('#error-toast .error-toast-body').html(res.messageBody);
-                    new bootstrap.Toast(document.getElementById('error-toast')).show();
-                }
-            },
-            error: function (err) {
-                console.log(err)
-            }
-        })
-        //to prevent default form submit event
-        return false;
-    } catch (ex) {
-        console.log(ex)
-    }
-}
-userDatatable = () => {
+categoryDatatable = () => {
     $("#category-datatable").DataTable({
         processing: true,
         serverSide: true,
@@ -303,10 +254,10 @@ userDatatable = () => {
             '<"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
         buttons: [
             {
-                text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة مستخدم</span>',
+                text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة تصنيف</span>',
                 className: 'dt-button create-new btn btn-primary m-2',
                 action: function (e, dt, node, config) {
-                    showInPopup('/Admin/Users/CreateOrEdit', 'تعديل المستخدم');
+                    showInPopup('/Admin/Category/CreateOrEdit', 'تعديل تصنيف');
                 },
             },
             {
@@ -378,9 +329,9 @@ userDatatable = () => {
             { "data": "name", "name": "name", "autoWidth": true },
             {
                 "render": function (data, type, row) {
-                    return `<button onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</button>` +
+                    return `<button onClick="showInPopup('/Admin/Category/CreateOrEdit/' + ${row.id}, 'تعديل الصنف')" class="btn btn-primary btn-sm">تعديل</button>` +
                         `<span>&nbsp;</span>` +
-                        `<button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</button>`;
+                        `<button onClick="showInPopup('/Admin/Category/Delete/' + ${row.id}, 'حذف الصنف')" class="btn btn-danger btn-sm">حذف</button>`;
                 },
                 "name": "action",
                 "autoWidth": true,
@@ -389,6 +340,61 @@ userDatatable = () => {
             },
         ]
     });
+}
+jQueryAjaxPost = form => {
+    try {
+        $.ajax({
+            type: 'POST',
+            url: form.action,
+            data: new FormData(form),
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if (res.status == "success") {
+                    $('#view-all').html(res.html)
+                    $('#form-modal .modal-body').html('');
+                    $('#form-modal .modal-title').html('');
+                    $('#form-modal').modal('hide');
+                    if (res.type == "help")
+                        helpDatatable();
+                    else if (res.type == "user")
+                        userDatatable();
+                    else if (res.type == "category")
+                        categoryDatatable();
+                    $('#success-toast .success-toast-title').html(res.messgaeTitle);
+                    $('#success-toast .success-toast-body').html(res.messageBody);
+                    new bootstrap.Toast(document.getElementById('success-toast')).show();
+                }
+                else if (res.status == "validation-error") {
+                    console.log(res.html);
+                    $('#form-modal .modal-body').html(res.html);
+                }
+                else {
+                    console.log("Error");
+                    $('#view-all').html(res.html)
+                    $('#form-modal .modal-body').html('');
+                    $('#form-modal .modal-title').html('');
+                    $('#form-modal').modal('hide');
+                    if (res.type == "help")
+                        helpDatatable();
+                    else if (res.type == "user")
+                        userDatatable();
+                    else if (res.type == "category")
+                        categoryDatatable();
+                    $('#error-toast .error-toast-title').html(res.messgaeTitle);
+                    $('#error-toast .error-toast-body').html(res.messageBody);
+                    new bootstrap.Toast(document.getElementById('error-toast')).show();
+                }
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+        //to prevent default form submit event
+        return false;
+    } catch (ex) {
+        console.log(ex)
+    }
 }
 // jQueryAjaxDelete = form => {
 //     if (confirm('Are you sure to delete this record ?')) {

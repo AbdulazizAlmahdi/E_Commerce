@@ -28,7 +28,7 @@ namespace E_commerce.Areas.Admin.Controllers
         {
             return View();
         }
-        public IActionResult CreateAndEdit(int id = 0)
+        public IActionResult CreateOrEdit(int id = 0)
         {
             if (id == 0)
             {
@@ -49,7 +49,7 @@ namespace E_commerce.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateAndEdit(HelpViewModel model)
+        public IActionResult CreateOrEdit(HelpViewModel model)
         {
             if (ModelState.IsValid)
             {

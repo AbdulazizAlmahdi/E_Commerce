@@ -6,7 +6,7 @@
 <div class="row">
     <!-- Basic -->
     <div class="col-md-12">
-        <form class="row g-3 needs-validation" asp-action="CreateAndEdit" asp-route-id="@Model.help.Id"
+        <form class="row g-3 needs-validation" asp-action="CreateOrEdit" asp-route-id="@Model.help.Id"
             onsubmit="return jQueryAjaxPost(this);">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.help.Id" name="id" />
@@ -15,9 +15,11 @@
                 <div class="input-group input-group-merge">
                     @if (@Model.help.Id != 0)
                     {
-                    <input type="tel" asp-for="@Model.help.Phone.Number" class="form-control" readonly />
-                    }else{
-                    <input type="tel" asp-for="@Model.help.Phone.Number" class="form-control" />
+                        <input type="tel" asp-for="@Model.help.Phone.Number" class="form-control" readonly />
+                    }
+                    else
+                    {
+                        <input type="tel" asp-for="@Model.help.Phone.Number" class="form-control" />
                     }
                 </div>
                 <span asp-validation-for="@Model.help.Phone.Number" class="text-danger"></span>
@@ -27,9 +29,11 @@
                 <div class="input-group input-group-merge">
                     @if (@Model.help.Id != 0)
                     {
-<input asp-for="@Model.help.Subject" class="form-control" readonly/>
-                    }else{
-<input asp-for="@Model.help.Subject" class="form-control" />
+                        <input asp-for="@Model.help.Subject" class="form-control" readonly />
+                    }
+                    else
+                    {
+                        <input asp-for="@Model.help.Subject" class="form-control" />
                     }
 
                 </div>
@@ -40,9 +44,11 @@
                 <div class="input-group input-group-merge">
                     @if (@Model.help.Id != 0)
                     {
-                    <textarea asp-for="@Model.help.Details" class="form-control" readonly></textarea>
-                    }else{
-                    <textarea asp-for="@Model.help.Details" class="form-control"></textarea>
+                        <textarea asp-for="@Model.help.Details" class="form-control" readonly></textarea>
+                    }
+                    else
+                    {
+                        <textarea asp-for="@Model.help.Details" class="form-control"></textarea>
                     }
                 </div>
                 <span asp-validation-for="@Model.help.Details" class="text-danger"></span>
@@ -52,7 +58,7 @@
                 <div class="d-grid gap-2">
                     @if (@Model.help.Id == 0)
                     {
-                        <input type="submit" value="Submit" class="btn btn-primary" /> 
+                        <input type="submit" value="Submit" class="btn btn-primary" />
                     }
                 </div>
             </div>

@@ -76,6 +76,7 @@ namespace e_commerce.Areas.Admin.Controllers
                         userViewModel.user.UsersId = Convert.ToInt32(UsersId);
                         userViewModel.user.CreatedAt = DateTime.Now;
                         usersRepository.Add(userViewModel.user);
+                        return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = "إضافة مستخدم", messageBody = "تمت إضافة المستخدم بنجاح" });
                     }
                     else
                     {
@@ -83,14 +84,14 @@ namespace e_commerce.Areas.Admin.Controllers
                         userViewModel.user.Id = Convert.ToInt32(id);
                         userViewModel.user.UpdatedAt = DateTime.Now;
                         usersRepository.Update(userViewModel.user);
+                        return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = "تعديل مستخدم", messageBody = "تمت تعديل المستخدم بنجاح" });
                     }
                 }
                 catch (Exception e)
                 {
                     var exception = e.InnerException.Message;
-                    return Json(new { status = "error", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = id == 0 ? "إضافة المستخدم" : "تعديل المستخدم", messageBody = id == 0 ? "حدث خطأ أثناء إضافة المستخدم" : "حدث خطأ أثناء تعديل المستخدم" });
+                    return Json(new { status = "error", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = "إضافة مستخدم", messageBody = "حدث خطأ أثناء إضافة/تعديل مستخدم" });
                 }
-                return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = id == 0 ? "إضافة المستخدم" : "تعديل المستخدم", messageBody = id == 0 ? "تمت إضافة المستخدم بنجاح" : "تم تعديل المستخدم بنجاح" });
 
             }
             else

@@ -11,31 +11,35 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using E_commerce.ViewModel;
 using System.Linq.Dynamic.Core;
 using static e_commerce.Helper;
+using e_commerce;
+using SelectListItem = E_commerce.Models.SelectListItem;
 
 namespace E_commerce.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class CategoryController : Controller
     {
-        IRepository<Category>   categoryRepository;
-        public CategoryController(IRepository<Category>   categoryRepository)
+        IRepository<Category> categoryRepository;
+        public CategoryController(IRepository<Category> categoryRepository)
         {
             this.categoryRepository = categoryRepository;
-        } 
+        }
         public ActionResult Index()
-           
+
         {
             return View();
         }
-
-    
-        public ActionResult CreateAndEdit(int id = 0)
+[NoDirectAccess]
+        public ActionResult CreateOrEdit(int id = 0)
         {
             if (id == 0)
             {
                 var model = new CategoryViewModel
                 {
-                    category = new Category(),
+                    category = new Category
+                    {                       
+                    }
+
                 };
                 return View(model);
             }
@@ -48,8 +52,84 @@ namespace E_commerce.Areas.Admin.Controllers
                 return View(model);
             }
         }
-         public IActionResult GetCategoryData(){
-             try
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateOrEdit(int id,CategoryViewModel categoryViewModel,string categoryId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (id == 0)
+                    {
+                        categoryViewModel.category.CreatedAt = DateTime.Now;
+                        categoryViewModel.category.CategoryId = Convert.ToInt32(categoryId);
+                        categoryRepository.Add(categoryViewModel.category);
+                                        return Json(new { status = "success", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "إضافة تصنيف", messageBody = "تمت إضافة التصنيف بنجاح" });
+                    }
+                    else
+                    {
+                        categoryViewModel.category.UpdatedAt = DateTime.Now;
+                        categoryViewModel.category.CategoryId = Convert.ToInt32(categoryId)==0?null: Convert.ToInt32(categoryId);
+                        categoryViewModel.category.Id = id;
+                        categoryRepository.Update(categoryViewModel.category);
+                        return Json(new { status = "success", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "تعديل تصنيف", messageBody = "تمت تعديل التصنيف بنجاح" });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var x=ex.InnerException.Message;
+                    return Json(new { status = "error", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "إضافة تصنيف", messageBody = "حدث خطأ أثناء إضافة/تعديل تصنيف" });
+                }
+            }
+            else
+            {
+                var model = new CategoryViewModel
+                {
+                    category = new Category
+                    {
+                        Id=0,
+                    }
+
+                };
+                return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
+            }
+        }
+        [NoDirectAccess]
+        public ActionResult Delete(int? id){
+                  return View(id);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+         public ActionResult Delete(int id){
+            try
+            {
+                categoryRepository.Delete(id);
+                return Json(new { status = "success", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "حذف تصنيف", messageBody = "تم حذف التصنيف بنجاح" });
+
+            }
+            catch (Exception e)
+            {
+                var x=e.InnerException.Message;
+                return Json(new { status = "error", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "حذف تصنيف", messageBody = "حدث خطأ أثناء حذف التصنيف" });
+            }
+         }
+        public IActionResult GetCategory(string q)
+        {
+            IEnumerable<SelectListItem> categoriesList = Enumerable.Empty<SelectListItem>();
+            if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
+                categoriesList = categoryRepository.show(0).Where(c => c.Name.Contains(q)).Select(
+                    u => new SelectListItem
+                    {
+                        Text = u.Name,
+                        Id = u.Id
+                    }
+                    );
+            return Json(new { items = categoriesList });
+        }
+        public IActionResult GetCategoryData()
+        {
+            try
             {
                 var draw = Request.Form["draw"].FirstOrDefault();
                 var start = Request.Form["start"].FirstOrDefault();
@@ -79,6 +159,6 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 throw;
             }
-         }
+        }
     }
 }

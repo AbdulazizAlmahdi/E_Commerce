@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Migrations
 {
     [DbContext(typeof(WebContext))]
-    [Migration("20220726174152_initial")]
+    [Migration("20220726195656_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,19 +95,18 @@ namespace E_commerce.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("CategoryId");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("Created_at");
-
-                    b.Property<int?>("CreatedByUserID")
-                        .HasColumnType("int");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -115,7 +114,7 @@ namespace E_commerce.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedByUserID");
+                    b.HasIndex(new[] { "CategoryId" }, "IX_Categoreis_CategoryId");
 
                     b.ToTable("Categories");
                 });
@@ -619,11 +618,11 @@ namespace E_commerce.Migrations
 
             modelBuilder.Entity("E_commerce.Models.Category", b =>
                 {
-                    b.HasOne("E_commerce.Models.Category", "CategoryNavigation")
-                        .WithMany("InverseCategoryNavigation")
-                        .HasForeignKey("CreatedByUserID");
+                    b.HasOne("E_commerce.Models.Category", "Categoreis")
+                        .WithMany("InverseCategory")
+                        .HasForeignKey("CategoryId");
 
-                    b.Navigation("CategoryNavigation");
+                    b.Navigation("Categoreis");
                 });
 
             modelBuilder.Entity("E_commerce.Models.Comment", b =>
@@ -772,7 +771,7 @@ namespace E_commerce.Migrations
 
             modelBuilder.Entity("E_commerce.Models.Category", b =>
                 {
-                    b.Navigation("InverseCategoryNavigation");
+                    b.Navigation("InverseCategory");
 
                     b.Navigation("Products");
                 });

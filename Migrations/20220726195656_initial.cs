@@ -13,19 +13,18 @@ namespace E_commerce.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", maxLength: 50, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: true),
-                    CreatedByUserID = table.Column<int>(type: "int", nullable: true)
+                    CategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Categories_Categories_CreatedByUserID",
-                        column: x => x.CreatedByUserID,
+                        name: "FK_Categories_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -443,9 +442,9 @@ namespace E_commerce.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_CreatedByUserID",
+                name: "IX_Categoreis_CategoryId",
                 table: "Categories",
-                column: "CreatedByUserID");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ProductID",

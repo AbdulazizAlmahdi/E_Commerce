@@ -22,20 +22,9 @@ namespace E_commerce.Models.Repositories
             context.SaveChanges();
             
         }
-
-        public Category Delete(int ID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Category entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public Category Find(int ID)
         {
-            throw new NotImplementedException();
+            return context.Categories.Include(c=>c.categories).SingleOrDefault(c => c.Id == ID);
         }
 
         public Category Find(string Text)
@@ -43,24 +32,22 @@ namespace E_commerce.Models.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Category> List()
-        {
-            return context.Categories;
-        }
-
         public IQueryable<Category> show(int? ID, string name = "")
         {
-            return context.Categories;
+            return context.Categories.Include(c=>c.categories);
         }
 
         public void Update(Category entity)
         {
-            throw new NotImplementedException();
+          context.Categories.Update(entity);
+            context.SaveChanges();
         }
 
         void IRepository<Category>.Delete(int ID)
         {
-            throw new NotImplementedException();
+            context.Categories.Remove(Find(ID));
+            context.SaveChanges();
+
         }
     }
 

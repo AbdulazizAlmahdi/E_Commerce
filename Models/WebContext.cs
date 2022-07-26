@@ -92,10 +92,12 @@ namespace E_commerce.Models
             modelBuilder.Entity<Category>(entity =>
             {
               
-
-                entity.Property(e => e.CreatedAt).HasColumnName("Created_at");
-
-               
+                entity.HasIndex(e => e.CategoryId, "IX_Categoreis_CategoryId");
+                entity.Property(e => e.CategoryId).HasColumnName("CategoryId");
+        
+                entity.HasOne(d => d.categories)
+                    .WithMany(p => p.InverseCategory)
+                    .HasForeignKey(d => d.CategoryId);
 
 
             });
