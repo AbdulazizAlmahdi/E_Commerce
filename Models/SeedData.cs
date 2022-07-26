@@ -153,6 +153,7 @@ namespace E_commerce.Models
                         Subject = RandomString(20),
                         Details = RandomString(20),
                         Phone = phone,
+                        Status= "Pending",
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     }

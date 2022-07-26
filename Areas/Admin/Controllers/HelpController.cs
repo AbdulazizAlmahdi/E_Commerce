@@ -88,9 +88,24 @@ namespace E_commerce.Areas.Admin.Controllers
                 }
                 if (!string.IsNullOrEmpty(searchValue))
                 {
+                    switch (searchValue)
+                    {
+                        case "لم يتم حل المشكلة":
+                            searchValue = "Pending";
+                            break;
+                        case "تم حل المشكلة":
+                            searchValue = "Solved";
+                            break;
+                        case "تم تجاهل المشكلة":
+                            searchValue = "Unsolved";
+                            break;                    
+                        default:
+                            break;
+                    }
                     helpData = helpData.Where(h => h.Subject.Contains(searchValue)
                                                 || h.Details.Contains(searchValue)
-                                                || h.Phone.Number.Contains(searchValue));
+                                                || h.Phone.Number.Contains(searchValue)
+                                                || h.Status.Contains(searchValue));
                 }
                 recordsTotal = helpData.Count();
                 var data = helpData.Skip(skip).Take(pageSize).ToList();
@@ -116,7 +131,7 @@ namespace E_commerce.Areas.Admin.Controllers
             try
             {
                 Help help = helpRepository.Find(id);
-                help.status = "Unsolved";
+                help.Status = "Unsolved";
                 helpRepository.Update(help);
                 return Json(new { status = "success", type = "help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "تجاهل طلب المساعدة", messageBody = "تم تجاهل طلب المساعدة" });
             }
@@ -136,7 +151,7 @@ namespace E_commerce.Areas.Admin.Controllers
             try
             {
                 Help help = helpRepository.Find(id);
-                help.status = "Solved";
+                help.Status = "Solved";
                 helpRepository.Update(help);
                 return Json(new { status = "success", type = "help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "حل طلب المساعدة", messageBody = "تم حل طلب المساعدة" });
             }

@@ -212,10 +212,11 @@ helpDatatable = () => {
                        default  : return 'لم يتم حل المشكلة'; break;
                     }
                   }
-            },],
+                },
+            ],
             columns: [
                         { "data": "id", "name": "Id", "autoWidth": true },
-                        { "data": "status", "name": "Status", "autoWidth": true, "orderable": false },
+                { "data": "status", "name": "Status", "autoWidth": true, "orderable": true },
                         { "data": "subject", "name": "Subject", "autoWidth": true, "orderable": false },
                         { "data": "phone.number", "name": "phone", "autoWidth": true, "orderable": false },
                         { "data": "createdAt", "name": "createdAt", "autoWidth": true },

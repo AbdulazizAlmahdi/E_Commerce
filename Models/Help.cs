@@ -20,7 +20,7 @@ namespace E_commerce.Models
         public string Details { get; set; }
         public int? PhoneId { get; set; }
         [DefaultValue("Pending")]
-        public string status { get; set; }
+        public string Status { get; set; }
         public virtual Phone Phone { get; set; }
          public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
