@@ -1,0 +1,71 @@
+﻿@model ProductViewModel
+
+@{ Layout = null; }
+<!--نموذج اضافة منتج جديد -->
+<div class="row">
+
+    <!-- Content wrapper -->
+    <div class="col-md-12">
+        <form class="row g-3 needs-validation" asp-action="CreateOrEdit" asp-route-id="@Model.Product.Id"
+              onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" value="1" asp-for="@Model.Product.CategoryId" />
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.Product.NameAr"></label>
+                <div class="input-group input-group-merge">
+                    <input id="name-id" asp-for="@Model.Product.NameAr" class="form-control"
+                           placeholder="بطاط--طماط" />
+                </div>
+                <span asp-validation-for="@Model.Product.NameAr" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                    <label class="form-label" asp-for="@Model.Product.Category.Name"></label>
+                    <select id="modalPlace" asp-for="@Model.Product.CategoryId" class="form-select" data-allow-clear="true"
+                            asp-items="@(new SelectList(Model.Product.CategoryId, "Id", "Name"))"></select>
+                </div>*@
+            <div class="form-group">
+                <label class="form-label w-100" for="namber-id" asp-for="@Model.Product.NameEn"></label>
+                <div class="input-group input-group-merge">
+                    <input type="tel" id="namber-id" asp-for="@Model.Product.NameEn" class="form-control"
+                           placeholder="خضروات--فواكة" aria-describedby="modalAddCard2" />
+                </div>
+                <span asp-validation-for="@Model.Product.NameEn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="namber-id" asp-for="@Model.Product.Quantity"></label>
+                <div class="input-group input-group-merge">
+                    <input type="tel" id="namber-id" asp-for="@Model.Product.Quantity" class="form-control"
+                           placeholder="20-30-60" aria-describedby="modalAddCard2" />
+                </div>
+                <span asp-validation-for="@Model.Product.Quantity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label w-100" for="namber-id" asp-for="@Model.Product.Unit"></label>
+                <div class="input-group input-group-merge">
+                    <input type="tel" id="namber-id" asp-for="@Model.Product.Unit" class="form-control"
+                           placeholder="سله--دينة" aria-describedby="modalAddCard2" />
+                </div>
+                <span asp-validation-for="@Model.Product.Unit" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label w-100" for="namber-id" asp-for="@Model.Product.Price"></label>
+                <div class="input-group input-group-merge">
+                    <input type="tel" id="namber-id" asp-for="@Model.Product.Price" class="form-control"
+                           placeholder="السعر" aria-describedby="modalAddCard2" />
+                </div>
+                <span asp-validation-for="@Model.Product.Price" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <div class="d-grid gap-2">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!--نموذج اضافة منتج جديد -->
+</div>
