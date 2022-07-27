@@ -34,13 +34,10 @@ namespace E_commerce
             services.AddScoped<IRepository<User>, UserRepository>();
             services.AddScoped<IRepository<Place>, PlaceRepository>();
             services.AddScoped<IRepository<Phone>, PhoneRepository>();
-            services.AddScoped<IProductRepository<Product>, ProductRepository>();
+            services.AddScoped<IRepository<Product>, ProductRepository>();
             services.AddScoped<IRepository<Category>, CategoryRepository>();
             services.AddScoped<IRepository<Help>, HelpRepository>();
-            services.AddControllersWithViews()
-.AddNewtonsoftJson(options =>
-options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
+            services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
@@ -48,11 +45,12 @@ options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoop
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-            services.AddDbContext<WebContext>(options => {
+            services.AddDbContext<WebContext>(options =>
+            {
                 options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB"));
             });
 
-           
+
 
             services.AddScoped<IProductRepository<Product>, ProductRepository>();
             services.AddRazorPages();
