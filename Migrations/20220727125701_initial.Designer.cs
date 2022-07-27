@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Migrations
 {
     [DbContext(typeof(WebContext))]
-    [Migration("20220726195656_initial")]
+    [Migration("20220727125701_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -195,6 +195,7 @@ namespace E_commerce.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProductId")
@@ -337,7 +338,12 @@ namespace E_commerce.Migrations
                         .HasColumnName("ID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int")
                         .HasColumnName("CategoryID");
 
@@ -349,11 +355,14 @@ namespace E_commerce.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DetailsAr")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasColumnName("DetailsAR");
 
                     b.Property<string>("DetailsEn")
-                        .HasColumnType("nvarchar(max)")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasColumnName("DetailsEN");
 
                     b.Property<int>("Discount")
@@ -365,15 +374,15 @@ namespace E_commerce.Migrations
                     b.Property<int>("Evaluation")
                         .HasColumnType("int");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("NameAr")
-                        .HasColumnType("nvarchar(max)")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("NameAR");
 
                     b.Property<string>("NameEn")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("NameEN");
 
                     b.Property<decimal>("Price")
@@ -618,11 +627,11 @@ namespace E_commerce.Migrations
 
             modelBuilder.Entity("E_commerce.Models.Category", b =>
                 {
-                    b.HasOne("E_commerce.Models.Category", "Categoreis")
+                    b.HasOne("E_commerce.Models.Category", "categories")
                         .WithMany("InverseCategory")
                         .HasForeignKey("CategoryId");
 
-                    b.Navigation("Categoreis");
+                    b.Navigation("categories");
                 });
 
             modelBuilder.Entity("E_commerce.Models.Comment", b =>
@@ -689,7 +698,9 @@ namespace E_commerce.Migrations
                 {
                     b.HasOne("E_commerce.Models.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });

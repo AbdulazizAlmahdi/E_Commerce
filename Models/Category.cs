@@ -22,7 +22,7 @@ namespace E_commerce.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "الاسم مطلوب")]
         [StringLength(50, ErrorMessage = "الاسم لا يزيد عن 50 حرف")]
-        [DisplayName("الاسم")]
+        [DisplayName("اسم الصنف")]
         [Column(TypeName = "nvarchar(max)")]
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }

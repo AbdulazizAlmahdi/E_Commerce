@@ -30,6 +30,7 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="~/Admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="~/Admin/assets/vendor/libs/typeahead-js/typeahead.css" />
+    <link rel="stylesheet" href="~/Admin/assets/vendor/libs/dropzone/dropzone.css" />
     <link rel="stylesheet" href="~/Admin/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
     <link rel="stylesheet" href="~/Admin/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
     <link rel="stylesheet" href="~/Admin/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
@@ -48,34 +49,6 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="~/Admin/assets/js/config.js"></script>
-    @* <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="~/Admin/assets/img/favicon/favicon.ico" />
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-
-        <!-- Icons -->
-        <link rel="stylesheet" href="~/Admin/assets/vendor/fonts/boxicons.css" />
-        <link rel="stylesheet" href="~/Admin/assets/vendor/fonts/fontawesome.css" />
-        <link rel="stylesheet" href="~/Admin/assets/vendor/fonts/flag-icons.css" />
-
-        <!-- Core CSS -->
-        <link rel="stylesheet" href="~/Admin/assets/vendor/css/rtl/core.css" />
-        <link rel="stylesheet" href="~/Admin/assets/vendor/css/rtl/theme-default.css" />
-        <link rel="stylesheet" href="~/Admin/assets/css/demo.css" />
-
-        <!-- Vendors CSS -->
-        <link rel="stylesheet" href="~/Admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-        <link rel="stylesheet" href="~/Admin/assets/vendor/libs/typeahead-js/typeahead.css" />
-        <link rel="stylesheet" href="~/Admin/assets/vendor/libs/apex-charts/apex-charts.css" />
-        <link rel="stylesheet" href="~/Admin/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
-        <link rel="stylesheet" href="~/Admin/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
-        <link rel="stylesheet" href="~/Admin/assets/vendor/libs/flatpickr/flatpickr.css" />
-        <link rel="stylesheet" href="~/Admin/assets/vendor/libs/select2/select2.css" />
-
-    *@
 
 </head>
 
@@ -720,26 +693,23 @@
                 </div>
             </nav>
             <!-- / Navbar -->
-
-
-                <!-- Modal -->
-                <div id="form-modal" class="modal fade" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <span class="d-none d-lg-inline-block modal-title" id="exampleModalLabel"
-                                    style="font-size: 20px;"></span>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+            <!-- Modal -->
+            <div id="form-modal" class="modal fade" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span class="d-none d-lg-inline-block modal-title" id="exampleModalLabel"
+                                  style="font-size: 20px;"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body" id="modal-body">
+                        </div>
+                        <div class="modal-body" id="modal-body">
 
-                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Modal -->
-                
+            </div>
+            <!-- Modal -->
             //
         </div>
         @RenderBody()
@@ -752,7 +722,7 @@
     <div class="drag-target"></div>
     </div>
     <!-- / Layout wrapper -->
-      <!-- / js -->
+    <!-- / js -->
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="~/Admin/assets/vendor/libs/jquery/jquery.js"></script>
@@ -795,21 +765,10 @@
 
     <!-- Page JS -->
     <script src="~/Admin/assets/js/tables-datatables-basic.js"></script>
-    
+    <script src="~/Admin/assets/vendor/libs/dropzone/dropzone.js"></script>
+    <script src="~/Admin/assets/js/forms-file-upload.js"></script>
     @RenderSection("scripts", required: false)
 
-    @* <!-- / js -->
-    <script src="~/Admin/assets/js/jquery.min.js"></script>
-    <script src="~/Admin/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="~/Admin/assets/js/jquery.dataTables.min.js"></script>
-    <script src="~/Admin/assets/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/Admin/assets/js/site.js" asp-append-version="true"></script>
-    <script src="~/Admin/assets/vendor/libs/select2/select2.js"></script>
-    <script src="~/Admin/assets/vendor/js/bootstrap.js"></script>
-    <script src="~/Admin/assets/vendor/js/menu.js"></script>
-    <script src="~/Admin/assets/js/main.js"></script>
-    
-    @RenderSection("scripts", required: false) *@
 </body>
 
 </html>

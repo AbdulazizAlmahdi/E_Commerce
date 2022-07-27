@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Session;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using E_commerce.Models.ViewModels;
 using E_commerce.ViewModel;
 using E_commerce;
 using System.Linq.Dynamic.Core;

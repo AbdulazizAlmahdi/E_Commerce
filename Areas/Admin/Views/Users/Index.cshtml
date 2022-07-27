@@ -13,33 +13,12 @@
             <!-- Toast with Placements -->
             @await Html.PartialAsync("_Toast", null)
             <!-- Toast with Placements -->
-            <!-- Basic Bootstrap Table -->
             <div class="card  p-4">
                 <div class="card-header border-bottom">
                     <span class="d-none d-lg-inline-block" style="font-size: 20px;">عرض المستخدمين</span>
                 </div>        
-                <div id="view-all">
                     @await Html.PartialAsync("UserTable", null)
-                </div>
-
-                <!-- Modal -->
-                <div id="form-modal" class="modal fade" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <span class="d-none d-lg-inline-block modal-title" id="exampleModalLabel"
-                                    style="font-size: 20px;"></span>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body" id="modal-body">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <!--/ Basic Bootstrap Table -->
         </div>
     </div>
 </div>

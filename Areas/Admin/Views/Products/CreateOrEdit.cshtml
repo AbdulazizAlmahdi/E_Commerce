@@ -1,71 +1,195 @@
-﻿@model ProductViewModel
+﻿@model E_commerce.ViewModel.ProductsViewModel
 
-@{ Layout = null; }
-<!--نموذج اضافة منتج جديد -->
+@{
+    Layout = null;
+}
+<script type="text/javascript">
+    $.fn.select2.defaults.set("dropdownParent", $('#select'));
+    $(document).ready(function () {
+        $("#category-product").select2({
+            ajax: {
+                url: '/Admin/Products/GetCategory',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: $.map(data.items, function (item) {
+                            console.log(item);
+
+                            return {
+                                id: item.id,
+                                text: item.text,
+                            };
+                        }),
+                    };
+                },
+                cache: true,
+                onError: function (err) {
+                    console.log(err);
+                }
+            },
+            minimumInputLength: 1,
+            placeholder: "حدد الصنف",
+        });
+    @* if ("@Model.user.Users" != "") {
+        var newOption = new Option("@Model.user.Users?.Name", "@Model.user.Users?.Id", false, false);
+        $('#childUsers').append(newOption).trigger('change');
+        } *@
+        });
+</script>
+
 <div class="row">
-
-    <!-- Content wrapper -->
+    <!-- Basic -->
     <div class="col-md-12">
-        <form class="row g-3 needs-validation" asp-action="CreateOrEdit" asp-route-id="@Model.Product.Id"
-              onsubmit="return jQueryAjaxPost(this);">
+        <form class="row g-3 needs-validation" asp-action="CreateOrEdit" method="post" enctype="multipart/form-data" 
+        id="dropzone-multi"
+             asp-route-id="@Model.product.Id" onsubmit="return jQueryAjaxPost(this);">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" value="1" asp-for="@Model.Product.CategoryId" />
+            <input type="hidden" value="1" asp-for="@Model.product.Id" />
             <div class="form-group">
-                <label class="form-label w-100" for="name-id" asp-for="@Model.Product.NameAr"></label>
+                <label class="form-label w-100" for="name-id" asp-for="@Model.product.NameAr"></label>
                 <div class="input-group input-group-merge">
-                    <input id="name-id" asp-for="@Model.Product.NameAr" class="form-control"
-                           placeholder="بطاط--طماط" />
+                    <input id="name-id" asp-for="@Model.product.NameAr" class="form-control" placeholder="رمان صعدي" />
                 </div>
-                <span asp-validation-for="@Model.Product.NameAr" class="text-danger"></span>
+                <span asp-validation-for="@Model.product.NameAr" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                    <label class="form-label" asp-for="@Model.Product.Category.Name"></label>
-                    <select id="modalPlace" asp-for="@Model.Product.CategoryId" class="form-select" data-allow-clear="true"
-                            asp-items="@(new SelectList(Model.Product.CategoryId, "Id", "Name"))"></select>
-                </div>*@
+            <!-- select2 -->
+            <div class="form-group" id="select">
+                <label class="form-label w-100" for="category-product" asp-for="@Model.product.Category.Name"></label>
+                <div class="input-group input-group-merge">
+                    <select id="category-product" asp-for="@Model.product.CategoryId" class="select2 form-select"
+                        name="CategoryId" style="width: 100%;" data-placeholder="حدد الصنف"
+                        aria-describedby="modalAddCard2">
+                    </select>
+                </div>
+                <span asp-validation-for="@Model.product.CategoryId" class="text-danger"></span>
+            </div>
+            <!-- /select2 -->
             <div class="form-group">
-                <label class="form-label w-100" for="namber-id" asp-for="@Model.Product.NameEn"></label>
+                <label class="form-label w-100" for="price-id" asp-for="@Model.product.Price"></label>
                 <div class="input-group input-group-merge">
-                    <input type="tel" id="namber-id" asp-for="@Model.Product.NameEn" class="form-control"
-                           placeholder="خضروات--فواكة" aria-describedby="modalAddCard2" />
+                    <input asp-for="@Model.product.Price" class="form-control" placeholder="" />
                 </div>
-                <span asp-validation-for="@Model.Product.NameEn" class="text-danger"></span>
+                <span asp-validation-for="@Model.product.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="form-label w-100" for="namber-id" asp-for="@Model.Product.Quantity"></label>
+                <label class="form-label w-100" for="price-id" asp-for="@Model.product.Quantity"></label>
                 <div class="input-group input-group-merge">
-                    <input type="tel" id="namber-id" asp-for="@Model.Product.Quantity" class="form-control"
-                           placeholder="20-30-60" aria-describedby="modalAddCard2" />
+                    <input asp-for="@Model.product.Quantity" class="form-control" placeholder="" />
                 </div>
-                <span asp-validation-for="@Model.Product.Quantity" class="text-danger"></span>
+                <span asp-validation-for="@Model.product.Quantity" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="form-label w-100" for="namber-id" asp-for="@Model.Product.Unit"></label>
+                <label class="form-label w-100" for="price-id" asp-for="@Model.product.Unit"></label>
                 <div class="input-group input-group-merge">
-                    <input type="tel" id="namber-id" asp-for="@Model.Product.Unit" class="form-control"
-                           placeholder="سله--دينة" aria-describedby="modalAddCard2" />
+                    <input asp-for="@Model.product.Unit" class="form-control" placeholder="" />
                 </div>
-                <span asp-validation-for="@Model.Product.Unit" class="text-danger"></span>
+                <span asp-validation-for="@Model.product.Unit" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label class="form-label w-100" for="namber-id" asp-for="@Model.Product.Price"></label>
+                <label class="form-label w-100" for="price-id" asp-for="@Model.product.DetailsAr"></label>
                 <div class="input-group input-group-merge">
-                    <input type="tel" id="namber-id" asp-for="@Model.Product.Price" class="form-control"
-                           placeholder="السعر" aria-describedby="modalAddCard2" />
+                    <textarea asp-for="@Model.product.DetailsAr" class="form-control" placeholder=""></textarea>
                 </div>
-                <span asp-validation-for="@Model.Product.Price" class="text-danger"></span>
+                <span asp-validation-for="@Model.product.DetailsAr" class="text-danger"></span>
             </div>
-
-
+            <div class="form-group">
+                <label class="form-label w-100" for="price-id" asp-for="@Model.product.Address"></label>
+                <div class="input-group input-group-merge">
+                    <input asp-for="@Model.product.Address" class="form-control" placeholder="" />
+                </div>
+                <span asp-validation-for="@Model.product.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="price-id" asp-for="@Model.product.Discount"></label>
+                <div class="input-group input-group-merge">
+                    <input asp-for="@Model.product.Discount" class="form-control" placeholder="" />
+                </div>
+                <span asp-validation-for="@Model.product.Discount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="price-id" asp-for="@Model.product.Status"></label>
+                <div class="input-group input-group-merge">
+                    <input type="text" asp-for="@Model.product.Status" class="form-control" placeholder="" />
+                </div>
+                <span asp-validation-for="@Model.product.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="price-id" asp-for="@Model.product.Duration"></label>
+                <div class="input-group input-group-merge">
+                    <input asp-for="@Model.product.Duration" class="form-control" placeholder="" />
+                </div>
+                <span asp-validation-for="@Model.product.Duration" class="text-danger"></span>
+            </div>
+          
+            <div class="form-group" style="
+            border: 2px dashed #d4d8dd;
+    width: 100%;
+    padding: 1.5rem;
+    cursor: pointer;
+    border-radius: 0.3125rem;
+">
+                <div class="dz-message needsclick ">
+                    Drop files here or click to upload
+                    <span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong>
+                        actually
+                        uploaded.)</span>
+                        <div class="row" id="template-preview"> </div>
+                </div>
+                <div class="fallback">
+                    <input name="file" type="file" />
+                </div>
+            </div>  
             <div class="form-group">
                 <div class="d-grid gap-2">
                     <input type="submit" value="Submit" class="btn btn-primary" />
                 </div>
-            </div>
+            </div>            
         </form>
-
     </div>
-    <!--نموذج اضافة منتج جديد -->
 </div>
+
+
+<script>
+    (function () {
+        const previewTemplate = `<div class="dz-preview dz-file-preview p-0">
+<div class="dz-details">
+  <div class="dz-thumbnail">
+    <img data-dz-thumbnail>
+    <span class="dz-nopreview">No preview</span>
+    <div class="dz-success-mark"></div>
+    <div class="dz-error-mark"></div>
+    <div class="dz-error-message"><span data-dz-errormessage></span></div>
+    <div class="progress">
+      <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress></div>
+    </div>
+  </div>
+  <div class="dz-filename" data-dz-name></div>
+  <div class="dz-size" data-dz-size></div>
+</div>
+</div>`;
+
+        // ? Start your code from here
+
+        // Basic Dropzone
+        // --------------------------------------------------------------------
+
+
+
+        // Multiple Dropzone
+        // --------------------------------------------------------------------
+        const dropzoneMulti = new Dropzone('#dropzone-multi', {
+            previewTemplate: previewTemplate,
+            parallelUploads: 1,
+            maxFilesize: 5,
+            addRemoveLinks: true,
+            previewsContainer: "#template-preview"
+        });
+    })();
+</script>

@@ -20,11 +20,9 @@ namespace E_commerce.Models
         [Display(Name = "اسم المنتج")]
         [StringLength(maximumLength: 100, ErrorMessage = "اسم المنتج لا يزيد عن 100 حرف")]        
         public string NameAr { get; set; }
-        [Required(ErrorMessage = "اسم المنتج مطلوب")]
         [Display(Name = "اسم المنتج")]
         [StringLength(maximumLength: 100, ErrorMessage = "اسم المنتج لا يزيد عن 100 حرف")]
         public string NameEn { get; set; }
-        [Required(ErrorMessage = "تفاصيل المنتج مطلوبة")]
         [Display(Name = "تفاصيل المنتج")]
         [StringLength(maximumLength: 500, ErrorMessage = "تفاصيل المنتج لا يزيد عن 500 حرف")]
         public string DetailsAr { get; set; }
@@ -32,8 +30,14 @@ namespace E_commerce.Models
         [Display(Name = "تفاصيل المنتج")]
         [StringLength(maximumLength: 500, ErrorMessage = "تفاصيل المنتج لا يزيد عن 500 حرف")]
         public string DetailsEn { get; set; }
+        [Display(Name = "عنوان المنتج")]
+        [StringLength(maximumLength: 100, ErrorMessage = "عنوان المنتج لا يزيد عن 100 حرف")]
+        [Required(ErrorMessage = "عنوان المنتج مطلوب")]
+        public string Address { get; set; }
         public string Report { get; set; }
         [Column(TypeName = "decimal(8, 2)")]
+        [Display(Name = "سعر المنتج")]
+        [Required(ErrorMessage = "سعر المنتج مطلوب")]
         public decimal Price { get; set; }
         [Display(Name = "المدة")]
         [Required(ErrorMessage = "المدة مطلوبة")]

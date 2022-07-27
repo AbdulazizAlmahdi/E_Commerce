@@ -45,15 +45,9 @@ namespace E_commerce.Models.Repositories
         {
             throw new NotImplementedException();
         }
-
-        public IEnumerable<Category> GetCategories()
-        {
-            return context.Categories;
-        }
-
         public IQueryable<Product> show(int? ID, string name = "")
         {
-            throw new NotImplementedException();
+            return context.Products.Include(p=>p.Category);
         }
 
         public void Update(Product entity)

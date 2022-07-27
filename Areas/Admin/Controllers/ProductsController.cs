@@ -6,12 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using E_commerce.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
 using System.Linq.Dynamic.Core;
 using static e_commerce.Helper;
 using e_commerce;
+using E_commerce.ViewModel;
 
 namespace E_commerce.Areas.Admin.Controllers
 {
@@ -38,11 +38,11 @@ namespace E_commerce.Areas.Admin.Controllers
 
             if (id == 0)
             {
-                var model = new ProductViewModel
+                var model = new ProductsViewModel
                 {
-                    categories = categories.show(null).ToList(),
-                    Product = new Product
+                    product = new Product
                     {
+                        
                     },
 
                 };
@@ -50,19 +50,16 @@ namespace E_commerce.Areas.Admin.Controllers
             }
             else
             {
-                var model = new ProductViewModel
+                var model = new ProductsViewModel
                 {
-                    categories = categories.show(null).ToList(),
-                    Product = products.Find(id),
-
+                    product = products.Find(id),
                 };
                 return View(model);
             }
-
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, ProductViewModel productViewModel, string ProductsId)
+        public IActionResult CreateOrEdit(int id, ProductsViewModel productViewModel, string ProductsId)
         {
             if (ModelState.IsValid)
             {
@@ -70,16 +67,16 @@ namespace E_commerce.Areas.Admin.Controllers
                 {
                     if (id == 0)
                     {
-                        productViewModel.Product.Id = Convert.ToInt32(ProductsId);
-                        productViewModel.Product.CreatedAt = DateTime.Now;
-                        products.Add(productViewModel.Product);
+                        productViewModel.product.Id = Convert.ToInt32(ProductsId);
+                        productViewModel.product.CreatedAt = DateTime.Now;
+                        products.Add(productViewModel.product);
                     }
                     else
                     {
-                        productViewModel.Product.Id = Convert.ToInt32(ProductsId);
-                        productViewModel.Product.Id = Convert.ToInt32(id);
-                        productViewModel.Product.UpdatedAt = DateTime.Now;
-                        products.Update(productViewModel.Product);
+                        productViewModel.product.Id = Convert.ToInt32(ProductsId);
+                        productViewModel.product.Id = Convert.ToInt32(id);
+                        productViewModel.product.UpdatedAt = DateTime.Now;
+                        products.Update(productViewModel.product);
 
                     }
                 }
@@ -93,10 +90,9 @@ namespace E_commerce.Areas.Admin.Controllers
             }
             else
             {
-                var model = new ProductViewModel
+                var model = new ProductsViewModel
                 {
-                    categories = categories.show(null).ToList(),
-                    Product = new Product
+                    product = new Product
                     {
                         Id = 0
                     },
@@ -136,37 +132,44 @@ namespace E_commerce.Areas.Admin.Controllers
         //    return View(productViewModel);
         //}
         ////post create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Product product)
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public IActionResult Create(Product product)
+        // {
+        //     try
+        //     {
+        //         products.Add(product);
+        //         return RedirectToAction(nameof(Index));
+        //     }
+        //     catch
+        //     {
+        //         return View();
+        //     }
+
+
+        // }
+        public IActionResult GetCategory(string q)
         {
-            try
-            {
-                products.Add(product);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-
-
+           IEnumerable<Models.SelectListItem> categorytList = Enumerable.Empty<Models.SelectListItem>();
+           if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
+                categorytList = categories.show(0).Where(p => p.Name.Contains(q)).Select(
+                   u => new Models.SelectListItem
+                   {
+                       Text = u.Name,
+                       Id = u.Id
+                   }
+                   );
+           return Json(new { items = categorytList});
         }
-        //public IActionResult GetProduct(string q)
-
-        //{
-        //    IEnumerable<Models.SelectListItem> poroductList = Enumerable.Empty<Models.SelectListItem>();
-        //    if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-        //        poroductList = products.show(int.Parse(HttpContext.Session.GetString("_ProductId") ?? "1")).Where(u => u.NameAr.Contains(q)).Select(
-        //            u => new Models.SelectListItem
-        //            {
-        //                Text = u.NameAr,
-        //                Id = u.Id
-        //            }
-        //            );
-        //    return Json(new { items = poroductList });
-        //}
-        public IActionResult GetProductData()
+     
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public IActionResult ConfirmDelete(Product product)
+        // {
+        //     // products.Delete(ID);
+        //     return RedirectToAction(nameof(Index));
+        // }
+   public IActionResult GetProductData()
         {
             try
             {
@@ -200,19 +203,6 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 throw;
             }
-        }
-
-        //post
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult ConfirmDelete(Product product)
-        {
-
-            // products.Delete(ID);
-            return RedirectToAction(nameof(Index));
-
-
-
         }
 
 

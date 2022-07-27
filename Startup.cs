@@ -49,10 +49,6 @@ namespace E_commerce
             {
                 options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB"));
             });
-
-
-
-            services.AddScoped<IProductRepository<Product>, ProductRepository>();
             services.AddRazorPages();
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
