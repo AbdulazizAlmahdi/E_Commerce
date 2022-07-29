@@ -171,22 +171,15 @@ namespace E_commerce.Models
                             new Product
                             {
                                 NameAr = RandomString(15),
-                                NameEn = RandomString(15),
                                 CategoryId = category.Id,
                                 Price = 200,
                                 DetailsAr = RandomString(20),
-                                DetailsEn = RandomString(20),
                                 Duration = 3,
                                 Status = true,
                                 Quantity = 20,
                                 Address="صنعاء سوق علي محسن",
                                 Unit = "سلة",
-                                Views = 2,
-                                Discount = 20,
-                                Evaluation = 5,
                                 CreatedAt = DateTime.UtcNow,
-                                UpdatedAt = DateTime.UtcNow,
-                                DeletedAt = DateTime.UtcNow
                             }
                             );
 

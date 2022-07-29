@@ -22,19 +22,19 @@ namespace E_commerce.Models
         public string NameAr { get; set; }
         [Display(Name = "اسم المنتج")]
         [StringLength(maximumLength: 100, ErrorMessage = "اسم المنتج لا يزيد عن 100 حرف")]
-        public string NameEn { get; set; }
+        public string? NameEn { get; set; }
         [Display(Name = "تفاصيل المنتج")]
         [StringLength(maximumLength: 500, ErrorMessage = "تفاصيل المنتج لا يزيد عن 500 حرف")]
         public string DetailsAr { get; set; }
         [Required(ErrorMessage = "تفاصيل المنتج مطلوبة")]
         [Display(Name = "تفاصيل المنتج")]
         [StringLength(maximumLength: 500, ErrorMessage = "تفاصيل المنتج لا يزيد عن 500 حرف")]
-        public string DetailsEn { get; set; }
+        public string? DetailsEn { get; set; }
         [Display(Name = "عنوان المنتج")]
         [StringLength(maximumLength: 100, ErrorMessage = "عنوان المنتج لا يزيد عن 100 حرف")]
         [Required(ErrorMessage = "عنوان المنتج مطلوب")]
         public string Address { get; set; }
-        public string Report { get; set; }
+        public string? Report { get; set; }
         [Column(TypeName = "decimal(8, 2)")]
         [Display(Name = "سعر المنتج")]
         [Required(ErrorMessage = "سعر المنتج مطلوب")]
@@ -49,14 +49,14 @@ namespace E_commerce.Models
         [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = "الكمية لا يمكن ان تكون 0")]
         public int Quantity { get; set; }
         [Display(Name = "الوحدة")]
-        public string Unit { get; set; }
-        public int Views { get; set; }
+        public string? Unit { get; set; }
+        public int? Views { get; set; }
         [Display(Name = "الخصم")]
-        public int Discount { get; set; }
-        public int Evaluation { get; set; }
+        public int? Discount { get; set; }
+        public int? Evaluation { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public DateTime DeletedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
         public int CategoryId { get; set; }
        
         public virtual Category Category { get; set; }

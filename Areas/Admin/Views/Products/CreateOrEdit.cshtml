@@ -47,9 +47,9 @@
 <div class="row">
     <!-- Basic -->
     <div class="col-md-12">
-        <form class="row g-3 needs-validation" asp-action="CreateOrEdit" method="post" enctype="multipart/form-data" 
-        id="dropzone-multi"
-             asp-route-id="@Model.product.Id" onsubmit="return jQueryAjaxPost(this);">
+        <form class="row g-3 needs-validation  dz-clickable" asp-action="CreateOrEdit" method="post"
+            enctype="multipart/form-data" id="dropzone-multi" asp-route-id="@Model.product.Id"
+            onsubmit="return jQueryAjaxPost(this);">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" value="1" asp-for="@Model.product.Id" />
             <div class="form-group">
@@ -127,69 +127,84 @@
                 </div>
                 <span asp-validation-for="@Model.product.Duration" class="text-danger"></span>
             </div>
-          
             <div class="form-group" style="
             border: 2px dashed #d4d8dd;
     width: 100%;
     padding: 1.5rem;
     cursor: pointer;
-    border-radius: 0.3125rem;
-">
+    border-radius: 0.3125rem;">
                 <div class="dz-message needsclick ">
                     Drop files here or click to upload
                     <span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong>
                         actually
                         uploaded.)</span>
-                        <div class="row" id="template-preview"> </div>
+                    <div class="row" id="template-preview"> </div>
                 </div>
                 <div class="fallback">
-                    <input name="file" type="file" />
+                    <input type="file" name="files" asp-for="@Model.Files" multiple />
                 </div>
-            </div>  
+            </div>
             <div class="form-group">
                 <div class="d-grid gap-2">
-                    <input type="submit" value="Submit" class="btn btn-primary" />
+                    <input type="submit" value="Submit" class="btn btn-primary" id="uploadFile" />
                 </div>
-            </div>            
+            </div>
         </form>
     </div>
 </div>
 
 
 <script>
-    (function () {
+
+    $(document).ready(function () {
         const previewTemplate = `<div class="dz-preview dz-file-preview p-0">
-<div class="dz-details">
-  <div class="dz-thumbnail">
-    <img data-dz-thumbnail>
-    <span class="dz-nopreview">No preview</span>
-    <div class="dz-success-mark"></div>
-    <div class="dz-error-mark"></div>
-    <div class="dz-error-message"><span data-dz-errormessage></span></div>
-    <div class="progress">
-      <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress></div>
+    <div class="dz-details">
+        <div class="dz-thumbnail">
+            <img data-dz-thumbnail>
+            <span class="dz-nopreview">No preview</span>
+            <div class="dz-success-mark"></div>
+            <div class="dz-error-mark"></div>
+            <div class="dz-error-message"><span data-dz-errormessage></span></div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                    data-dz-uploadprogress></div>
+            </div>
+        </div>
+        <div class="dz-filename" data-dz-name></div>
+        <div class="dz-size" data-dz-size></div>
     </div>
-  </div>
-  <div class="dz-filename" data-dz-name></div>
-  <div class="dz-size" data-dz-size></div>
-</div>
 </div>`;
-
-        // ? Start your code from here
-
-        // Basic Dropzone
-        // --------------------------------------------------------------------
-
-
-
-        // Multiple Dropzone
-        // --------------------------------------------------------------------
-        const dropzoneMulti = new Dropzone('#dropzone-multi', {
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone("#dropzone-multi", {
+            paramName: () => "files",
+            maxFilesize: 30,
+            maxFiles: 4,
+            parallelUploads: 10,
+            acceptedFiles: ".jpeg,.jpg,.png",
+            uploadMultiple: true,
             previewTemplate: previewTemplate,
-            parallelUploads: 1,
-            maxFilesize: 5,
+            previewsContainer: "#template-preview",
+            autoProcessQueue: false,
             addRemoveLinks: true,
-            previewsContainer: "#template-preview"
+            init: function () {
+                myDropzone = this; // closure
+                document.getElementById("uploadFile").addEventListener("click", function () {
+                    myDropzone.processQueue();
+                    console.log(myDropzone.getQueuedFiles());
+                });
+
+                // You might want to show the submit button only when 
+                // files are dropped here:
+                this.on("addedfile", function () {
+                    // Show submit button here and/or inform user to click it.
+                    console.log("added file");
+                });
+
+            }
         });
-    })();
+
+
+
+    });
+
 </script>

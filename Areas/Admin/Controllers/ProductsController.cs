@@ -12,6 +12,8 @@ using System.Linq.Dynamic.Core;
 using static e_commerce.Helper;
 using e_commerce;
 using E_commerce.ViewModel;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace E_commerce.Areas.Admin.Controllers
 {
@@ -20,12 +22,14 @@ namespace E_commerce.Areas.Admin.Controllers
     {
         IRepository<Product> products;
         IRepository<Category> categories;
+        private readonly IHostingEnvironment hosting;
 
 
-        public ProductsController(IRepository<Product> products, IRepository<Category> categories)
+        public ProductsController(IRepository<Product> products, IRepository<Category> categories, IHostingEnvironment hosting)
         {
             this.categories = categories;
             this.products = products;
+            this.hosting = hosting;
         }
         public IActionResult Index()
         {
@@ -59,21 +63,38 @@ namespace E_commerce.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, ProductsViewModel productViewModel, string ProductsId)
-        {
-            if (ModelState.IsValid)
+        public async Task<IActionResult> CreateOrEdit(int id,ProductsViewModel productViewModel, List<IFormFile> files,string CategoryId)
+            {
+            List<IFormFile> filesList = files;
+            if (true)
             {
                 try
                 {
                     if (id == 0)
                     {
-                        productViewModel.product.Id = Convert.ToInt32(ProductsId);
+
+                        //productViewModel.product.Id = Convert.ToInt32(ProductsId);
+                        //foreach (var file in filesList)
+                        //{
+                        //    if (file != null)
+                        //    {
+                        //        string fileName = UploadFile(file) ?? string.Empty;
+                        //        productViewModel.product.ImagesProducts.Add(new ImagesProduct{
+                        //            ImageUrl = fileName
+                        //        });
+                        //    }
+                        //}
+                        productViewModel.product.CategoryId = Convert.ToInt32(CategoryId);
                         productViewModel.product.CreatedAt = DateTime.Now;
+                        productViewModel.product.NameEn = productViewModel.product.NameAr;
+                        productViewModel.product.DetailsEn = productViewModel.product.DetailsAr;
+                        productViewModel.product.Views = 0;
+                        productViewModel.product.Evaluation=5;
                         products.Add(productViewModel.product);
                     }
                     else
                     {
-                        productViewModel.product.Id = Convert.ToInt32(ProductsId);
+                        //productViewModel.product.Id = Convert.ToInt32(ProductsId);
                         productViewModel.product.Id = Convert.ToInt32(id);
                         productViewModel.product.UpdatedAt = DateTime.Now;
                         products.Update(productViewModel.product);
@@ -85,6 +106,7 @@ namespace E_commerce.Areas.Admin.Controllers
                     var exception = e.InnerException.Message;
                     return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
                 }
+                System.Console.WriteLine(filesList.Count);
                 return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
 
             }
@@ -100,8 +122,23 @@ namespace E_commerce.Areas.Admin.Controllers
                 };
                 return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
             }
+
+            return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
         }
 
+        string UploadFile(IFormFile file)
+        {
+            if (file != null)
+            {
+                string uploads = Path.Combine(hosting.WebRootPath, "uploads");
+                string fullPath = Path.Combine(uploads, file.FileName);
+                file.CopyTo(new FileStream(fullPath, FileMode.Create));
+
+                return file.FileName;
+            }
+
+            return null;
+        }
         //public IActionResult Delete(int id)
         //{
         //    ProductViewModel productViewModel = new ProductViewModel

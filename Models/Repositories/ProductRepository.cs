@@ -20,7 +20,7 @@ namespace E_commerce.Models.Repositories
 
         public void Add(Product entity)
         {
-            context.Products.Add(entity);
+            context.Add(entity);
             context.SaveChanges();
         }
 
