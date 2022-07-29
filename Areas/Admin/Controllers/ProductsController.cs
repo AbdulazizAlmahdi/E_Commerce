@@ -63,7 +63,7 @@ namespace E_commerce.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateOrEdit(int id,ProductsViewModel productViewModel, List<IFormFile> files,string CategoryId)
+        public async Task<IActionResult> CreateOrEdit(int id, ProductsViewModel productViewModel, List<IFormFile> files,string CategoryId)
             {
             List<IFormFile> filesList = files;
             if (true)
@@ -73,18 +73,17 @@ namespace E_commerce.Areas.Admin.Controllers
                     if (id == 0)
                     {
 
-                        //productViewModel.product.Id = Convert.ToInt32(ProductsId);
-                        //foreach (var file in filesList)
-                        //{
-                        //    if (file != null)
-                        //    {
-                        //        string fileName = UploadFile(file) ?? string.Empty;
-                        //        productViewModel.product.ImagesProducts.Add(new ImagesProduct{
-                        //            ImageUrl = fileName
-                        //        });
-                        //    }
-                        //}
+                         foreach (var file in filesList)
+                        {
+                           
+                                string fileName = await UploadFile(file) ?? string.Empty;
+                                productViewModel.product.ImagesProducts.Add(new ImagesProduct
+                                {
+                                    ImageUrl = fileName
+                                });
+                        }
                         productViewModel.product.CategoryId = Convert.ToInt32(CategoryId);
+                        productViewModel.product.Id =0;
                         productViewModel.product.CreatedAt = DateTime.Now;
                         productViewModel.product.NameEn = productViewModel.product.NameAr;
                         productViewModel.product.DetailsEn = productViewModel.product.DetailsAr;
@@ -95,7 +94,7 @@ namespace E_commerce.Areas.Admin.Controllers
                     else
                     {
                         //productViewModel.product.Id = Convert.ToInt32(ProductsId);
-                        productViewModel.product.Id = Convert.ToInt32(id);
+                        productViewModel.product.Id = id;
                         productViewModel.product.UpdatedAt = DateTime.Now;
                         products.Update(productViewModel.product);
 
@@ -103,7 +102,6 @@ namespace E_commerce.Areas.Admin.Controllers
                 }
                 catch (Exception e)
                 {
-                    var exception = e.InnerException.Message;
                     return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
                 }
                 System.Console.WriteLine(filesList.Count);
@@ -126,7 +124,7 @@ namespace E_commerce.Areas.Admin.Controllers
             return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
         }
 
-        string UploadFile(IFormFile file)
+        public async Task<string> UploadFile(IFormFile file)
         {
             if (file != null)
             {

@@ -174,6 +174,7 @@ namespace E_commerce.Models
                                 CategoryId = category.Id,
                                 Price = 200,
                                 DetailsAr = RandomString(20),
+                                DetailsEn = RandomString(20),
                                 Duration = 3,
                                 Status = true,
                                 Quantity = 20,

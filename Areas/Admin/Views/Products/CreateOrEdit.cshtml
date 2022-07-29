@@ -51,7 +51,7 @@
             enctype="multipart/form-data" id="dropzone-multi" asp-route-id="@Model.product.Id"
             onsubmit="return jQueryAjaxPost(this);">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" value="1" asp-for="@Model.product.Id" />
+            <input type="hidden" value="0" asp-for="@Model.product.Id" name="id" />
             <div class="form-group">
                 <label class="form-label w-100" for="name-id" asp-for="@Model.product.NameAr"></label>
                 <div class="input-group input-group-merge">
