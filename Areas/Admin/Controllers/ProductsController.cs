@@ -73,10 +73,11 @@ namespace E_commerce.Areas.Admin.Controllers
                     if (id == 0)
                     {
 
-                         foreach (var file in filesList)
+                        productViewModel.product.Id = id;
+                          foreach (var file in filesList)
                         {
                            
-                                string fileName = await UploadFile(file) ?? string.Empty;
+                                string fileName =await UploadFile(file) ?? string.Empty;
                                 productViewModel.product.ImagesProducts.Add(new ImagesProduct
                                 {
                                     ImageUrl = fileName
@@ -124,13 +125,13 @@ namespace E_commerce.Areas.Admin.Controllers
             return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
         }
 
-        public async Task<string> UploadFile(IFormFile file)
+     public async Task<string> UploadFile(IFormFile file)
         {
             if (file != null)
             {
                 string uploads = Path.Combine(hosting.WebRootPath, "uploads");
                 string fullPath = Path.Combine(uploads, file.FileName);
-                file.CopyTo(new FileStream(fullPath, FileMode.Create));
+              await  file.CopyToAsync(new FileStream(fullPath, FileMode.Create));
 
                 return file.FileName;
             }
