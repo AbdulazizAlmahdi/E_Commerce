@@ -187,6 +187,59 @@ namespace E_commerce.Models
                         webContext.SaveChanges();
                     }
                 }
+            }  
+            
+            if (!webContext.Products.Any())
+            {
+                IList<Category> categories = webContext.Categories.ToList();
+                foreach (Category category in categories)
+                {
+
+                    for (int i = 0; i < 50; i++)
+                    {
+                        webContext.AddRange(
+                            new Product
+                            {
+                                NameAr = RandomString(15),
+                                CategoryId = category.Id,
+                                Price = 200,
+                                DetailsAr = RandomString(20),
+                                DetailsEn = RandomString(20),
+                                Duration = 3,
+                                Status = true,
+                                Quantity = 20,
+                                Address="صنعاء سوق علي محسن",
+                                Unit = "سلة",
+                                CreatedAt = DateTime.UtcNow,
+                            }
+                            );
+
+                        webContext.SaveChanges();
+                    }
+                }
+            }  
+            
+            if (!webContext.Auctions.Any())
+            {
+                IList<Product> products = webContext.Products.ToList();
+                foreach (Product product in products)
+                {
+
+                    for (int i = 0; i < 50; i++)
+                    {
+                        webContext.AddRange(
+                            new Auction
+                            {
+                                StartDate=DateTime.UtcNow,
+                                EndDate=DateTime.UtcNow.AddDays(3),
+                                ProductId = product.Id,
+                                StartPrice=200,
+                            }
+                            );
+
+                        webContext.SaveChanges();
+                    }
+                }
             }          
         }
     }

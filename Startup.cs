@@ -37,6 +37,7 @@ namespace E_commerce
             services.AddScoped<IRepository<Product>, ProductRepository>();
             services.AddScoped<IRepository<Category>, CategoryRepository>();
             services.AddScoped<IRepository<Help>, HelpRepository>();
+            services.AddScoped<IRepository<Auction>, AuctionsRepository>();
             services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
