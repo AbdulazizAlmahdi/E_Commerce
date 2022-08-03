@@ -32,9 +32,82 @@ namespace E_commerce.Areas.Admin.Controllers
         {
             return View();
         }
-        [NoDirectAccess]        
-    
-       public IActionResult GetProducts(string q)
+        [NoDirectAccess]
+        public IActionResult CreateOrEdit(int id = 0)
+        {
+
+            if (id == 0)
+            {
+                var model = new AuctionsViewModel
+                {
+                    auction = new Auction
+                    {
+                        Product = new Product()
+                    },
+
+                };
+                return View(model);
+            }
+            else
+            {
+                var model = new AuctionsViewModel
+                {
+                    auction = auction.Find(id),
+
+                };
+                return View(model);
+            }
+
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateOrEdit(int id , AuctionsViewModel auctionsViewModel, string ProductId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (id == 0)
+                    {
+                        var model = new AuctionsViewModel
+                        {
+                            auction = new Auction
+                            {
+                                Product = new Product()
+                            },
+
+                        };
+                        return View(model);
+                    }
+                    else
+                    {
+                        var model = new AuctionsViewModel
+                        {
+                            auction = auction.Find(id),
+
+                        };
+                        return View(model);
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    var exception = e.InnerException.Message;
+                    return Json(new { status = "error", type = "auctions", html = Helper.RenderRazorViewToString(this, "AuctionsTable"), messgaeTitle = "إضافة مزاد", messageBody = "حدث خطأ أثناء إضافة/تعديل مزاد" });
+
+                }
+            }
+            else
+            {
+                var model = new AuctionsViewModel
+                {
+                    auction = auction.Find(id),
+                };
+                return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
+            }
+        }
+        public IActionResult GetProducts(string q)
         {
            IEnumerable<Models.SelectListItem> productsList = Enumerable.Empty<Models.SelectListItem>();
            if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
@@ -48,7 +121,7 @@ namespace E_commerce.Areas.Admin.Controllers
            return Json(new { items = productsList});
         }
      
-   public IActionResult GetProductData()
+   public IActionResult GetAuctionsData()
         {
             try
             {

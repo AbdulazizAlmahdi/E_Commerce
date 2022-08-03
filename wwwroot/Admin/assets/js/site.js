@@ -37,7 +37,7 @@ userDatatable = () => {
                 text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة مستخدم</span>',
                 className: 'dt-button create-new btn btn-primary m-2',
                 action: function (e, dt, node, config) {
-                    showInPopup('/Admin/Users/CreateOrEdit', 'تعديل المستخدم');
+                    showInPopup('/Admin/Users/CreateOrEdit', 'إضافة مستخدم');
                 },
             },
             {
@@ -475,7 +475,7 @@ auctionDatatable = () => {
                 text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة مزاد</span>',
                 className: 'dt-button create-new btn btn-primary m-2',
                 action: function (e, dt, node, config) {
-                    showInPopup('/Admin/Users/CreateOrEdit', 'تعديل المزاد');
+                    showInPopup('/Admin/Auctions/CreateOrEdit', 'إضافة المزاد');
                 },
             },
             {
@@ -528,7 +528,7 @@ auctionDatatable = () => {
             }
         ],
         ajax: {
-            "url": "/Admin/Auctions/GetProductData",
+            "url": "/Admin/Auctions/GetAuctionsData",
             "type": "POST",
             "datatype": "json"
         },
