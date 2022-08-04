@@ -20,13 +20,13 @@ namespace E_commerce.Areas.Admin.Controllers
     [Area("Admin")]
     public class AuctionsController : Controller
     {
-        IRepository<Auction> auction;
-        IRepository<Product> products;
+        IRepository<Auction> auctionRepository;
+        IRepository<Product> productsRepository;
 
-        public AuctionsController(IRepository<Auction> auction, IRepository<Product> products)
+        public AuctionsController(IRepository<Auction> auctionRepository, IRepository<Product> productsRepository)
         {
-            this.products = products;
-            this.auction = auction;
+            this.productsRepository = productsRepository;
+            this.auctionRepository = auctionRepository;
         }
         public IActionResult Index()
         {
@@ -52,7 +52,7 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 var model = new AuctionsViewModel
                 {
-                    auction = auction.Find(id),
+                    auction = auctionRepository.Find(id),
 
                 };
                 return View(model);
@@ -62,7 +62,7 @@ namespace E_commerce.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id , AuctionsViewModel auctionsViewModel, string ProductId)
+        public IActionResult CreateOrEdit(int id, AuctionsViewModel auctionsViewModel, string ProductId)
         {
             if (ModelState.IsValid)
             {
@@ -70,24 +70,16 @@ namespace E_commerce.Areas.Admin.Controllers
                 {
                     if (id == 0)
                     {
-                        var model = new AuctionsViewModel
-                        {
-                            auction = new Auction
-                            {
-                                Product = new Product()
-                            },
-
-                        };
-                        return View(model);
+                        auctionsViewModel.auction.ProductId = Convert.ToInt32(ProductId);
+                        auctionRepository.Add(auctionsViewModel.auction);
+                        return Json(new { status = "success", type = "auctions", html = Helper.RenderRazorViewToString(this, "AuctionsTable"), messgaeTitle = "إضافة مزاد", messageBody = "تمت إضافة المزاد بنجاح" });
                     }
                     else
                     {
-                        var model = new AuctionsViewModel
-                        {
-                            auction = auction.Find(id),
-
-                        };
-                        return View(model);
+                        auctionsViewModel.auction.Id = id;
+                        auctionsViewModel.auction.ProductId = Convert.ToInt32(ProductId);
+                        auctionRepository.Update(auctionsViewModel.auction);
+                        return Json(new { status = "success", type = "auctions", html = Helper.RenderRazorViewToString(this, "AuctionsTable"), messgaeTitle = "تعديل مستخدم", messageBody = "تمت تعديل المستخدم بنجاح" });
                     }
 
                 }
@@ -102,26 +94,53 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 var model = new AuctionsViewModel
                 {
-                    auction = auction.Find(id),
+                    auction = new Auction
+                    {
+                        Id = 0
+                    }
                 };
                 return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
             }
         }
+
+
+
+        [NoDirectAccess]
+        public ActionResult Delete(int id)
+        {
+            return View(id);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, string x)
+        {
+            try
+            {
+                auctionRepository.Delete(id);
+                return Json(new { status = "success", type = "auctions", html = Helper.RenderRazorViewToString(this, "AuctionsTable", null), messgaeTitle = "حذف المزاد", messageBody = "تم حذف المزاد بنجاح" });
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = "error", type = "auctions", html = Helper.RenderRazorViewToString(this, "AuctionsTable", null), messgaeTitle = "حذف المزاد", messageBody = "حدث خطأ أثناء حذف المزاد" });
+            }
+        }
+
         public IActionResult GetProducts(string q)
         {
-           IEnumerable<Models.SelectListItem> productsList = Enumerable.Empty<Models.SelectListItem>();
-           if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-                productsList = products.show(0).Where(p => p.NameAr.Contains(q)).Select(
+            IEnumerable<Models.SelectListItem> productsList = Enumerable.Empty<Models.SelectListItem>();
+            if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
+                productsList = productsRepository.show(0).Where(p => p.NameAr.Contains(q)).Select(
                    p => new Models.SelectListItem
                    {
                        Text = p.NameAr,
                        Id = p.Id
                    }
                    );
-           return Json(new { items = productsList});
+            return Json(new { items = productsList });
         }
-     
-   public IActionResult GetAuctionsData()
+
+        public IActionResult GetAuctionsData()
         {
             try
             {
@@ -134,7 +153,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                IQueryable<Auction> auctionsData = auction.show(1);
+                IQueryable<Auction> auctionsData = auctionRepository.show(1);
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
                     auctionsData = auctionsData.OrderBy(sortColumn + " " + sortColumnDirection);

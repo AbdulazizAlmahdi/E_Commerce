@@ -38,7 +38,7 @@
             minimumInputLength: 1,
             placeholder: "حدد المنتج",
         });
-        if ("@Model.auction.Product" != "") {
+        if ("@Model.auction.Product" != null) {
             var newOption = new Option("@Model.auction.Product.NameAr", "@Model.auction.Product.Id", false, false);
             $('#product-auction').append(newOption).trigger('change');
         }
@@ -67,9 +67,9 @@
                 <span asp-validation-for="@Model.auction.EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="form-label w-100" for="namber-id" asp-for="@Model.auction.StartPrice"></label>
+                <label class="form-label w-100" for="price" asp-for="@Model.auction.StartPrice"></label>
                 <div class="input-group input-group-merge">
-                    <input type="tel" id="namber-id" asp-for="@Model.auction.StartPrice" class="form-control"
+                    <input type="number" id="price" asp-for="@Model.auction.StartPrice" class="form-control"
                         aria-describedby="modalAddCard2" />
                 </div>
                 <span asp-validation-for="@Model.auction.StartPrice" class="text-danger"></span>
@@ -84,6 +84,7 @@
                     </select>
                 </div>
                 <span asp-validation-for="@Model.auction.ProductId" class="text-danger"></span>
+                <!-- /select2 -->
             </div>
             <div class="form-group">
                 <div class="d-grid gap-2">

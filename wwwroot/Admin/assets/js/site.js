@@ -462,6 +462,7 @@ auctionDatatable = () => {
         serverSide: true,
         filter: true,
         paging: true,
+        destroy: true,
         lengthChange: true,
         searching: true,
         ordering: true,
@@ -539,15 +540,15 @@ auctionDatatable = () => {
         }],
         columns: [
             { "data": "id", "name": "Id", "autoWidth": true },
+            { "data": "product.nameAr", "name": "Product Name", "autoWidth": true,"orderable": false  },
             { "data": "startDate", "name": "StartDate", "autoWidth": true },
             { "data": "endDate", "name": "EndDate", "autoWidth": true },
             { "data": "startPrice", "name": "StartPrice", "autoWidth": true },
-            { "data": "product.nameAr", "name": "Product Name", "autoWidth": true },
             {
                 "render": function (data, type, row) {
-                    return `<button onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المزاد')" class="btn btn-primary btn-sm">تعديل</button>` +
+                    return `<button onClick="showInPopup('/Admin/Auctions/CreateOrEdit/' + ${row.id}, 'تعديل المزاد')" class="btn btn-primary btn-sm">تعديل</button>` +
                         `<span>&nbsp;</span>` +
-                        `<button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المزاد')" class="btn btn-danger btn-sm">حذف</button>`;
+                        `<button onClick="showInPopup('/Admin/Auctions/Delete/' + ${row.id}, 'حذف المزاد')" class="btn btn-danger btn-sm">حذف</button>`;
                 },
                 "name": "action",
                 "autoWidth": true,
@@ -576,8 +577,13 @@ jQueryAjaxPost = form => {
                         helpDatatable();
                     else if (res.type == "user")
                         userDatatable();
-                    else if (res.type == "category")
-                        categoryDatatable();
+                        else if (res.type == "category")
+                            categoryDatatable();
+                        
+                    else if (res.type == "auctions")
+                    auctionDatatable();
+
+                        
                     $('#success-toast .success-toast-title').html(res.messgaeTitle);
                     $('#success-toast .success-toast-body').html(res.messageBody);
                     new bootstrap.Toast(document.getElementById('success-toast')).show();
@@ -597,7 +603,9 @@ jQueryAjaxPost = form => {
                     else if (res.type == "user")
                         userDatatable();
                     else if (res.type == "category")
-                        categoryDatatable();
+                        categoryDatatable();  
+                        else if (res.type == "auctions")
+                        auctionDatatable();
                     $('#error-toast .error-toast-title').html(res.messgaeTitle);
                     $('#error-toast .error-toast-body').html(res.messageBody);
                     new bootstrap.Toast(document.getElementById('error-toast')).show();

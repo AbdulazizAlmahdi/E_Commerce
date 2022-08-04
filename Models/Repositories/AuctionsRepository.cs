@@ -19,17 +19,21 @@ namespace E_commerce.Models.Repositories
 
         public void Add(Auction entity)
         {
-                 throw new NotImplementedException();
+            context.Add(entity);
+            context.SaveChanges();
         }
 
         public void Delete(int ID)
         {
-            throw new NotImplementedException();
+            var auction = Find(ID);
+            context.Auctions.Remove(auction);
+            context.SaveChanges();
         }
 
         public Auction Find(int ID)
         {
-            throw new NotImplementedException();
+            var auction = context.Auctions.Include(a => a.Product).SingleOrDefault(a => a.Id == ID);
+            return auction;
         }
 
         public Auction Find(string Text)
@@ -39,7 +43,8 @@ namespace E_commerce.Models.Repositories
 
         public void Update(Auction entity)
         {
-            throw new NotImplementedException();
+            context.Auctions.Update(entity);
+            context.SaveChanges();
         }
 
      
