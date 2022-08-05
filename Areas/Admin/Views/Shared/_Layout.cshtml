@@ -129,29 +129,25 @@
                     </li>
 
                     <!-- Layouts -->
-                    <li class="menu-item active">
+                    <li class="menu-item ">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-layout"></i>
                             <div data-i18n="المستخدمين والصلاحيات">المستخدمين والصلاحيات</div>
                         </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item  @(ViewData["Title"].ToString()== "المستخدمين"?"active":" ")">
+                                <a href="~/admin/users" class="menu-link">
+                                    <div data-i18n="المستخدمين">المستخدمين</div>
+                                </a>
+                            </li>
+                            <li id="ta" class="menu-item">
+                                <a href="" class="menu-link">
+                                    <div data-i18n="الصلاحيات">الصلاحيات</div>
+                                </a>
 
-                        <li class="menu-item  active">
-                            <a href="~/admin/users" class="menu-link">
-                                <div data-i18n="المستخدمين">المستخدمين</div>
-                            </a>
+                            </li>
+                        </ul>
                         </li>
- 
-                          <li class="menu-item  @(ViewData["Title"].ToString()== "المستخدمين"?"active":" ")">
-                            <a href="~/admin/users" class="menu-link">
-                                <div data-i18n="المستخدمين">المستخدمين</div>
-                            </a>
-                        </li>
-                        <li id="ta" class="menu-item">
-                            <a href="" class="menu-link">
-                                <div data-i18n="الصلاحيات">الصلاحيات</div>
-                            </a>
-                    </ul>
-                    </li>
                     <li class="menu-item  accordion active">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bxl-apple"></i>
@@ -178,7 +174,7 @@
                         </a>
                     </li>
                     <li class="menu-item  @(ViewData["Title"].ToString()== "المزادات"?"active":" ")">
-                        <a href="~/admin/help" class="menu-link">
+                        <a href="~/admin/auctions" class="menu-link">
                             <i class="menu-icon tf-icons bx bx"></i>
                             <div data-i18n="المزادات">المزادات</div>
                         </a>
