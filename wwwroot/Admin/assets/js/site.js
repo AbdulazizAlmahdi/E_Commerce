@@ -9,6 +9,7 @@
         }
     })
 }
+
 $(document).ready(function () {
     userDatatable();
     helpDatatable();
@@ -589,7 +590,6 @@ jQueryAjaxPost = form => {
                     new bootstrap.Toast(document.getElementById('success-toast')).show();
                 }
                 else if (res.status == "validation-error") {
-                    console.log(res.html);
                     $('#form-modal .modal-body').html(res.html);
                 }
                 else {

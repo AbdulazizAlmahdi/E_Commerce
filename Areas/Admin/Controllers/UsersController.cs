@@ -122,13 +122,13 @@ namespace e_commerce.Areas.Admin.Controllers
         }
 
         [NoDirectAccess]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
             return View(id);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, string x)
+        public ActionResult Delete(int id)
         {
             try
             {

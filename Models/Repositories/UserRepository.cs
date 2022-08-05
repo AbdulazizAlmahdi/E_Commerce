@@ -14,7 +14,6 @@ namespace E_commerce.Models.Repositories
         {
             this.context = db;
         }
-        //public IQueryable<User> show(int? ID) => context.Users.Where(u=>u.UsersId == 5||u.Id==5).SelectMany(x => x.InverseUsers).Include(u => u.Place).Include(u => u.Phone).Include(u => u.UserStatus);
         public IQueryable<User> show(int? ID,String name= "")
         {
             return GetChild(ID??0, name).AsQueryable();
@@ -54,25 +53,10 @@ namespace E_commerce.Models.Repositories
             return user;
         }
 
-        //public IList<User> List()
-        //{
-        //    return this.context.Users.Include(u => u.Place).Include(u => u.Phone).ToList();
-        //}
-
         public void Update(User entity)
         {
             context.Users.Update(entity);
-            context.SaveChanges();
-            // var user = context.Users.SingleOrDefault(a => a.Id == entity.Id);
-            // context.Entry(user).CurrentValues.SetValues(entity);
-            // context.Entry(user).State = EntityState.Modified;
-            //  var phones = context.Phones.FirstOrDefault(x => x.Id == entity.Phone.Id);
-            // if (phones != null)
-            // {
-            //     phones.Number = entity.Phone.Number;
-            //     context.Entry(phones).State = EntityState.Modified;
-            // }
-            // context.SaveChanges();            
+            context.SaveChanges();          
         }
     }
 }
