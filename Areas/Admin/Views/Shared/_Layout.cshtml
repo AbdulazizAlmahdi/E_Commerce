@@ -129,38 +129,24 @@
                     </li>
 
                     <!-- Layouts -->
-                    <li class="menu-item  active">
+                    <li class="menu-item open active">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                            <i class="menu-icon tf-icons bx bx-layout"></i>
                             <div data-i18n="المستخدمين والصلاحيات">المستخدمين والصلاحيات</div>
                         </a>
 
                         <ul class="menu-sub">
-                            @if (Layout == "~/admin/users")
-                            {
-                                <li class="menu-item open active">
-
-
-
-                                    <a href="~/admin/users" class="menu-link">
-                                        <div data-i18n="المستخدمين">المستخدمين</div>
-                                    </a>
-                                </li>
-
-                            }
-                            else
-                            {
-                        <li class="menu-item  @(ViewData["Title"].ToString()== "المستخدمين"?"active":" ")">
-
-
-
-                            <a href="~/admin/users" class="menu-link">
-                                <div data-i18n="المستخدمين">المستخدمين</div>
-                            </a>
-                        </li>
-                            }
-                            
-                            <li id="ta" class="menu-item">
+                            <li class="menu-item active">
+                                <a href="~/admin/users" class="menu-link">
+                                    <div data-i18n="المستخدمين">المستخدمين</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="~/admin/help" class="menu-link">
+                                    <div data-i18n="المساعدة">المساعدة</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
                                 <a href="" class="menu-link">
                                     <div data-i18n="الصلاحيات">الصلاحيات</div>
                                 </a>
@@ -168,34 +154,6 @@
 
                         </ul>
                     </li>
-                    <li class="menu-item  accordion active">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bxl-apple"></i>
-                            <div data-i18n="المنتجات والاصناف">المنتجات والاصناف</div>
-                        </a>
-
-                        <ul class="menu-sub">
-                            <li class="menu-item  @(ViewData["Title"].ToString()== "المنتجات"?"active":" ") ">
-                                    <a href="~/admin/products" class="menu-link">
-                                        <div data-i18n="المنتجات">المنتجات</div>
-                                    </a>    
-                                </li>
-                                <li class="menu-item  @(ViewData["Title"].ToString()== "الاصناف"?"active":" ") ">
-                                    <a href="~/admin/category" class="menu-link ">
-                                        <div data-i18n="الاصناف">الاصناف</div>
-                                    </a>
-                                </li>
-
-                            </ul>
-                    </li>
-                    <li class="menu-item  @(ViewData["Title"].ToString()== "المساعدة"?"active":" ")">
-                        <a href="~/admin/help" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-help-circle"></i>
-                            <div data-i18n="المساعدة">المساعدة</div>
-                        </a>
-                    </li>
-                 
-
 
                     <!-- Apps & Pages -->
                     <li class="menu-header small text-uppercase">
@@ -515,8 +473,9 @@
                                                         <small class="text-muted">2 days ago</small>
                                                     </div>
                                                     <div class="dropdown-notifications-actions flex-shrink-0">
-                                                        class="dropdown-notifications-read">
-                                                        <span class="badge badge-dot"></span>
+                                                        <a href="javascript:void(0)"
+                                                           class="dropdown-notifications-read">
+                                                            <span class="badge badge-dot"></span>
                                                         </a>
                                                         <a href="javascript:void(0)"
                                                            class="dropdown-notifications-archive">
@@ -745,11 +704,7 @@
                                     aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="modal-body">
-<<<<<<< Updated upstream
                             
-=======
-
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
