@@ -44,7 +44,12 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 var model = new ProductsViewModel
                 {
+<<<<<<< Updated upstream
                     product = new Product
+=======
+                   // categories = categories.show(null).ToList(),
+                    Product = new Product
+>>>>>>> Stashed changes
                     {
                         
                     },
@@ -56,7 +61,13 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 var model = new ProductsViewModel
                 {
+<<<<<<< Updated upstream
                     product = products.Find(id),
+=======
+                   // categories = categories.show(null).ToList(),
+                    Product = products.Find(id),
+
+>>>>>>> Stashed changes
                 };
                 return View(model);
             }
@@ -114,7 +125,12 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 var model = new ProductsViewModel
                 {
+<<<<<<< Updated upstream
                     product = new Product
+=======
+                   /// categories = categories.show(null).ToList(),
+                    Product = new Product
+>>>>>>> Stashed changes
                     {
                         Id = 0
                     },

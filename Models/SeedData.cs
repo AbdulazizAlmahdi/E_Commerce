@@ -176,6 +176,10 @@ namespace E_commerce.Models
                                 DetailsAr = RandomString(20),
                                 DetailsEn = RandomString(20),
                                 Duration = 3,
+<<<<<<< Updated upstream
+=======
+                                //Image = "no image",
+>>>>>>> Stashed changes
                                 Status = true,
                                 Quantity = 20,
                                 Address="صنعاء سوق علي محسن",

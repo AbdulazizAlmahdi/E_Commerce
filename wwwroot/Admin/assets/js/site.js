@@ -43,7 +43,7 @@ userDatatable = () => {
             },
             {
                 extend: 'collection',
-                className: 'class="dt-button buttons-collection btn btn-label-primary dropdown-toggle me-2"',
+                className: 'class="dt-button buttons-collection btn btn-label-primary  me-6"',
                 text: 'تصدير',
                 buttons: [
                     {

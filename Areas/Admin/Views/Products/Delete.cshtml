@@ -1,1 +1,126 @@
+<<<<<<< Updated upstream
 ﻿
+=======
+﻿@model ProductViewModel
+<!--نموذج حذف منتج جديد -->
+<div class="layout-page">
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <form asp-action="ConfirmDelete" dir="rtl" style="padding-right:30px;">
+                <div class="row">
+
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label"> رق الصنف</label>
+                        <input asp-for="Product.Id" class="form-control">
+                    </div>
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label"> رق الصنف</label>
+                        @*<select asp-for="Product.Category" asp-items="@Model.GetCategory" class="form-control"></select>*@
+                    </div>
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label"> اسم المنتج</label>
+                        <input asp-for="Product.NameAr" type="text" class="form-control" id="defaultFormControlInput" placeholder="بطاط صعدي" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Product.NameAr" class="text-danger"></span>
+
+                    </div>
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label"> الاسم بالانجليزي</label>
+                        <input asp-for="Product.NameEn" type="text" class="form-control" id="defaultFormControlInput" placeholder="بطاط صعدي" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Product.NameEn" class="text-danger"></span>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label">التقرير</label>
+                        <input asp-for="Product.Report" type="text" class="form-control" id="defaultFormControlInput" placeholder="بطاط صعدي" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Product.Report" class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label">السعر</label>
+                        <input asp-for="Product.Price" type="text" class="form-control" id="defaultFormControlInput" placeholder="700000ر.ي" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Product.Price" class="text-danger"></span>
+
+                    </div>
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label">التفاصيل</label>
+                        <input asp-for="Product.DetailsAr" type="text" class="form-control" id="defaultFormControlInput" placeholder="سلة بطاط عمراني" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Product.DetailsAr" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label">التفاصيل بالانجليزي</label>
+                        <input asp-for="Product.DetailsEn" type="text" class="form-control" id="defaultFormControlInput" placeholder="سلة بطاط عمراني" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Product.DetailsEn" class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label">المدة</label>
+                        <input asp-for="Product.Duration" type="text" class="form-control" id="defaultFormControlInput" placeholder="5يوم" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Product.Duration" class="text-danger"></span>
+
+
+                    </div>
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label">الحالة</label>
+                        <input asp-for="Product.Status" type="text" class="form-control" id="defaultFormControlInput" placeholder="نشط" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Product.Status" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label">الكمية</label>
+                        <input asp-for="Product.Quantity" type="text" class="form-control" id="defaultFormControlInput" placeholder="50" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Product.Quantity" class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label">الوحدة</label>
+                        <input asp-for="Product.Unit" type="text" class="form-control" id="defaultFormControlInput" placeholder="سلة" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Product.Unit" class="text-danger"></span>
+                    </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="defaultFormControlInput" class="control-label">الخصم</label>
+                        <input asp-for="Product.Discount" type="text" class="form-control" id="defaultFormControlInput" placeholder="20%" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Product.Discount" class="text-danger"></span>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+
+                    </div>
+                    <div class="col">
+
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary data-submit me-1 me-sm-3">Delete</button>
+                    <button asp-action="Index" class="btn btn-outline-secondary">Back</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<!--نموذج حذف منتج جديد -->
+>>>>>>> Stashed changes
