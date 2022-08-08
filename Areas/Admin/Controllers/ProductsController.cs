@@ -20,8 +20,8 @@ namespace E_commerce.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductsController : Controller
     {
-        IRepository<Product> products;
-        IRepository<Category> categories;
+        private IRepository<Product> products;
+        private IRepository<Category> categories;
         private readonly IHostingEnvironment hosting;
 
 
@@ -91,6 +91,7 @@ namespace E_commerce.Areas.Admin.Controllers
                         productViewModel.product.Views = 0;
                         productViewModel.product.Evaluation=5;
                         products.Add(productViewModel.product);
+                        return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "إضافة مستخدم", messageBody = "تمت إضافة المستخدم بنجاح" });
                     }
                     else
                     {
@@ -98,15 +99,18 @@ namespace E_commerce.Areas.Admin.Controllers
                         productViewModel.product.Id = id;
                         productViewModel.product.UpdatedAt = DateTime.Now;
                         products.Update(productViewModel.product);
+                        return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "تعديل مستخدم", messageBody = "تمت تعديل المستخدم بنجاح" });
 
                     }
                 }
                 catch (Exception e)
                 {
-                    return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
+                    var exception = e.InnerException.Message;
+                    return Json(new { status = "error", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "إضافة مستخدم", messageBody = "حدث خطأ أثناء إضافة/تعديل مستخدم" });
+                    //return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
+
                 }
-                System.Console.WriteLine(filesList.Count);
-                return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
+               
 
             }
             else
@@ -121,8 +125,8 @@ namespace E_commerce.Areas.Admin.Controllers
                 };
                 return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
             }
-
-            return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
+           
+            //return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
         }
 
      public async Task<string> UploadFile(IFormFile file)
@@ -184,6 +188,26 @@ namespace E_commerce.Areas.Admin.Controllers
 
 
         // }
+        [NoDirectAccess]
+        public ActionResult Delete(int? id)
+        {
+            return View(id);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, string x)
+        {
+            try
+            {
+                products.Delete(id);
+                return Json(new { status = "success", type = "Product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف المنتج", messageBody = "تم حذف المنتج بنجاح" });
+                
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = "error", type = "Product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف المنتج", messageBody = "حدث خطأ أثناء حذف المنتج" });
+            }
+        }
         public IActionResult GetCategory(string q)
         {
            IEnumerable<Models.SelectListItem> categorytList = Enumerable.Empty<Models.SelectListItem>();

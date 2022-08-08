@@ -577,6 +577,8 @@ jQueryAjaxPost = form => {
                         helpDatatable();
                     else if (res.type == "user")
                         userDatatable();
+                    else if (res.type == "products")
+                        productsDatatable();
                         else if (res.type == "category")
                             categoryDatatable();
                         
@@ -602,6 +604,8 @@ jQueryAjaxPost = form => {
                         helpDatatable();
                     else if (res.type == "user")
                         userDatatable();
+                    else if (res.type == "products")
+                        productsDatatable();
                     else if (res.type == "category")
                         categoryDatatable();  
                         else if (res.type == "auctions")

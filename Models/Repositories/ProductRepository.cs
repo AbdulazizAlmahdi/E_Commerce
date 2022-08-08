@@ -23,15 +23,21 @@ namespace E_commerce.Models.Repositories
             context.Add(entity);
             context.SaveChanges();
         }
+        // public void Delete(int id)
+        // {
+        //     var Product = Find(id);
+        //   context.Products.Remove(Product);
+        //    context.SaveChanges();
+        // }
 
-        public void Delete(Product product)
+        void IRepository<Product>.Delete(int ID)
         {
-            context.Products.Remove(product);
+            context.Products.Remove(Find(ID));
             context.SaveChanges();
-           
+
         }
 
-        public Product Delete(int ID)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -55,9 +61,9 @@ namespace E_commerce.Models.Repositories
             throw new NotImplementedException();
         }
 
-        void IRepository<Product>.Delete(int ID)
-        {
-            throw new NotImplementedException();
-        }
+        //void IRepository<Product>.Delete(int ID)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
