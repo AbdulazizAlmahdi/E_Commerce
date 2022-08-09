@@ -83,6 +83,7 @@ namespace E_commerce.Areas.Admin.Controllers
                                     ImageUrl = fileName
                                 });
                         }
+
                         productViewModel.product.CategoryId = Convert.ToInt32(CategoryId);
                         productViewModel.product.Id =0;
                         productViewModel.product.CreatedAt = DateTime.Now;
