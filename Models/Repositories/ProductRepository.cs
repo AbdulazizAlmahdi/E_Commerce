@@ -44,7 +44,7 @@ namespace E_commerce.Models.Repositories
 
         public Product Find(int ID)
         {
-            return context.Products.Include(u => u.Category).FirstOrDefault(a=>a.Id==ID);
+            return context.Products.Include(u => u.Category).Include(u => u.ImagesProducts).FirstOrDefault(a=>a.Id==ID);
         }
 
         public Product Find(string Text)
@@ -58,12 +58,8 @@ namespace E_commerce.Models.Repositories
 
         public void Update(Product entity)
         {
-            throw new NotImplementedException();
+            context.Update(entity);
+            context.SaveChanges();
         }
-
-        //void IRepository<Product>.Delete(int ID)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

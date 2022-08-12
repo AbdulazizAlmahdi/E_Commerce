@@ -242,7 +242,6 @@ helpDatatable = () => {
         ]
     });
 }
-
 categoryDatatable = () => {
     $("#category-datatable").DataTable({
         processing: true,
@@ -351,6 +350,7 @@ productDatatable = () => {
     $("#productDatatable").DataTable({
         processing: true,
         serverSide: true,
+        destroy: true,
         filter: true,
         paging: true,
         lengthChange: true,
@@ -435,7 +435,7 @@ productDatatable = () => {
         }],
         columns: [
             { "data": "id", "name": "Id", "autoWidth": true },
-            { "data": "nameAr", "name": "Name", "autoWidth": true },
+            { "data": "nameAr", "name": "nameAr", "autoWidth": true },
             { "data": "category.name", "name": "Name", "autoWidth": true },
             { "data": "quantity", "name": "Name", "autoWidth": true },
             { "data": "unit", "name": "Name", "autoWidth": true },
@@ -541,7 +541,7 @@ auctionDatatable = () => {
         }],
         columns: [
             { "data": "id", "name": "Id", "autoWidth": true },
-            { "data": "product.nameAr", "name": "Product Name", "autoWidth": true,"orderable": false  },
+            { "data": "product.nameAr", "name": "Product Name", "autoWidth": true, "orderable": false },
             { "data": "startDate", "name": "StartDate", "autoWidth": true },
             { "data": "endDate", "name": "EndDate", "autoWidth": true },
             { "data": "startPrice", "name": "StartPrice", "autoWidth": true },
@@ -578,15 +578,13 @@ jQueryAjaxPost = form => {
                         helpDatatable();
                     else if (res.type == "user")
                         userDatatable();
-                    else if (res.type == "products")
-                        productsDatatable();
-                        else if (res.type == "category")
-                            categoryDatatable();
-                        
+                    else if (res.type == "product")
+                    productDatatable();
+                    else if (res.type == "category")
+                        categoryDatatable();
                     else if (res.type == "auctions")
-                    auctionDatatable();
+                        auctionDatatable();
 
-                        
                     $('#success-toast .success-toast-title').html(res.messgaeTitle);
                     $('#success-toast .success-toast-body').html(res.messageBody);
                     new bootstrap.Toast(document.getElementById('success-toast')).show();
@@ -604,11 +602,11 @@ jQueryAjaxPost = form => {
                         helpDatatable();
                     else if (res.type == "user")
                         userDatatable();
-                    else if (res.type == "products")
-                        productsDatatable();
+                    else if (res.type == "product")
+                    productDatatable();
                     else if (res.type == "category")
-                        categoryDatatable();  
-                        else if (res.type == "auctions")
+                        categoryDatatable();
+                    else if (res.type == "auctions")
                         auctionDatatable();
                     $('#error-toast .error-toast-title').html(res.messgaeTitle);
                     $('#error-toast .error-toast-body').html(res.messageBody);

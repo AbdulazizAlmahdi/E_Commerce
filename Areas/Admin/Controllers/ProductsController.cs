@@ -13,6 +13,7 @@ using static e_commerce.Helper;
 using e_commerce;
 using E_commerce.ViewModel;
 using System.IO;
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Hosting;
 
 namespace E_commerce.Areas.Admin.Controllers
@@ -21,15 +22,17 @@ namespace E_commerce.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private IRepository<Product> products;
+        private IRepository<ImagesProduct> imagesRepository;
         private IRepository<Category> categories;
-        private readonly IHostingEnvironment hosting;
+        private readonly IWebHostEnvironment hosting;
 
 
-        public ProductsController(IRepository<Product> products, IRepository<Category> categories, IHostingEnvironment hosting)
+        public ProductsController(IRepository<Product> products, IRepository<ImagesProduct> imagesRepository, IRepository<Category> categories, IWebHostEnvironment hosting)
         {
             this.categories = categories;
             this.products = products;
             this.hosting = hosting;
+            this.imagesRepository = imagesRepository;
         }
         public IActionResult Index()
         {
@@ -46,7 +49,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 {
                     product = new Product
                     {
-                        
+
                     },
 
                 };
@@ -63,43 +66,59 @@ namespace E_commerce.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateOrEdit(int id, ProductsViewModel productViewModel, List<IFormFile> files,string CategoryId)
-            {
-            List<IFormFile> filesList = files;
-            if (true)
+        public IActionResult CreateOrEdit(int id, ProductsViewModel productViewModel, string CategoryId)
+        {
+            if (ModelState.IsValid)
             {
                 try
                 {
+
                     if (id == 0)
                     {
-
                         productViewModel.product.Id = id;
-                          foreach (var file in filesList)
+                        foreach (IFormFile item in productViewModel.Files)
                         {
-                           
-                                string fileName =await UploadFile(file) ?? string.Empty;
-                                productViewModel.product.ImagesProducts.Add(new ImagesProduct
-                                {
-                                    ImageUrl = fileName
-                                });
+                            productViewModel.product.ImagesProducts.Add(new ImagesProduct
+                            {
+                                ImageUrl = UploadFile(item)
+                            });
                         }
-
                         productViewModel.product.CategoryId = Convert.ToInt32(CategoryId);
-                        productViewModel.product.Id =0;
+                        productViewModel.product.Id = 0;
                         productViewModel.product.CreatedAt = DateTime.Now;
                         productViewModel.product.NameEn = productViewModel.product.NameAr;
                         productViewModel.product.DetailsEn = productViewModel.product.DetailsAr;
                         productViewModel.product.Views = 0;
-                        productViewModel.product.Evaluation=5;
+                        productViewModel.product.Evaluation = 5;
                         products.Add(productViewModel.product);
                         return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "إضافة مستخدم", messageBody = "تمت إضافة المستخدم بنجاح" });
                     }
                     else
                     {
-                        //productViewModel.product.Id = Convert.ToInt32(ProductsId);
-                        productViewModel.product.Id = id;
-                        productViewModel.product.UpdatedAt = DateTime.Now;
-                        products.Update(productViewModel.product);
+                        var product = products.Find(id);
+                        if (productViewModel.Files!=null&&productViewModel.Files.Count > 0)
+                        {
+                             foreach (var item in product.ImagesProducts)
+                            {
+                                DeleteFile(item.ImageUrl);
+                               imagesRepository.Delete(item.Id);
+                            }
+                            product.ImagesProducts.Clear();
+                            foreach (IFormFile item in productViewModel.Files)
+                            {
+                                product.ImagesProducts.Add(new ImagesProduct
+                                {
+                                    ImageUrl = UploadFile(item)
+                                });
+                            }
+                        }
+                        product.NameEn = productViewModel.product.NameEn;
+                        product.NameAr = productViewModel.product.NameAr;
+                        product.DetailsEn = productViewModel.product.DetailsEn;
+                        product.DetailsAr = productViewModel.product.DetailsAr;
+                        product.CategoryId = Convert.ToInt32(CategoryId);
+                        product.UpdatedAt = DateTime.Now;
+                        products.Update(product);
                         return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "تعديل مستخدم", messageBody = "تمت تعديل المستخدم بنجاح" });
 
                     }
@@ -111,7 +130,7 @@ namespace E_commerce.Areas.Admin.Controllers
                     //return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
 
                 }
-               
+
 
             }
             else
@@ -126,67 +145,43 @@ namespace E_commerce.Areas.Admin.Controllers
                 };
                 return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
             }
-           
+
             //return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
         }
-
-     public async Task<string> UploadFile(IFormFile file)
+        public string UploadFile(IFormFile file)
         {
             if (file != null)
             {
                 string uploads = Path.Combine(hosting.WebRootPath, "uploads");
                 string fullPath = Path.Combine(uploads, file.FileName);
-              await  file.CopyToAsync(new FileStream(fullPath, FileMode.Create));
-
+                using (var stream = new FileStream(fullPath, FileMode.Create)){
+                    file.CopyTo(stream);
+                    stream.Close();
+                }
                 return file.FileName;
             }
 
             return null;
+        }   
+
+        void DeleteFile(string fileName)
+        {
+                 string uploads = Path.Combine(hosting.WebRootPath, "uploads");
+                string fullPath = Path.Combine(uploads, fileName);
+            if ((System.IO.File.Exists(fullPath)))
+            {
+                    System.IO.File.Delete(fullPath);
+            }
         }
-        //public IActionResult Delete(int id)
-        //{
-        //    ProductViewModel productViewModel = new ProductViewModel
-        //    {
-        //        GetCategory = products.GetCategories().Select(c => new Models.SelectListItem
-        //        {
-
-        //        }),
-
-        //        Product = products.Find(id)
-        //    };
-
-        //    return View(productViewModel);
-
-
-        //}
-        ////GET Create
-        //public IActionResult Create()
-        //{
-        //    ProductViewModel productViewModel = new ProductViewModel
-        //    {
-        //        GetCategory = products.GetCategories().Select(c => new Models.SelectListItem
-        //        {
-
-        //        }),
-        //    };
-
-        //    return View(productViewModel);
-        //}
-        ////post create
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public IActionResult Create(Product product)
+        //GetFileFromUrl
+        // public IFormFile GetFileFromUrl(String fileName)
         // {
-        //     try
-        //     {
-        //         products.Add(product);
-        //         return RedirectToAction(nameof(Index));
-        //     }
-        //     catch
-        //     {
-        //         return View();
-        //     }
-
+        //    string uploads = Path.Combine(hosting.WebRootPath, "uploads");
+        //         string fullPath = Path.Combine(uploads, fileName);
+        //    using (var stream = System.IO.File.OpenRead(fullPath))
+        //    {
+        //        return new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name));
+        //    }
 
         // }
         [NoDirectAccess]
@@ -201,18 +196,18 @@ namespace E_commerce.Areas.Admin.Controllers
             try
             {
                 products.Delete(id);
-                return Json(new { status = "success", type = "Product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف المنتج", messageBody = "تم حذف المنتج بنجاح" });
-                
+                return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف المنتج", messageBody = "تم حذف المنتج بنجاح" });
+
             }
             catch (Exception e)
             {
-                return Json(new { status = "error", type = "Product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف المنتج", messageBody = "حدث خطأ أثناء حذف المنتج" });
+                return Json(new { status = "error", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف المنتج", messageBody = "حدث خطأ أثناء حذف المنتج" });
             }
         }
         public IActionResult GetCategory(string q)
         {
-           IEnumerable<Models.SelectListItem> categorytList = Enumerable.Empty<Models.SelectListItem>();
-           if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
+            IEnumerable<Models.SelectListItem> categorytList = Enumerable.Empty<Models.SelectListItem>();
+            if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
                 categorytList = categories.show(0).Where(p => p.Name.Contains(q)).Select(
                    u => new Models.SelectListItem
                    {
@@ -220,17 +215,9 @@ namespace E_commerce.Areas.Admin.Controllers
                        Id = u.Id
                    }
                    );
-           return Json(new { items = categorytList});
+            return Json(new { items = categorytList });
         }
-     
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public IActionResult ConfirmDelete(Product product)
-        // {
-        //     // products.Delete(ID);
-        //     return RedirectToAction(nameof(Index));
-        // }
-   public IActionResult GetProductData()
+        public IActionResult GetProductData()
         {
             try
             {

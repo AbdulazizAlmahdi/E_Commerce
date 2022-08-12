@@ -37,21 +37,21 @@
             minimumInputLength: 1,
             placeholder: "حدد الصنف",
         });
-    @* if ("@Model.user.Users" != "") {
-        var newOption = new Option("@Model.user.Users?.Name", "@Model.user.Users?.Id", false, false);
-        $('#childUsers').append(newOption).trigger('change');
-        } *@
+    if ("@Model.product.Category" != "") {
+        var newOption = new Option("@Model.product.Category?.Name", "@Model.product.Category?.Id", false, false);
+        $('#category-product').append(newOption).trigger('change');
+        }
         });
 </script>
 
 <div class="row">
     <!-- Basic -->
     <div class="col-md-12">
-        <form class="row g-3 needs-validation  dz-clickable" asp-action="CreateOrEdit" method="post"
-            enctype="multipart/form-data" id="dropzone-multi" asp-route-id="@Model.product.Id"
-            onsubmit="return jQueryAjaxPost(this);">
+        <form class="row g-3 needs-validation" asp-action="CreateOrEdit" method="post"
+              enctype="multipart/form-data" asp-route-id="@Model.product.Id"
+              onsubmit="return jQueryAjaxPost(this);">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" value="0" asp-for="@Model.product.Id" name="id" />
+            <input type="hidden" asp-for="@Model.product.Id" name="id" />
             <div class="form-group">
                 <label class="form-label w-100" for="name-id" asp-for="@Model.product.NameAr"></label>
                 <div class="input-group input-group-merge">
@@ -64,8 +64,8 @@
                 <label class="form-label w-100" for="category-product" asp-for="@Model.product.Category.Name"></label>
                 <div class="input-group input-group-merge">
                     <select id="category-product" asp-for="@Model.product.CategoryId" class="select2 form-select"
-                        name="CategoryId" style="width: 100%;" data-placeholder="حدد الصنف"
-                        aria-describedby="modalAddCard2">
+                            name="CategoryId" style="width: 100%;" data-placeholder="حدد الصنف"
+                            aria-describedby="modalAddCard2">
                     </select>
                 </div>
                 <span asp-validation-for="@Model.product.CategoryId" class="text-danger"></span>
@@ -127,23 +127,30 @@
                 </div>
                 <span asp-validation-for="@Model.product.Duration" class="text-danger"></span>
             </div>
-            <div class="form-group" style="
-            border: 2px dashed #d4d8dd;
-    width: 100%;
-    padding: 1.5rem;
-    cursor: pointer;
-    border-radius: 0.3125rem;">
-                <div class="dz-message needsclick ">
-                    Drop files here or click to upload
-                    <span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong>
-                        actually
-                        uploaded.)</span>
-                    <div class="row" id="template-preview"> </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="price-id" asp-for="@Model.Files"></label>
+                <div class="input-group input-group-merge">
+                    <input type="file" class="form-control" id="inputGroupFile02" multiple asp-for="@Model.Files">
                 </div>
-                <div class="fallback">
-                    <input type="file" name="files" asp-for="@Model.Files" multiple />
-                </div>
+                <span asp-validation-for="@Model.Files" class="text-danger"></span>
             </div>
+            @* <div class="form-group" style="
+                        border: 2px dashed #d4d8dd;
+                width: 100%;
+                padding: 1.5rem;
+                cursor: pointer;
+                border-radius: 0.3125rem;">
+                            <div class="dz-message needsclick ">
+                                Drop files here or click to upload
+                                <span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong>
+                                    actually
+                                    uploaded.)</span>
+                                <div class="row" id="template-preview"> </div>
+                            </div>
+                            <div class="fallback">
+                                <input type="file" name="filesList" asp-for="@Model.Files" multiple />
+                            </div>
+                        </div> *@
             <div class="form-group">
                 <div class="d-grid gap-2">
                     <input type="submit" value="Submit" class="btn btn-primary" id="uploadFile" />
@@ -154,57 +161,42 @@
 </div>
 
 
-<script>
+@*<script>
 
-    $(document).ready(function () {
-        const previewTemplate = `<div class="dz-preview dz-file-preview p-0">
-    <div class="dz-details">
-        <div class="dz-thumbnail">
-            <img data-dz-thumbnail>
-            <span class="dz-nopreview">No preview</span>
-            <div class="dz-success-mark"></div>
-            <div class="dz-error-mark"></div>
-            <div class="dz-error-message"><span data-dz-errormessage></span></div>
-            <div class="progress">
-                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                    data-dz-uploadprogress></div>
+        $(document).ready(function () {
+            const previewTemplate = `<div class="dz-preview dz-file-preview p-0">
+        <div class="dz-details">
+            <div class="dz-thumbnail">
+                <img data-dz-thumbnail>
+                <span class="dz-nopreview">No preview</span>
+                <div class="dz-success-mark"></div>
+                <div class="dz-error-mark"></div>
+                <div class="dz-error-message"><span data-dz-errormessage></span></div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                        data-dz-uploadprogress></div>
+                </div>
             </div>
+            <div class="dz-filename" data-dz-name></div>
+            <div class="dz-size" data-dz-size></div>
         </div>
-        <div class="dz-filename" data-dz-name></div>
-        <div class="dz-size" data-dz-size></div>
-    </div>
-</div>`;
-        Dropzone.autoDiscover = false;
-        var myDropzone = new Dropzone("#dropzone-multi", {
-            paramName: () => "files",
-            maxFilesize: 30,
-            maxFiles: 4,
-            parallelUploads: 10,
-            acceptedFiles: ".jpeg,.jpg,.png",
-            uploadMultiple: true,
-            previewTemplate: previewTemplate,
-            previewsContainer: "#template-preview",
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            init: function () {
-                myDropzone = this; // closure
-                document.getElementById("uploadFile").addEventListener("click", function () {
-                    myDropzone.processQueue();
-                    console.log(myDropzone.getQueuedFiles());
-                });
+    </div>`;
+            Dropzone.autoDiscover = false;
+            var myDropzone = new Dropzone("#dropzone-multi", {
+                paramName: () => "filesList",
+                maxFilesize: 30,
+                maxFiles: 4,
+                parallelUploads: 1,
+                acceptedFiles: ".jpeg,.jpg,.png",
+                uploadMultiple: fals,
+                previewTemplate: previewTemplate,
+                previewsContainer: "#template-preview",
+                autoProcessQueue: false,
+                addRemoveLinks: true
+            });
 
-                // You might want to show the submit button only when 
-                // files are dropped here:
-                this.on("addedfile", function () {
-                    // Show submit button here and/or inform user to click it.
-                    console.log("added file");
-                });
 
-            }
+
         });
 
-
-
-    });
-
-</script>
+    </script>*@

@@ -35,6 +35,7 @@ namespace E_commerce
             services.AddScoped<IRepository<Place>, PlaceRepository>();
             services.AddScoped<IRepository<Phone>, PhoneRepository>();
             services.AddScoped<IRepository<Product>, ProductRepository>();
+            services.AddScoped<IRepository<ImagesProduct>, ImageProductRepository>();
             services.AddScoped<IRepository<Category>, CategoryRepository>();
             services.AddScoped<IRepository<Help>, HelpRepository>();
             services.AddScoped<IRepository<Auction>, AuctionsRepository>();
