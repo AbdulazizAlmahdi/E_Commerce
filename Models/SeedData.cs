@@ -211,6 +211,7 @@ namespace E_commerce.Models
                                 Address="صنعاء سوق علي محسن",
                                 Unit = "سلة",
                                 CreatedAt = DateTime.UtcNow,
+                                UserId= category.Id
                             }
                             );
 

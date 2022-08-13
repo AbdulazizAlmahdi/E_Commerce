@@ -53,9 +53,27 @@ namespace E_commerce.Models.Repositories
         }
         public IQueryable<Product> show(int? ID, string name = "")
         {
-            return context.Products.Include(p=>p.Category);
+            return GetChildProducts(1).AsQueryable();
         }
+        List<Product> GetChildProducts(int userId)
+        {
+            List<Product> products = new List<Product>();
+            foreach(var user in GetChild(userId)) {
+            products.AddRange(context.Products.Where(p =>p.UserId == user.Id).Include(u => u.Category).Include(u => u.ImagesProducts).ToList());
+            }
 
+            return products;
+
+        }
+        List<User> GetChild(int id)
+        {
+            var users = context.Users.Where(x => x.UsersId == id || x.Id == id).ToList();
+
+            var childUsers = users.AsEnumerable().Union(
+                                        context.Users.AsEnumerable().Where(x => x.UsersId == id).SelectMany(y => GetChild(y.Id))).ToList();
+            return childUsers;
+
+        }
         public void Update(Product entity)
         {
             context.Update(entity);

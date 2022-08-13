@@ -60,6 +60,8 @@ namespace E_commerce.Models
         [AllowNull]
         public int? Discount { get; set; }
         [AllowNull]
+        public int? UserId { get; set; }
+        [AllowNull]
         public int? Evaluation { get; set; }
         public DateTime CreatedAt { get; set; }
         [AllowNull]
@@ -69,6 +71,7 @@ namespace E_commerce.Models
         public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
+        public virtual User User { get; set; }
         public virtual Auction Auction { get; set; }
         public virtual Purchase Purchase { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

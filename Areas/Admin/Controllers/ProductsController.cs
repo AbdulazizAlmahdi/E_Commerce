@@ -42,7 +42,6 @@ namespace E_commerce.Areas.Admin.Controllers
         [NoDirectAccess]
         public IActionResult CreateOrEdit(int id = 0)
         {
-
             if (id == 0)
             {
                 var model = new ProductsViewModel
