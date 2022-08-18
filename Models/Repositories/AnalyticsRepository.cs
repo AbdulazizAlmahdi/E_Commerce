@@ -20,5 +20,10 @@ namespace E_commerce.Models.Repositories
         {
             return context.Users.Include(u=>u.Purchase).ThenInclude(p=>p.Product);
         }
+
+        public IEnumerable<Product> GetProducts()
+        {
+            return context.Products.Include(p => p.User.Name);
+        }
     }
 }

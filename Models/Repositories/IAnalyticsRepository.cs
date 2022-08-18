@@ -8,6 +8,7 @@ namespace E_commerce.Models.Repositories
     public interface IAnalyticsRepository
     {
         public IEnumerable<User> GetUsers();
+        public IEnumerable<Product> GetProducts();
         
     }
 }

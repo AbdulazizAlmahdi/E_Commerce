@@ -82,7 +82,7 @@ namespace E_commerce
             {
                 endpoints.MapControllerRoute(
                    name: "areas",
-                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                   pattern: "{area:exists}/{controller=Analytics}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
                    name: "default",
