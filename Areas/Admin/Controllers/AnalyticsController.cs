@@ -27,11 +27,14 @@ namespace E_commerce.Areas.Admin.Controllers
             //{
             //    return RedirectToAction("Index", "Login");
             //}
-  
+
+
             var vm = new AnaylticsViewModel
             {
-                //Users = _analyticsRepository.GetUsers()
-                //Product = (Models.Product)_analyticsRepository.GetProducts()
+                Users = _analyticsRepository.GetUsers(),
+                Products = _analyticsRepository.GetProducts(),
+                AuctionCount = _analyticsRepository.GetAuctionCount(),
+                PurchaseCount= _analyticsRepository.GetPurchaseCount(2022)
             };
             return View(vm);
         }

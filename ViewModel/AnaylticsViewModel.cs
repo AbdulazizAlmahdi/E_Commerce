@@ -9,7 +9,7 @@ namespace E_commerce.ViewModel
 {
     public class AnaylticsViewModel
     {
-        public Product Product { get; set; }
+        public IEnumerable<Product> Products { get; set; }
         
         public IEnumerable<User> Users {get; set;}
 
@@ -18,5 +18,9 @@ namespace E_commerce.ViewModel
         public Purchase Purchase { get; set; }
 
         public Customer Customer { get; set; }
+
+        public int AuctionCount { get; set; }
+
+        public decimal PurchaseCount { get; set; }
     }
 }

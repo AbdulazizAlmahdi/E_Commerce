@@ -23,7 +23,18 @@ namespace E_commerce.Models.Repositories
 
         public IEnumerable<Product> GetProducts()
         {
-            return context.Products.Include(p => p.User.Name);
+            return context.Products;
         }
+
+        public int GetAuctionCount()
+        {
+            return context.Auctions.Count();
+        }
+
+        public decimal GetPurchaseCount(int year)
+        {
+            return  context.Purchases.Where(P => P.CreatedAt.Year == year).Sum(p=>p.Amount*p.ExtraAmount);
+        }
+
     }
 }

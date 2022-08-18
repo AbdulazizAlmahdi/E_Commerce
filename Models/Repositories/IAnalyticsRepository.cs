@@ -9,6 +9,11 @@ namespace E_commerce.Models.Repositories
     {
         public IEnumerable<User> GetUsers();
         public IEnumerable<Product> GetProducts();
-        
+
+        public int GetAuctionCount();
+
+        public decimal GetPurchaseCount(int year);
+
+
     }
 }
