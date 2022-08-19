@@ -26,6 +26,13 @@ namespace E_commerce.Areas.Admin.Controllers
         public ActionResult Index()
 
         {
+            var userId = HttpContext.Session.GetString("_UserId");
+
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             return View();
         }
 [NoDirectAccess]

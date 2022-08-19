@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using static e_commerce.Helper;
 using e_commerce;
+using Microsoft.AspNetCore.Http;
 
 namespace E_commerce.Areas.Admin.Controllers
 {
@@ -26,6 +27,13 @@ namespace E_commerce.Areas.Admin.Controllers
 
         public IActionResult index()
         {
+            var userId = HttpContext.Session.GetString("_UserId");
+
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             return View();
         }
         public IActionResult CreateOrEdit(int id = 0)

@@ -29,7 +29,15 @@ namespace E_commerce.Areas.Admin.Controllers
             this.auctionRepository = auctionRepository;
         }
         public IActionResult Index()
-        {
+        {   
+            
+            var userId= HttpContext.Session.GetString("_UserId");
+
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             return View();
         }
         [NoDirectAccess]
