@@ -16,6 +16,7 @@ $(document).ready(function () {
     categoryDatatable();
     productDatatable();
     auctionDatatable();
+    purchaseDatatable();
 
 });
 userDatatable = () => {
@@ -345,7 +346,6 @@ categoryDatatable = () => {
         ]
     });
 }
-
 productDatatable = () => {
     $("#productDatatable").DataTable({
         processing: true,
@@ -456,7 +456,6 @@ productDatatable = () => {
         ]
     });
 }
-
 auctionDatatable = () => {
     $("#auction-datatable").DataTable({
         processing: true,
@@ -550,6 +549,104 @@ auctionDatatable = () => {
                     return `<button onClick="showInPopup('/Admin/Auctions/CreateOrEdit/' + ${row.id}, 'تعديل المزاد')" class="btn btn-primary btn-sm">تعديل</button>` +
                         `<span>&nbsp;</span>` +
                         `<button onClick="showInPopup('/Admin/Auctions/Delete/' + ${row.id}, 'حذف المزاد')" class="btn btn-danger btn-sm">حذف</button>`;
+                },
+                "name": "action",
+                "autoWidth": true,
+                "searchable": false,
+                "orderable": false
+            },
+        ]
+    });
+}
+purchaseDatatable = () => {
+    $("#purchase-datatable").DataTable({
+        processing: true,
+        serverSide: true,
+        filter: true,
+        paging: true,
+        destroy: true,
+        lengthChange: true,
+        searching: true,
+        ordering: true,
+        lengthMenu: [7, 10, 25, 50, 75, 100],
+        responsive: false,
+        dom:
+            '<"row"<"col-sm-12"<"col-sm-12"B>>>' + '<"row"<"col-sm-12 col-md-6"l>' + '<"col-sm-12 col-md-6"f>>' +
+            '<"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+        buttons: [
+            {
+                text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة طلب</span>',
+                className: 'dt-button create-new btn btn-primary m-2',
+                action: function (e, dt, node, config) {
+                    showInPopup('/Admin/Auctions/CreateOrEdit', 'إضافة طلب');
+                },
+            },
+            {
+                extend: 'collection',
+                className: 'class="dt-button buttons-collection btn btn-label-primary dropdown-toggle me-2"',
+                text: 'تصدير',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'Copy',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+
+                    {
+                        extend: 'pdf',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'PDF',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'Excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'CSV',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        className: 'dt-button buttons-print dropdown-item',
+                        text: 'Print',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }
+                ]
+            }
+        ],
+        ajax: {
+            "url": "/Admin/Purchase/GetPurchaseData",
+            "type": "POST",
+            "datatype": "json"
+        },
+        columnDefs: [{
+            "targets": [0],
+            "visible": true,
+            "searchable": true
+        }],
+        columns: [
+            { "data": "id", "name": "Id", "autoWidth": true },
+            {
+                "render": function (data, type, row) {
+                    return `<button onClick="showInPopup('/Admin/Auctions/CreateOrEdit/' + ${row.id}, 'تعديل الطلب')" class="btn btn-primary btn-sm">تعديل</button>` +
+                        `<span>&nbsp;</span>` +
+                        `<button onClick="showInPopup('/Admin/Auctions/Delete/' + ${row.id}, 'حذف الطلب')" class="btn btn-danger btn-sm">حذف</button>`;
                 },
                 "name": "action",
                 "autoWidth": true,

@@ -268,8 +268,8 @@ namespace E_commerce.Models
                     .HasForeignKey<Purchase>(d => d.ProductId);
 
                 entity.HasOne(d => d.User)
-                    .WithOne(p => p.Purchase)
-                    .HasForeignKey<Purchase>(d => d.UserId);
+                    .WithMany(p => p.Purchases)
+                    .HasForeignKey(d => d.UserId);
 
               
 

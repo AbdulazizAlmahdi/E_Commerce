@@ -18,6 +18,7 @@ namespace E_commerce.Models
         public decimal ExtraAmount { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
+        public string Detials { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime DeletedAt { get; set; }

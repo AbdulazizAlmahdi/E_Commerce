@@ -436,6 +436,9 @@ namespace E_commerce.Migrations
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Detials")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("ExtraAmount")
                         .HasColumnType("decimal(8,2)");
 
@@ -461,14 +464,10 @@ namespace E_commerce.Migrations
                     b.HasIndex("ProductId")
                         .IsUnique();
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
                     b.HasIndex(new[] { "ProductId" }, "IX_Purchases_ProductID")
                         .HasDatabaseName("IX_Purchases_ProductID1");
 
-                    b.HasIndex(new[] { "UserId" }, "IX_Purchases_UserID")
-                        .HasDatabaseName("IX_Purchases_UserID1");
+                    b.HasIndex(new[] { "UserId" }, "IX_Purchases_UserID");
 
                     b.ToTable("Purchases");
                 });
@@ -722,8 +721,8 @@ namespace E_commerce.Migrations
                         .IsRequired();
 
                     b.HasOne("E_commerce.Models.User", "User")
-                        .WithOne("Purchase")
-                        .HasForeignKey("E_commerce.Models.Purchase", "UserId")
+                        .WithMany("Purchases")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -845,7 +844,7 @@ namespace E_commerce.Migrations
 
                     b.Navigation("InverseUsers");
 
-                    b.Navigation("Purchase");
+                    b.Navigation("Purchases");
 
                     b.Navigation("RolesUsers");
                 });

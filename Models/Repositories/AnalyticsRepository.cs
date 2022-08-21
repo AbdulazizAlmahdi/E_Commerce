@@ -18,7 +18,8 @@ namespace E_commerce.Models.Repositories
         }
         public IEnumerable<User> GetUsers()
         {
-            return context.Users.Include(u=>u.Purchase).ThenInclude(p=>p.Product);
+            //return context.Users.Include(u=>u.Purchase).ThenInclude(p=>p.Product);
+            return context.Users;
         }
 
         public IEnumerable<Product> GetProducts()

@@ -58,7 +58,7 @@ namespace E_commerce.Models
         [IgnoreDataMember]
         public virtual User Users { get; set; }
         public virtual AuctionsUser AuctionsUser { get; set; }
-        public virtual Purchase Purchase { get; set; }
+        public virtual ICollection<Purchase> Purchases { get; set; }
         [JsonIgnore]
         [IgnoreDataMember]
         public virtual ICollection<Comment> Comments { get; set; }

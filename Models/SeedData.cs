@@ -218,8 +218,8 @@ namespace E_commerce.Models
                         webContext.SaveChanges();
                     }
                 }
-            }  
-            
+            }
+
             if (!webContext.Auctions.Any())
             {
                 IList<Product> products = webContext.Products.ToList();
@@ -231,17 +231,43 @@ namespace E_commerce.Models
                         webContext.AddRange(
                             new Auction
                             {
-                                StartDate=DateTime.UtcNow,
-                                EndDate=DateTime.UtcNow.AddDays(3),
+                                StartDate = DateTime.UtcNow,
+                                EndDate = DateTime.UtcNow.AddDays(3),
                                 ProductId = product.Id,
-                                StartPrice=200,
+                                StartPrice = 200,
                             }
                             );
 
                         webContext.SaveChanges();
                     }
                 }
-            }          
+            }
+            if (!webContext.Purchases.Any())
+            {
+                IList<Product> products = webContext.Products.ToList();
+                foreach (Product product in products)
+                {
+
+                        webContext.AddRange(
+                            new Purchase
+                            {
+                                Status=true,
+                                Amount=50,
+                                ExtraAmount=0,
+                                Address="sana'a",
+                                Phone="777339975",
+                                Detials="رقم الحوالة 123456789",
+                                CreatedAt= DateTime.UtcNow,
+                                UserId=1,
+                                ProductId= product.Id
+
+                            }
+                            );
+
+                        webContext.SaveChanges();
+                    
+                }
+            }
         }
     }
 }

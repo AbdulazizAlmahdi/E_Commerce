@@ -346,6 +346,7 @@ namespace E_commerce.Migrations
                     ExtraAmount = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Detials = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -511,12 +512,6 @@ namespace E_commerce.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purchases_UserID",
-                table: "Purchases",
-                column: "UserID",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Purchases_UserID1",
                 table: "Purchases",
                 column: "UserID");
 
