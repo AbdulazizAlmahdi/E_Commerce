@@ -1,4 +1,4 @@
-using E_commerce.Models;
+﻿using E_commerce.Models;
 using E_commerce.ViewModel;
 using E_commerce.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +33,12 @@ namespace E_commerce.Areas.Admin.Controllers
 
             return View();
         }
-
+        public IActionResult ShowProducts(int? id)
+        {
+            var products = purchaseRepository.Find(id??0).Products;
+            return View(products);
+        }
+        
         public IActionResult GetPurchaseData()
         {
             try
@@ -54,7 +59,6 @@ namespace E_commerce.Areas.Admin.Controllers
                 }
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-
                     purchaseData = purchaseData.Where(p => p.Detials.Contains(searchValue));
                 }
                 recordsTotal = purchaseData.Count();

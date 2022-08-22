@@ -9,7 +9,6 @@ namespace E_commerce.Models
     {
         public Purchase()
         {
-            Payments = new HashSet<Payment>();
         }
 
         public int Id { get; set; }
@@ -21,13 +20,9 @@ namespace E_commerce.Models
         public string Detials { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public DateTime DeletedAt { get; set; }
-    
+        public DateTime DeletedAt { get; set; }    
         public int UserId { get; set; }
-        public int ProductId { get; set; }
-        
-        public virtual Product Product { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

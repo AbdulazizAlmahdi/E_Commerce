@@ -180,10 +180,6 @@ namespace E_commerce.Models
 
                 entity.Property(e => e.PurchaseId).HasColumnName("PurchaseID");
 
-                entity.HasOne(d => d.Purchase)
-                    .WithMany(p => p.Payments)
-                    .HasForeignKey(d => d.PurchaseId);
-
 
 
             });
@@ -247,8 +243,6 @@ namespace E_commerce.Models
 
             modelBuilder.Entity<Purchase>(entity =>
             {
-                entity.HasIndex(e => e.ProductId, "IX_Purchases_ProductID");
-
                 entity.HasIndex(e => e.UserId, "IX_Purchases_UserID");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
@@ -259,13 +253,10 @@ namespace E_commerce.Models
 
                 entity.Property(e => e.ExtraAmount).HasColumnType("decimal(8, 2)");
 
-                entity.Property(e => e.ProductId).HasColumnName("ProductID");
-
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
-                entity.HasOne(d => d.Product)
-                    .WithOne(p => p.Purchase)
-                    .HasForeignKey<Purchase>(d => d.ProductId);
+                entity.HasMany(d => d.Products)
+                    .WithOne(p => p.Purchase);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Purchases)

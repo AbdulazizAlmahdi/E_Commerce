@@ -36,10 +36,9 @@ namespace E_commerce.Models.Repositories
         {
             throw new NotImplementedException();
         }
-
         public IQueryable<Purchase> show(int? _, string __="")       
         {
-            return context.Purchases.Include(h => h.Product);
+            return context.Purchases.Include(h => h.Products).Include(h => h.User);
         }
 
         public void Update(Purchase entity)

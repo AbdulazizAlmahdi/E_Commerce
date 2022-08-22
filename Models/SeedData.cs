@@ -259,8 +259,6 @@ namespace E_commerce.Models
                                 Detials="رقم الحوالة 123456789",
                                 CreatedAt= DateTime.UtcNow,
                                 UserId=1,
-                                ProductId= product.Id
-
                             }
                             );
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Migrations
 {
     [DbContext(typeof(WebContext))]
-    [Migration("20220821210023_initial")]
+    [Migration("20220822194700_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -387,6 +387,9 @@ namespace E_commerce.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(8,2)");
 
+                    b.Property<int?>("PurchaseId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -409,6 +412,8 @@ namespace E_commerce.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PurchaseId");
 
                     b.HasIndex("UserId");
 
@@ -447,10 +452,6 @@ namespace E_commerce.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("ProductID");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -462,12 +463,6 @@ namespace E_commerce.Migrations
                         .HasColumnName("UserID");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "ProductId" }, "IX_Purchases_ProductID")
-                        .HasDatabaseName("IX_Purchases_ProductID1");
 
                     b.HasIndex(new[] { "UserId" }, "IX_Purchases_UserID");
 
@@ -682,7 +677,7 @@ namespace E_commerce.Migrations
             modelBuilder.Entity("E_commerce.Models.Payment", b =>
                 {
                     b.HasOne("E_commerce.Models.Purchase", "Purchase")
-                        .WithMany("Payments")
+                        .WithMany()
                         .HasForeignKey("PurchaseId");
 
                     b.Navigation("Purchase");
@@ -705,30 +700,28 @@ namespace E_commerce.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("E_commerce.Models.Purchase", "Purchase")
+                        .WithMany("Products")
+                        .HasForeignKey("PurchaseId");
+
                     b.HasOne("E_commerce.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Category");
 
+                    b.Navigation("Purchase");
+
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("E_commerce.Models.Purchase", b =>
                 {
-                    b.HasOne("E_commerce.Models.Product", "Product")
-                        .WithOne("Purchase")
-                        .HasForeignKey("E_commerce.Models.Purchase", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("E_commerce.Models.User", "User")
                         .WithMany("Purchases")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });
@@ -822,13 +815,11 @@ namespace E_commerce.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("ImagesProducts");
-
-                    b.Navigation("Purchase");
                 });
 
             modelBuilder.Entity("E_commerce.Models.Purchase", b =>
                 {
-                    b.Navigation("Payments");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("E_commerce.Models.Role", b =>
