@@ -29,7 +29,7 @@ namespace E_commerce.Models.Repositories
 
         public Purchase Find(int ID)
         {
-            return context.Purchases.SingleOrDefault(a => a.Id == ID);
+            return context.Purchases.Include(p=>p.Products).ThenInclude(p=>p.ImagesProducts).SingleOrDefault(a => a.Id == ID);
         }
 
         public Purchase Find(string Text)

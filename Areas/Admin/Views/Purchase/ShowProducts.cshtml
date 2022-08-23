@@ -1,24 +1,44 @@
 ﻿@model IEnumerable<E_commerce.Models.Product>
-@{ Layout = null; }
+@{
+    Layout = null; 
+}
 
 <div class="row">
-    <!-- Basic -->
     <div class="col-md-12">
-        <form class="row g-3 needs-validation">
+        <div class="col-md-12 col-xl-12">
+    @foreach (var item in Model){
+            <div class="card mb-6">
+                @if (item.ImagesProducts.Any())
+                {
+            <img class="card-img-top"
+                 src="~/uploads/@item.ImagesProducts.First().ImageUrl"
+                 alt="Card image cap" height="200"> }
+                            else
+                            {
+            <img class="card-img-top"
+                 src="~/uploads/default.png"
+                 alt="Card image cap" height="200">            
+                }
 
-            <!-- select2 -->
-            <div class="form-group" id="select">
-                <label class="form-label w-100" for="category-product"></label>
-                <div class="input-group input-group-merge">
-                    <select id="category-product" class="select2 form-select"
-                            name="CategoryId" style="width: 100%;" data-placeholder="حدد الصنف"
-                            aria-describedby="modalAddCard2">
-                        
-                    </select>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <h5 class="card-title">@item.NameAr</h5>
+                        </div>
+                        <div class="col-4">
+                            <span class="d-none d-lg-inline-block" >@item.Price ريال</span>
+                        </div>
+                    </div>
+                    <p class="card-text">
+                        @item.DetailsAr
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">@item.CreatedAt</small>
+                    </p>
                 </div>
-                <span class="text-danger"></span>
             </div>
-            <!-- /select2 -->
-        </form>
+            <span>&nbsp;</span>
+    }
+        </div>
     </div>
 </div>

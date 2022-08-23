@@ -13,11 +13,11 @@ namespace E_commerce.Areas.Admin.Controllers
     [Area("Admin")]
     public class LoginController : Controller
     {
-        private IRepository<Phone> phone;
+        private IRepository<Phone> phoneRepository;
 
         public LoginController(IRepository<Phone> phoneRepository)
         {
-            this.phone = phoneRepository;
+            this.phoneRepository = phoneRepository;
 
         }
         public IActionResult Index()
@@ -28,12 +28,19 @@ namespace E_commerce.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(LoginViewModel loginViewModel)
         {
-           
-            Phone phoneUser = phone.Find(loginViewModel.Number);
-            if (phoneUser.User.Password == loginViewModel.Password)
+
+            try
             {
-                HttpContext.Session.SetString("_UserId", phoneUser.User.Id.ToString());
-                return RedirectToAction("Index", "Home");
+                Phone phoneUser = phoneRepository.Find(loginViewModel.Number);
+                if (phoneUser.User.Password == loginViewModel.Password)
+                {
+                    HttpContext.Session.SetString("_UserId", phoneUser.User.Id.ToString());
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            catch (Exception e)
+            {
+
             }
             return View();
         }

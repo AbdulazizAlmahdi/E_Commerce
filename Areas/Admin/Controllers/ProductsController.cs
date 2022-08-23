@@ -168,7 +168,6 @@ namespace E_commerce.Areas.Admin.Controllers
 
             return null;
         }   
-
         void DeleteFile(string fileName)
         {
                  string uploads = Path.Combine(hosting.WebRootPath, "uploads");
