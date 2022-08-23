@@ -1,0 +1,118 @@
+﻿@model E_commerce.ViewModel.PurchaseViewModel
+
+@{
+    Layout = null;
+}
+<script type="text/javascript">
+    $.fn.select2.defaults.set("dropdownParent", $('#select'));
+    $(document).ready(function () {
+        $("#products").select2({
+            ajax: {
+                url: '/Admin/Purchase/GetProducts',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: $.map(data.items, function (item) {
+                            console.log(item);
+                            return {
+                                id: item.id+"-"+item.amount,
+                                text: item.text,
+                            };
+                        }),
+                    };
+                },
+                cache: true,
+                onError: function (err) {
+                    console.log(err);
+                }
+            },
+            minimumInputLength: 1,
+            placeholder: "حدد الصنف",
+        }).on('change', function (e) {
+  var data = e.currentTarget.value
+  var dummyString = data.split('-')[1]
+var amountInput=$('#amount-id')
+amountInput.val(parseFloat(amountInput.val())+parseFloat(dummyString));
+  console.log(dummyString);
+});;
+        });
+</script>
+
+<div class="row">
+    <!-- Basic -->
+    <div class="col-md-12">
+        <form class="row g-3 needs-validation" asp-action="CreateOrEdit" method="post"
+              enctype="multipart/form-data" asp-route-id="@Model.purchase.Id"
+              onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.purchase.Id" name="id" />
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Amount"></label>
+                <div class="input-group input-group-merge">
+                    <input id="amount-id" asp-for="@Model.purchase.Amount" class="form-control" placeholder="250000.0" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.ExtraAmount"></label>
+                <div class="input-group input-group-merge">
+                    <input id="name-id" asp-for="@Model.purchase.ExtraAmount" class="form-control" placeholder="25400.0" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="price-id" asp-for="@Model.purchase.Status"></label>
+                <div class="input-group input-group-merge">
+                    <select type="text" asp-for="@Model.purchase.Status" class="form-select form-select">
+                        <option>حالة الفاتورة</option>
+                        <option value="1">تم اكتمال تسجيل الفاتورة</option>
+                        <option value="2">لم يكتم تسجيل الفاتورة</option>
+                    </select>
+                </div>
+                <span asp-validation-for="@Model.purchase.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Address"></label>
+                <div class="input-group input-group-merge">
+                    <input id="name-id" asp-for="@Model.purchase.Address" class="form-control" placeholder="صنعاء - شارع حدة"  />
+                </div>
+                <span asp-validation-for="@Model.purchase.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Phone"></label>
+                <div class="input-group input-group-merge">
+                    <input id="name-id" asp-for="@Model.purchase.Phone" class="form-control" placeholder="777555111"/>
+                </div>
+                <span asp-validation-for="@Model.purchase.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Detials"></label>
+                <div class="input-group input-group-merge">
+                    <textarea id="name-id" asp-for="@Model.purchase.Detials" class="form-control" placeholder="تم تسليم المبلغ عبر حوالة برقم 555XXXX" ></textarea>
+                </div>
+                <span asp-validation-for="@Model.purchase.Detials" class="text-danger"></span>
+            </div>
+            <!-- select2 -->
+            <div class="form-group" id="select">
+                <label class="form-label w-100" for="product">المنتجات</label>
+                <div class="input-group input-group-merge">
+                    <select id="products" class="select2 form-select"
+                            name="products" style="width: 100%;" data-placeholder="حدد المنتج"
+                            aria-describedby="modalAddCard2" multiple>
+                    </select>
+                </div>
+            </div>
+            <!-- /select2 -->
+            <div class="form-group">
+                <div class="d-grid gap-2">
+                    <input type="submit" value="Submit" class="btn btn-primary" id="uploadFile" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

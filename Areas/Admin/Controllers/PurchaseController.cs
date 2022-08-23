@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using e_commerce;
 using Microsoft.AspNetCore.Http;
+using static e_commerce.Helper;
 
 namespace E_commerce.Areas.Admin.Controllers
 {
@@ -16,10 +17,12 @@ namespace E_commerce.Areas.Admin.Controllers
     public class PurchaseController : Controller
     {
         private IRepository<Purchase> purchaseRepository;
+        private IRepository<Product> productRepository;
 
-        public PurchaseController(IRepository<Purchase> purchaseRepository)
+        public PurchaseController(IRepository<Purchase> purchaseRepository,IRepository<Product> productRepository)
         {
             this.purchaseRepository = purchaseRepository;
+            this.productRepository = productRepository;
         }
 
         public IActionResult index()
@@ -33,12 +36,113 @@ namespace E_commerce.Areas.Admin.Controllers
 
             return View();
         }
+        
+        [NoDirectAccess]
+        public IActionResult CreateOrEdit(int id = 0)
+        {
+
+            if (id == 0)
+            {
+                var model = new PurchaseViewModel
+                {
+                    products = productRepository.show(null).ToList(),
+                    purchase = new Purchase
+                    {
+                    },
+
+                };
+                return View(model);
+            }
+            else
+            {
+                var model = new PurchaseViewModel
+                {
+                    products = productRepository.show(null).ToList(),
+                    purchase =  purchaseRepository.Find(id),
+
+                };
+                return View(model);
+            }
+
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateOrEdit(int id, PurchaseViewModel purchaseViewModel, string[] products)
+        {
+            if (true)
+            {
+                try
+                {
+
+                    if (id == 0)
+                    {
+                        purchaseViewModel.purchase.Id = id;
+                        purchaseViewModel.purchase.UserId = 1;
+                        List<Product> list = new List<Product>();
+
+                        foreach (var item in products)
+                        {
+                            int productId = int.Parse(item.Substring(0, item.LastIndexOf('-')));
+                            var product = productRepository.Find(productId);
+                            list.Add(product);
+                        }
+                        purchaseViewModel.purchase.Products = list;
+                        purchaseRepository.Add(purchaseViewModel.purchase);
+                        return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "إضافة فاتورة", messageBody = "تمت إضافة الفاتورة بنجاح" });
+                    }
+                    else
+                    {
+                        return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "تعديل فاتورة", messageBody = "تمت تعديل الفاتورة بنجاح" });
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    var exception = e.InnerException.Message;
+                    return Json(new { status = "error", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "إضافة مستخدم", messageBody = "حدث خطأ أثناء إضافة/تعديل مستخدم" });
+                    //return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
+
+                }
+
+
+            }
+            else
+            {
+                var model = new ProductsViewModel
+                {
+                    product = new Product
+                    {
+                        Id = 0
+                    },
+
+                };
+                return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
+            }
+
+            //return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
+        }
+
         public IActionResult ShowProducts(int? id)
         {
             var products = purchaseRepository.Find(id??0).Products;
             return View(products);
         }
-        
+        public IActionResult GetProducts(string q)
+        {
+            IEnumerable<Models.SelectListItem> productsList = Enumerable.Empty<Models.SelectListItem>();
+            if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
+                productsList = productRepository.show(null).Where(p => p.NameAr.Contains(q)).Select(
+                   u => new Models.SelectListItem
+                   {
+                       Text = u.NameAr,
+                       Id = u.Id,
+                       Amount=u.Price
+                   }
+                   );
+            return Json(new { items = productsList });
+        }
         public IActionResult GetPurchaseData()
         {
             try

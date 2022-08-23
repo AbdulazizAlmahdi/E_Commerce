@@ -9,5 +9,6 @@ namespace E_commerce.Models
     {
         public String Text { get; set; }
         public int Id { get; set; }
+        public decimal? Amount { get; set; }
     }
 }

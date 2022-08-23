@@ -53,9 +53,9 @@ namespace E_commerce.Models.Repositories
         }
         public IQueryable<Product> show(int? ID, string name = "")
         {
-            return GetChildProducts(1).AsQueryable();
+            return GetChildProducts(ID).AsQueryable();
         }
-        List<Product> GetChildProducts(int userId)
+        List<Product> GetChildProducts(int? userId)
         {
             List<Product> products = new List<Product>();
             foreach(var user in GetChild(userId)) {
@@ -65,7 +65,7 @@ namespace E_commerce.Models.Repositories
             return products;
 
         }
-        List<User> GetChild(int id)
+        List<User> GetChild(int? id)
         {
             var users = context.Users.Where(x => x.UsersId == id || x.Id == id).ToList();
 
