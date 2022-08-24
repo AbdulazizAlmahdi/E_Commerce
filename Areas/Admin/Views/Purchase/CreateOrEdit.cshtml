@@ -69,9 +69,8 @@ amountInput.val(parseFloat(amountInput.val())+parseFloat(dummyString));
                 <label class="form-label w-100" for="price-id" asp-for="@Model.purchase.Status"></label>
                 <div class="input-group input-group-merge">
                     <select type="text" asp-for="@Model.purchase.Status" class="form-select form-select">
-                        <option>حالة الفاتورة</option>
-                        <option value="1">تم اكتمال تسجيل الفاتورة</option>
-                        <option value="2">لم يكتم تسجيل الفاتورة</option>
+                        <option value="false">لم يكتم تسجيل الفاتورة</option>
+                        <option value="true">تم اكتمال تسجيل الفاتورة</option>
                     </select>
                 </div>
                 <span asp-validation-for="@Model.purchase.Status" class="text-danger"></span>

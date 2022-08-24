@@ -71,7 +71,7 @@ namespace E_commerce.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateOrEdit(int id, PurchaseViewModel purchaseViewModel, string[] products)
         {
-            if (true)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -110,11 +110,12 @@ namespace E_commerce.Areas.Admin.Controllers
             }
             else
             {
-                var model = new ProductsViewModel
+                var model = new PurchaseViewModel
                 {
-                    product = new Product
+
+                    products = productRepository.show(null).ToList(),
+                    purchase = new Purchase
                     {
-                        Id = 0
                     },
 
                 };
