@@ -19,7 +19,7 @@ namespace E_commerce.Areas.Admin.Controllers
         private IRepository<Purchase> purchaseRepository;
         private IRepository<Product> productRepository;
 
-        public PurchaseController(IRepository<Purchase> purchaseRepository,IRepository<Product> productRepository)
+        public PurchaseController(IRepository<Purchase> purchaseRepository, IRepository<Product> productRepository)
         {
             this.purchaseRepository = purchaseRepository;
             this.productRepository = productRepository;
@@ -36,7 +36,7 @@ namespace E_commerce.Areas.Admin.Controllers
 
             return View();
         }
-        
+
         [NoDirectAccess]
         public IActionResult CreateOrEdit(int id = 0)
         {
@@ -48,6 +48,7 @@ namespace E_commerce.Areas.Admin.Controllers
                     products = productRepository.show(null).ToList(),
                     purchase = new Purchase
                     {
+                        Id=id
                     },
 
                 };
@@ -58,8 +59,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 var model = new PurchaseViewModel
                 {
                     products = productRepository.show(null).ToList(),
-                    purchase =  purchaseRepository.Find(id),
-
+                    purchase = purchaseRepository.Find(id),
                 };
                 return View(model);
             }
@@ -127,7 +127,7 @@ namespace E_commerce.Areas.Admin.Controllers
 
         public IActionResult ShowProducts(int? id)
         {
-            var products = purchaseRepository.Find(id??0).Products;
+            var products = purchaseRepository.Find(id ?? 0).Products;
             return View(products);
         }
         public IActionResult GetProducts(string q)
@@ -139,7 +139,7 @@ namespace E_commerce.Areas.Admin.Controllers
                    {
                        Text = u.NameAr,
                        Id = u.Id,
-                       Amount=u.Price
+                       Amount = u.Price
                    }
                    );
             return Json(new { items = productsList });

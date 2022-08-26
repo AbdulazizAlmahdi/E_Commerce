@@ -4,8 +4,10 @@
     Layout = null;
 }
 <script type="text/javascript">
+
     $.fn.select2.defaults.set("dropdownParent", $('#select'));
     $(document).ready(function () {
+
         $("#products").select2({
             ajax: {
                 url: '/Admin/Purchase/GetProducts',
@@ -20,9 +22,8 @@
                 processResults: function (data, params) {
                     return {
                         results: $.map(data.items, function (item) {
-                            console.log(item);
                             return {
-                                id: item.id+"-"+item.amount,
+                                id: item.id + "-" + item.amount,
                                 text: item.text,
                             };
                         }),
@@ -30,39 +31,54 @@
                 },
                 cache: true,
                 onError: function (err) {
-                    console.log(err);
                 }
             },
             minimumInputLength: 1,
             placeholder: "حدد الصنف",
         }).on('change', function (e) {
-  var data = e.currentTarget.value
-  var dummyString = data.split('-')[1]
-var amountInput=$('#amount-id')
-amountInput.val(parseFloat(amountInput.val())+parseFloat(dummyString));
-  console.log(dummyString);
-});;
+            console.log(e.delegateTarget.value);
+            if(e.currentTarget.value!=1){
+            var data = e.currentTarget.value
+            var dummyString = data.split('-')[1]
+            var amountInput = $('#amount-id')
+            amountInput.val(parseFloat(amountInput.val()) + parseFloat(dummyString));
+        }
         });
+
+           @if(@Model.purchase.Id!=0&& @Model.purchase.Products?.Count()>0)
+        {
+    @foreach (var item in Model.purchase.Products)
+    {
+             @* @:var amountInput = $('#amount-id')
+             @:amountInput.val(parseFloat(amountInput.val()) + parseFloat('@item.Price')); *@
+             @:console.log('@item.Id');
+        @:var newOption = new Option('@item.NameAr', '@item.Id-@item.Price', false, true);
+        @:$('#products').append(newOption).trigger('change');
+    }
+
+        }
+    });
 </script>
 
 <div class="row">
     <!-- Basic -->
     <div class="col-md-12">
-        <form class="row g-3 needs-validation" asp-action="CreateOrEdit" method="post"
-              enctype="multipart/form-data" asp-route-id="@Model.purchase.Id"
-              onsubmit="return jQueryAjaxPost(this);">
+        <form class="row g-3 needs-validation" asp-action="CreateOrEdit" method="post" enctype="multipart/form-data"
+            asp-route-id="@Model.purchase.Id" onsubmit="return jQueryAjaxPost(this);">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.purchase.Id" name="id" />
             <div class="form-group">
                 <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Amount"></label>
                 <div class="input-group input-group-merge">
-                    <input id="amount-id" asp-for="@Model.purchase.Amount" class="form-control" placeholder="250000.0" readonly />
+                    <input id="amount-id" type="number" asp-for="@Model.purchase.Amount" class="form-control" placeholder="250000.0" readonly
+                         />
                 </div>
             </div>
             <div class="form-group">
                 <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.ExtraAmount"></label>
                 <div class="input-group input-group-merge">
-                    <input id="name-id" asp-for="@Model.purchase.ExtraAmount" class="form-control" placeholder="25400.0" />
+                    <input id="name-id" asp-for="@Model.purchase.ExtraAmount" class="form-control"
+                        placeholder="25400.0" />
                 </div>
             </div>
             <div class="form-group">
@@ -78,21 +94,23 @@ amountInput.val(parseFloat(amountInput.val())+parseFloat(dummyString));
             <div class="form-group">
                 <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Address"></label>
                 <div class="input-group input-group-merge">
-                    <input id="name-id" asp-for="@Model.purchase.Address" class="form-control" placeholder="صنعاء - شارع حدة"  />
+                    <input id="name-id" asp-for="@Model.purchase.Address" class="form-control"
+                        placeholder="صنعاء - شارع حدة" />
                 </div>
                 <span asp-validation-for="@Model.purchase.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Phone"></label>
                 <div class="input-group input-group-merge">
-                    <input id="name-id" asp-for="@Model.purchase.Phone" class="form-control" placeholder="777555111"/>
+                    <input id="name-id" asp-for="@Model.purchase.Phone" class="form-control" placeholder="777555111" />
                 </div>
                 <span asp-validation-for="@Model.purchase.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Detials"></label>
                 <div class="input-group input-group-merge">
-                    <textarea id="name-id" asp-for="@Model.purchase.Detials" class="form-control" placeholder="تم تسليم المبلغ عبر حوالة برقم 555XXXX" ></textarea>
+                    <textarea id="name-id" asp-for="@Model.purchase.Detials" class="form-control"
+                        placeholder="تم تسليم المبلغ عبر حوالة برقم 555XXXX"></textarea>
                 </div>
                 <span asp-validation-for="@Model.purchase.Detials" class="text-danger"></span>
             </div>
@@ -100,9 +118,8 @@ amountInput.val(parseFloat(amountInput.val())+parseFloat(dummyString));
             <div class="form-group" id="select">
                 <label class="form-label w-100" for="product">المنتجات</label>
                 <div class="input-group input-group-merge">
-                    <select id="products" class="select2 form-select"
-                            name="products" style="width: 100%;" data-placeholder="حدد المنتج"
-                            aria-describedby="modalAddCard2" multiple>
+                    <select id="products" class="select2 form-select" name="products" style="width: 100%;"
+                        data-placeholder="حدد المنتج" aria-describedby="modalAddCard2" multiple>
                     </select>
                 </div>
             </div>
