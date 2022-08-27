@@ -35,28 +35,26 @@
             },
             minimumInputLength: 1,
             placeholder: "حدد الصنف",
-        }).on('change', function (e) {
-            console.log(e.delegateTarget.value);
-            if(e.currentTarget.value!=1){
-            var data = e.currentTarget.value
-            var dummyString = data.split('-')[1]
-            var amountInput = $('#amount-id')
-            amountInput.val(parseFloat(amountInput.val()) + parseFloat(dummyString));
-        }
         });
-
-           @if(@Model.purchase.Id!=0&& @Model.purchase.Products?.Count()>0)
-        {
-    @foreach (var item in Model.purchase.Products)
+    @if (@Model.purchase.Id != 0 && @Model.purchase.Products?.Count() > 0)
     {
-             @* @:var amountInput = $('#amount-id')
-             @:amountInput.val(parseFloat(amountInput.val()) + parseFloat('@item.Price')); *@
-             @:console.log('@item.Id');
-        @:var newOption = new Option('@item.NameAr', '@item.Id-@item.Price', false, true);
-        @:$('#products').append(newOption).trigger('change');
-    }
-
+        @foreach (var item in Model.purchase.Products)
+        {
+            @:var newOption = new Option('@item.NameAr', '@item.Id-@item.Price', false, true);
+            @:$('#products').append(newOption).trigger('change');
         }
+    }
+    
+        $('#products').on('select2:select', function (e) {
+            var data = e.params.data.id.split('-')[1];
+            var amountInput = $('#amount-id')
+            amountInput.val(parseFloat(amountInput.val()) + parseFloat(data));        
+        });
+        $('#products').on('select2:unselecting', function (e) {
+            var data = e.params.args.data.id.split('-')[1];
+            var amountInput = $('#amount-id')
+            amountInput.val(parseFloat(amountInput.val()) - parseFloat(data));  
+        });
     });
 </script>
 
@@ -70,8 +68,8 @@
             <div class="form-group">
                 <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Amount"></label>
                 <div class="input-group input-group-merge">
-                    <input id="amount-id" type="number" asp-for="@Model.purchase.Amount" class="form-control" placeholder="250000.0" readonly
-                         />
+                    <input id="amount-id" type="number" asp-for="@Model.purchase.Amount" class="form-control"
+                        placeholder="250000.0" readonly />
                 </div>
             </div>
             <div class="form-group">
