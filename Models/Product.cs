@@ -69,6 +69,8 @@ namespace E_commerce.Models
         [AllowNull]
         public DateTime? DeletedAt { get; set; }
         public int CategoryId { get; set; }
+        [ForeignKey("PurchaseId")]
+        public int? PurchaseId { get; set; }
 
         public virtual Category Category { get; set; }
         public virtual User User { get; set; }

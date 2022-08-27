@@ -40,11 +40,31 @@ namespace E_commerce.Models.Repositories
         {
             return context.Purchases.Include(h => h.Products).Include(h => h.User);
         }
-
+        ICollection<Product> GetProducts(int PurchaseId)
+        {
+            return context.Products.Where(p => p.PurchaseId == PurchaseId).ToList();
+        }
         public void Update(Purchase entity)
         {
-             context.Purchases.Update(entity);
+            ICollection<Product> products = GetProducts(entity.Id);
+            UpdateProduct(products);
+            context.Purchases.Update(entity);
             context.SaveChanges();
+
+            //UpdateProduct(Comparison(oldProducts, entity.Products).ToList());
+        }
+        ICollection<Product> Comparison(ICollection<Product> firstList, ICollection<Product> secondList)
+        {
+          return  firstList.Except(secondList).ToList();
+        }
+         public void UpdateProduct(ICollection<Product> entities)
+        {
+            foreach (var item in entities)
+            {
+                item.PurchaseId = null;
+                context.Update(item);
+                context.SaveChanges();
+            }
         }
     }
 }

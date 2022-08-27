@@ -94,14 +94,25 @@ namespace E_commerce.Areas.Admin.Controllers
                     }
                     else
                     {
-                        return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "تعديل فاتورة", messageBody = "تمت تعديل الفاتورة بنجاح" });
+                        purchaseViewModel.purchase.Id = id;
+                        purchaseViewModel.purchase.UserId = 1;    
+                        List<Product> list = new List<Product>();
+                        foreach (var item in products)
+                        {
+                            int productId = int.Parse(item.Substring(0, item.LastIndexOf('-')));
+                            var product = productRepository.Find(productId);
+                            list.Add(product);
+                        }
+                        purchaseViewModel.purchase.Products = list;                    
+                        purchaseRepository.Update(purchaseViewModel.purchase);
+                        return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "تعديل فاتورة", messageBody = "تمت تعديل الفاتورة بنجاح" });
 
                     }
                 }
                 catch (Exception e)
                 {
                     var exception = e.InnerException.Message;
-                    return Json(new { status = "error", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "إضافة مستخدم", messageBody = "حدث خطأ أثناء إضافة/تعديل مستخدم" });
+                    return Json(new { status = "error", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "إضافة فاتورة", messageBody = "حدث خطأ أثناء إضافة/تعديل فاتورة" });
                     //return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
 
                 }
@@ -124,6 +135,7 @@ namespace E_commerce.Areas.Admin.Controllers
 
             //return Json(new { status = "success", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
         }
+
 
         public IActionResult ShowProducts(int? id)
         {

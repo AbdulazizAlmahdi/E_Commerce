@@ -429,6 +429,7 @@ namespace E_commerce.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Amount")
@@ -442,12 +443,14 @@ namespace E_commerce.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Detials")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ExtraAmount")
                         .HasColumnType("decimal(8,2)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
