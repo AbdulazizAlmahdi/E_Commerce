@@ -142,6 +142,26 @@ namespace E_commerce.Areas.Admin.Controllers
             var products = purchaseRepository.Find(id ?? 0).Products;
             return View(products);
         }
+          [NoDirectAccess]
+        public ActionResult Delete(int? id)
+        {
+            return View(id);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                purchaseRepository.Delete(id);
+                return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable", null), messgaeTitle = "حذف الفاتورة", messageBody = "تم حذف الفاتورة بنجاح" });
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = "error", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف المنتج", messageBody = "حدث خطأ أثناء حذف المنتج" });
+            }
+        }
         public IActionResult GetProducts(string q)
         {
             IEnumerable<Models.SelectListItem> productsList = Enumerable.Empty<Models.SelectListItem>();

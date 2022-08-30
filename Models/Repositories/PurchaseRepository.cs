@@ -24,7 +24,9 @@ namespace E_commerce.Models.Repositories
 
         public void Delete(int ID)
         {
-            throw new NotImplementedException();
+              var purchase = Find(ID);
+          context.Purchases.Remove(purchase);
+           context.SaveChanges();
         }
 
         public Purchase Find(int ID)
@@ -52,10 +54,6 @@ namespace E_commerce.Models.Repositories
             context.SaveChanges();
 
             //UpdateProduct(Comparison(oldProducts, entity.Products).ToList());
-        }
-        ICollection<Product> Comparison(ICollection<Product> firstList, ICollection<Product> secondList)
-        {
-          return  firstList.Except(secondList).ToList();
         }
          public void UpdateProduct(ICollection<Product> entities)
         {
