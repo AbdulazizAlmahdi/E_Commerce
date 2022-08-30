@@ -40,9 +40,9 @@ body{
     border-radius: 1em 1em  0em 0em;
   }
 .card .autionTime {
-    background-color: var(--green-color-light);
-    font-weight: bold;
-}
+     background-color:var(--green-color-light) ;
+     font-weight: bold;
+  }
   
 
   

@@ -17,7 +17,6 @@ namespace E_commerce.Controllers
         }
         public IActionResult Index()
         {
-
             return View();
         }
 
@@ -48,7 +47,6 @@ namespace E_commerce.Controllers
                 return View();
             }
 
-
             Phone phoneRow = db.Phones.FirstOrDefault(ph => ph.Number == phone);
 
             if (phoneRow == null)
@@ -58,13 +56,7 @@ namespace E_commerce.Controllers
                 return View();
             }
             User user = db.Users.FirstOrDefault(i => i.PhoneId == phoneRow.Id);
-            if (user == null)
-            {
-                ViewBag.Error = "رقم الهاتف أو كلمة المرور غير صحيح";
-
-                return View();
-            }
-             if (user.Password != password)
+            if (user == null || user.Password != password)
             {
                 ViewBag.Error = "رقم الهاتف أو كلمة المرور غير صحيح";
 
@@ -77,9 +69,13 @@ namespace E_commerce.Controllers
             HttpContext.Session.SetInt32("idS", user.Id);
             HttpContext.Session.SetString("userAddress", user.Address ?? "لايوجد عنوان");
 
+            ImagesUser imageRow = db.ImagesUsers.Where(img => img.UserId == user.Id).ToList().LastOrDefault();
+            if (imageRow != null)
+                HttpContext.Session.SetString("userImage", imageRow.ImageUrl);
+            else
+                HttpContext.Session.SetString("userImage", "users/default.png");
+
             return Redirect("/home");
-            
         }
     }
 }
-//SessionName

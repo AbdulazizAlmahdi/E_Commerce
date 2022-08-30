@@ -1,28 +1,147 @@
 ﻿<title>الصفحة الشخصية</title>
 
-<link rel="stylesheet" href="../css/UserinfoC2C.css">
-
 <div class=" divMain container-fluid  pt-2 pb-5">
-
     <div class=" persnalinfo container mt-5">
         <div class="row">
             <div class="col-lg-6  col-md-6">
-                <div class="  m-4  ">
-                    <div class=" imgDiv  align-content-center p-2 d-inline-block">
-                        <img class="img-fluid " src="../imgs/user.png" alt="">
+                <div class=" imgDiv    mt-4 mx-4     ">
+                    <div class=" containerImg d-flex  d-md-block  d-lg-block justify-content-center p-3 " data-bs-toggle="modal" data-bs-target="#imgErofileEditModle">
+                        <img class="img-fluid   " src="~/uploads/@ViewBag.userImage" alt="" style="width:35%">
                     </div>
-                    <div class=" row row-cols-2  pt-3">
+
+                    <!--image profile Edit Modle -->
+                    <div class="modal fade   " id="imgErofileEditModle" tabindex="-1" aria-labelledby="addproductLabel" aria-hidden="true">
+                        <div class="modal-dialog  modal-lg  ">
+                            <div class="modal-content">
+                                <div class="modal-header   ">
+                                    <h5 class="modal-title text-center " id="editModalLabel">تعديل صورة الملف الشخصي</h5>
+                                    <button type="button " class=" bg-white rounded-circle" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="fa-solid fa-close p-1 fs-4"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="modal-body  mt-4">
+                                    <div class="TheProfileImgInDB py-2 d-flex justify-content-center">
+                                        <img src="~/uploads/@ViewBag.userImage" class=" img-fluid"
+                                             style="width: 40%;"
+                                             alt="profileimage" />
+
+                                    </div>
+
+                                    <div class=" editArea  p-3" id="img-upload-panel">
+                                        <div class="row ">
+
+                                            <form action="/Userinfo" method="post" enctype="multipart/form-data">
+
+                                            <div class="imagebutton gap-2 mb-3  d-flex justify-content-center ">
+                                                <div id="status " class=""></div>
+                                                <input id="clooseimg"
+                                                       type="file"
+                                                       name="image2"
+                                                       class="img-upload-input"
+                                                       editor="#img-upload-panel"
+                                                       target="#image"
+                                                       status="#status"
+                                                       passurl=""
+                                                       pshape="square"
+                                                       w=300 h=300
+                                                       size="viewport"
+                                                       style="display:none; visibility: none; " />
+
+                                                      <input 
+                                                       type="file"
+                                                       name="image"
+                                                        />
+
+                                                <!-- <img src="" alt="" id="image" style="width: 30%;"/> -->
+                                                <label for="clooseimg" class=" btn   choose-img ">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                </label>
+                                                <button type="button" class="btn  replay img-remove-btn">
+                                                    <i class="fa-solid fa-reply"></i>
+                                                </button>
+                                                <button type="submit" name="save" class="btn save-edit-img  img-upload-btn">
+                                                    <i class="fa-solid fa-save "></i>
+                                                </button>
+                                                <button type="button" class=" btn delete-img  delete-img">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+
+                                            </form>
+                                            
+                                        </div>
+                                            <div class="img-edit-container  m-0 ">
+
+                                            </div>
+                                        </div>
+                                        <hr style="height:  5px;">
+                                        <div class="row control px-5  ">
+                                            <div class="col-6 p-1">
+                                                <h6>السطوع :</h6>
+                                                <input type="range" class="form-control-range filter" min=0 max=200 value=100 step=1 filter="brightness" />
+                                                <h6> اسود وابيض:</h6>
+                                                <input type="range" class="form-control-range filter" min=0 max=200 value=100 step=1 filter="threshold" />
+
+                                            </div>
+
+                                            <div class="col-6 p-1">
+                                                <h6> مؤثرات اضافية :</h6>
+
+                                                <button type="button" class="btn btn-dark filter" filter="grayscale">تدرج الرمادي</button>
+                                                <button type="button" class="btn btn-dark filter" filter="sharpen">حاداً</button>
+                                                <button type="button" class="btn btn-dark filter" filter="blur">ضبابية</button>
+
+
+                                            </div>
+                                            <div class="col-6 p-1">
+                                                <h6>التدوير :</h6>
+
+                                                <button type="button" class="btn btn-dark img-rotate-left">
+                                                    <i class="fa-solid fa-rotate-left"></i>
+                                                </button>
+
+                                                <button type="button" class="btn btn-dark img-rotate-right">
+                                                    <i class="fa-solid fa-rotate-right"></i>
+                                                </button>
+
+
+                                            </div>
+                                            <div class="col-6 p-1">
+                                                <h6>الاعدادات الاولية :</h6>
+                                                <button type="button" class="btn  img-clear-filter reset-filter">اعادة الوضع الطبيعي</button>
+                                            </div>
+
+
+
+
+                                        </div>
+
+
+
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class=" row row-cols-2  pt-3 text-center">
 
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                             <p class=" ">
                                 الاسم:
-                                <span class="">@ViewBag.userS</span>
+                                <span class="text-dark">@ViewBag.userS</span>
                             </p>
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                             <p class="">
                                 رقم التلفون:
-                                <span class="">@ViewBag.phoneS</span>
+                                <span class="text-dark">@ViewBag.phoneS</span>
                             </p>
                         </div>
                     </div>
@@ -65,14 +184,14 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form class="  needs-validation  mt-5 mt-sm-5 mt-md-1   mt-lg-5 mx-4" novalidate method="post">
+                                <form action="/" class="needs-validation mt-5 mt-sm-5 mt-md-1 mt-lg-5 mx-4" novalidate method="post">
 
 
                                     <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" id="validationCustom01" value="@ViewBag.userS" name="newName" required>
 
                                     <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" id="validationCustom01" value="@ViewBag.userAddress" name="newAddress" required>
 
-                                    <div class="   ">
+                                    <div>
                                         <button class=" btnsubmit btn  fs-5 w-100   " type="submit">تعديل</button>
                                     </div>
 
@@ -93,14 +212,14 @@
         <nav class=" ">
             <ul class="  nav justify-content-center gap-2 ">
                 <li class="nav-item mx-2">
+                    <button id="btnActive" class="active px-2 py-1">اعلانات فعالة</button>
+                </li>
+                <li class="nav-item mx-2">
                     <button id="btnStop" class="px-2 py-1">اعلانات تم ايقافها</button>
                 </li>
-                <li class="nav-item mx-2">
+                @*<li class="nav-item mx-2">
                     <button id="btnSold" class="px-2 py-1 ">اعلانات تم بيعها</button>
-                </li>
-                <li class="nav-item mx-2">
-                    <button id="btnActive" class=" px-2 py-1">اعلانات فعالة</button>
-                </li>
+                </li>*@
                 <li class="nav-item mx-2">
                     <button id="btnPurchased" class="px-2 py-1 ">طلبات تم شرائها</button>
                 </li>
@@ -112,9 +231,522 @@
     </div>
     <!--end menu tab-->
     <!--start table details data-->
-    <div class="divTable container pb-4">
-        <table id="tableStop" class="table   container  table-borderless  ">
-            <thead class="tableHead sticky-top ">
+    <div class="divTable container pt-3 pb-4 table-responsive">
+        <table id="tableActive" class="table tableActive mt-4 table-borderless">
+            <caption class="p-2 text-center">اعلانات الفعالة</caption>
+            <thead class="tableHead  ">
+                <tr class="">
+                    <th class="thStart" scope="col">رقم الاعلان</th>
+                    <th scope="col">اسم الاعلان</th>
+                    <th scope="col">السعر</th>
+                    <th scope="col">الكمية</th>
+                    <th scope="col">الوحدة</th>
+                    <th scope="col">الصنف</th>
+                    <th scope="col">المشاهدات</th>
+                    <th class="thEnd"> الاجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+                            <!--  fa-ellipsis-v   -->
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid  fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+                            <!--  fa-ellipsis-v   -->
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid  fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+                            <!--  fa-ellipsis-v   -->
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid  fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+                            <!--  fa-ellipsis-v   -->
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid  fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+                            <!--  fa-ellipsis-v   -->
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid  fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+                            <!--  fa-ellipsis-v   -->
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid  fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+                            <!--  fa-ellipsis-v   -->
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid  fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+                            <!--  fa-ellipsis-v   -->
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid  fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+                            <!--  fa-ellipsis-v   -->
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid  fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+                            <!--  fa-ellipsis-v   -->
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid  fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                    <td class=" ">
+                        <div class="dropdown dropleft btn-group  d-flex ">
+                            <!--  fa-ellipsis-v   -->
+                            <a class="nav-link  " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid  fa-navicon fa-lg  rounded-circle "></i>
+                            </a>
+                            <ul class="dropdown-menu   dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+
+                                <li>
+                                    <a class="dropdown-item " href="#">
+                                        <i class="fa-solid fa-pen fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تعديل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">تفاصيل</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="dropdown-item delete " href="#">
+                                        <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                        <span class="ps-1">حذف</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table id="tableStop" class="table tableStop table-borderless">
+            <caption class="p-2 text-center">اعلانات التي تم ايقافها</caption>
+            <thead class="tableHead  ">
                 <tr>
                     <th class="thStart" scope="col">رقم الاعلان</th>
                     <th scope="col">اسم الاعلان</th>
@@ -122,8 +754,7 @@
                     <th scope="col">الكمية</th>
                     <th scope="col">الوحدة</th>
                     <th scope="col">الصنف</th>
-                    <th class="thEnd" scope="col">المشاهدات</th> 
-                    
+                    <th class="thEnd" scope="col">المشاهدات</th>
                 </tr>
             </thead>
             <tbody>
@@ -255,8 +886,9 @@
                 </tr>
             </tbody>
         </table>
-        <table id="tableSold" class="table  container  table-borderless   ">
-            <thead class="tableHead sticky-top">
+        <table id="tableSold" class="table tableSold table-borderless">
+            <caption class="p-2 text-center">اعلانات تم بيعها</caption>
+            <thead class="tableHead ">
                 <tr>
                     <th class="thStart" scope="col">رقم الاعلان</th>
                     <th scope="col">اسم الاعلان</th>
@@ -279,45 +911,10 @@
                 </tr>
             </tbody>
         </table>
-        <table id="tableActive" class="table  container  table-borderless ">
-            <thead class="tableHead sticky-top">
-                <tr>
-                    <th class="thStart" scope="col">رقم الاعلان</th>
-                    <th scope="col">اسم الاعلان</th>
-                    <th scope="col">السعر</th>
-                    <th scope="col">الكمية</th>
-                    <th scope="col">الوحدة</th>
-                    <th scope="col">الصنف</th>
-                    <th class="thEnd" scope="col">المشاهدات</th>
-                    <th>action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>بطاط</td>
-                    <td>35000.00</td>
-                    <td>50</td>
-                    <td>سلة</td>
-                    <td>خضار</td>
-                    <td>121</td>  
-                    <td>
-                        <button class="nav-link dropdown-toggle " href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-globe fa-lg  rounded-circle "></i>
-                            
-                        </button>
-                        <ul class="dropdown-menu  shangelanguage dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
-                            
-                            <li><a class="dropdown-item " href="#">  عربي</a></li>
-                            <li><a class="dropdown-item" href="#">  English</a></li>
-                            
-                        </ul>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table id="tablePurchased" class="table  container  table-borderless ">
-            <thead class="tableHead sticky-top">
+        
+        <table id="tablePurchased" class="table tablePurchased table-borderless">
+            <caption class="p-2 text-center">طلبات  تم شرائها</caption>
+            <thead class="tableHead ">
                 <tr>
                     <th class="thStart" scope="col">رقم الاعلان</th>
                     <th scope="col">اسم الاعلان</th>
@@ -338,10 +935,173 @@
                     <td>خضار</td>
                     <td>121</td>
                 </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>بطاط</td>
+                    <td>35000.00</td>
+                    <td>50</td>
+                    <td>سلة</td>
+                    <td>خضار</td>
+                    <td>121</td>
+                </tr>
             </tbody>
         </table>
-        <table id="tableOrder" class="table  container  table-borderless ">
-            <thead class="tableHead sticky-top">
+        <table id="tableOrder" class="table tableOrder table-borderless">
+            <caption class="p-2 text-center"> طلبات الشراء</caption>
+            <thead class="tableHead ">
                 <tr>
                     <th class="thStart" scope="col">رقم الاعلان</th>
                     <th scope="col">اسم الاعلان</th>

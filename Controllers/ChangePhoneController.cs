@@ -18,6 +18,8 @@ namespace E_commerce.Controllers
         public IActionResult Index()
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
+            ViewBag.userImage = HttpContext.Session.GetString("userImage");
+
             if (ViewBag.userS == null)
             {
                 return Redirect("/home");
@@ -29,6 +31,7 @@ namespace E_commerce.Controllers
         public IActionResult Index([FromForm] string newPhone)
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
+            ViewBag.userImage = HttpContext.Session.GetString("userImage");
 
             if (ViewBag.userS == null)
             {
@@ -95,7 +98,8 @@ namespace E_commerce.Controllers
                 return View();
             }
 
-            ViewBag.Success = "تم ارسال طلب التحقق";
+            //ViewBag.Success = "تم ارسال طلب التحقق";
+            ViewBag.Success = "تم تغيير رقم الهاتف";
             ViewBag.phone = newPhone;
 
             return View();

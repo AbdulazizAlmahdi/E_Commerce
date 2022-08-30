@@ -4,15 +4,35 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="~/css/all.min.css" />
-
+    <!-- link of font-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!--<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap" rel="stylesheet" />-->
-    <!--call fonts-->
     <link rel="stylesheet" href="~/css/fonts.css">
+    <!--link bootstrape css-->
     <link rel="stylesheet" href="~/css/bootstrap.rtl.min.css">
+    <!--link bootstrape css-->
+    <link rel="stylesheet" href="~/css/jquery.dataTables.min.css">
+    <!--link fontawsome css-->
+    <link rel="stylesheet" href="~/css/all.min.css">
+    <!--link croppie.css-->
+    <link href="~/css/croppie.css" rel="stylesheet" />
+    <!--link the css file style of all page website-->
     <link rel="stylesheet" href="~/css/e_commerce.css">
+    <link rel="stylesheet" href="~/css/addproduct.css">
+    <link rel="stylesheet" href="~/css/Aution.css">
+    <link rel="stylesheet" href="~/css/ChangePass.css">
+    <link rel="stylesheet" href="~/css/Check.css">
+    <link rel="stylesheet" href="~/css/Details.css">
+    <link rel="stylesheet" href="~/css/Help.css">
+    <link rel="stylesheet" href="~/css/Login.css">
+    <link rel="stylesheet" href="~/css/SignIn.css">
+    <link rel="stylesheet" href="~/css/UserinfoC2C.css">
+    <link rel="stylesheet" href="~/css/editprofileimg.css">
+    <link rel="stylesheet" href="~/css/aboutus.css">
+    <link rel="stylesheet" href="~/css/Basket.css">
+
+
 </head>
 <body>
     <!-- start navbar-->
@@ -47,15 +67,15 @@
                     </li>
 
                 </ul>
-                @{ 
+                @{
                     string search = ViewBag.Search;
                 }
-           
-                <form class="search  mx-auto" action="/" method="get" >
+
+                <form class="search  mx-auto" action="/" method="get">
                     <input class="form-control me-2 rounded-pill" type="search" placeholder="ابحث هنا" name="search" aria-label="Search">
                 </form>
 
-                <ul class="navbar-nav justify-content-center  px-5">
+                <ul class="navbar-nav justify-content-center  p-3 gap-3">
                     @if (ViewBag.userS == null || ViewBag.userS == "")
                     {
                         <li class="nav-item d-none ">
@@ -100,13 +120,13 @@
                         </li>
 
                         <li class="nav-item  btn-group myacount ">
-                            <img src="imgs/nader.png" class="rounded-circle" style="width:35px ; height: 35px;" alt="myprofileimage">
+                            <img src="~/uploads/@ViewBag.userImage" class="rounded-circle" style="width:35px ; height: 35px;" alt="myprofileimage">
                             <a class="nav-link dropdown-toggle " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                                 حسابي
                             </a>
                             <ul class="dropdown-menu  dropdown-menu-colo-light fs-6 " aria-labelledby="dropdownMenuButton2">
                                 <li class="dropdown-item myacountname  ">
-                                    <img src="~/imgs/nader.png" class="rounded-circle" style="width:35px ; height: 35px;" alt="myprofileimage">
+                                    <img src="~/uploads/@ViewBag.userImage" class="rounded-circle" style="width:35px ; height: 35px;" alt="myprofileimage">
                                     <span>@ViewBag.userS</span>
 
                                 </li>
@@ -175,7 +195,7 @@
 
     @RenderBody()
 
-    
+
 
     <!-- start footer-->
     <footer class=" ">
@@ -300,17 +320,31 @@
 
     </footer>
     <!-- end footer-->
-
-
-
-    <script src="~/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/all.min.js"></script>
+    <!--link jquery-3.6.0 -->
     <script src="~/js/jquery-3.6.0.min.js"></script>
-    <script src="~/js/ScriptScrollMenu.js"></script>
-    <script src="~/js/Basket.js"></script>
-    <script src="~/js/ModelNotice.js"></script>
+    <!--link jquery.dataTables.min.js -->
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    <!--link bootstrap js -->
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <!--link fontawsome js -->
+    <script src="~/js/all.min.js"></script>
+    <!--link bootstrap Validation js -->
     <script src="~/js/Validation.js"></script>
-    <script src="../js/UserinfoC2C.js"></script>
+    <!--link pagination_2.1.5  -->
+    <script src="~/js/pagination_2.1.5.min.js"></script>
+    <!--link croppie.min.js -->
+    <script src="~/js/croppie.min.js"></script>
+    <!--link the js file script of all page website -->
+    <script src="~/js/paginationproduct.js"></script>
+    <script src="~/js/addproduct.js"></script>
+    <script src="~/js/detailes.js"></script>
+    <script src="~/js/ModelNotice.js"></script>
+    <script src="~/js/ScriptScrollMenu.js"></script>
+    <script src="~/js/UserinfoC2C.js"></script>
+    <script src="~/js/profile.js"></script>
+    <script src="~/js/Basket.js"></script>
+
+
 </body>
 </html>
 

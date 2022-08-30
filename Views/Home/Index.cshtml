@@ -1,4 +1,4 @@
-﻿@model IEnumerable<E_commerce.Models.Product>
+﻿@model IEnumerable<E_commerce.Models.Custome.ProductsWithImages>
     <title>الرئيسية</title>
 <div class="home">
     <div class=" container">
@@ -12,121 +12,41 @@
                     <i class="fa-solid fa-caret-left"></i>
                 </button>
                 <div class="row   scrollitem rounded-pill ">
-                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
-                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            العسل والزبيب
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
-                            <li><a class="dropdown-item active" href="#">عسل بلدي</a></li>
-                            <li><a class="dropdown-item" href="#">زبيب رازقي</a></li>
-                            <li><a class="dropdown-item" href="#">عسل مراعي</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
-                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            العسل والزبيب
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
-                            <li><a class="dropdown-item active" href="#">عسل بلدي</a></li>
-                            <li><a class="dropdown-item" href="#">زبيب رازقي</a></li>
-                            <li><a class="dropdown-item" href="#">عسل مراعي</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
-                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            المحاصيل الزراعية
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
-                            <li><a class="dropdown-item active" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
-                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            الثروة الحيوانية
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
-                            <li><a class="dropdown-item active" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
-                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            المعدات الزراعة
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
-                            <li><a class="dropdown-item active" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
-                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            البن اليمني
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
-                            <li><a class="dropdown-item active" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
-                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            العسل والزبيب
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
-                            <li><a class="dropdown-item active" href="#">عسل بلدي</a></li>
-                            <li><a class="dropdown-item" href="#">زبيب رازقي</a></li>
-                            <li><a class="dropdown-item" href="#">عسل مراعي</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
-                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            الاجبان والالبان
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
-                            <li><a class="dropdown-item active" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                    <div class=" col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
-                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            المكسرات والبهارات
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
-                            <li><a class="dropdown-item active" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
-                        <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            البذور والاسمدة
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton2">
-                            <li><a class="dropdown-item active" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
+
+                    @{
+                        List<E_commerce.Controllers.MainCategory> categories = ViewBag.categories;
+                    }
+
+                    @foreach (var cat in categories)
+                    {
+                        <div class="col-sm-6 col-md-auto col-lg-auto  rowcolumn   ">
+                            <button class="btn btn-color dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton[@cat.Id]" data-bs-toggle="dropdown" aria-expanded="false">
+                                @cat.Name
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-colo-light" aria-labelledby="dropdownMenuButton[@cat.Id]">
+                                @foreach (var subCat in cat.subCategory)
+                                {
+                                    <li><a class="dropdown-item " href="/?catId=@subCat.Id">@subCat.Name</a></li>
+                                }
+                            </ul>
+                        </div>  
+                    }
                 </div>
             </div>
 
         </div>
 
 
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide mt-3" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active  rounded-pill">
-                    <img src="imgs/backgrond_slid1.png" class="d-block w-100" alt="...">
+                    <img src="~/imgs/backgrond_slid1.png" class="d-block w-100" alt="...">
                     <div class="carousel-caption">
                         <h3 class="  py-3">مرحبا بكم في السوق المركزي الالكتروني  </h3>
                         <P class="py-2  d-sm-none d-md-none d-lg-block ">
@@ -142,13 +62,13 @@
                         <P>
                             سجل دخولك واستمتع بالعروض
                         </P>
-                        <a href="pages/Login.html" class=" text-decoration-none  ">
+                        <a href="/Login" class=" text-decoration-none  ">
                             <button type="button" class="btn btncarousel rounded-pill p-auto  px-sm-3  py-sm-1 px-md-5  py-md-1 px-lg-5  py-lg-1">اشتري الان</button>
                         </a>
                     </div>
                 </div>
-                <div class="carousel-item rounded-pill">
-                    <img src="imgs/backgrond_slid2.png" class="d-block w-100" alt="...">
+                <div class="carousel-item  rounded-pill">
+                    <img src="~/imgs/backgrond_slid2.png" class="d-block w-100" alt="...">
                     <div class="carousel-caption ">
                         <h3 class="  py-3">المزاد الاسبوعي </h3>
                         <P class="py-2  d-sm-none d-md-none d-lg-block ">
@@ -159,14 +79,14 @@
                         <P>
                             سجل دخولك واستمتع بالعروض
                         </P>
-                        <a href="pages/Login.html" class=" text-decoration-none  ">
+                        <a href="/Login" class=" text-decoration-none  ">
                             <button type="button" class="btn btncarousel rounded-pill p-auto  px-sm-3  py-sm-1 px-md-5  py-md-1 px-lg-5  py-lg-1"> اشترك الان</button>
                         </a>
 
                     </div>
                 </div>
                 <div class="carousel-item rounded-pill">
-                    <img src="imgs/backgrond_slid3.png" class="d-block w-100" alt="...">
+                    <img src="~/imgs/backgrond_slid3.png" class="d-block w-100" alt="...">
                     <div class="carousel-caption rounded-pill ">
                         <h3 class="  py-3">ترقبوا العروض الحصرية والقائمة</h3>
                         <P class="py-2  d-sm-none d-md-none d-lg-block ">
@@ -175,7 +95,7 @@
                         <p>
                             سجل دخولك واستمتع بالعروض
                         </p>
-                        <a href="pages/Login.html" class=" text-decoration-none  ">
+                        <a href="/Login" class=" text-decoration-none  ">
                             <button type="button" class="btn btncarousel rounded-pill p-auto  px-sm-3  py-sm-1 px-md-5  py-md-1 px-lg-5  py-lg-1">اشتري الان</button>
                         </a>
                     </div>
@@ -192,7 +112,6 @@
             </button>
         </div>
 
-
         <div class="DivProduct container">
             <div class=" btn btnProduct my-4  p-2  text-center">
                 <h5 class=" pt-2 fs-4 ">
@@ -201,55 +120,47 @@
 
             </div>
 
-            <div class="row">
+            <div class="row mypaginationindex" style="display: none;">
 
-                @if (Model == null || Model.Count() == 0)
+                @foreach (var proJoinimg in Model)
                 {
-                <h1>لايوجد منتجات</h1>
-                }
-
-                @foreach (var product in Model)
-                {
-                    <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                        <a href="/Details?id=@product.Id" class="text-decoration-none">
-                            <div class="card">
-                                <img src="imgs/tomato.png" class=" img-fluid card-img-top" alt="tomato">
+                    <div class="col-sm-6 col-md-4  col-lg-4 data">
+                        <a href="/Details?id=@proJoinimg.product.Id" class="text-decoration-none">
+                            <div class="card my-2">
+                                @if(proJoinimg.image != null && proJoinimg.image.Count > 0){
+                                    <img src="~/uploads/@Html.DisplayFor(modelItem => proJoinimg.image.First().ImageUrl)" class="img-fluid card-img-top" alt="@proJoinimg.product.NameAr" style="max-height: 245px;">
+                                } else
+                                {
+                                    <img src="~/imgs/tomato.png" class="img-fluid card-img-top" alt="@proJoinimg.product.NameAr" style="width: 760; height:1200">
+                                }
                                 <div class="card-body">
-                                    <h5 class="card-title">@Html.DisplayFor(modelItem => product.NameAr)</h5>
+                                    <h5 class="card-title">@Html.DisplayFor(modelItem => proJoinimg.product.NameAr)</h5>
                                     <div class="row justify-content-center">
                                         <div class="col">
-                                            <p class="pt-2">@Html.DisplayFor(modelItem => product.Quantity) @Html.DisplayFor(modelItem => product.Unit)</p>
+                                            <p class="pt-2">@Html.DisplayFor(modelItem => proJoinimg.product.Quantity) @Html.DisplayFor(modelItem => proJoinimg.product.Unit)</p>
                                         </div>
                                         <div class="col">
-                                            <p class="price p-2 ">@Html.DisplayFor(modelItem => product.Price) ريال</p>
+                                            <p class="price p-2 ">@Html.DisplayFor(modelItem => proJoinimg.product.Price) ريال</p>
                                         </div>
                                     </div>
                                     <div class="row justify-content-center">
-                                        <div class="col star">
-                                            <i class="fa-solid fa-star active"></i>
-                                            <i class="fa-solid fa-star active"></i>
-                                            <i class="fa-solid fa-star active"></i>
-                                            <i class="fa-solid fa-star"></i>
-
-                                        </div>
                                         <div class="col">
-                                            @if (product.Status)
+                                            @if (proJoinimg.product.UserId != null && proJoinimg.product.UserId != 1)
                                             {
-                                                <p><i class="fa-solid fa-square-check me-2"></i>الاتحاد التعاوني الزراعي</p>
+                                                <p><i class="fa-solid fa-square-check me-2"></i>بضمانة الاتحاد الزراعي</p>
                                             }
 
                                         </div>
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col">
-                                            @if (false)
-                                            {
-                                                <p><i class="fa-solid fa-location-dot me-2"></i>ذمار- قاع جهران</p>
-                                            }
-                                            <p><i class="fa-solid fa-location-dot me-2"></i>@Html.DisplayFor(modelItem => product.DetailsAr)</p>
+                                           
+                                                <p><i class="fa-solid fa-location-dot me-2"></i>@proJoinimg.product.Address</p>
+                                            
+                                            <p>@Html.DisplayFor(modelItem => proJoinimg.product.DetailsAr)</p>
                                         </div>
                                         <div class="col">
-                                            <p>@Html.DisplayFor(modelItem => product.CreatedAt)</p>
+                                            <p>@Html.DisplayFor(modelItem => proJoinimg.product.CreatedAt)</p>
                                         </div>
                                     </div>
                                 </div>
@@ -258,7 +169,26 @@
                     </div>
                 }
 
+
+
             </div>
+
+            @if (Model == null || Model.Count() == 0)
+            {
+                <center><h1>لايوجد منتجات</h1></center>
+                <br />
+                <br />
+            }
+            else
+            {
+                <nav aria-label="pages" class="pages mt-4 ">
+                    <ul class="pagination ">
+                    </ul>
+                </nav>
+            }
+
+
+
         </div>
     </div>
 </div>

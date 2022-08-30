@@ -12,6 +12,7 @@ namespace E_commerce.Controllers
         public IActionResult Index()
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
+            ViewBag.userImage = HttpContext.Session.GetString("userImage");
 
             return View();
         }

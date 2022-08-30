@@ -18,6 +18,8 @@ namespace E_commerce.Controllers
         public IActionResult Index()
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
+            ViewBag.userImage = HttpContext.Session.GetString("userImage");
+
             if (ViewBag.userS == null)
             {
                 return Redirect("/home");
@@ -31,6 +33,7 @@ namespace E_commerce.Controllers
         public IActionResult Index([FromForm] string oldPass, [FromForm] string newPass, [FromForm] string newPass2)
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
+            ViewBag.userImage = HttpContext.Session.GetString("userImage");
 
             if (ViewBag.userS == null)
             {
@@ -83,7 +86,6 @@ namespace E_commerce.Controllers
                 ViewBag.ErrorOldPass = "كلمة المرور الحالية غير صحيحة";
                 return View();
             }
-           
 
             user.Password = newPass;
             int result = db.SaveChanges();

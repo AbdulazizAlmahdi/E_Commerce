@@ -20,6 +20,7 @@ namespace E_commerce.Controllers
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");//Check Login
             ViewBag.PhoneOrg = HttpContext.Session.GetString("phoneS");
+            ViewBag.userImage = HttpContext.Session.GetString("userImage");
         }
 
         public IActionResult Index()

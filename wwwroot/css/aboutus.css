@@ -1,0 +1,76 @@
+
+:root {
+    --green-color-dark: #031900;
+    --green-color-light: #CEE9CB;
+    --green-color:#13A200;
+    --green-color2-d: #118C00;
+    --body-color:#F9F7F7;
+    --red-color: #ff3150;
+    --yellow-color: #ffc400;
+    --section-color: #eff7fa;
+  }
+
+body{
+    direction: rtl;
+    background-color: var(--body-color);
+
+}
+.aboutus{
+    border-radius: 1rem ;
+    background: linear-gradient(84deg,#bbf5b3,var(--green-color-dark));
+}
+.aboutus .titleimg{
+
+    
+    background: linear-gradient(2deg,#bbf5b3,var(--green-color-dark));
+    
+    font-weight: bold;
+    border-radius: 1rem 1rem 1rem 1rem;
+}
+.aboutus .titleimg img{
+    width: 10%;
+    height: 10%;
+}
+.aboutus .titlePrg{
+    color: white;
+    font-weight: bold;
+    
+    
+}
+.ourwork{
+    
+    fill-opacity: 1;
+    color: white;
+    border: 2px var(--green-color)solid;
+    border-top: 1rem var(--green-color)solid;
+    border-radius: 1rem 1rem 0rem 0rem;
+    font-weight: bold;
+}
+.ourwork h3{
+    background-image: url('../imgs/Path3.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position:  center right; 
+    background: linear-gradient(177deg,#bbf5b3,var(--green-color-dark));
+    
+    
+}
+.ourfeatures{
+    color: white;
+    border: 2px var(--green-color)solid;
+    border-top: 2px var(--green-color)solid;
+    border-bottom: 1rem var(--green-color)solid;
+    border-radius: 0rem 0rem 1rem 1rem ;
+    font-weight: bold;
+}
+.ourfeatures h3{
+    background-image: url('../imgs/Path2.svg');
+    background-repeat: no-repeat;
+    background-size:contain;
+    background-position:  center right; 
+    background: linear-gradient(177deg,#bbf5b3,var(--green-color-dark));
+
+}
+.aboutus svg{
+    color: var(--green-color);
+}

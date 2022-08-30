@@ -21,6 +21,12 @@ body{
 .detailsaution{
     border-radius: 1em;
 }
+.details{
+    background-color: var(--body-color);
+}
+.detailsaution{
+    background-color: var(--body-color);
+}
 .details .main,
 .details .related
 {
@@ -28,16 +34,13 @@ body{
     border-radius: 1em;
 }
 
-.related .card{
-    background-color:var(--green-color-light);
-}
 
 
-
-.details .divinfo {
+.details .divinfo{
     background-color: var(--green-color-light);
-    border-radius: 1rem;
+    border-radius: 1rem;  
     color: var(--green-color-dark);
+    
 }
 .divinfo .divinfocolorwhite{
     border-radius: 1rem;
@@ -134,6 +137,7 @@ textarea{
     border-radius: 10px;
 
 }
+
 .toast-body{
     background-color: var(--green-color);
     color: white;
@@ -161,10 +165,29 @@ textarea{
 
 }
 
+.successfulMSG {
+    top: 20%;
+    right: 1%;
+}
 
 
 .toast{
     border-radius: 1rem;
+}
+.cuccessDiv .copybtn{
+    color: var(--green-color);
+    background-color: white;
+}
+.cuccessDiv .copybtn:hover,
+.cuccessDiv .copybtn:focus{
+    color: white;
+    border-color: #007bff;
+    background-color: #007bff;
+}
+.cuccessDiv .copybtnmessage{
+    display: none;
+    color: white;
+    background-color: #007bff; 
 }
 
 

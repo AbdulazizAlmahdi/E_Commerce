@@ -2,8 +2,8 @@
 @import url(././fonts.css);
 
 :root {
-    --green-color-dark: #031900;
-    --green-color-light: #CEE9CB;
+    --green-color-dark: #031a00;
+    --green-color-light: #cee9cb;
     --green-color:#13A200;
     --green-color2-d: #118C00;
     --body-color:#F9F7F7;
@@ -30,6 +30,98 @@ body{
     background-color: var(--green-color);
     border-radius: 1em 1em 0em 0em;
 }
+.product .contactbtn{
+    background-color: var(--green-color);
+    color: white;
+    font-weight: bold;
+}
+.product .contactbtn:hover{
+    background-color: var(--green-color2-d);
+    color: white;
+    font-weight: bold;
+}
+.product .productTopP{
+    border-bottom:  2px solid var(--green-color);
+    background-color: var(--green-color-light);
+}
+
+ form .firstselectcategory{
+    color: #6c7781;
+    background-color: white;
+    border-radius: 10px;
+}
+form .firstselectcategory:hover,
+form .firstselectcategory:focus{
+
+    color: #6c7781;
+    cursor: pointer;
+    
+    
+}
+form .firstselectcategory .changecategorybtn {
+    display: none;
+    background-color: var(--green-color);
+    color: white;
+    font-weight: bold;
+}
+form .firstselectcategory .changecategorybtn :hover{
+    background-color: var(--green-color2-d);
+    color: white;
+    font-weight: bold;
+}
+
+form .Catagrysection{
+    display: none;
+    background-color: var(--body-color);
+    
+}
+.CatagryMainSection{
+    display: none;
+    background-color: var(--green-color-light);
+    border-radius: 1rem 1rem 1rem 0rem;
+}
+.CatagryMainSection h5{
+    background-color: var(--green-color);
+    color: white;
+    border-radius: 1rem 1rem 0rem 0rem;
+}
+
+
+.CatagrySubsectionAnimal,
+.CatagrySubsectionPlant,
+.CatagrySubsectionMachine{
+    display: none;
+    background-color: var(--green-color-light);
+    border-radius: 1rem 1rem 0rem 1rem;
+}
+.CatagrySubsectionAnimal h5,
+.CatagrySubsectionPlant h5,
+.CatagrySubsectionMachine h5{
+    background-color: var(--green-color);
+    color: white;
+    border-radius: 1rem 1rem 0rem 0rem;
+} 
+.CatagryMainSection .dropdown-item:hover,
+.CatagrySubsectionAnimal .dropdown-item:hover,
+.CatagrySubsectionPlant .dropdown-item:hover,
+.CatagrySubsectionMachine .dropdown-item:hover{
+    background-color: white;
+    cursor:pointer
+}
+.CatagryMainSection .dropdown-item:active,
+.CatagryMainSection .dropdown-item:focus,
+.CatagrySubsectionAnimal .dropdown-item:active,
+.CatagrySubsectionAnimal .dropdown-item:focus,
+.CatagrySubsectionPlant .dropdown-item:active,
+.CatagrySubsectionPlant .dropdown-item:focus,
+.CatagrySubsectionMachine .dropdown-item:active,
+.CatagrySubsectionMachine .dropdown-item:focus{
+    background-color: var(--green-color2-d);
+    color: white;
+    cursor:pointer
+}
+
+
 
 .product form input{
     border-radius: 10px;
@@ -40,18 +132,6 @@ body{
 .product textarea{
     border-radius: 10px;
 }
-
-
-.product .imgDiv {
-    border: 1px solid #ced4da;
-    border-radius: 10px;
-}
-.product .photo button{
-    background-image: url("../imgs/camera.png");
-}
-
-
-
 
 .product .linksginup{
     color:var(--green-color);
@@ -72,9 +152,38 @@ body{
     color: white;
     border-radius: 10px;
 }
-.addpeoduct .ScrollMenu button{
-    color: var(--green-color);
+
+.product .row .addimg{
+    text-align:center;
+    
 }
-.ScrollMenu .menu_btn:hover{
-    color: white;
+.product .row .addimg img{
+    height: 150px;
+    width: 150px;
+    object-fit:cover;
+    border-radius: 1em ;
+   
+   
+}
+.product .row .addimg div {
+    position:relative;
+    width: 150px;
+    text-align:center;
+    color:var(--green-color-dark);
+    background-color: #cee9cb;
+    
+    
+  }
+ 
+.imgDiv p{
+    background-color: var(--green-color-light);
+    color: var(--green-color-dark);
+    border-radius: 10px;
+}
+.imgDiv p span {
+    color:orange;
+}
+.addimg h5{
+    color: var(--green-color);
+
 }

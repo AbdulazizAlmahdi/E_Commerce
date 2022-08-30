@@ -40,6 +40,8 @@ body{
 }
 
 
+
+
 .puyproduct button{
     background-color: var(--green-color);
     color: white;
@@ -55,7 +57,7 @@ body{
 }
 
 /* state style model*/
-.modal .modal-content{
+.modal .modal-content {
     border-radius: 1rem 1rem 0rem 0rem;
 }
 .modal .modal-header{
@@ -190,4 +192,11 @@ textarea{
     border-radius: 4px;
 }
 
+#basketTable {
+    display: table;
+}
+.basketsuccessfulMSG {
+    top: 22%;
+    right: 1%;
+}
 

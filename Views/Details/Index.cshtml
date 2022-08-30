@@ -1,16 +1,16 @@
-﻿
+﻿@using E_commerce.Models.Custome
+
     <title>تفاصيل المنتج</title>
-    <link rel="stylesheet" href="../css/Details.css">
 
     <div class="details container  mt-4  ">
         <div class="row  ">
 
             @{
 
-                Product product = ViewBag.Product;
+                ProductsWithImages prodJoinImage = ViewBag.Product;
 
             }
-            @if (product != null)
+            @if (prodJoinImage != null)
             {
                 <div class="col-lg-9 col-md-9 col-sm-12 main  ">
                     <div class="row ">
@@ -20,14 +20,15 @@
                                     <div class="row">
                                         <div class="col-8   ">
                                             <div class="row">
-                                                <h5 class="fs-3 pt-3"><span>@product.NameAr</span></h5>
+                                                <h5 class="fs-3 pt-3"><span>@prodJoinImage.product.NameAr</span></h5>
                                                 <div class="col-6">
 
                                                     <div class="">
                                                         <p><i class="fa-solid fa-square-check me-2"></i>الاتحاد التعاوني الزراعي</p>
                                                     </div>
+
                                                     <div class="">
-                                                        <p><i class="fa-solid fa-location-dot me-2"></i>ذمار- قاع جهران</p>
+                                                        <p><i class="fa-solid fa-location-dot me-2"></i>@prodJoinImage.product.Address</p>
                                                     </div>
                                                     <div class=" star">
                                                         <i class="fa-solid fa-star active"></i>
@@ -42,13 +43,13 @@
                                                 <div class="col-6">
 
                                                     <div class="">
-                                                        <p> <span class="me-2">@product.Quantity</span>@product.Unit</p>
+                                                        <p> <span class="me-2">@prodJoinImage.product.Quantity</span>@prodJoinImage.product.Unit</p>
                                                     </div>
                                                     <div class="">
-                                                        <p><i class="fa-solid fa-eye me-2"></i><span>@product.Views</span></p>
+                                                        <p><i class="fa-solid fa-eye me-2"></i><span>@prodJoinImage.product.Views</span></p>
                                                     </div>
                                                     <div class="">
-                                                        <p>@product.Duration</p>
+                                                        <p>@prodJoinImage.product.Duration</p>
                                                     </div>
                                                 </div>
 
@@ -58,12 +59,12 @@
 
                                             <div class="row justify-content-between ">
                                                 <div class="col">
-                                                    <h5 class="fs-1  pt-5 pb-md-2 pb-lg-3"> <span>@product.Price</span>  </h5>
+                                                    <h5 class="fs-1  pt-5 pb-md-2 pb-lg-3"> <span>@prodJoinImage.product.Price</span>  </h5>
                                                 </div>
                                             </div>
                                             <div class="row justify-content-between ">
                                                 <div class="col">
-                                                    <p class="">خصم % <span>@product.Discount</span></p>
+                                                    <p class="">خصم % <span>@prodJoinImage.product.Discount</span></p>
                                                 </div>
                                                 <div class="col">
                                                     <p class=""><span>ريال</span></p>
@@ -80,7 +81,7 @@
                                         <div class="col ">
                                             <p>
                                                 <span>
-                                                    @product.DetailsAr
+                                                    @prodJoinImage.product.DetailsAr
 
                                                 </span>
                                             </p>
@@ -91,7 +92,7 @@
                                                     اضافة الى السلة
                                                 </h5>
                                             </button>
-                                            <div class="position-fixed top-0 start-0 p-3">
+                                            <div class="successfulMSG position-fixed  p-3">
                                                 <div id="liveToast" class="toast " style="border-radius: 1rem ;" role="alert" aria-live="assertive" aria-atomic="true">
 
                                                     <div class="toast-body text-center pt-3" style="border-radius:1rem;">
@@ -114,12 +115,12 @@
                             </div>
 
                         </div>
-                        <div class="col-12">
-                            <img src="../imgs/tomato.png" class=" img-fluid mb-3 " alt="">
-                        </div>
-                        <div class="col-12 ">
-                            <img src="../imgs/tomato.png" class=" img-fluid mb-3 " alt="">
-                        </div>
+                    @foreach(var images in prodJoinImage.image)
+                    {
+                       <img src="~/uploads/@Html.DisplayFor(modelItem => images.ImageUrl)" class="img-fluid mb-3" alt="@prodJoinImage.product.NameAr">
+                    }
+                        
+                        
                         <div class="col m-2">
 
                             <div class=" comment p-3 ">
@@ -127,6 +128,15 @@
                                 <hr>
                                 <p>
                                     ممكن فيديو عن المنتج ؟
+                                </p>
+                                <p>
+                                    لا
+                                </p>
+                                <p>
+                                    لو سمجت
+                                </p>
+                                <p>
+                                    روح لبرنامج من يطلبه المعلقون
                                 </p>
 
                             </div>
@@ -154,14 +164,20 @@
                         <p class=" fs-5 mt-2 ">
                             اعلانات مشابهة
                         </p>
-                        @foreach (Product item in ViewBag.ProductList)
+                        @foreach (ProductsWithImages prod in ViewBag.ProductList)
                         {
                             <div class="col-6  ">
                                 
-                                <a href="/Details?id=@item.Id" title="@item.NameAr" class="text-decoration-none">
+                                <a href="/Details?id=@prod.product.Id" title="@prod.product.NameAr" class="text-decoration-none">
                                     <div class="card">
-                                        <img src="../imgs/tomato.png" class=" img-fluid  mb-1 " alt="">
-                                        <h6 class="text-center ">@item.DetailsAr</h6>
+                                        @if(prod.image != null && prod.image.Count > 0){
+                                        <img src="~/uploads/@Html.DisplayFor(modelItem => prod.image.First().ImageUrl)" class="img-fluid  mb-1" alt="@prod.product.NameAr">
+                                
+                                        } else
+                                {
+                                        <img src="~/imgs/tomato.png" class="img-fluid  mb-1" alt="@prod.product.NameAr">
+                                }
+                                        <h6 class="text-center ">@prod.product.DetailsAr</h6>
                                     </div>
                                 </a>
                                 </div>

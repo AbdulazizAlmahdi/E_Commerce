@@ -1,44 +1,84 @@
-/* import fonts from fonts.css file */ 
+/* import fonts from fonts.css file */
 @import url(././fonts.css);
 
 :root {
     --green-color-dark: #031900;
     --green-color-light: #CEE9CB;
-    --green-color:#13A200;
+    --green-color: #13A200;
     --green-color2-d: #118C00;
-    --body-color:#F9F7F7;
+    --body-color: #F9F7F7;
     --red-color: #ff3150;
     --yellow-color: #ffc400;
     --section-color: #eff7fa;
-  }
-/*start body style*/
-body{
-  direction: rtl;
-  font-family: "NaderFont","Roboto",sans-serif;
-  background-color: var(--body-color);
-
 }
 /*start body style*/
-.divMain{
+body {
+    direction: rtl;
+    font-family: "NaderFont","Roboto",sans-serif;
     background-color: var(--body-color);
 }
-.persnalinfo{
+
+.impotant {
+    display: none;
+}
+/*start body style*/
+.divMain {
+    background-color: var(--body-color);
+}
+
+.persnalinfo {
     background-color: var(--green-color-light);
     border-radius: 1rem;
     color: var(--green-color);
 }
-.persnalinfo .imgDiv,
-.persnalinfo .left_p_Div{
+
+
+    /*
+.persnalinfo .containerImg{
+    display: flex;
+    justify-content: center;
+
+}
+*/
+
+    .persnalinfo .containerImg {
+        display: inline-block;
+        justify-content: center;
+    }
+
+.profileimage:hover {
+    cursor: pointer;
+}
+
+.persnalinfo .containerImg,
+.persnalinfo .left_p_Div {
     background-color: white;
     border-radius: 1rem;
 }
-.persnalinfo button{
+/*
+@media(max-width: 766px ){
+    .persnalinfo .containerImg{
+        display: flex;
+        justify-content: center;
+        background-color: var(--green-color-light);
+    
+    }
+}
+
+*/
+
+
+
+
+
+.persnalinfo button {
     background-color: var(--green-color);
     color: white;
     border: solid var(--green-color2-d) 3px;
     border-radius: 10px;
     font-weight: bold;
 }
+
 .navbarmenu button {
     background-color: white;
     color: var(--green-color);
@@ -46,59 +86,134 @@ body{
     border-radius: 10px;
     font-weight: bold;
 }
-.persnalinfo button:hover,
-.persnalinfo button:focus,
-.persnalinfo button:active,
-.navbarmenu button:hover,
-.navbarmenu button:focus{
-    background-color: var(--green-color2-d);
-    color: white;
-    
-}
+
+    .persnalinfo button:hover,
+    .persnalinfo button:focus,
+    .persnalinfo button:active,
+    .navbarmenu button:hover,
+    .navbarmenu button:active {
+        background-color: var(--green-color2-d);
+        color: white;
+    }
+
+
 
 /* state style model*/
-.modal .modal-content{
+.modal .modal-content {
     border-radius: 1rem 1rem 0rem 0rem;
 }
-.modal .modal-header{
+
+.modal .modal-header {
     background-color: var(--green-color);
     border-radius: 1rem 1rem 0rem 0rem;
     color: white;
 }
-.modal .modal-header svg{
-    color:var(--green-color);
 
-}
+    .modal .modal-header svg {
+        color: var(--green-color);
+    }
 
 
 
-.navbarmenu{
+.navbarmenu {
     background-color: white;
     border-radius: 1rem;
+}
+/*
+dataTables_wrapper no-footer
+dataTables_length  
+dataTables_filter
+dataTables_info
+.navbarmenu .btnActive:active,
+.navbarmenu .btnActive:focus{
+    background-color: var(--green-color2-d);
+    color: white;
 
 }
-.divTable{
-    
-    overflow-x: auto;
-    overflow-y: auto;
-    height: fit-content;
-    max-height: 28rem;        /*max-height: 66.4vh;*/
+
+
+*/
+.dataTables_length,
+.dataTables_filter {
+    margin-bottom: 20px;
 }
-.table{
+
+.dataTables_info,
+.dataTables_paginate {
+    margin-top: 20px;
+}
+
+div#tableStop_wrapper,
+div#tableOrder_wrapper,
+div#tableSold_wrapper,
+div#tableActive_wrapper,
+div#tablePurchased_wrapper {
+    padding: 20px;
+    background-color: var(--green-color-light);
+    border-radius: 1rem;
+}
+
+.table {
     background-color: white;
     border-radius: 1rem 1rem 0rem 0rem;
 }
-.table thead{
+ .table thead {
+        background-color: var(--green-color);
+        color: white;
+    }
+
+.table caption {
     background-color: var(--green-color);
+    font-weight: bold;
     color: white;
-    
+    border-radius: 0rem 0rem 1rem 1rem;
 }
-.divTable table{
-    display: none;
-}
-.table thead .thStart{
+
+
+.table thead .thStart {
     border-radius: 0rem 1rem 0rem 0rem;
 }
-.table thead .thEnd{
+
+.table thead .thEnd {
     border-radius: 1rem 0rem 0rem 0rem;
+}
+
+.table tr td {
+    color: var(--green-color);
+}
+
+ .table tr td a {
+        color: var(--green-color);
+}
+
+        .table tr td a:hover,
+        .table tr td a:focus {
+            color: var(--green-color);
+        }
+
+
+
+
+.dropdown .dropdown-item:hover {
+    background-color: var(--green-color);
+    color: white;
+}
+
+.dropdown .dropdown-item:active {
+    background-color: white;
+    color: var(--green-color);
+}
+
+.dropdown .delete:hover {
+    background-color: red;
+    color: white;
+}
+#tableStop,
+#tableOrder,
+#tableSold,
+#tablePurchased{
+    display:none;
+}
+#tableActive, #basketTable {
+    display: table;
 }

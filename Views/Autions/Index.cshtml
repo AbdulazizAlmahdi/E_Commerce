@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<E_commerce.Models.Custome.AutionsProduct>
     <title> المزادات</title>
-    <link rel="stylesheet" href="../css/Aution.css">
+
 
 <div class="container-fluid Aution">
     <div class="DivAution container">
@@ -10,12 +10,12 @@
             </h5>
 
         </div>
-        <div class="row">
+        <div class="row mypaginationindex" style="display: none;">
 
             @foreach (var item in Model)
             {
 
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="col-sm-6 col-md-4  col-lg-4 data">
                     <a href="/DetailsAution?id=@item.Auctions.Id" class="text-decoration-none">
                         <div class="card">
                             <img src="../imgs/tomato.png" class=" img-fluid card-img-top" alt="tomato">
@@ -67,6 +67,36 @@
 
             }
         </div>
+        <nav aria-label="pages   " class=" pages mt-4 ">
+            <ul class="pagination ">
+                <!--<li class="page-item previous-page  disable ">
+              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item current-page">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item dots">
+              <a class="page-link " href="#">...</a>
+            </li>
+            <li class="page-item  current-page active" aria-current="page">
+              <a class="page-link" href="#">4</a>
+            </li>
+            <li class="page-item current-page">
+              <a class="page-link" href="#">5</a>
+            </li>
+            <li class="page-item dots">
+              <a class="page-link " href="#">...</a>
+            </li>
+            <li class="page-item current-page">
+              <a class="page-link" href="#">10</a>
+            </li>
+            <li class="page-item next-page">
+              <a class="page-link" href="#">Next</a>
+            </li>-->
+            </ul>
+        </nav>
+
+
     </div>
 </div>
 

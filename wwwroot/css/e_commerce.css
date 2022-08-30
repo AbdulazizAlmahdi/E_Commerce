@@ -24,6 +24,7 @@ body{
 .navbar {
   background-color: var(--green-color-dark);
   font-weight: bold;
+  
 }
 .navbar .navbar-nav .nav-link {
   color: white;
@@ -41,7 +42,7 @@ body{
   color: var(--green-color);
 }
 .navbar ul svg{
-  margin-left: 1em;
+  margin-left: 3px;
 }
 .navbar .navbar-toggler {
   color: white;
@@ -124,9 +125,9 @@ body{
   /* End Navbar1 */
 
 .home{
-
+  background-color: var(--body-color);
   height: auto;
-  border: var(--green-color-dark) 2px solid;
+ 
 }
 .hometab{
   display: inline-block;
@@ -183,9 +184,12 @@ margin-top: 4px;
 
 
 /* satrt carousel slid */
-.carousel .active{
+.carousel .carousel-indicators button {
 background-color: var(--green-color);
+
 }
+
+
 .carousel .carousel-control-prev svg,
 .carousel .carousel-control-next svg{
   width: 30px;
@@ -225,15 +229,16 @@ background-color: var(--green-color);
   border-radius: 10px;
   
 }
-.card .price {
-    background-color: var(--green-color-light);
-    color: var(--green-color);
+
+.card .price{
+  background-color: #BCBCBC;
+  color: var(--green-color);
 }
-.card {
+.data a .card {
   color:var(--green-color-dark);
   border-radius: 1em ;
   border-style:  double;
-  border: white double 4px;
+  border: white double 6px;
 }
 .card img{
   border-radius: 1em 1em  0em 0em;
@@ -248,6 +253,51 @@ background-color: var(--green-color);
   color: var(--green-color);
 
 }
+/*start style paginaton*/
+.home .pages{
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+}
+.previous-page  a,
+.next-page a{
+  background-color: var(--green-color);
+  color: white;
+}
+.home .pages .active a{
+  background-color: var(--green-color2-d);
+  color: white;
+}
+.home .pages .disable a{
+  background-color: var(--green-color-light);
+  color: var(--green-color-dark);
+}
+.previous-page  a:hover,
+.previous-page  a:focus,
+.next-page a:hover,
+.next-page a:focus{
+  background-color: var(--green-color2-d);
+  color: white;
+ 
+}
+
+.current-page a,
+.dots a{
+  background-color: var(--green-color-light);
+  color: var(--green-color-dark);
+}
+.current-page a:hover,
+.dots a:hover{
+  background-color: white;
+  color: var(--green-color-dark);
+}
+
+
+
+/*end style paginaton*/
+
+
+
 
 
   /* Start Footer */
@@ -296,6 +346,9 @@ background-color: var(--green-color);
   height: 25px;
   color: white;
 }
+.footer .container{
+  border-bottom: 2px solid var(--green-color-dark);
+}
 
 .contact .nav .nav-item .nav-link.active,
 .contact .nav  .nav-item .nav-link:focus,
@@ -309,10 +362,6 @@ background-color: var(--green-color);
   color: white;
   font-family: "NaderFont";
   font-weight: bold;
-}
-
-.footer .container{
-    border-bottom:solid 2px var(--green-color-dark);
 }
 /* End Footer */
   

@@ -21,7 +21,6 @@ namespace E_commerce.Controllers
         }
        
 
-
         [HttpPost]
         public IActionResult Index([FromForm] string name, [FromForm] string address, [FromForm] string password,[FromForm] string password2 ,[FromForm] string phone)
         {
@@ -60,21 +59,6 @@ namespace E_commerce.Controllers
                 return View();
             }
 
-            if (password.Length < 6)
-            {
-                ViewBag.Error = "عزيزي المستخدم يجب أن تكون كلمة المرور أكثر من خمسة أرقام";
-
-                return View();
-            }
-
-            if (password != password2)
-            {
-                ViewBag.Error = "كلمة المرور ليست متساوية";
-
-                return View();
-            }
-
-
             /** ********************* **/
             Phone phoneRow = db.Phones.FirstOrDefault(ph => ph.Number == phone);
 
@@ -90,8 +74,6 @@ namespace E_commerce.Controllers
             {
                 Number = phone,
                 CreatedAt = DateTime.Now,
-                
-                
             });
             db.SaveChanges();
 
@@ -103,7 +85,19 @@ namespace E_commerce.Controllers
                 return View();
             }
 
-            
+            if (password == null)
+            {
+                password = "123456";
+                password2 = password;
+            }
+            else if (password != password2)
+            {
+                ViewBag.Error = "كلمةالمرور غير متساويه";
+                return View();
+            }
+            name = name ?? ("User " + phone);
+            address = address ?? "اليمن";
+
             db.Users.Add(new User()
             {
                 Phone = phoneRow,
@@ -111,8 +105,7 @@ namespace E_commerce.Controllers
                 Address = address,
                 Password = password,
                 CreatedAt = DateTime.Now,
-                PlaceId = 3,
-                Status = "active"
+                UsersId = 1
             });
 
             db.SaveChanges();
@@ -121,7 +114,5 @@ namespace E_commerce.Controllers
 
             return View();
         }
-
-
     }
 }
