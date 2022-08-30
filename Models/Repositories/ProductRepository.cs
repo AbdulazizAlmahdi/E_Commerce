@@ -23,12 +23,12 @@ namespace E_commerce.Models.Repositories
             context.Add(entity);
             context.SaveChanges();
         }
-        // public void Delete(int id)
-        // {
-        //     var Product = Find(id);
-        //   context.Products.Remove(Product);
-        //    context.SaveChanges();
-        // }
+        public void Delete(int id)
+        {
+            var Product = Find(id);
+          context.Products.Remove(Product);
+           context.SaveChanges();
+        }
 
         void IRepository<Product>.Delete(int ID)
         {
@@ -36,12 +36,6 @@ namespace E_commerce.Models.Repositories
             context.SaveChanges();
 
         }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Product Find(int ID)
         {
             return context.Products.Include(u => u.Category).Include(u => u.ImagesProducts).FirstOrDefault(a=>a.Id==ID);

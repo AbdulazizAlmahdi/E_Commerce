@@ -195,7 +195,7 @@ namespace E_commerce.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, string x)
+        public ActionResult Delete(int id)
         {
             try
             {
