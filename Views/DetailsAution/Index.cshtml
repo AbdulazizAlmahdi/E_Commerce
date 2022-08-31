@@ -207,6 +207,16 @@
         <div class="">
             <form class="needs-validation mt-5 mx-1" action="./DetailsAution?id=@ViewBag.autionId" novalidate method="post">
                 <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5" id="validationTextarea" placeholder=" اكتب تعليقك هنا" name="comment" required></textarea>
+                <div class=" my-2   Evaluationaution p-3 ">
+                    <p class="">التقييم :</p>
+                    <li class=" bg-info d-none" value=""></li>
+                    <i class="fa fa-star fa-lg " aria-hidden="true" id="st1"></i>
+                    <i class="fa fa-star fa-lg" aria-hidden="true" id="st2"></i>
+                    <i class="fa fa-star fa-lg" aria-hidden="true" id="st3"></i>
+                    <i class="fa fa-star fa-lg" aria-hidden="true" id="st4"></i>
+                    <i class="fa fa-star fa-lg" aria-hidden="true" id="st5"></i>
+                </div>
+
                 <button class=" btAddComment btn  fs-5 me-3  px-lg-5 px-md-3   py-0  " type="submit"> ارسال</button>
             </form>
         </div>

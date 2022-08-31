@@ -21,104 +21,132 @@
                                 </div>
                                 
                                 <div class="modal-body  mt-4">
-                                    <div class="TheProfileImgInDB py-2 d-flex justify-content-center">
-                                        <img src="~/uploads/@ViewBag.userImage" class=" img-fluid"
-                                             style="width: 40%;"
-                                             alt="profileimage" />
+                                    @*<div class="TheProfileImgInDB py-2 d-flex justify-content-center">
+            <img src="~/uploads/@ViewBag.userImage" class=" img-fluid"
+                 style="width: 40%;"
+                 alt="profileimage" />
 
+        </div>*@
+
+                                    <!--<div class=" addimg  d-flex justify-content-center">-->
+                                    <!-- Image Preview on choose file in BLOB url format -->
+                                    <!--<input name="imageprofile" id="imageprofile" class="d-none" type="file">
+        <label for="imageprofile">
+            <img id="previewprofile" class="img-fluid  " src="~/uploads/@ViewBag.userImage"  alt="">
+
+        </label>
+
+
+
+    </div>
+
+    <div class=" editArea  p-3" id="img-upload-panel">
+        <div class="row ">
+
+            <form action="/Userinfo" method="post" enctype="multipart/form-data">
+
+                <div class="imagebutton gap-2 mb-3  d-flex justify-content-center ">
+                    <div id="status " class=""></div>
+                    <input id="clooseimg"
+                           type="file"
+                           name="image2"
+                           class="img-upload-input"
+                           editor="#img-upload-panel"
+                           target="#image"
+                           status="#status"
+                           passurl=""
+                           pshape="square"
+                           w=300 h=300
+                           size="viewport"
+                           style="display:none; visibility: none; " />
+
+                    <input type="file"
+                           name="image" />-->
+                                    <!-- <img src="" alt="" id="image" style="width: 30%;"/> -->
+                                    <!--<label for="clooseimg" class=" btn   choose-img ">
+                        <i class="fa-solid fa-pen"></i>
+                    </label>
+                    <button type="button" class="btn  replay img-remove-btn">
+                        <i class="fa-solid fa-reply"></i>
+                    </button>
+                    <button type="submit" name="save" class="btn save-edit-img  img-upload-btn">
+                        <i class="fa-solid fa-save "></i>
+                    </button>
+                    <button type="button" class=" btn delete-img  delete-img">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+
+            </form>
+
+        </div>
+        <div class="img-edit-container  m-0 ">
+
+        </div>
+    </div>
+    <hr style="height:  5px;">
+    <div class="row control px-5  ">
+        <div class="col-6 p-1">
+            <h6>السطوع :</h6>
+            <input type="range" class="form-control-range filter" min=0 max=200 value=100 step=1 filter="brightness" />
+            <h6> اسود وابيض:</h6>
+            <input type="range" class="form-control-range filter" min=0 max=200 value=100 step=1 filter="threshold" />
+
+        </div>
+
+        <div class="col-6 p-1">
+            <h6> مؤثرات اضافية :</h6>
+
+            <button type="button" class="btn btn-dark filter" filter="grayscale">تدرج الرمادي</button>
+            <button type="button" class="btn btn-dark filter" filter="sharpen">حاداً</button>
+            <button type="button" class="btn btn-dark filter" filter="blur">ضبابية</button>
+
+
+        </div>
+        <div class="col-6 p-1">
+            <h6>التدوير :</h6>
+
+            <button type="button" class="btn btn-dark img-rotate-left">
+                <i class="fa-solid fa-rotate-left"></i>
+            </button>
+
+            <button type="button" class="btn btn-dark img-rotate-right">
+                <i class="fa-solid fa-rotate-right"></i>
+            </button>
+
+
+        </div>
+        <div class="col-6 p-1">
+            <h6>الاعدادات الاولية :</h6>
+            <button type="button" class="btn  img-clear-filter reset-filter">اعادة الوضع الطبيعي</button>
+        </div>
+
+
+
+
+    </div>-->
+
+
+
+
+
+                                    <div class="controlbtn  d-flex justify-content-center gap-2 my-2">
+                                        <label for="imageprofile" class=" btn   replay text-white ">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </label>
+
+                                        <button type="button" class="btn save-edit-img  ">
+                                            <i class="fa-solid fa-save "></i>
+                                        </button>
+                                        <button type="button" class=" btn   delete-img">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
                                     </div>
 
-                                    <div class=" editArea  p-3" id="img-upload-panel">
-                                        <div class="row ">
-
-                                            <form action="/Userinfo" method="post" enctype="multipart/form-data">
-
-                                            <div class="imagebutton gap-2 mb-3  d-flex justify-content-center ">
-                                                <div id="status " class=""></div>
-                                                <input id="clooseimg"
-                                                       type="file"
-                                                       name="image2"
-                                                       class="img-upload-input"
-                                                       editor="#img-upload-panel"
-                                                       target="#image"
-                                                       status="#status"
-                                                       passurl=""
-                                                       pshape="square"
-                                                       w=300 h=300
-                                                       size="viewport"
-                                                       style="display:none; visibility: none; " />
-
-                                                      <input 
-                                                       type="file"
-                                                       name="image"
-                                                        />
-
-                                                <!-- <img src="" alt="" id="image" style="width: 30%;"/> -->
-                                                <label for="clooseimg" class=" btn   choose-img ">
-                                                    <i class="fa-solid fa-pen"></i>
-                                                </label>
-                                                <button type="button" class="btn  replay img-remove-btn">
-                                                    <i class="fa-solid fa-reply"></i>
-                                                </button>
-                                                <button type="submit" name="save" class="btn save-edit-img  img-upload-btn">
-                                                    <i class="fa-solid fa-save "></i>
-                                                </button>
-                                                <button type="button" class=" btn delete-img  delete-img">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-
-                                            </form>
-                                            
-                                        </div>
-                                            <div class="img-edit-container  m-0 ">
-
-                                            </div>
-                                        </div>
-                                        <hr style="height:  5px;">
-                                        <div class="row control px-5  ">
-                                            <div class="col-6 p-1">
-                                                <h6>السطوع :</h6>
-                                                <input type="range" class="form-control-range filter" min=0 max=200 value=100 step=1 filter="brightness" />
-                                                <h6> اسود وابيض:</h6>
-                                                <input type="range" class="form-control-range filter" min=0 max=200 value=100 step=1 filter="threshold" />
-
-                                            </div>
-
-                                            <div class="col-6 p-1">
-                                                <h6> مؤثرات اضافية :</h6>
-
-                                                <button type="button" class="btn btn-dark filter" filter="grayscale">تدرج الرمادي</button>
-                                                <button type="button" class="btn btn-dark filter" filter="sharpen">حاداً</button>
-                                                <button type="button" class="btn btn-dark filter" filter="blur">ضبابية</button>
-
-
-                                            </div>
-                                            <div class="col-6 p-1">
-                                                <h6>التدوير :</h6>
-
-                                                <button type="button" class="btn btn-dark img-rotate-left">
-                                                    <i class="fa-solid fa-rotate-left"></i>
-                                                </button>
-
-                                                <button type="button" class="btn btn-dark img-rotate-right">
-                                                    <i class="fa-solid fa-rotate-right"></i>
-                                                </button>
-
-
-                                            </div>
-                                            <div class="col-6 p-1">
-                                                <h6>الاعدادات الاولية :</h6>
-                                                <button type="button" class="btn  img-clear-filter reset-filter">اعادة الوضع الطبيعي</button>
-                                            </div>
 
 
 
 
-                                        </div>
-
-
-
-                                    </div>
+                                </div>
 
 
 
