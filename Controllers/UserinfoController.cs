@@ -1,4 +1,5 @@
 ﻿using E_commerce.Models;
+using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,7 @@ namespace E_commerce.Controllers
             ViewBag.phones = HttpContext.Session.GetString("phoneS");
             ViewBag.userAddress = HttpContext.Session.GetString("userAddress");
             ViewBag.userImage = HttpContext.Session.GetString("userImage");
+            ViewBag.cartCount = Cart.getInstance().Count;
         }    
         public IActionResult Index()
         {

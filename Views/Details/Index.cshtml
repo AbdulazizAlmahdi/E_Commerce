@@ -1,198 +1,204 @@
 ﻿@using E_commerce.Models.Custome
 
-    <title>تفاصيل المنتج</title>
+<title>تفاصيل المنتج</title>
 
-    <div class="details container  mt-4  ">
-        <div class="row  ">
+<div class="details container  mt-4  ">
+    <div class="row  ">
 
-            @{
+        @{
+            ProductsWithImages prodJoinImage = ViewBag.Product;
+            string user = ViewBag.userS;
+        }
+        @if (prodJoinImage != null)
+        {
+            <div class="col-lg-9 col-md-9 col-sm-12 main  ">
+                <div class="row ">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class=" col divinfo   m-3  ">
+                                <div class="row">
+                                    <div class="col-8   ">
+                                        <div class="row">
+                                            <h5 class="fs-3 pt-3"><span>@prodJoinImage.product.NameAr</span></h5>
+                                            <div class="col-6">
 
-                ProductsWithImages prodJoinImage = ViewBag.Product;
-
-            }
-            @if (prodJoinImage != null)
-            {
-                <div class="col-lg-9 col-md-9 col-sm-12 main  ">
-                    <div class="row ">
-                        <div class="col-12">
-                            <div class="row">
-                                <div class=" col divinfo   m-3  ">
-                                    <div class="row">
-                                        <div class="col-8   ">
-                                            <div class="row">
-                                                <h5 class="fs-3 pt-3"><span>@prodJoinImage.product.NameAr</span></h5>
-                                                <div class="col-6">
-
-                                                    <div class="">
-                                                        <p><i class="fa-solid fa-square-check me-2"></i>الاتحاد التعاوني الزراعي</p>
-                                                    </div>
-
-                                                    <div class="">
-                                                        <p><i class="fa-solid fa-location-dot me-2"></i>@prodJoinImage.product.Address</p>
-                                                    </div>
-                                                    <div class=" star">
-                                                        <i class="fa-solid fa-star active"></i>
-                                                        <i class="fa-solid fa-star active"></i>
-                                                        <i class="fa-solid fa-star active"></i>
-                                                        <i class="fa-solid fa-star"></i>
-
-                                                    </div>
-
-
+                                                <div class="">
+                                                    <p><i class="fa-solid fa-square-check me-2"></i>الاتحاد التعاوني الزراعي</p>
                                                 </div>
-                                                <div class="col-6">
 
-                                                    <div class="">
-                                                        <p> <span class="me-2">@prodJoinImage.product.Quantity</span>@prodJoinImage.product.Unit</p>
-                                                    </div>
-                                                    <div class="">
-                                                        <p><i class="fa-solid fa-eye me-2"></i><span>@prodJoinImage.product.Views</span></p>
-                                                    </div>
-                                                    <div class="">
-                                                        <p>@prodJoinImage.product.Duration</p>
-                                                    </div>
+                                                <div class="">
+                                                    <p><i class="fa-solid fa-location-dot me-2"></i>@prodJoinImage.product.Address</p>
                                                 </div>
 
                                             </div>
-                                        </div>
-                                        <div class="col divinfoprice  m-2   ">
+                                            <div class="col-6">
 
-                                            <div class="row justify-content-between ">
-                                                <div class="col">
-                                                    <h5 class="fs-1  pt-5 pb-md-2 pb-lg-3"> <span>@prodJoinImage.product.Price</span>  </h5>
+                                                <div class="">
+                                                    <p> <span class="me-2">@prodJoinImage.product.Quantity</span>@prodJoinImage.product.Unit</p>
+                                                </div>
+                                                <div class="">
+                                                    <p><i class="fa-solid fa-eye me-2"></i><span>@prodJoinImage.product.Views</span></p>
+                                                </div>
+                                                <div class="">
+                                                    <p>@prodJoinImage.product.Duration</p>
                                                 </div>
                                             </div>
-                                            <div class="row justify-content-between ">
-                                                <div class="col">
-                                                    <p class="">خصم % <span>@prodJoinImage.product.Discount</span></p>
-                                                </div>
-                                                <div class="col">
-                                                    <p class=""><span>ريال</span></p>
-                                                </div>
-
-                                            </div>
-
 
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12   m-3 ">
-                                    <div class="row">
-                                        <div class="col ">
-                                            <p>
-                                                <span>
-                                                    @prodJoinImage.product.DetailsAr
+                                    <div class="col divinfoprice  m-2   ">
 
-                                                </span>
-                                            </p>
+                                        <div class="row justify-content-between ">
+                                            <div class="col">
+                                                <h5 class="fs-1  pt-5 pb-md-2 pb-lg-3"> <span>@prodJoinImage.product.Price</span>  </h5>
+                                            </div>
                                         </div>
-                                        <div class="col clearfix">
-                                            <button id="liveToastBtn" type="button" class=" btn float-end btAddToBasket me-3  px-lg-5 px-md-3   py-0 ">
+                                        <div class="row justify-content-between ">
+                                            <div class="col">
+                                                <p class="">خصم % <span>@prodJoinImage.product.Discount</span></p>
+                                            </div>
+                                            <div class="col">
+                                                <p class=""><span>ريال</span></p>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12   m-3 ">
+                                <div class="row">
+                                    <div class="col ">
+                                        <p>
+                                            <span>
+                                                @prodJoinImage.product.DetailsAr
+
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col clearfix">
+                                        <form action="/Details/AddToCart" method="post">
+                                            <button id="liveToastBtn" type="submit" class=" btn float-end btAddToBasket me-3  px-lg-5 px-md-3   py-0 ">
                                                 <h5 class="pt-2 ">
                                                     اضافة الى السلة
                                                 </h5>
+
                                             </button>
-                                            <div class="successfulMSG position-fixed  p-3">
-                                                <div id="liveToast" class="toast " style="border-radius: 1rem ;" role="alert" aria-live="assertive" aria-atomic="true">
 
-                                                    <div class="toast-body text-center pt-3" style="border-radius:1rem;">
-                                                        <p class="fs-5 ">
-                                                            تم اضافة المنتج الى السلة
-                                                            <button type="button" class="    float-end  rounded-circle" data-bs-dismiss="toast" aria-label="Close">
-                                                                <i class="fa-solid fa-close  fs-4"></i>
-                                                            </button>
+                                            <input type="hidden" value="@prodJoinImage.product.Id" name="id" />
+                                            <input type="hidden" value="@prodJoinImage.product.NameAr" name="name" />
+                                            <input type="hidden" value="@prodJoinImage.product.Price" name="price" />
+                                            @if (@prodJoinImage.image != null && @prodJoinImage.image.Count > 0)
+                                            {
+                                                <input type="hidden" value="@prodJoinImage.image.First().ImageUrl" name="url" />
+                                            }
+                                        </form>
+                                        <div class="successfulMSG position-fixed  p-3">
+                                            <div id="liveToast" class="toast " style="border-radius: 1rem ;" role="alert" aria-live="assertive" aria-atomic="true">
 
-                                                        </p>
+                                                <div class="toast-body text-center pt-3" style="border-radius:1rem;">
+                                                    <p class="fs-5 ">
+                                                        تم اضافة المنتج الى السلة
+                                                        <button type="button" class="    float-end  rounded-circle" data-bs-dismiss="toast" aria-label="Close">
+                                                            <i class="fa-solid fa-close  fs-4"></i>
+                                                        </button>
 
-                                                    </div>
+                                                    </p>
+
                                                 </div>
                                             </div>
-
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
-                    @foreach(var images in prodJoinImage.image)
-                    {
-                       <img src="~/uploads/@Html.DisplayFor(modelItem => images.ImageUrl)" class="img-fluid mb-3" alt="@prodJoinImage.product.NameAr">
-                    }
-                        
-                        
-                        <div class="col m-2">
 
-                            <div class=" comment p-3 ">
-                                <p><i class="fa-solid fa-user me-2"></i> محمد علي </p>
-                                <hr>
-                                <p>
-                                    ممكن فيديو عن المنتج ؟
-                                </p>
-                                <p>
-                                    لا
-                                </p>
-                                <p>
-                                    لو سمجت
-                                </p>
-                                <p>
-                                    روح لبرنامج من يطلبه المعلقون
-                                </p>
+                    </div>
+                    @foreach (var images in prodJoinImage.image)
+                    {
+                        <img src="~/uploads/@Html.DisplayFor(modelItem => images.ImageUrl)" class="img-fluid mb-3" alt="@prodJoinImage.product.NameAr">
+                    }
+
+
+                    <div class="col m-2">
+
+                        @{
+                            List<UsersWithComments> comments = ViewBag.comments;
+                        }
+
+                        @if (comments != null && comments.Count > 0)
+                        {
+                            <div class="comment p-3 ">
+                                @foreach (var com in comments)
+                                {
+                                    <p><i class="fa-solid fa-user me-2"></i> @com.user.Name </p>
+                                    <hr>
+                                    <p>
+                                        @com.comment.Text
+                                    </p>
+                                }
 
                             </div>
+                        }
+                        @if (user != null)
+                        {
                             <div class="">
-                                <form class="  needs-validation  mt-5  mx-1 " novalidate>
-                                    <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " id="validationTextarea" placeholder=" اكتب تعليقك هنا" required></textarea>
-                                    <div class="valid-feedback">
-                                        Please enter a message in the textarea.
-                                    </div>
+                                <form class="  needs-validation  mt-5  mx-1 " action="./Details/AddComments?id=@prodJoinImage.product.Id" novalidate method="post">
+                                    <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " id="validationTextarea" name="comment" placeholder=" اكتب تعليقك هنا" required></textarea>
                                     <button class=" btAddComment btn  fs-5 me-3  px-lg-5 px-md-3   py-0  " type="submit"> ارسال</button>
                                 </form>
                             </div>
-
-
-                        </div>
-                    </div>
-
-                </div>
-            }
-
-            <div class="col-lg-3 col-md-3 col-sm-12   ">
-
-                <div class="related p-3 mb-3">
-                    <div class="row">
-                        <p class=" fs-5 mt-2 ">
-                            اعلانات مشابهة
-                        </p>
-                        @foreach (ProductsWithImages prod in ViewBag.ProductList)
-                        {
-                            <div class="col-6  ">
-                                
-                                <a href="/Details?id=@prod.product.Id" title="@prod.product.NameAr" class="text-decoration-none">
-                                    <div class="card">
-                                        @if(prod.image != null && prod.image.Count > 0){
-                                        <img src="~/uploads/@Html.DisplayFor(modelItem => prod.image.First().ImageUrl)" class="img-fluid  mb-1" alt="@prod.product.NameAr">
-                                
-                                        } else
-                                {
-                                        <img src="~/imgs/tomato.png" class="img-fluid  mb-1" alt="@prod.product.NameAr">
-                                }
-                                        <h6 class="text-center ">@prod.product.DetailsAr</h6>
-                                    </div>
-                                </a>
-                                </div>
-                            
                         }
 
 
+
                     </div>
                 </div>
 
-
             </div>
-        
-        
+        }
+
+        <div class="col-lg-3 col-md-3 col-sm-12   ">
+
+            <div class="related p-3 mb-3">
+                <div class="row">
+                    <p class=" fs-5 mt-2 ">
+                        اعلانات مشابهة
+                    </p>
+                    @foreach (ProductsWithImages prod in ViewBag.ProductList)
+                    {
+                        <div class="col-6  ">
+
+                            <a href="/Details?id=@prod.product.Id" title="@prod.product.NameAr" class="text-decoration-none">
+                                <div class="card">
+                                    @if (prod.image != null && prod.image.Count > 0)
+                                    {
+                                        <img src="~/uploads/@Html.DisplayFor(modelItem => prod.image.First().ImageUrl)" class="img-fluid  mb-1" alt="@prod.product.NameAr">
+
+                                    }
+                                    else
+                                    {
+                                        <img src="~/imgs/tomato.png" class="img-fluid  mb-1" alt="@prod.product.NameAr">
+                                    }
+                                    <h6 class="text-center ">@prod.product.DetailsAr</h6>
+                                </div>
+                            </a>
+                        </div>
+
+                    }
+
+
+                </div>
+            </div>
+
+
         </div>
 
 
     </div>
+
+
+</div>

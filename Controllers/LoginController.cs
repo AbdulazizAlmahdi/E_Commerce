@@ -1,4 +1,5 @@
 ﻿using E_commerce.Models;
+using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,12 +18,14 @@ namespace E_commerce.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.cartCount = Cart.getInstance().Count;
             return View();
         }
 
         [HttpPost]
         public IActionResult Index([FromForm] string phone, [FromForm] string password)
         {
+            ViewBag.cartCount = Cart.getInstance().Count;
             ViewBag.PhoneOrg = phone;
 
             if (string.IsNullOrEmpty(phone?.Trim()))

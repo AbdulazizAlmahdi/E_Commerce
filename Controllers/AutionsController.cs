@@ -23,6 +23,7 @@ namespace E_commerce.Controllers
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
             ViewBag.userImage = HttpContext.Session.GetString("userImage");
+            ViewBag.cartCount = Cart.getInstance().Count;
 
             // var auctio = db.Auctions.ToList();
 
@@ -32,7 +33,7 @@ namespace E_commerce.Controllers
                 p => p.Id, // second table key
                 (a, p) => new { product = p, aution = a } // new data
                 )
-                .Where(ss => ss.aution.EndDate > DateTime.Now) // where condition
+                .Where(ss => ss.aution.EndDate >= DateTime.Now) // where condition
                 .ToList();// converto to list, so we can use it in for
 
             List<AutionsProduct> autonProducts = new List<AutionsProduct>();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using E_commerce.Models.Custome;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace E_commerce.Controllers
     {
         public IActionResult Index(string phone)
         {
+            ViewBag.cartCount = Cart.getInstance().Count;
             ViewBag.phone = phone;
 
             return View();

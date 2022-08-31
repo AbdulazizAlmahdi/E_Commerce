@@ -21,6 +21,7 @@ namespace E_commerce.Controllers
             ViewBag.userS = HttpContext.Session.GetString("userNameS");//Check Login
             ViewBag.PhoneOrg = HttpContext.Session.GetString("phoneS");
             ViewBag.userImage = HttpContext.Session.GetString("userImage");
+            ViewBag.cartCount = Cart.getInstance().Count;
         }
 
         public IActionResult Index()

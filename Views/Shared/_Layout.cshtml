@@ -76,14 +76,15 @@
                 </form>
 
                 <ul class="navbar-nav justify-content-center  p-3 gap-3">
-                    @if (ViewBag.userS == null || ViewBag.userS == "")
-                    {
-                        <li class="nav-item d-none ">
+                    <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/Basket">
                                 <i class="fa-solid fa-cart-shopping fa-lg  rounded-circle"></i>السلة
-                                <span class="badge  rounded-pill">4</span>
+                                <span class="badge  rounded-pill">@ViewBag.cartCount</span>
                             </a>
                         </li>
+                    @if (ViewBag.userS == null || ViewBag.userS == "")
+                    {
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="/Login">
                                 <i class="fa-solid fa-user fa-lg  rounded-circle "></i>
@@ -112,12 +113,7 @@
                     }
                     else
                     {
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/Basket">
-                                <i class="fa-solid fa-cart-shopping fa-lg  rounded-circle"></i>السلة
-                                <span class="badge  rounded-pill">4</span>
-                            </a>
-                        </li>
+                        
 
                         <li class="nav-item  btn-group myacount ">
                             <img src="~/uploads/@ViewBag.userImage" class="rounded-circle" style="width:35px ; height: 35px;" alt="myprofileimage">

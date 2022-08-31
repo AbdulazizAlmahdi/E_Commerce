@@ -1,4 +1,5 @@
 ﻿using E_commerce.Models;
+using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,7 @@ namespace E_commerce.Controllers
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
             ViewBag.userImage = HttpContext.Session.GetString("userImage");
+            ViewBag.cartCount = Cart.getInstance().Count;
 
             if (ViewBag.userS == null)
             {
@@ -45,6 +47,8 @@ namespace E_commerce.Controllers
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
             int? userId = HttpContext.Session.GetInt32("idS");
+            ViewBag.cartCount = Cart.getInstance().Count;
+
             if (ViewBag.userS == null)
             {
                 return Redirect("/home");

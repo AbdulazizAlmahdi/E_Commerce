@@ -68,6 +68,8 @@ namespace E_commerce.Controllers
 
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
             ViewBag.userImage = HttpContext.Session.GetString("userImage");
+            ViewBag.cartCount = Cart.getInstance().Count;
+
 
             List<Category> mainCat = db.Categories.Where(cat => cat.CategoryId == null).ToList();
             List<MainCategory> categories = new List<MainCategory>();

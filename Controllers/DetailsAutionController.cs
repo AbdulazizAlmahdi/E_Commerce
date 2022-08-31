@@ -20,6 +20,7 @@ namespace E_commerce.Controllers
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
             ViewBag.userImage = HttpContext.Session.GetString("userImage");
+            ViewBag.cartCount = Cart.getInstance().Count;
 
             if (id == null)
             {

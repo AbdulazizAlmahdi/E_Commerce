@@ -1,4 +1,5 @@
-﻿@model IEnumerable<E_commerce.Models.Product>
+﻿@using E_commerce.Models.Custome
+@model IEnumerable<E_commerce.Models.Product>
 <title>سلة المشتريات</title>
 
 
@@ -12,7 +13,7 @@
             <div class="col ">
                 <button type="button" class="float-start px-5 btnColor " disabled>
                     <p class=" fs-4 pt-2 mt-1 ">
-                        السلة/
+                        السلة
                         <i class="fa-solid fa-cart-shopping fa-lg  ms-2"></i>
                     </p>
                 </button>
@@ -95,89 +96,76 @@
                 </div>
             </div>
 
-
         </div>
+
+        @{
+            List<Cart> carts = ViewBag.cart;
+        }
+
         <div class="table-responsive py-3">
-            <table id="basketTable" class=" basketTable table fs-5" >
+            <table id="basketTable" class=" basketTable table fs-5">
                 <thead class="tableHead  ">
                     <tr>
-                        <th scope="col">المنتج</th>
+                        <th scope="col">الصوره</th>
                         <th scope="col">اسم المنتج</th>
-
-                        <th scope="col">السعر للوحدة</th>
-                        <th scope="col" class="text-right">
-                            <span id="amount">المقدار</span>
-                        </th>
+                        <th scope="col">السعر</th>
                         <th scope="col">الكمية</th>
+                        <th scope="col" class="text-right">
+                            <span id="amount">الاجمالي</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr id="productTr1">
-                        <td>
-                            <div class="productImg">
-                                <div class="imgPro">
-                                    <img src="../imgs/tomato.png" alt="">
+                    @foreach (Cart cart in carts)
+                    {
+                        <tr id="productTr1">
+                            <td>
+                                <div class="productImg">
+                                    <div class="imgPro">
+                                        <img src="../imgs/tomato.png" alt="">
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p>طماطم</p>
-                        </td>
+                            </td>
 
-                        <td>
-                            <input type="text" value="100" class="price form-control " disabled>
-                        </td>
-                        <td>
-                            <span id="amount" class="amount">0</span>
-                            ريال
+                            <td>
+                                <p>@cart.Name</p>
+                            </td>
 
-                        </td>
-                        <td>
-                            <div class="button-container fs-4 ">
-                                <button class="cartQtyPlus " type="button" value="+"> + </button>
-                                <input type="text" name="qty" min="0" class="qty form-control ">
-                                <button class="cartQtyMinus" type="button" value="-">- </button>
-                                <button id="btnDelete1" class=" btnDelete   ms-5 " type="button">
-                                    <i class="fa-solid fa-close p-1 fs-4 "></i>
-                                </button>
-                            </div>
-                        </td>
+                            <td>
+                                <input type="text" value="@cart.Price" class="price form-control " disabled>
+                            </td>
 
+                            <td>
+                                <div class="button-container fs-4 ">
+                                    <form action="/Basket/Increment" method="post">
+                                        <button class="cartQtyPlus " type="submit"> + </button>
+                                        <input type="hidden" name="id" value="@cart.Id" />
+                                    </form>
+                                    
+                                    <input type="text" name="qty" min="0" class="qty form-control" value="@cart.Quantity">
+                                    
+                                    <form action="/Basket/Decrement" method="post">
+                                        <button class="cartQtyMinus" type="submit" value="-">- </button>
+                                        <input type="hidden" name="id" value="@cart.Id" />
+                                    </form>
+                                    
+                                    <form action="/Basket/Remove" method="post">
+                                        <button id="btnDelete1" class="btnDelete ms-5 " type="submit">
+                                            <i class="fa-solid fa-close p-1 fs-4 "></i>
+                                        </button>
+                                        <input type="hidden" name="id" value="@cart.Id" />
+                                    </form>
 
-                    </tr>
-                    <tr id="productTr2">
-                        <td>
-                            <div class="productImg">
-                                <div class="imgPro">
-                                    <img src="../imgs/tomato.png" alt="">
                                 </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p>طماطم</p>
-                        </td>
+                            </td>
 
-                        <td>
-                            <input type="text" value="100" class="price form-control " disabled>
-                        </td>
-                        <td>
-                            <span id="amount" class="amount">0</span>
-                            ريال
+                            <td>
+                                <span id="amount" class="amount">@(cart.Quantity * cart.Price)</span>
+                                ريال
+                            </td>
+                        </tr>
+                    }
 
-                        </td>
-                        <td>
-                            <div class="button-container fs-4 ">
-                                <button class="cartQtyPlus " type="button" value="+"> + </button>
-                                <input type="text" name="qty" min="0" class="qty form-control ">
-                                <button class="cartQtyMinus" type="button" value="-">- </button>
-                                <button id="btnDelete2" class=" btnDelete   ms-5 " type="button">
-                                    <i class="fa-solid fa-close p-1 fs-4 "></i>
-                                </button>
-                            </div>
-                        </td>
-
-
-                    </tr>
 
                 </tbody>
                 <tfoot>
@@ -186,7 +174,7 @@
                         </td>
                         <td align="right">
                             <strong>
-                                الاجمالي= <span id="total" class="total"> 0</span>ريال
+                                الاجمالي= <span id="total" class="total">@carts.Sum(c => (c.Price*c.Quantity))</span>ريال
 
                             </strong>
                         </td>

@@ -1,4 +1,5 @@
 ﻿using E_commerce.Models;
+using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,6 +20,7 @@ namespace E_commerce.Controllers
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
             ViewBag.userImage = HttpContext.Session.GetString("userImage");
+            ViewBag.cartCount = Cart.getInstance().Count;
 
             if (ViewBag.userS == null)
             {
@@ -32,6 +34,7 @@ namespace E_commerce.Controllers
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
             ViewBag.userImage = HttpContext.Session.GetString("userImage");
+            ViewBag.cartCount = Cart.getInstance().Count;
 
             if (ViewBag.userS == null)
             {
