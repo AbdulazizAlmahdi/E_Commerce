@@ -1,89 +1,87 @@
 :root {
     --green-color-dark: #031900;
     --green-color-light: #CEE9CB;
-    --green-color:#13A200;
+    --green-color: #13A200;
     --green-color2-d: #118C00;
-    --body-color:#F9F7F7;
+    --body-color: #F9F7F7;
     --red-color: #ff3150;
     --yellow-color: #ffc400;
     --section-color: #eff7fa;
-  }
-.modal .modal-body .editArea{
-  background-color: var(--green-color-light);
-  border-radius: 1rem;
- 
-  
-  
-}
-.modal .img-edit-container{
-  background-color: white;
-  
 }
 
- .modal .control button{
-   background-color: white;
-   color: var(--green-color2-d);
-   border: 2px solid var(--green-color2-d);
- }
- .modal .control button:hover,
- .modal .control button:focus{
+.modal .modal-body .editArea {
+    background-color: var(--green-color-light);
+    border-radius: 1rem;
+}
 
-  background-color:var(--green-color2-d);
-  color:white;
- }
- 
+.modal .img-edit-container {
+    background-color: white;
+}
 
- .modal .control .reset-filter{
+.modal .control button {
+    background-color: white;
+    color: var(--green-color2-d);
+    border: 2px solid var(--green-color2-d);
+}
+
+    .modal .control button:hover,
+    .modal .control button:focus {
+        background-color: var(--green-color2-d);
+        color: white;
+    }
+
+
+.modal .control .reset-filter {
     color: white;
-    background-color:  #ffc107;
-  }
-  .modal  .control.reset-filter:hover{
-    color: #fff;
-    background: var(--green-color2-d);
-  }
-  .modal .choose-img{
+    background-color: #ffc107;
+}
+
+    .modal .control.reset-filter:hover {
+        color: #fff;
+        background: var(--green-color2-d);
+    }
+
+.modal .choose-img {
     color: white;
     background: var(--green-color);
     border: 0px;
     border-radius: 10px
-  
-  }
-  .modal .choose-img:active,
-  .modal .choose-img:focus,
-  .modal .choose-img:hover{
-    background: var(--green-color2-d);
-    color: white;
-  
-  }
-  .modal .replay,
-  .modal .replay:active,
-  .modal .replay:focus {
+}
+
+    .modal .choose-img:active,
+    .modal .choose-img:focus,
+    .modal .choose-img:hover {
+        background: var(--green-color2-d);
+        color: white;
+    }
+
+.modal .replay,
+.modal .replay:active,
+.modal .replay:focus {
     background: #28a745;
     border: 0px;
-    
-  }
-  .modal .save-edit-img,
-  .modal .save-edit-img:active,
-  .modal .save-edit-img:focus{
-      border: 0px;
-      background-color: #007bff;
+}
 
-  }
-  .modal .delete-img ,
-  .modal .delete-img:active,
-  .modal .delete-img:focus{
-      border: 0px;
-      background-color: #dc3545;
+.modal .save-edit-img,
+.modal .save-edit-img:active,
+.modal .save-edit-img:focus {
+    border: 0px;
+    background-color: #007bff;
+}
 
-  }
+.modal .delete-img,
+.modal .delete-img:active,
+.modal .delete-img:focus {
+    border: 0px;
+    background-color: #dc3545;
+}
 
 
-  .modal .cr-viewport {
+.modal .cr-viewport {
     width: 80%;
     height: 80%;
+}
 
-  }
-  .modal .cr-boundary{
+.modal .cr-boundary {
     width: auto;
-  }
-  
+}
