@@ -13,11 +13,7 @@
   }
  
 /*start body style*/
-body{
-  direction: rtl;
-  font-family: "NaderFont","Roboto",sans-serif;
-  background-color: var(--body-color);
-}
+
 .main{
     background-color: var(--body-color);
 }

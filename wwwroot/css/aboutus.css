@@ -10,11 +10,7 @@
     --section-color: #eff7fa;
   }
 
-body{
-    direction: rtl;
-    background-color: var(--body-color);
 
-}
 .aboutus{
     border-radius: 1rem ;
     background: linear-gradient(84deg,#bbf5b3,var(--green-color-dark));

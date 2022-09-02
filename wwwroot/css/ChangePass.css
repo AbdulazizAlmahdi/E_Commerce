@@ -12,11 +12,7 @@
     --section-color: #eff7fa;
   }
 /*start body style*/
-body{
-  direction: rtl;
-  font-family: "NaderFont","Roboto",sans-serif;
-  background-color: var(--body-color);
-}
+
 /*start body style*/
 .changepass{
     background-color: white;

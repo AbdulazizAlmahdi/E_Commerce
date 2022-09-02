@@ -12,11 +12,7 @@
     --section-color: #eff7fa;
 }
 /*start body style*/
-body {
-    direction: rtl;
-    font-family: "NaderFont","Roboto",sans-serif;
-    background-color: var(--body-color);
-}
+
 
 .impotant {
     display: none;
@@ -216,4 +212,8 @@ div#tablePurchased_wrapper {
 }
 #tableActive, #basketTable {
     display: table;
+}
+
+img:hover{
+    cursor:pointer;
 }
