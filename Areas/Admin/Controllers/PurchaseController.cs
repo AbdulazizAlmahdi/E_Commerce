@@ -28,7 +28,6 @@ namespace E_commerce.Areas.Admin.Controllers
         public IActionResult index()
         {
             var userId = HttpContext.Session.GetString("_UserId");
-            //TODO: change to ==
             if (userId == null)
             {
                 return RedirectToAction("Index", "Login");
