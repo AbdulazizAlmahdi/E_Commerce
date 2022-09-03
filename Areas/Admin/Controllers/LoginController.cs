@@ -40,7 +40,7 @@ namespace E_commerce.Areas.Admin.Controllers
             }
             catch (Exception e)
             {
-
+                var x = e.InnerException;
             }
             return View();
         }

@@ -124,8 +124,9 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item @(ViewData["Title"].ToString()== "المستخدمين"?"active":" ")">
-                                <a href="admin/users" class="menu-link">
-                                    <i class="menu-icon tf-icons bx bx-user"></i>
+                                <a href="~/admin/users"></a>
+                                <a href="~/admin/users" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bxl-product-hunt"></i>
                                     <div data-i18n="المستخدمين">المستخدمين</div>
                                 </a>
                             </li>
@@ -152,6 +153,20 @@
                             <li class="menu-item  @(ViewData["Title"].ToString()== "الاصناف"?"active":" ") ">
                                 <a href="~/admin/category" class="menu-link ">
                                     <div data-i18n="الاصناف">الاصناف</div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-item accordion active @(ViewData["Title"].ToString() == "المبيعات")?"open":" ")">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bxl-blogger"></i>
+                            <div data-i18n="المبيعات">المبيعات</div>
+                        </a>
+                        <ul class="menu-sub">                          
+                            <li class="menu-item  @(ViewData["Title"].ToString()== "المنتجات"?"active":" ") ">
+                                <a href="~/admin/Purchase" class="menu-link ">
+                                    <div data-i18n="المبيعات">المبيعات</div>
                                 </a>
                             </li>
 
