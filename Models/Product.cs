@@ -46,7 +46,7 @@ namespace E_commerce.Models
         [Required(ErrorMessage = "المدة مطلوبة")]
         public int Duration { get; set; }
         [Display(Name = "الحالة")]
-        public bool Status { get; set; }
+        public string Status { get; set; }
         [Required(ErrorMessage = "الكمية مطلوبة")]
         [Display(Name = "الكمية")]
         [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = "الكمية لا يمكن ان تكون 0")]

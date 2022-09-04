@@ -254,10 +254,10 @@
         <nav class=" ">
             <ul class="  nav justify-content-center gap-2 ">
                 <li class="nav-item mx-2">
-                    <button type="button" id="btnActive" onclick="showTable('@(Url.Action("GetProduct","Userinfo",new {state=true },Context.Request.Scheme))')" class="active px-2 py-1">اعلانات فعالة</button>
+                    <button type="button" id="btnActive" onclick="showTable('@(Url.Action("GetProduct","Userinfo",new {state="فعال" },Context.Request.Scheme))')" class="active px-2 py-1">اعلانات فعالة</button>
                 </li>
                 <li class="nav-item mx-2">
-                    <button type="button" id="btnStop" onclick="showTable('@(Url.Action("GetProduct","Userinfo",new {state=false },Context.Request.Scheme))')" class="px-2 py-1">اعلانات تم ايقافها</button>
+                    <button type="button" id="btnStop" onclick="showTable('@(Url.Action("GetProduct","Userinfo",new {state="متوقف" },Context.Request.Scheme))')" class="px-2 py-1">اعلانات تم ايقافها</button>
                 </li>
                 @*<li class="nav-item mx-2">
                     <button id="btnSold" class="px-2 py-1 ">اعلانات تم بيعها</button>

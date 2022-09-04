@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Migrations
 {
     [DbContext(typeof(WebContext))]
-    [Migration("20220831173332_createDB2")]
-    partial class createDB2
+    [Migration("20220904190952_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -396,8 +396,8 @@ namespace E_commerce.Migrations
                     b.Property<string>("Report")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Unit")
                         .HasColumnType("nvarchar(max)");
@@ -531,6 +531,11 @@ namespace E_commerce.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("JobName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -548,6 +553,8 @@ namespace E_commerce.Migrations
                         .HasColumnName("PlaceID");
 
                     b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
