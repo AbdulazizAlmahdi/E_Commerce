@@ -38,6 +38,12 @@ namespace e_commerce.Areas.Admin.Controllers
 
             return View();
         }
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Remove("_UserId");
+            return RedirectToAction("Index", "Login");
+
+        }
         [NoDirectAccess]
         public IActionResult CreateOrEdit(int id = 0)
         {
@@ -72,34 +78,60 @@ namespace e_commerce.Areas.Admin.Controllers
 
         public IActionResult UserProfile(int id = 0)
         {
-            //var userId = (int)HttpContext.Session.GetInt32("_UserId");
-            //id = userId;
+            var user= HttpContext.Session.GetString("_UserId");
+            var userId = int.Parse(user);
+           
 
-            if (id == 0)
-            {
+            
                 var model = new UserViewModel
                 {
                     places = places.show(null).ToList(),
-                    user = new User
-                    {
-                        Phone = new Phone(),
-                    },
+                    user = usersRepository.Find(userId),
 
                 };
                 return View(model);
+            
+    
+
+        }
+
+        [HttpPost]
+
+        public IActionResult EditProfile(int id, UserViewModel userViewModel, string UsersId)
+        {
+            if (ModelState.IsValid)
+            {
+               // try
+                {
+                         
+                        //userViewModel.user.UsersId = Convert.ToInt32(UsersId);
+                        userViewModel.user.Id = Convert.ToInt32(id);
+                        userViewModel.user.UpdatedAt = DateTime.Now;
+                        usersRepository.Update(userViewModel.user);
+                    return RedirectToAction("UserProfile");                  
+                }
+               /* catch (Exception e)
+                {
+                    var exception = e.InnerException.Message;
+                }*/
+
             }
             else
             {
                 var model = new UserViewModel
                 {
                     places = places.show(null).ToList(),
-                    user = usersRepository.Find(id),
+                    user = new User
+                    {
+                        Id = 0
+                    },
 
                 };
-                return View(model);
             }
+            return RedirectToAction("UserProfile");
 
         }
+
         public IActionResult CreateOrEdit(int id, UserViewModel userViewModel, string UsersId)
         {
             if (ModelState.IsValid)

@@ -118,8 +118,7 @@ userDatatable = () => {
                 "render": function (data, type, row) {
                     return `<button onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</button>` +
                         `<span>&nbsp;</span>` +
-                        `<button onClick="showInPopup('/Admin/Users/UserProfile/' + ${row.id}, 'الملف الشخصي')" class="btn btn-primary btn-sm">الملف الشخصي</button>` +
-                        `<span>&nbsp;</span>` +
+           
                         `<button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</button>`;
                 },
                 "name": "action",

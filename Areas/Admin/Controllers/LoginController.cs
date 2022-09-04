@@ -35,7 +35,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 if (phoneUser.User.Password == loginViewModel.Password)
                 {
                     HttpContext.Session.SetString("_UserId", phoneUser.User.Id.ToString());
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Analytics");
                 }
             }
             catch (Exception e)

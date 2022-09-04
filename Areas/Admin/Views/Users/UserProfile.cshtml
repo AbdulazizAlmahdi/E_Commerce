@@ -6,47 +6,6 @@
 
 
 }
-<script type="text/javascript">
-
-    $.fn.select2.defaults.set("dropdownParent", $('#select'));
-    $(document).ready(function () {
-        $("#childUsers").select2({
-            ajax: {
-                url: '/Admin/Users/GetUser',
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    return {
-                        q: params.term, // search term
-                        page: params.page
-                    };
-                },
-                processResults: function (data, params) {
-                    return {
-                        results: $.map(data.items, function (item) {
-                            console.log(item);
-
-                            return {
-                                id: item.id,
-                                text: item.text,
-                            };
-                        }),
-                    };
-                },
-                cache: true,
-                onError: function (err) {
-                    console.log(err);
-                }
-            },
-            minimumInputLength: 1,
-            placeholder: "حدد المستخدم",
-        });
-         if ("@Model.user.Users" != "") {
-            var newOption = new Option("@Model.user.Users?.Name", "@Model.user.Users?.Id", false, false);
-            $('#childUsers').append(newOption).trigger('change');
-        }
-    });
-</script>
 <div class="layout-page  w-100">
    
     <!-- Basic -->
@@ -60,10 +19,10 @@
                 </span>
             </div>
         </div>*@
-        <form class="container-xxl flex-fill container-p-y" asp-action="UserProfile" asp-route-id="@Model.user.Id"
-              onsubmit="return jQueryAjaxPost(this);">
+        <form class="container-xxl flex-fill container-p-y" method="post" asp-action="EditProfile" asp-route-id="@Model.user.Id"
+              >
             <img class="rounded-circle mt-5" width="100px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-
+            <input asp-for="user.UsersId" hidden value="@Model.user.Id" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" value="1" asp-for="@Model.user.Status" />
             <input type="hidden" asp-for="@Model.user.Id" name="id" />
@@ -129,9 +88,52 @@
             </div>
             <div class="form-group">
                 <div class="d-grid gap-2">
-                    <input type="submit" value="Submit" class="btn btn-primary" />
+                    <br />
+                    <input type="submit" value="تعديل الملف الشخصي" class="btn btn-primary" />
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $.fn.select2.defaults.set("dropdownParent", $('#select'));
+    $(document).ready(function () {
+        $("#childUsers").select2({
+            ajax: {
+                url: '/Admin/Users/GetUser',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: $.map(data.items, function (item) {
+                            console.log(item);
+
+                            return {
+                                id: item.id,
+                                text: item.text,
+                            };
+                        }),
+                    };
+                },
+                cache: true,
+                onError: function (err) {
+                    console.log(err);
+                }
+            },
+            minimumInputLength: 1,
+            placeholder: "حدد المستخدم",
+        });
+         @*if ("@Model.user.Users" != "") {
+            var newOption = new Option("@Model.user.Users?.Name", "@Model.user.Users?.Id", false, false);
+            $('#childUsers').append(newOption).trigger('change');
+        }*@
+    });
+</script>
