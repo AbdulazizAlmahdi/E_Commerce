@@ -1,7 +1,6 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="rtl" data-theme="theme-default"
-    data-assets-path="~/Admin/assets/" data-template="vertical-menu-template-no-customizer">
+      data-assets-path="~/Admin/assets/" data-template="vertical-menu-template-no-customizer">
 
 <head>
     <meta charset="utf-8" />
@@ -108,7 +107,10 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboards -->
-                    
+                  
+                  
+                    <i  class="menu-icon  tf-icons bx bx-user-circle"></i>
+
                     <li class="fa-solid fa-house menu-item @(ViewData["Title"].ToString() == "الإحصائيات"?"active":" ")">
                         <a href="~/admin/Analytics" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home"></i>
@@ -117,7 +119,7 @@
                     </li>
 
                     <!-- Layouts -->
-                    <li class="menu-item @(ViewData["Title"].ToString() == "المستخدمين" || (ViewData["Title"].ToString() == "الصلاحيات")?"open":" ")"">
+                    <li class="menu-item @(ViewData["Title"].ToString() == "المستخدمين" || (ViewData["Title"].ToString() == "الصلاحيات")?"open":" ")" ">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-user"></i>
                             <div data-i18n="المستخدمين والصلاحيات">المستخدمين والصلاحيات</div>

@@ -29,12 +29,13 @@ namespace e_commerce.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var userId = HttpContext.Session.GetString("_UserId");
+            //var userId = HttpContext.Session.GetString("_UserId");
 
-            if (userId == null)
             {
-                return RedirectToAction("Index", "Login");
-            }
+            //if (userId == null)
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
 
             return View();
         }
@@ -68,8 +69,38 @@ namespace e_commerce.Areas.Admin.Controllers
 
 
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+
+
+        public IActionResult UserProfile(int id = 0)
+        {
+            //var userId = (int)HttpContext.Session.GetInt32("_UserId");
+            //id = userId;
+
+            if (id == 0)
+            {
+                var model = new UserViewModel
+                {
+                    places = places.show(null).ToList(),
+                    user = new User
+                    {
+                        Phone = new Phone(),
+                    },
+
+                };
+                return View(model);
+            }
+            else
+            {
+                var model = new UserViewModel
+                {
+                    places = places.show(null).ToList(),
+                    user = usersRepository.Find(id),
+
+                };
+                return View(model);
+            }
+
+        }
         public IActionResult CreateOrEdit(int id, UserViewModel userViewModel, string UsersId)
         {
             if (ModelState.IsValid)

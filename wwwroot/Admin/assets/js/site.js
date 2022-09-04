@@ -118,6 +118,8 @@ userDatatable = () => {
                 "render": function (data, type, row) {
                     return `<button onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</button>` +
                         `<span>&nbsp;</span>` +
+                        `<button onClick="showInPopup('/Admin/Users/UserProfile/' + ${row.id}, 'الملف الشخصي')" class="btn btn-primary btn-sm">الملف الشخصي</button>` +
+                        `<span>&nbsp;</span>` +
                         `<button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</button>`;
                 },
                 "name": "action",
@@ -575,10 +577,10 @@ purchaseDatatable = () => {
             '<"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
         buttons: [
             {
-                text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة فاتورة</span>',
+                text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة طلب</span>',
                 className: 'dt-button create-new btn btn-primary m-2',
                 action: function (e, dt, node, config) {
-                    showInPopup('/Admin/Purchase/CreateOrEdit', 'إضافة طلب');
+                    showInPopup('/Admin/Auctions/CreateOrEdit', 'إضافة طلب');
                 },
             },
             {
@@ -701,9 +703,7 @@ jQueryAjaxPost = form => {
                     else if (res.type == "category")
                         categoryDatatable();
                     else if (res.type == "auctions")
-                        auctionDatatable();                   
-                    else if (res.type == "purchase")
-                        purchaseDatatable();
+                        auctionDatatable();
 
                     $('#success-toast .success-toast-title').html(res.messgaeTitle);
                     $('#success-toast .success-toast-body').html(res.messageBody);
@@ -728,8 +728,6 @@ jQueryAjaxPost = form => {
                         categoryDatatable();
                     else if (res.type == "auctions")
                         auctionDatatable();
-                    else if (res.type == "purchase")
-                        purchaseDatatable();
                     $('#error-toast .error-toast-title').html(res.messgaeTitle);
                     $('#error-toast .error-toast-body').html(res.messageBody);
                     new bootstrap.Toast(document.getElementById('error-toast')).show();
