@@ -4,7 +4,7 @@
 }
 <!DOCTYPE html>
 
-<html lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default"
+<html lang="ar" class="light-style customizer-hide" dir="rtl" data-theme="theme-default"
       data-assets-path="~/Admin/assets/" data-template="vertical-menu-template-no-customizer">
 
 <head>
@@ -129,6 +129,10 @@
                                     <label class="form-check-label" for="remember-me"> تذكرنى </label>
                                 </div>
                             </div>
+                            @if (!Model.Status)
+                            {
+                            <span class="text-danger">رقم الهاتف أو كلمة المرور غير صحيح</span>
+                            }
                             <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">تسجيل الدخول</button>
                             </div>

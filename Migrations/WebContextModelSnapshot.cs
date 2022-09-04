@@ -394,8 +394,8 @@ namespace E_commerce.Migrations
                     b.Property<string>("Report")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Unit")
                         .HasColumnType("nvarchar(max)");
@@ -551,6 +551,8 @@ namespace E_commerce.Migrations
                         .HasColumnName("PlaceID");
 
                     b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")

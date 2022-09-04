@@ -45,7 +45,7 @@ namespace E_commerce.Controllers
 
             var vm = new UserInfoViewModel
             {
-                GetProducts = db.Products.Include(p=>p.Category).Where(p => p.Status == true)
+                GetProducts = db.Products.Include(p=>p.Category).Where(p => p.Status == "فعال")
             };
 
             return View(vm);
@@ -131,7 +131,7 @@ namespace E_commerce.Controllers
             return "users/" + imageName;
         }
 
-        public JsonResult GetProduct(bool state)
+        public JsonResult GetProduct(string state)
         {
             var p = db.Products.Include(p => p.Category).Where(p => p.Status == state&&p.PurchaseId==null);
 
@@ -141,7 +141,7 @@ namespace E_commerce.Controllers
 
         public JsonResult GetProductPurchase()
         {
-            var p = db.Products.Include(p => p.Category).Where(p => p.Status == true && p.PurchaseId >0);
+            var p = db.Products.Include(p => p.Category).Where(p => p.Status == "فعال" && p.PurchaseId >0);
 
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ProductTable", p) });
 

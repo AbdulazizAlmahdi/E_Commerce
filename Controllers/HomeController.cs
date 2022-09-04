@@ -28,7 +28,7 @@ namespace E_commerce.Controllers
             if (search != null)
                 products = db.Products.Where(prod =>
                 prod.PurchaseId == null &&
-                prod.Status == true
+                prod.Status == "فعال"
                 && (prod.NameAr.Trim().Contains(search.Trim())
                 || prod.DetailsAr.Trim().Contains(search.Trim()))
                 ).OrderByDescending(p => p.CreatedAt).ToList();
@@ -39,7 +39,7 @@ namespace E_commerce.Controllers
                     int catIdInt = Convert.ToInt32(catId);
                     products = db.Products.Where(prod =>
                     prod.PurchaseId == null && 
-                    prod.Status == true && 
+                    prod.Status == "فعال" && 
                     prod.CategoryId == catIdInt)
                         .OrderByDescending(p => p.CreatedAt)
                         .ToList();
@@ -47,7 +47,7 @@ namespace E_commerce.Controllers
                 catch (Exception) { }
             }
             else
-                products = db.Products.Where(prod => prod.PurchaseId == null && prod.Status == true)
+                products = db.Products.Where(prod => prod.PurchaseId == null && prod.Status == "فعال")
                     .OrderByDescending(p => p.CreatedAt)
                     .ToList();
 

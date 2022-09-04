@@ -22,7 +22,7 @@ namespace E_commerce.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View(new LoginViewModel { Status = true });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -32,11 +32,19 @@ namespace E_commerce.Areas.Admin.Controllers
             try
             {
                 Phone phoneUser = phoneRepository.Find(loginViewModel.Number);
-                if (phoneUser.User.Password == loginViewModel.Password)
+                if (phoneUser == null) {
+                    return View(new LoginViewModel { Status=false});
+                }
+               else if (phoneUser.User.Password == loginViewModel.Password)
                 {
                     HttpContext.Session.SetString("_UserId", phoneUser.User.Id.ToString());
                     return RedirectToAction("Index", "Analytics");
                 }
+                else
+                {
+                    return View(new LoginViewModel { Status = false });
+                }
+
             }
             catch (Exception e)
             {

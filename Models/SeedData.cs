@@ -115,7 +115,8 @@ namespace E_commerce.Models
                         Place = place,
                         Status = "active",
                         CreatedAt = DateTime.UtcNow,
-                        UpdatedAt = DateTime.UtcNow
+                        UpdatedAt = DateTime.UtcNow,
+                        JobName="فعال"
                     }
                     );
 
@@ -176,7 +177,7 @@ namespace E_commerce.Models
                                 DetailsAr = RandomString(20),
                                 DetailsEn = RandomString(20),
                                 Duration = 3,
-                                Status = true,
+                                Status = "فعال",
                                 Quantity = 20,
                                 Address="صنعاء سوق علي محسن",
                                 Unit = "سلة",
@@ -206,7 +207,7 @@ namespace E_commerce.Models
                                 DetailsAr = RandomString(20),
                                 DetailsEn = RandomString(20),
                                 Duration = 3,
-                                Status = true,
+                                Status = "فعال",
                                 Quantity = 20,
                                 Address="صنعاء سوق علي محسن",
                                 Unit = "سلة",

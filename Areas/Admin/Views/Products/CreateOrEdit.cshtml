@@ -117,8 +117,8 @@
                 <label class="form-label w-100" for="price-id" asp-for="@Model.product.Status"></label>
                 <div class="input-group input-group-merge">
                     <select asp-for="@Model.product.Status" class="form-control" >
-                      <option value="true">فعال</option>
-                    <option value="false">متوقف</option>
+                      <option value="فعال">فعال</option>
+                    <option value="متوقف">متوقف</option>
                     </select>
                 </div>
                 <span asp-validation-for="@Model.product.Status" class="text-danger"></span>

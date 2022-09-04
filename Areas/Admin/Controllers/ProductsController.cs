@@ -90,6 +90,7 @@ namespace E_commerce.Areas.Admin.Controllers
                         }
                         productViewModel.product.CategoryId = Convert.ToInt32(CategoryId);
                         productViewModel.product.Id = 0;
+                        productViewModel.product.UserId = int.Parse(HttpContext.Session.GetString("_UserId"));
                         productViewModel.product.CreatedAt = DateTime.Now;
                         productViewModel.product.NameEn = productViewModel.product.NameAr;
                         productViewModel.product.DetailsEn = productViewModel.product.DetailsAr;
@@ -121,6 +122,7 @@ namespace E_commerce.Areas.Admin.Controllers
                         product.NameAr = productViewModel.product.NameAr;
                         product.DetailsEn = productViewModel.product.DetailsEn;
                         product.DetailsAr = productViewModel.product.DetailsAr;
+                        product.Status = productViewModel.product.Status;
                         product.CategoryId = Convert.ToInt32(CategoryId);
                         product.UpdatedAt = DateTime.Now;
                         products.Update(product);
@@ -177,17 +179,6 @@ namespace E_commerce.Areas.Admin.Controllers
                     System.IO.File.Delete(fullPath);
             }
         }
-        //GetFileFromUrl
-        // public IFormFile GetFileFromUrl(String fileName)
-        // {
-        //    string uploads = Path.Combine(hosting.WebRootPath, "uploads");
-        //         string fullPath = Path.Combine(uploads, fileName);
-        //    using (var stream = System.IO.File.OpenRead(fullPath))
-        //    {
-        //        return new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name));
-        //    }
-
-        // }
         [NoDirectAccess]
         public ActionResult Delete(int? id)
         {
@@ -234,7 +225,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                IQueryable<Product> productsData = products.show(1);
+                IQueryable<Product> productsData = products.show(int.Parse(HttpContext.Session.GetString("_UserId")));
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
                     productsData = productsData.OrderBy(sortColumn + " " + sortColumnDirection);

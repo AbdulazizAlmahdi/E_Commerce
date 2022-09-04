@@ -113,7 +113,7 @@ namespace E_commerce.Controllers
                 DetailsAr = details.Trim(),
                 Duration = 10,
                 CreatedAt = DateTime.Now,
-                Status = true,
+                Status = "فعال",
                 Views = 0,
                 Discount = 0,
                 Evaluation = 0,
