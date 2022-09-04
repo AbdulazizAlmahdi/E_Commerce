@@ -1,6 +1,9 @@
 $(document).ready(function () {
     $("body").on("change", "#image1", function (e) {
-        previewImage(this, 'previewImage1');
+
+
+
+        iewImage(this, 'previewImage1');
     });
 
 

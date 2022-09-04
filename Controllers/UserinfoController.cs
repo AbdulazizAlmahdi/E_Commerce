@@ -1,8 +1,11 @@
-﻿using E_commerce.Models;
+﻿using e_commerce;
+using E_commerce.Models;
 using E_commerce.Models.Custome;
+using E_commerce.ViewModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,7 +42,13 @@ namespace E_commerce.Controllers
             {
                 return Redirect("/home");
             }
-            return View();
+
+            var vm = new UserInfoViewModel
+            {
+                GetProducts = db.Products.Include(p=>p.Category).Where(p => p.Status == true)
+            };
+
+            return View(vm);
         }
 
                 
@@ -120,6 +129,22 @@ namespace E_commerce.Controllers
             }
 
             return "users/" + imageName;
+        }
+
+        public JsonResult GetProduct(bool state)
+        {
+            var p = db.Products.Include(p => p.Category).Where(p => p.Status == state&&p.PurchaseId==null);
+
+            return Json(new {  html = Helper.RenderRazorViewToString(this, "_ProductTable",p) });
+
+        }
+
+        public JsonResult GetProductPurchase()
+        {
+            var p = db.Products.Include(p => p.Category).Where(p => p.Status == true && p.PurchaseId >0);
+
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ProductTable", p) });
+
         }
 
     }
