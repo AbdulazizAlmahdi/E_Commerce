@@ -35,7 +35,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 if (phoneUser == null) {
                     return View(new LoginViewModel { Status=false});
                 }
-               else if (phoneUser.User.Password == loginViewModel.Password)
+               else if (phoneUser.User.Password == loginViewModel.Password&& phoneUser.User.JobName!="عميل"&& phoneUser.User.Status!="متوقف")
                 {
                     HttpContext.Session.SetString("_UserId", phoneUser.User.Id.ToString());
                     return RedirectToAction("Index", "Analytics");

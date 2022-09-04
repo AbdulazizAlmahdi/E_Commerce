@@ -108,7 +108,9 @@ namespace E_commerce.Controllers
                 Address = address,
                 Password = password,
                 CreatedAt = DateTime.Now,
-                UsersId = 1
+                UsersId = null,
+                JobName="عميل",
+                Status="موقف"
             });
 
             db.SaveChanges();
