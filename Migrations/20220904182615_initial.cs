@@ -147,6 +147,7 @@ namespace E_commerce.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", maxLength: 50, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", maxLength: 50, nullable: false),
+                    JobName = table.Column<string>(type: "nvarchar(max)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),

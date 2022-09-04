@@ -132,6 +132,8 @@ namespace e_commerce.Areas.Admin.Controllers
 
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult CreateOrEdit(int id, UserViewModel userViewModel, string UsersId)
         {
             if (ModelState.IsValid)

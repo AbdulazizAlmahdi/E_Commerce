@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Migrations
 {
     [DbContext(typeof(WebContext))]
-    [Migration("20220831173332_createDB2")]
-    partial class createDB2
+    [Migration("20220904182615_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -530,6 +530,11 @@ namespace E_commerce.Migrations
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("JobName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
