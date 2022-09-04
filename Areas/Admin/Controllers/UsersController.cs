@@ -29,12 +29,12 @@ namespace e_commerce.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            //var userId = HttpContext.Session.GetString("_UserId");
+            var userId = HttpContext.Session.GetString("_UserId");
 
-            //if (userId == null)
-            //{
-            //    return RedirectToAction("Index", "Login");
-            //}
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
 
             return View();
         }
@@ -142,8 +142,8 @@ namespace e_commerce.Areas.Admin.Controllers
                 {
                     if (id == 0)
                     {
-
-                        userViewModel.user.UsersId = Convert.ToInt32(UsersId);
+                        var userId = HttpContext.Session.GetString("_UserId");
+                        userViewModel.user.UsersId = Convert.ToInt32(UsersId??userId);
                         userViewModel.user.CreatedAt = DateTime.Now;
                         usersRepository.Add(userViewModel.user);
                         return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = "إضافة مستخدم", messageBody = "تمت إضافة المستخدم بنجاح" });
@@ -240,7 +240,7 @@ namespace e_commerce.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                IQueryable<User> usersData = usersRepository.show(1);
+                IQueryable<User> usersData = usersRepository.show(int.Parse(HttpContext.Session.GetString("_UserId")));
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
                     usersData = usersData.OrderBy(sortColumn + " " + sortColumnDirection);

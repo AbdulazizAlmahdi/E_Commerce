@@ -109,7 +109,8 @@ userDatatable = () => {
         columns: [
             { "data": "id", "name": "Id", "autoWidth": true },
             { "data": "name", "name": "name", "autoWidth": true },
-            { "data": "place.name", "name": "job name", "autoWidth": true, "orderable": false },
+            { "data": "jobName", "name": "job name", "autoWidth": true, "orderable": false },
+            { "data": "place.name", "name": "place", "autoWidth": true, "orderable": false },
             { "data": "phone.number", "name": "phone", "autoWidth": true, "orderable": false },
             { "data": "address", "name": "address", "autoWidth": true },
             { "data": "createdAt", "name": "createdAt", "autoWidth": true },

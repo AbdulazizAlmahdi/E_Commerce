@@ -35,7 +35,7 @@ namespace E_commerce.Models
         [Display(Name = "العنوان")]
         [Column(TypeName = "nvarchar(max)")]
         public string Address { get; set; }
-        [Required(ErrorMessage = "المسمى الوظيفي")]
+        [Required(ErrorMessage = "المسمى الوظيفي مطلوب")]
         [StringLength(50, ErrorMessage = "المسمى الوظيفي لا يزيد عن 50 حرف")]
         [Display(Name = "المسمى الوظيفي")]
         [Column(TypeName = "nvarchar(max)")]
@@ -43,13 +43,17 @@ namespace E_commerce.Models
         [Display(Name = "كلمة المرور")]
         [Column(TypeName = "nvarchar(max)")]
         public string Password { get; set; }
+        [Required(ErrorMessage = "حالة المستخدم مطلوب")]
+        [StringLength(50, ErrorMessage = "حالة المستخدم لا يزيد عن 50 حرف")]
+        [Display(Name = "حالة المستخدم")]
+        [Column(TypeName = "nvarchar(max)")]
+        public string Status { get; set; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? CreatedAt { get; set; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? UpdatedAt { get; set; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? DeletedAt { get; set; }
-        public string Status { get; set; }
         [ForeignKey("PhoneId")]
         public int PhoneId { get; set; }
         [ForeignKey("PlaceId")]
