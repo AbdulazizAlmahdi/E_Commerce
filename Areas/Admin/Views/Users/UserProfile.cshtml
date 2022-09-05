@@ -2,9 +2,6 @@
 
 @{
     ViewData["Title"] = "الملف الشخصي";
-    
-
-
 }
 <div class="layout-page  w-100">
    
@@ -36,7 +33,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label w-100" for="namber-id" asp-for="@Model.user.JobName"></label>
-                    <select class="form-select" asp-for="@Model.user.JobName"
+                    <select disabled class="form-select" asp-for="@Model.user.JobName"
                             data-allow-clear="true">
                         <option value="مشرف عام">مشرف عام</option>
                         <option value="دعم">دعم</option>
@@ -63,7 +60,7 @@
                 <div class="form-group" id="select">
                     <label class="form-label w-100" for="childUsers" asp-for="@Model.user.UsersId"></label>
                     <div class="input-group input-group-merge">
-                        <select id="childUsers" asp-for="@Model.user.UsersId" class="form-control" name="UsersId"
+                        <select disabled id="childUsers" asp-for="@Model.user.UsersId" class="form-control" name="UsersId"
                                 style="width: 100%;" data-placeholder="حدد المستخدم" aria-describedby="modalAddCard2">
                         </select>
                     </div>
@@ -87,7 +84,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="modalPermission">الصلاحيات</label>
-                    <select multiple id="modalPermission" name="modalPermission" class="form-select"
+                    <select disabled multiple id="modalPermission" name="modalPermission" class="form-select"
                             data-allow-clear="true">
                         <option value="">حدد صلاحية المستخدم</option>
                         <option value="Australia">مندوب</option>
