@@ -80,6 +80,13 @@ namespace E_commerce.Areas.Admin.Controllers
                     {
                         auctionsViewModel.auction.ProductId = Convert.ToInt32(ProductId);
                         auctionRepository.Add(auctionsViewModel.auction);
+                        if (auctionsViewModel.auction.ProductId != null)
+                        {
+
+                        Product product=    productsRepository.Find(auctionsViewModel.auction.ProductId);
+                            product.Status = "متوقف";
+                            productsRepository.Update(product);
+                        }
                         return Json(new { status = "success", type = "auctions", html = Helper.RenderRazorViewToString(this, "AuctionsTable"), messgaeTitle = "إضافة مزاد", messageBody = "تمت إضافة المزاد بنجاح" });
                     }
                     else
