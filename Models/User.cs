@@ -82,6 +82,9 @@ namespace E_commerce.Models
         [JsonIgnore]
         [IgnoreDataMember]
         public virtual ICollection<RolesUser> RolesUsers { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
+        public virtual ICollection<Category> Categories { get; set; }
   
 
     }

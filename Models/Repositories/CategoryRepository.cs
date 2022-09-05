@@ -20,11 +20,11 @@ namespace E_commerce.Models.Repositories
         {
             context.Categories.Add(entity);
             context.SaveChanges();
-            
+
         }
         public Category Find(int ID)
         {
-            return context.Categories.Include(c=>c.categories).SingleOrDefault(c => c.Id == ID);
+            return context.Categories.Include(c => c.categories).Include(c => c.User).SingleOrDefault(c => c.Id == ID);
         }
 
         public Category Find(string Text)
@@ -34,22 +34,21 @@ namespace E_commerce.Models.Repositories
 
         public IQueryable<Category> show(int? ID, string name = "")
         {
-            return context.Categories.Include(c=>c.categories);
+            return context.Categories.Include(c => c.categories);
         }
 
         public void Update(Category entity)
         {
-          context.Categories.Update(entity);
+           context.Categories.Update(entity);
             context.SaveChanges();
         }
 
         void IRepository<Category>.Delete(int ID)
         {
             context.Categories.Remove(Find(ID));
-            context.SaveChanges();
-
+                context.SaveChanges();
         }
     }
 
-    
+
 }

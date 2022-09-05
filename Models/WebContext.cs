@@ -99,6 +99,10 @@ namespace E_commerce.Models
                     .WithMany(p => p.InverseCategory)
                     .HasForeignKey(d => d.CategoryId);
 
+                entity.HasOne(c => c.User)
+                    .WithMany(u =>u.Categories)
+                    .HasForeignKey(d => d.UserId);
+
 
             });
 

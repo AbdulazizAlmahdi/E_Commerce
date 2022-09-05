@@ -155,6 +155,7 @@ namespace E_commerce.Models
                             Name = RandomString(10),
                             UpdatedAt = DateTime.UtcNow,
                             DeletedAt = DateTime.UtcNow,
+                            UserId=i+1
                         });
 
                     webContext.SaveChanges();

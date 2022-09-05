@@ -110,7 +110,12 @@ namespace E_commerce.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex(new[] { "CategoryId" }, "IX_Categoreis_CategoryId");
 
@@ -637,7 +642,13 @@ namespace E_commerce.Migrations
                         .WithMany("InverseCategory")
                         .HasForeignKey("CategoryId");
 
+                    b.HasOne("E_commerce.Models.User", "User")
+                        .WithMany("Categories")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("categories");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("E_commerce.Models.Comment", b =>
@@ -838,6 +849,8 @@ namespace E_commerce.Migrations
             modelBuilder.Entity("E_commerce.Models.User", b =>
                 {
                     b.Navigation("AuctionsUser");
+
+                    b.Navigation("Categories");
 
                     b.Navigation("Comments");
 

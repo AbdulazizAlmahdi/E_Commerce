@@ -90,7 +90,7 @@ namespace E_commerce
                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-           // SeedData.Seeddb(webContext);
+            SeedData.Seeddb(webContext);
         }
     }
 }

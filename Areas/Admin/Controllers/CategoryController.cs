@@ -19,9 +19,11 @@ namespace E_commerce.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         IRepository<Category> categoryRepository;
-        public CategoryController(IRepository<Category> categoryRepository)
+        IRepository<User> userRepository;
+        public CategoryController(IRepository<Category> categoryRepository,IRepository<User> userRepository)
         {
             this.categoryRepository = categoryRepository;
+            this.userRepository = userRepository;
         }
         public ActionResult Index()
 
@@ -35,7 +37,7 @@ namespace E_commerce.Areas.Admin.Controllers
 
             return View();
         }
-[NoDirectAccess]
+        [NoDirectAccess]
         public ActionResult CreateOrEdit(int id = 0)
         {
             if (id == 0)
@@ -69,17 +71,26 @@ namespace E_commerce.Areas.Admin.Controllers
                     if (id == 0)
                     {
                         categoryViewModel.category.CreatedAt = DateTime.Now;
+                        categoryViewModel.category.UserId = int.Parse(HttpContext.Session.GetString("_UserId"));
+                        if(categoryId!=null){
                         categoryViewModel.category.CategoryId = Convert.ToInt32(categoryId);
+                        }
                         categoryRepository.Add(categoryViewModel.category);
-                                        return Json(new { status = "success", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "إضافة تصنيف", messageBody = "تمت إضافة التصنيف بنجاح" });
+                        return Json(new { status = "success", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "إضافة صنف", messageBody = "تمت إضافة الصنف بنجاح" });
                     }
                     else
                     {
+                        if (checkCategory(categoryViewModel.category.UserId ?? 0)) { 
                         categoryViewModel.category.UpdatedAt = DateTime.Now;
                         categoryViewModel.category.CategoryId = Convert.ToInt32(categoryId)==0?null: Convert.ToInt32(categoryId);
                         categoryViewModel.category.Id = id;
                         categoryRepository.Update(categoryViewModel.category);
-                        return Json(new { status = "success", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "تعديل تصنيف", messageBody = "تمت تعديل التصنيف بنجاح" });
+                        return Json(new { status = "success", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "تعديل صنف", messageBody = "تمت تعديل الصنف بنجاح" });
+                    }
+                        else
+                        {
+                            return Json(new { status = "error", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "تعديل صنف", messageBody = "ليس لديك صلاحية" });
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -101,6 +112,27 @@ namespace E_commerce.Areas.Admin.Controllers
                 return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
             }
         }
+        bool checkCategory(int userId)
+        {
+            User user = GetChildUser().FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        List<User> GetChildUser()
+        {
+            var users = userRepository.show(int.Parse(HttpContext.Session.GetString("_UserId"))).ToList();
+
+            return users;
+
+        }
+
         [NoDirectAccess]
         public ActionResult Delete(int? id){
                   return View(id);
@@ -110,14 +142,21 @@ namespace E_commerce.Areas.Admin.Controllers
          public ActionResult Delete(int id){
             try
             {
-                categoryRepository.Delete(id);
-                return Json(new { status = "success", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "حذف تصنيف", messageBody = "تم حذف التصنيف بنجاح" });
-
+                Category category = categoryRepository.Find(id);
+                if (checkCategory(category.UserId ?? 0))
+                {
+                    categoryRepository.Delete(id);
+                return Json(new { status = "success", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "حذف صنف", messageBody = "تم حذف الصنف بنجاح" });
             }
+                        else
+            {
+                return Json(new { status = "error", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "تعديل صنف", messageBody = "ليس لديك صلاحية" });
+            }
+        }
             catch (Exception e)
             {
                 var x=e.InnerException.Message;
-                return Json(new { status = "error", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "حذف تصنيف", messageBody = "حدث خطأ أثناء حذف التصنيف" });
+                return Json(new { status = "error", type = "category", html = Helper.RenderRazorViewToString(this, "CategoryTable"), messgaeTitle = "حذف صنف", messageBody = "حدث خطأ أثناء حذف الصنف" });
             }
          }
         public IActionResult GetCategory(string q)
@@ -146,17 +185,17 @@ namespace E_commerce.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                IQueryable<Category> usersData = categoryRepository.show(1);
+                IQueryable<Category> categoriesData = categoryRepository.show(null);
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
-                    usersData = usersData.OrderBy(sortColumn + " " + sortColumnDirection);
+                    categoriesData = categoriesData.OrderBy(sortColumn + " " + sortColumnDirection);
                 }
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    usersData = usersData.Where(m => m.Name.Contains(searchValue));
+                    categoriesData = categoriesData.Where(m => m.Name.Contains(searchValue));
                 }
-                recordsTotal = usersData.Count();
-                var data = usersData.Skip(skip).Take(pageSize).ToList();
+                recordsTotal = categoriesData.Count();
+                var data = categoriesData.Skip(skip).Take(pageSize).ToList();
                 var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
                 return Ok(jsonData);
 

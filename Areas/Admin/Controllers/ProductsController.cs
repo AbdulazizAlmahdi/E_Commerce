@@ -126,14 +126,14 @@ namespace E_commerce.Areas.Admin.Controllers
                         product.CategoryId = Convert.ToInt32(CategoryId);
                         product.UpdatedAt = DateTime.Now;
                         products.Update(product);
-                        return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "تعديل مستخدم", messageBody = "تمت تعديل المستخدم بنجاح" });
+                        return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "تعديل منتج", messageBody = "تمت تعديل المنتج بنجاح" });
 
                     }
                 }
                 catch (Exception e)
                 {
                     var exception = e.InnerException.Message;
-                    return Json(new { status = "error", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "إضافة مستخدم", messageBody = "حدث خطأ أثناء إضافة/تعديل مستخدم" });
+                    return Json(new { status = "error", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "إضافة منتج", messageBody = "حدث خطأ أثناء إضافة/تعديل المنتج" });
                     //return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
 
                 }
@@ -191,12 +191,12 @@ namespace E_commerce.Areas.Admin.Controllers
             try
             {
                 products.Delete(id);
-                return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف المنتج", messageBody = "تم حذف المنتج بنجاح" });
+                return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف منتج", messageBody = "تم حذف المنتج بنجاح" });
 
             }
             catch (Exception e)
             {
-                return Json(new { status = "error", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف المنتج", messageBody = "حدث خطأ أثناء حذف المنتج" });
+                return Json(new { status = "error", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف منتج", messageBody = "حدث خطأ أثناء حذف المنتج" });
             }
         }
         public IActionResult GetCategory(string q)
