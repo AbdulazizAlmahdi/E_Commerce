@@ -86,7 +86,9 @@ namespace E_commerce.Controllers
             {
                 Phone = phoneRow,
                 Subject = subject,
-                Details = details
+                Details = details,
+                //Adding datatime for help
+                CreatedAt = DateTime.Now,
             });
 
             db.SaveChanges();
