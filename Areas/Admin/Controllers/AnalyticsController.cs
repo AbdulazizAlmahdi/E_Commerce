@@ -21,12 +21,12 @@ namespace E_commerce.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            //var userId= HttpContext.Session.GetString("_UserId");
+            var userId = HttpContext.Session.GetString("_UserId");
 
-            //if (userId==null)
-            //{
-            //    return RedirectToAction("Index", "Login");
-            //}
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
 
 
             var vm = new AnaylticsViewModel
