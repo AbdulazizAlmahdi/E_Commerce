@@ -665,7 +665,7 @@ purchaseDatatable = () => {
             { "data": "phone", "name": "phone", "autoWidth": true },
             { "data": "detials", "name": "detials", "autoWidth": true },
             { "data": "createdAt", "name": "createdAt", "autoWidth": true },
-            { "data": "user.name", "name": "name", "autoWidth": true },
+            { "data": "user.name", "name": "name", "autoWidth": true, "orderable": false },
             {
                 "render": function (data, type, row) {
                     return `<button onClick="showInPopup('/Admin/Purchase/ShowProducts/' + ${row.id}, 'عرض منتجات الفاتورة')" class="btn btn-primary btn-sm">المنتجات</button>` +
