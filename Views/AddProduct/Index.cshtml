@@ -54,68 +54,54 @@
 
             @*<h6 class="text-start">اختر الصنف :</h6>
 
-        <a class=" firstselectcategory text-decoration-none text-start form-control">
-            <span class="dropdown-toggle ">ماذا تريد ان تبيع   </span>
-            <span class="changecategorybtn font-monospace py-0 btn">تغيير</span>
-        </a>
+                <a class=" firstselectcategory text-decoration-none text-start form-control">
+                <span class="dropdown-toggle ">ماذا تريد ان تبيع   </span>
+                <span class="changecategorybtn font-monospace py-0 btn">تغيير</span>
+                </a>
 
-        <input type="hidden" id="categoryId" name="categoryId" value="4">
+                <input type="hidden" id="categoryId" name="categoryId" value="4">
 
-        <div class="row Catagrysection gap-2 form-control  my-2 my-sm-2 my-md-2 my-lg-4 mx-0">
+                <div class="row Catagrysection gap-2 form-control  my-2 my-sm-2 my-md-2 my-lg-4 mx-0">
 
-            <div class="col CatagryMainSection px-0  mt-0">
+                <div class="col CatagryMainSection px-0  mt-0">
 
                 <h5 class="p-2 text-center">الاصناف الرئيسية: </h5>
 
                 @foreach (var cat in categories)
                 {
-                    <li class="dropdown-item  Animal">@cat.Name</li>
+                <li class="dropdown-item  Animal">@cat.Name</li>
                 }
-            </div>
+                </div>
 
-            <div class="col  CatagrySubsectionAnimal   px-0  mt-0 ">
+                <div class="col  CatagrySubsectionAnimal   px-0  mt-0 ">
 
                 <h5 class=" p-2   text-center ">
-                    منتجات حيوانية:
-                    <p class="fs-6">(الصنف الفرعي)</p>
+                منتجات حيوانية:
+                <p class="fs-6">(الصنف الفرعي)</p>
                 </h5>
 
                 <li class=" dropdown-item li1"> منتجات اللحوم</li>
                 <li class=" dropdown-item li2"> طيور</li>
                 <li class="dropdown-item li3">اخرى </li>
 
-            </div>
+                </div>
 
-        </div>*@
+                </div>*@
             <h6 class="text-start">  اختر الصنف الرئيسي :</h6>
             <hr style="height: 2px;">
-            <select class="form-control my-2 my-sm-2 my-md-2 my-lg-4" name="category" id="category">
-                <option value="">
-                    <li class="   ">منتجات حيوانية</li>
-                </option>
-                <option value="">
-                    <li class="  ">منتجات زراعية</li>
-                </option>
-                <option value="">
-                    <li class=" ">اسمدة ومعدات واّلات زراعية</li>
-                </option>
+            <select class="form-control my-2 my-sm-2 my-md-2 my-lg-4" name="categoryId" id="category">
+                @foreach (var category in categories)
+                {
+                    <optgroup label="@category.Name">
+                        @foreach (var subCategory in category.subCategory)
+                        {
+                            <option value="@subCategory.Id">
+                                <li> @subCategory.Name</li>
+                            </option>
+                        }
+                    </optgroup>
+                }
             </select>
-
-
-            <h6 class="text-start">  اختر الصنف الفرعي :</h6>
-            <hr style="height: 2px;">
-            <select class="form-control my-2 my-sm-2 my-md-2 my-lg-4" name="category" id="category">
-                <option value="">
-                    <li class="   ">منتجات حيوانية</li>
-                </option>
-                <option value="">
-                    <li class="  ">منتجات زراعية</li>
-                </option>
-                <option value="">
-                    <li class=" ">اسمدة ومعدات واّلات زراعية</li>
-                </option>
-            </select>
-
 
 
             @if (productName != null || price != null || quantity != null || unit != null || address != null || details != null)
@@ -217,54 +203,54 @@
             }
 
             <!--<div class=" imgDiv   w-100   form-control text-start ">
-    <p class=" ps-2 fs-4 mt-1  ps-5 py-2">
-        اضف صورة ←  <span class=" ">قم بتعين احد الصور كصورة رئيسية</span>
-    </p>
+            <p class=" ps-2 fs-4 mt-1  ps-5 py-2">
+                اضف صورة ←  <span class=" ">قم بتعين احد الصور كصورة رئيسية</span>
+            </p>
 
-    <div class="row   ">
-        <div class=" addimg col-12 col-sm-6 col-md-4 col-lg-4">
-            <input class="imagemain " type="radio" name="imagemain" value="1">
-            <h5 class="d-inline-block">  تعيين كصورة رئيسية</h5>
-            <br>
-            <input name="image1" id="image1" class="d-none" type="file">
-            <label for="image1">
-                <img id="previewImage1" class="img-fluid  " src="../imgs/camera.png" alt="">
+            <div class="row   ">
+                <div class=" addimg col-12 col-sm-6 col-md-4 col-lg-4">
+                    <input class="imagemain " type="radio" name="imagemain" value="1">
+                    <h5 class="d-inline-block">  تعيين كصورة رئيسية</h5>
+                    <br>
+                    <input name="image1" id="image1" class="d-none" type="file">
+                    <label for="image1">
+                        <img id="previewImage1" class="img-fluid  " src="../imgs/camera.png" alt="">
 
-                <div class="rounded-3 p-1 mt-2">
-                    +
+                        <div class="rounded-3 p-1 mt-2">
+                            +
+                        </div>
+                    </label>
                 </div>
-            </label>
-        </div>
-        <div class=" addimg col-12 col-sm-6 col-md-4 col-lg-4 ">
-            <input class="imagemain " type="radio" name="imagemain" value="2">
-            <h5 class="d-inline-block">  تعيين كصورة رئيسية</h5>
-            <br>
-            <input name="image2" id="image2" class="d-none" type="file">
-            <label for="image2">
-                <img id="previewImage2" class="img-fluid  " src="../imgs/camera.png" alt="">
-                <div class="rounded-3 p-1 mt-2">
-                    +
-                </div>
-            </label>
+                <div class=" addimg col-12 col-sm-6 col-md-4 col-lg-4 ">
+                    <input class="imagemain " type="radio" name="imagemain" value="2">
+                    <h5 class="d-inline-block">  تعيين كصورة رئيسية</h5>
+                    <br>
+                    <input name="image2" id="image2" class="d-none" type="file">
+                    <label for="image2">
+                        <img id="previewImage2" class="img-fluid  " src="../imgs/camera.png" alt="">
+                        <div class="rounded-3 p-1 mt-2">
+                            +
+                        </div>
+                    </label>
 
-        </div>
-        <div class=" addimg col-12 col-sm-6 col-md-4 col-lg-4 ">-->
+                </div>
+                <div class=" addimg col-12 col-sm-6 col-md-4 col-lg-4 ">-->
             <!-- Image Preview on choose file in BLOB url format -->
             <!--<input class="imagemain " type="radio" name="imagemain" value="3">  <h5 class="d-inline-block">  تعيين كصورة رئيسية</h5>
-                <br>
-                <input name="image3" id="image3" class="d-none" type="file">
-                <label for="image3">
-                    <img id="previewImage3" class="img-fluid  " src="../imgs/camera.png" alt="">
-                    <div class="div3 rounded-3 p-1 mt-2">
-                        +
+                        <br>
+                        <input name="image3" id="image3" class="d-none" type="file">
+                        <label for="image3">
+                            <img id="previewImage3" class="img-fluid  " src="../imgs/camera.png" alt="">
+                            <div class="div3 rounded-3 p-1 mt-2">
+                                +
+                            </div>
+                        </label>
+
                     </div>
-                </label>
 
-            </div>
+                </div>
 
-        </div>
-
-    </div>-->
+            </div>-->
             <div class=" imgDiv   w-100   form-control text-start ">
                 <p class=" ps-2 fs-4 mt-1  ps-5 py-2">
                     اضف صورة ←  <span class=" ">   الصورة الرئيسية ضرورة</span>

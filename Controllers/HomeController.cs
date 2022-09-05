@@ -93,6 +93,7 @@ namespace E_commerce.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("userNameS");
+            Cart.getInstance().Clear();
 
             return Redirect("/home");
         }

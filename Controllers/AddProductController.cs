@@ -39,6 +39,8 @@ namespace E_commerce.Controllers
 
             return View();
         }
+
+
         [HttpPost]
         public IActionResult Index([FromForm] string productName, [FromForm] string price, [FromForm] string quantity,
                                    [FromForm] string unit, [FromForm] string address, [FromForm] string details, [FromForm] string date,
@@ -124,34 +126,43 @@ namespace E_commerce.Controllers
 
             if (db.SaveChanges() > 0)
             {
-                string fileNameImage1 = UpoadImages("f_", image1);
-                if (!string.IsNullOrEmpty(fileNameImage1))
+                if (image1 != null)
                 {
-                    db.ImagesProducts.Add(new ImagesProduct()
+                    string fileNameImage1 = UpoadImages("f_", image1);
+                    if (!string.IsNullOrEmpty(fileNameImage1))
                     {
-                        ImageUrl = fileNameImage1,
-                        ProductId = product.Id,
-                    });
+                        db.ImagesProducts.Add(new ImagesProduct()
+                        {
+                            ImageUrl = fileNameImage1,
+                            ProductId = product.Id,
+                        });
+                    }
                 }
 
-                string fileNameImage2 = UpoadImages("s_", image2);
-                if (!string.IsNullOrEmpty(fileNameImage2))
+                if (image2 != null)
                 {
-                    db.ImagesProducts.Add(new ImagesProduct()
+                    string fileNameImage2 = UpoadImages("s_", image2);
+                    if (!string.IsNullOrEmpty(fileNameImage2))
                     {
-                        ImageUrl = fileNameImage1,
-                        ProductId = product.Id,
-                    });
+                        db.ImagesProducts.Add(new ImagesProduct()
+                        {
+                            ImageUrl = fileNameImage2,
+                            ProductId = product.Id,
+                        });
+                    }
                 }
 
-                string fileNameImage3 = UpoadImages("th_", image3);
-                if (!string.IsNullOrEmpty(fileNameImage3))
+                if (image3 != null)
                 {
-                    db.ImagesProducts.Add(new ImagesProduct()
+                    string fileNameImage3 = UpoadImages("th_", image3);
+                    if (!string.IsNullOrEmpty(fileNameImage3))
                     {
-                        ImageUrl = fileNameImage1,
-                        ProductId = product.Id,
-                    });
+                        db.ImagesProducts.Add(new ImagesProduct()
+                        {
+                            ImageUrl = fileNameImage3,
+                            ProductId = product.Id,
+                        });
+                    }
                 }
 
                 db.SaveChanges();

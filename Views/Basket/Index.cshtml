@@ -20,12 +20,26 @@
 
             </div>
             <div class="col puyproduct">
-                <button type="button" class="float-end px-4 btnColor"
+                @if (ViewBag.userS != null)
+                {
+                    <button type="button" class="float-end px-4 btnColor"
                         data-bs-toggle="modal" data-bs-target="#basketParticipant">
-                    <p class=" fs-4  pt-2 mt-1">
-                        اتمام عملية الشراء
-                    </p>
-                </button>
+                        <p class=" fs-4  pt-2 mt-1">
+                            اتمام عملية الشراء
+                        </p>
+                    </button>
+                }
+                else
+                {
+                    <form action="/login">
+                        <button type="submit" class="float-end px-4 btnColor">
+                            <p class=" fs-4  pt-2 mt-1">
+                                اتمام عملية الشراء
+                            </p>
+                        </button>
+                    </form>
+                }
+
 
                 <!-- complete puy product  -->
                 <div class="modal fade   " id="basketParticipant" tabindex="-1" aria-labelledby="payproductLabel" aria-hidden="true">
@@ -38,34 +52,17 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form class="  needs-validation  mt-5 mt-sm-5 mt-md-1   mt-lg-5 mx-4" novalidate>
-                                    <label class="">رقم هاتفك:</label>
-                                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder="00967770331586" id="validationCustom01" value="" required>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please provide a valid input.
-                                    </div>
+                                <form class="  needs-validation  mt-5 mt-sm-5 mt-md-1   mt-lg-5 mx-4" method="post" action="/Basket/Done" novalidate>
+
                                     <label class="">العنوان :</label>
-                                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder="" id="validationCustom01" value="" required>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please provide a valid input.
-                                    </div>
-                                    <label class="">العنوان :</label>
-                                    <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " id="validationTextarea" placeholder=" الرسالة" required></textarea>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please provide a valid input.
-                                    </div>
+                                    <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder="" id="validationCustom01" name="userAddress" required>
+
+
+                                    <label class="">ملاحظة :</label>
+                                    <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " id="validationTextarea" name="detials" placeholder=" نص الملاحظة"></textarea>
 
                                     <div class="   ">
-                                        <button id="basketcuccessNotice" class=" btnsubmit btn  fs-5 w-100   " type="submit"> تاكيد الشراء</button>
+                                        <button class=" btnsubmit btn  fs-5 w-100   " type="submit"> تاكيد الشراء</button>
                                     </div>
 
 
@@ -76,7 +73,7 @@
                     </div>
                 </div>
                 <!-- message success share in the aution form  -->
-                <div id="baskecuccessDiv" class="   basketsuccessfulMSG text-center cuccessDiv position-fixed  m-4   ">
+                @*<div  class="   basketsuccessfulMSG text-center  position-fixed  m-4   ">
                     <div class="alert fs-5 alert-dismissible fade show  pb-0 float-end " role="alert">
                         <div class="row justify-content-center">
                             <div class="col-6 ">
@@ -93,7 +90,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
+
+                
             </div>
 
         </div>
@@ -141,14 +140,14 @@
                                         <button class="cartQtyPlus " type="submit"> + </button>
                                         <input type="hidden" name="id" value="@cart.Id" />
                                     </form>
-                                    
+
                                     <input type="text" name="qty" min="0" class="qty form-control" value="@cart.Quantity">
-                                    
+
                                     <form action="/Basket/Decrement" method="post">
                                         <button class="cartQtyMinus" type="submit" value="-">- </button>
                                         <input type="hidden" name="id" value="@cart.Id" />
                                     </form>
-                                    
+
                                     <form action="/Basket/Remove" method="post">
                                         <button id="btnDelete1" class="btnDelete ms-5 " type="submit">
                                             <i class="fa-solid fa-close p-1 fs-4 "></i>
