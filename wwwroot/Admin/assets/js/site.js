@@ -138,6 +138,7 @@ helpDatatable = () => {
         paging: true,
         lengthChange: true,
         searching: true,
+        order: [[1, 'asc']],
         ordering: true,
         lengthMenu: [7, 10, 25, 50, 75, 100],
         responsive: false,
