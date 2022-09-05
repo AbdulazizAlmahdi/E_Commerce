@@ -138,7 +138,7 @@ namespace E_commerce.Areas.Admin.Controllers
         {
             IEnumerable<Models.SelectListItem> productsList = Enumerable.Empty<Models.SelectListItem>();
             if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-                productsList = productsRepository.show(0).Where(p => p.NameAr.Contains(q)).Select(
+                productsList = productsRepository.show(int.Parse(HttpContext.Session.GetString("_UserId"))).Where(p => p.NameAr.Contains(q)).Select(
                    p => new Models.SelectListItem
                    {
                        Text = p.NameAr,
@@ -161,7 +161,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                IQueryable<Auction> auctionsData = auctionRepository.show(1);
+                IQueryable<Auction> auctionsData = auctionRepository.show(int.Parse(HttpContext.Session.GetString("_UserId")));
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
                     auctionsData = auctionsData.OrderBy(sortColumn + " " + sortColumnDirection);
