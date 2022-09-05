@@ -34,65 +34,80 @@
                     <input id="name-id" asp-for="@Model.user.Name" class="form-control"
                            placeholder="محمد احمد عبدالله" />
                 </div>
-                <span asp-validation-for="@Model.user.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="form-label w-100" for="namber-id" asp-for="@Model.user.Phone.Number"></label>
-                <div class="input-group input-group-merge">
-                    <input type="tel" id="namber-id" asp-for="@Model.user.Phone.Number" class="form-control"
-                           placeholder="777-000-000" aria-describedby="modalAddCard2" />
+                <div class="form-group">
+                    <label class="form-label w-100" for="namber-id" asp-for="@Model.user.JobName"></label>
+                    <select class="form-select" asp-for="@Model.user.JobName"
+                            data-allow-clear="true">
+                        <option value="مشرف عام">مشرف عام</option>
+                        <option value="دعم">دعم</option>
+                        <option value="مدير مبيعات">مدير مبيعات</option>
+                        <option value="مشرف محافظة">مشرف محافظة</option>
+                        <option value="مشرف مديرية">مشرف مديرية</option>
+                        <option value="مشرف عزلة">مشرف عزلة</option>
+                        <option value="مشرف قرية">مشرف قرية</option>
+                        <option value="لجنة تسويقية">لجنة تسويقية</option>
+                        <option value="مندوب">مندوب</option>
+                        <option value="عميل">عميل</option>
+                    </select>
+                    <span asp-validation-for="@Model.user.JobName" class="text-danger"></span>
                 </div>
-                <span asp-validation-for="@Model.user.Phone.Number" class="text-danger"></span>
-            </div>
-            <!-- select2 -->
-            <div class="form-group" id="select">
-                <label class="form-label w-100" for="childUsers" asp-for="@Model.user.UsersId"></label>
-                <div class="input-group input-group-merge">
-                    <select id="childUsers" asp-for="@Model.user.UsersId" class="form-control" name="UsersId"
-                            style="width: 100%;" data-placeholder="حدد المستخدم" aria-describedby="modalAddCard2">
+                <div class="form-group">
+                    <label class="form-label w-100" for="namber-id" asp-for="@Model.user.Phone.Number"></label>
+                    <div class="input-group input-group-merge">
+                        <input type="tel" id="namber-id" asp-for="@Model.user.Phone.Number" class="form-control"
+                               placeholder="777-000-000" aria-describedby="modalAddCard2" />
+                    </div>
+                    <span asp-validation-for="@Model.user.Phone.Number" class="text-danger"></span>
+                </div>
+                <!-- select2 -->
+                <div class="form-group" id="select">
+                    <label class="form-label w-100" for="childUsers" asp-for="@Model.user.UsersId"></label>
+                    <div class="input-group input-group-merge">
+                        <select id="childUsers" asp-for="@Model.user.UsersId" class="form-control" name="UsersId"
+                                style="width: 100%;" data-placeholder="حدد المستخدم" aria-describedby="modalAddCard2">
+                        </select>
+                    </div>
+                    <span asp-validation-for="@Model.user.UsersId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label w-100" for="modalAddCard" asp-for="@Model.user.Address"></label>
+                    <div class="input-group input-group-merge">
+                        <input id="modalAddCard" asp-for="@Model.user.Address" class="form-control" type="text"
+                               placeholder="صنعاء - بني الحارث - قرية النجيبة" aria-describedby="modalAddCard2" />
+                    </div>
+                    <span asp-validation-for="@Model.user.Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label w-100" for="modalAddCard" asp-for="@Model.user.Password"></label>
+                    <div class="input-group input-group-merge">
+                        <input id="modalAddCard" asp-for="@Model.user.Password" class="form-control" type="text"
+                               placeholder="Test@124ot4mm" aria-describedby="modalAddCard2" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="modalPermission">الصلاحيات</label>
+                    <select multiple id="modalPermission" name="modalPermission" class="form-select"
+                            data-allow-clear="true">
+                        <option value="">حدد صلاحية المستخدم</option>
+                        <option value="Australia">مندوب</option>
+                        <option value="Bangladesh">اضافة منتجات المخازن</option>
+                        <option value="Belarus">ادارة العملاء</option>
+                        <option value="Brazil">الدعم</option>
                     </select>
                 </div>
-                <span asp-validation-for="@Model.user.UsersId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label w-100" for="modalAddCard" asp-for="@Model.user.Address"></label>
-                <div class="input-group input-group-merge">
-                    <input id="modalAddCard" asp-for="@Model.user.Address" class="form-control" type="text"
-                           placeholder="صنعاء - بني الحارث - قرية النجيبة" aria-describedby="modalAddCard2" />
+                <div class="form-group">
+                    <label class="form-label" asp-for="@Model.user.Place.Name"></label>
+                    <select id="modalPlace" asp-for="@Model.user.PlaceId" class="form-select" data-allow-clear="true"
+                            asp-items="@(new SelectList(Model.places, "Id", "Name"))"></select>
                 </div>
-                <span asp-validation-for="@Model.user.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="form-label w-100" for="modalAddCard" asp-for="@Model.user.Password"></label>
-                <div class="input-group input-group-merge">
-                    <input id="modalAddCard" asp-for="@Model.user.Password" class="form-control" type="text"
-                           placeholder="Test@124ot4mm" aria-describedby="modalAddCard2" />
+                <div class="form-group">
+                    <div class="d-grid gap-2">
+                        <br />
+                        <input type="submit" value="تعديل الملف الشخصي" class="btn btn-primary" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="form-label" for="modalPermission">الصلاحيات</label>
-                <select multiple id="modalPermission" name="modalPermission" class="form-select"
-                        data-allow-clear="true">
-                    <option value="">حدد صلاحية المستخدم</option>
-                    <option value="Australia">مندوب</option>
-                    <option value="Bangladesh">اضافة منتجات المخازن</option>
-                    <option value="Belarus">ادارة العملاء</option>
-                    <option value="Brazil">الدعم</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label" asp-for="@Model.user.Place.Name"></label>
-                <select id="modalPlace" asp-for="@Model.user.PlaceId" class="form-select" data-allow-clear="true"
-                        asp-items="@(new SelectList(Model.places, "Id", "Name"))"></select>
-            </div>
-            <div class="form-group">
-                <div class="d-grid gap-2">
-                    <br />
-                    <input type="submit" value="تعديل الملف الشخصي" class="btn btn-primary" />
-                </div>
-            </div>
-        </form>
+</form>
     </div>
 </div>
 
