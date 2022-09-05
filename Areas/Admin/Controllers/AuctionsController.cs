@@ -29,9 +29,9 @@ namespace E_commerce.Areas.Admin.Controllers
             this.auctionRepository = auctionRepository;
         }
         public IActionResult Index()
-        {   
-            
-            var userId= HttpContext.Session.GetString("_UserId");
+        {
+
+            var userId = HttpContext.Session.GetString("_UserId");
 
             if (userId == null)
             {
@@ -180,6 +180,19 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 throw;
             }
+        }
+
+        public IActionResult Show(int id)
+
+        {
+            var auth= auctionRepository.show(0, "").FirstOrDefault(a => a.Id == id);
+
+            if(auth.AuctionsUser==null)
+            {
+                return View("error");
+            }
+
+            return View(auth);
         }
 
 

@@ -88,6 +88,7 @@ namespace E_commerce.Controllers
                         UserId = userId,
                         Amount = ammount
                     });
+                    db.SaveChanges();
                 }
                 else
                 {
