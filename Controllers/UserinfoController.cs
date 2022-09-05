@@ -133,18 +133,15 @@ namespace E_commerce.Controllers
 
         public JsonResult GetProduct(string state)
         {
-            var p = db.Products.Include(p => p.Category).Where(p => p.Status == state&&p.PurchaseId==null);
-
+            var id = HttpContext.Session.GetString("_UserId");
+            var p = db.Products.Include(p => p.Category).Where(p => p.Status == state && p.PurchaseId==null && p.UserId == int.Parse(id));
             return Json(new {  html = Helper.RenderRazorViewToString(this, "_ProductTable",p) });
-
         }
 
         public JsonResult GetProductPurchase()
         {
             var p = db.Products.Include(p => p.Category).Where(p => p.Status == "فعال" && p.PurchaseId >0);
-
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ProductTable", p) });
-
         }
 
     }
