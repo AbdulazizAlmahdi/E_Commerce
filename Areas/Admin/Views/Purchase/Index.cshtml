@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "المبيعات";
+    ViewData["Title"] = "الطلبات";
     Layout = "_Layout";
 }
 <!-- Layout container -->
@@ -7,7 +7,7 @@
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-            <span class="d-none d-lg-inline-block" style="font-size: 25px;">المبيعات/</span>
+            <span class="d-none d-lg-inline-block" style="font-size: 25px;">الطلبات/</span>
         </div>
         <div class="container-xxl flex-grow-1 container-p-y">
             <!-- Toast with Placements -->
@@ -16,7 +16,7 @@
             <!-- Basic Bootstrap Table -->
             <div class="card  p-4">
                 <div class="card-header border-bottom">
-                    <span class="d-none d-lg-inline-block" style="font-size: 20px;">عرض المبيعات</span>
+                    <span class="d-none d-lg-inline-block" style="font-size: 20px;">عرض الطلبات</span>
                 </div>           
                 <div id="view-all">
                     @await Html.PartialAsync("PurchaseTable", null)

@@ -15,11 +15,11 @@ namespace E_commerce.Models
         }
 
         public int Id { get; set; }
-        [Required(ErrorMessage = "حالة الفاتورة مطلوب")]
-        [Display(Name = "حالة الفاتورة")]
+        [Required(ErrorMessage = "حالة الطلب مطلوب")]
+        [Display(Name = "حالة الطلب")]
         public bool Status { get; set; }
-        [Required(ErrorMessage = "إجمالي الفاتورة مطلوب")]
-        [Display(Name = "إجمالي الفاتورة")]
+        [Required(ErrorMessage = "إجمالي الطلب مطلوب")]
+        [Display(Name = "إجمالي الطلب")]
         public decimal Amount { get; set; }
         [Display(Name = "مبالغ اضافية")]
         public decimal ExtraAmount { get; set; }

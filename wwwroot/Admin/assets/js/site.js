@@ -668,7 +668,7 @@ purchaseDatatable = () => {
             { "data": "user.name", "name": "name", "autoWidth": true, "orderable": false },
             {
                 "render": function (data, type, row) {
-                    return `<button onClick="showInPopup('/Admin/Purchase/ShowProducts/' + ${row.id}, 'عرض منتجات الفاتورة')" class="btn btn-primary btn-sm">المنتجات</button>` +
+                    return `<button onClick="showInPopup('/Admin/Purchase/ShowProducts/' + ${row.id}, 'عرض منتجات الطلب')" class="btn btn-primary btn-sm">المنتجات</button>` +
                         `<span>&nbsp;</span>` +
                         `<button onClick="showInPopup('/Admin/Purchase/CreateOrEdit/' + ${row.id}, 'تعديل الطلب')" class="btn btn-primary btn-sm">تعديل</button>` +
                         `<span>&nbsp;</span>` +
