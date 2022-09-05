@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce.Migrations
 {
     [DbContext(typeof(WebContext))]
-    [Migration("20220905164243_initial")]
+    [Migration("20220905184936_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,14 +72,10 @@ namespace E_commerce.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuctionId")
-                        .IsUnique();
-
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.HasIndex(new[] { "AuctionId" }, "IX_AuctionsUsers_AuctionID")
-                        .HasDatabaseName("IX_AuctionsUsers_AuctionID1");
+                    b.HasIndex(new[] { "AuctionId" }, "IX_AuctionsUsers_AuctionID");
 
                     b.HasIndex(new[] { "UserId" }, "IX_AuctionsUsers_UserID")
                         .HasDatabaseName("IX_AuctionsUsers_UserID1");
@@ -622,8 +618,8 @@ namespace E_commerce.Migrations
             modelBuilder.Entity("E_commerce.Models.AuctionsUser", b =>
                 {
                     b.HasOne("E_commerce.Models.Auction", "Auction")
-                        .WithOne("AuctionsUser")
-                        .HasForeignKey("E_commerce.Models.AuctionsUser", "AuctionId")
+                        .WithMany("AuctionsUsers")
+                        .HasForeignKey("AuctionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -800,7 +796,7 @@ namespace E_commerce.Migrations
 
             modelBuilder.Entity("E_commerce.Models.Auction", b =>
                 {
-                    b.Navigation("AuctionsUser");
+                    b.Navigation("AuctionsUsers");
                 });
 
             modelBuilder.Entity("E_commerce.Models.Category", b =>

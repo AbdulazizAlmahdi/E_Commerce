@@ -438,12 +438,6 @@ namespace E_commerce.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AuctionsUsers_AuctionID",
                 table: "AuctionsUsers",
-                column: "AuctionID",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AuctionsUsers_AuctionID1",
-                table: "AuctionsUsers",
                 column: "AuctionID");
 
             migrationBuilder.CreateIndex(

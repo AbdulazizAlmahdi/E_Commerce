@@ -549,7 +549,7 @@ auctionDatatable = () => {
             { "data": "startPrice", "name": "StartPrice", "autoWidth": true },
             {
                 "render": function (data, type, row) {
-                    return `<button onClick="showInPopup('/Admin/Auctions/Show/' + ${row.id}, 'المشاركين')" class="btn btn-secondary btn-sm">المشاركين</button>` +
+                    return `<button onClick="showInPopup('/Admin/Auctions/ShowParticipants/' + ${row.id}, 'المشاركين')" class="btn btn-secondary btn-sm">المشاركين</button>` +
                             `<span>&nbsp;</span>` +
                             `<button onClick="showInPopup('/Admin/Auctions/CreateOrEdit/' + ${row.id}, 'تعديل المزاد')" class="btn btn-primary btn-sm">تعديل</button>` +
                             `<span>&nbsp;</span>` +

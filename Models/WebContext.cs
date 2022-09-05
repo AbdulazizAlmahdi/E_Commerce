@@ -64,6 +64,10 @@ namespace E_commerce.Models
                 entity.HasOne(d => d.Product)
                     .WithOne(p => p.Auction)
                     .HasForeignKey<Auction>(d => d.ProductId);
+
+                entity.HasMany(a => a.AuctionsUsers)
+                .WithOne(a => a.Auction)
+                .HasForeignKey(a => a.AuctionId);
             });
 
             modelBuilder.Entity<AuctionsUser>(entity =>
@@ -80,9 +84,8 @@ namespace E_commerce.Models
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
-                entity.HasOne(d => d.Auction)
-                    .WithOne(p => p.AuctionsUser)
-                    .HasForeignKey<AuctionsUser>(d => d.AuctionId);
+                entity.HasOne(a => a.Auction)
+                    .WithMany(u=>u.AuctionsUsers);
 
                 entity.HasOne(d => d.User)
                     .WithOne(p => p.AuctionsUser)

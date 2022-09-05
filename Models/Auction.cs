@@ -23,6 +23,6 @@ namespace E_commerce.Models
         public int ProductId { get; set; }
 
         public virtual Product Product { get; set; }
-        public virtual AuctionsUser AuctionsUser { get; set; }
+        public virtual ICollection<AuctionsUser> AuctionsUsers { get; set; }
     }
 }

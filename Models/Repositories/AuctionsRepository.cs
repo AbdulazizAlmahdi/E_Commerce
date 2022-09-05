@@ -16,7 +16,7 @@ namespace E_commerce.Models.Repositories
             this.context = db;
         }
         public IQueryable<Auction> show(int? id,String name) =>
-            context.Auctions.Include(a=>a.Product).Include(a=>a.AuctionsUser).ThenInclude(u=>u.User).ThenInclude(u=>u.Phone);
+            context.Auctions.Include(a=>a.Product).Include(a=>a.AuctionsUsers).ThenInclude(u=>u.User).ThenInclude(u=>u.Phone);
 
         public void Add(Auction entity)
         {

@@ -1,0 +1,31 @@
+﻿@model Auction
+@{
+    Layout = null;
+}
+<!-- Basic Bootstrap Table -->
+<div class="table-responsive text-nowrap">
+    <table id="auction-datatable" class="table table-striped table-bordered dt-responsive nowrap" width="100%"
+        cellspacing="0">
+        <thead>
+            <tr>
+                <th><strong>الرقم</strong></th>
+                <th>اسم المشارك</th>
+                <th>رقم الهاتف</th>
+                <th>المبلغ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AuctionsUsers)
+            {
+                <tr class="@item.Id%2==0?odd:even">
+                    <td class="sorting_1">@item.Id</td>
+                    <td>@item.User.Name</td>
+                    <td>@item.User.Phone.Number</td>
+                    <td>@item.Amount</td>                  
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<!--/ Basic Bootstrap Table -->

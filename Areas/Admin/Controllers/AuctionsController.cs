@@ -110,9 +110,6 @@ namespace E_commerce.Areas.Admin.Controllers
                 return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
             }
         }
-
-
-
         [NoDirectAccess]
         public ActionResult Delete(int id)
         {
@@ -181,16 +178,11 @@ namespace E_commerce.Areas.Admin.Controllers
                 throw;
             }
         }
-
-        public IActionResult Show(int id)
+        [NoDirectAccess]
+        public IActionResult ShowParticipants(int id)
 
         {
-            var auth= auctionRepository.show(0, "").FirstOrDefault(a => a.Id == id);
-
-            if(auth.AuctionsUser==null)
-            {
-                return View("error");
-            }
+            Auction auth = auctionRepository.show(null).FirstOrDefault(a => a.Id == id);
 
             return View(auth);
         }
