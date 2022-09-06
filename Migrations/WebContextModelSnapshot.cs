@@ -294,13 +294,16 @@ namespace E_commerce.Migrations
 
                     b.Property<string>("Number")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Number" }, "IX_Phone_Number")
+                        .IsUnique();
 
                     b.ToTable("Phones");
                 });
@@ -363,10 +366,11 @@ namespace E_commerce.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasColumnName("DetailsEN");
 
-                    b.Property<int?>("Discount")
-                        .HasColumnType("int");
+                    b.Property<double?>("Discount")
+                        .HasColumnType("float");
 
-                    b.Property<int>("Duration")
+                    b.Property<int?>("Duration")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("Evaluation")
@@ -383,13 +387,15 @@ namespace E_commerce.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("NameEN");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal?>("Price")
+                        .IsRequired()
                         .HasColumnType("decimal(8,2)");
 
                     b.Property<int?>("PurchaseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int?>("Quantity")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Report")

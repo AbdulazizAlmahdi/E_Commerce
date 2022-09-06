@@ -43,7 +43,7 @@ namespace E_commerce.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -301,7 +301,7 @@ namespace E_commerce.Migrations
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Views = table.Column<int>(type: "int", nullable: true),
-                    Discount = table.Column<int>(type: "int", nullable: true),
+                    Discount = table.Column<double>(type: "float", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     Evaluation = table.Column<int>(type: "int", nullable: true),
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -490,6 +490,12 @@ namespace E_commerce.Migrations
                 name: "IX_Payments_PurchaseID",
                 table: "Payments",
                 column: "PurchaseID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Phone_Number",
+                table: "Phones",
+                column: "Number",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Places_PlaceID",

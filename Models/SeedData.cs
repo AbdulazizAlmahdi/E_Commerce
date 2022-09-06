@@ -82,13 +82,13 @@ namespace E_commerce.Models
             }        
             if (!webContext.Phones.Any())
             {
-                for(int i = 0; i < 500; i++)
+                for(int i = 0; i < 10; i++)
                 {
 
                     webContext.AddRange(
                         new Phone
                         {
-                            Number = "+96777711111" + i.ToString(),
+                            Number = "77711111" + i.ToString(),
                             CreatedAt=DateTime.UtcNow,
                             UpdatedAt = DateTime.UtcNow
                         }
@@ -100,9 +100,9 @@ namespace E_commerce.Models
             if (!webContext.Users.Any())
             {
                 
-                for (int i = 0; i < 500; i++)
+                for (int i = 0; i < 10; i++)
                 {
-                    Phone phone = webContext.Phones.Single(r => r.Number == "+96777711111"+i.ToString());
+                    Phone phone = webContext.Phones.Single(r => r.Number == "77711111"+i.ToString());
                     Place place = webContext.Places.Single(r => r.Name == "taiz");
 
                     webContext.AddRange(
@@ -126,9 +126,9 @@ namespace E_commerce.Models
             if (!webContext.Helps.Any())
             {
                 
-                for (int i = 0; i < 500; i++)
+                for (int i = 0; i < 10; i++)
                 {
-                    Phone phone = webContext.Phones.Single(r => r.Number == "+96777711111"+i.ToString());
+                    Phone phone = webContext.Phones.Single(r => r.Number == "77711111"+i.ToString());
 
                     webContext.AddRange(
                     new Help
@@ -167,7 +167,7 @@ namespace E_commerce.Models
                 foreach (Category category in categories)
                 {
 
-                    for (int i = 0; i < 50; i++)
+                    for (int i = 0; i < 10; i++)
                     {
                         webContext.AddRange(
                             new Product
@@ -197,7 +197,7 @@ namespace E_commerce.Models
                 foreach (Category category in categories)
                 {
 
-                    for (int i = 0; i < 50; i++)
+                    for (int i = 0; i < 10; i++)
                     {
                         webContext.AddRange(
                             new Product
@@ -228,7 +228,7 @@ namespace E_commerce.Models
                 foreach (Product product in products)
                 {
 
-                    for (int i = 0; i < 50; i++)
+                    for (int i = 0; i < 10; i++)
                     {
                         webContext.AddRange(
                             new Auction

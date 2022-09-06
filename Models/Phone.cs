@@ -17,8 +17,9 @@ namespace E_commerce.Models
         [Key]
         public int Id { get; set; }
         [Required (ErrorMessage = "رقم الهاتف مطلوب")]
-        [StringLength(15)]
+        [StringLength(9)]
         [Display(Name = "رقم الهاتف")]
+        [Index(IsUnique = true)]
         public string Number { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }

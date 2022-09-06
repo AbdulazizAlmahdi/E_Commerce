@@ -27,6 +27,7 @@ namespace E_commerce.Models
         public string NameEn { get; set; }
         [Display(Name = "تفاصيل المنتج")]
         [StringLength(maximumLength: 500, ErrorMessage = "تفاصيل المنتج لا يزيد عن 500 حرف")]
+        [Required(ErrorMessage = "تفاصيل المنتج مطلوب")]
         public string DetailsAr { get; set; }
         [Display(Name = "تفاصيل المنتج")]
         [StringLength(maximumLength: 500, ErrorMessage = "تفاصيل المنتج لا يزيد عن 500 حرف")]
@@ -41,24 +42,26 @@ namespace E_commerce.Models
         [Column(TypeName = "decimal(8, 2)")]
         [Display(Name = "سعر المنتج")]
         [Required(ErrorMessage = "سعر المنتج مطلوب")]
-        public decimal Price { get; set; }
-        [Display(Name = "المدة")]
+        [Range(1000, 10000000, ErrorMessage = "السعر يجب أن يكون بين 1000 و 10000000")]
+        public decimal? Price { get; set; }
+        [Display(Name = "المدة/يوم")]
         [Required(ErrorMessage = "المدة مطلوبة")]
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
         [Display(Name = "الحالة")]
         public string Status { get; set; }
         [Required(ErrorMessage = "الكمية مطلوبة")]
         [Display(Name = "الكمية")]
         [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = "الكمية لا يمكن ان تكون 0")]
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
         [Display(Name = "الوحدة")]
-        [AllowNull]
+        [StringLength(maximumLength: 100, ErrorMessage = "الوحدة لا تزيد عن 100 حرف")]
+        [Required(ErrorMessage = "الوحدة مطلوبة")]
         public string Unit { get; set; }
         [AllowNull]
         public int? Views { get; set; }
         [Display(Name = "الخصم")]
         [AllowNull]
-        public int? Discount { get; set; }
+        public double? Discount { get; set; }
         [AllowNull]
         public int? UserId { get; set; }
         [AllowNull]

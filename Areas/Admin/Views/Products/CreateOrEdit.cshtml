@@ -63,7 +63,7 @@
             <div class="form-group" id="select">
                 <label class="form-label w-100" for="category-product" asp-for="@Model.product.Category.Name"></label>
                 <div class="input-group input-group-merge">
-                    <select id="category-product" asp-for="@Model.product.CategoryId" class="select2 form-select"
+                    <select id="category-product" asp-for="@Model.product.CategoryId" class="select2 form-select" required
                             name="CategoryId" style="width: 100%;" data-placeholder="حدد الصنف"
                             aria-describedby="modalAddCard2">
                     </select>
@@ -74,21 +74,21 @@
             <div class="form-group">
                 <label class="form-label w-100" for="price-id" asp-for="@Model.product.Price"></label>
                 <div class="input-group input-group-merge">
-                    <input asp-for="@Model.product.Price" class="form-control" placeholder="" />
+                    <input type="number" asp-for="@Model.product.Price" class="form-control"  />
                 </div>
                 <span asp-validation-for="@Model.product.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="form-label w-100" for="price-id" asp-for="@Model.product.Quantity"></label>
                 <div class="input-group input-group-merge">
-                    <input asp-for="@Model.product.Quantity" class="form-control" placeholder="" />
+                    <input type="number" min="1" max="1000" step="1" asp-for="@Model.product.Quantity" class="form-control" placeholder="" />
                 </div>
                 <span asp-validation-for="@Model.product.Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="form-label w-100" for="price-id" asp-for="@Model.product.Unit"></label>
                 <div class="input-group input-group-merge">
-                    <input asp-for="@Model.product.Unit" class="form-control" placeholder="" />
+                    <input type="text" asp-for="@Model.product.Unit" class="form-control" placeholder="" />
                 </div>
                 <span asp-validation-for="@Model.product.Unit" class="text-danger"></span>
             </div>
@@ -102,14 +102,14 @@
             <div class="form-group">
                 <label class="form-label w-100" for="price-id" asp-for="@Model.product.Address"></label>
                 <div class="input-group input-group-merge">
-                    <input asp-for="@Model.product.Address" class="form-control" placeholder="" />
+                    <input type="text" asp-for="@Model.product.Address" class="form-control" placeholder="" />
                 </div>
                 <span asp-validation-for="@Model.product.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="form-label w-100" for="price-id" asp-for="@Model.product.Discount"></label>
                 <div class="input-group input-group-merge">
-                    <input asp-for="@Model.product.Discount" class="form-control" placeholder="" />
+                    <input  type="number" min="0.00" max="0.99" step="0.01" value="0.00"  asp-for="@Model.product.Discount" class="form-control" placeholder="" />
                 </div>
                 <span asp-validation-for="@Model.product.Discount" class="text-danger"></span>
             </div>
@@ -126,14 +126,14 @@
             <div class="form-group">
                 <label class="form-label w-100" for="price-id" asp-for="@Model.product.Duration"></label>
                 <div class="input-group input-group-merge">
-                    <input asp-for="@Model.product.Duration" class="form-control" placeholder="" />
+                    <input type="number" min="1" max="30" step="1" asp-for="@Model.product.Duration" class="form-control" placeholder="" />
                 </div>
                 <span asp-validation-for="@Model.product.Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="form-label w-100" for="price-id" asp-for="@Model.Files"></label>
                 <div class="input-group input-group-merge">
-                    <input type="file" class="form-control" id="inputGroupFile02" multiple asp-for="@Model.Files">
+                    <input type="file" min="1" max="10" class="form-control" id="inputGroupFile02" multiple asp-for="@Model.Files">
                 </div>
                 <span asp-validation-for="@Model.Files" class="text-danger"></span>
             </div>
