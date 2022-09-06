@@ -154,13 +154,6 @@ namespace E_commerce.Controllers
                 return Redirect("/home");
             }
 
-<<<<<<< Updated upstream
-        public JsonResult GetProductPurchase()
-        {
-            var id = HttpContext.Session.GetString("_UserId");
-            var p = db.Products.Include(p => p.Category).Where(p => p.Status == "فعال" && p.PurchaseId >0 && p.UserId == int.Parse(id));
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ProductTable", p) });
-=======
             if(id != null && id > 0)
             {
                 Product product = db.Products.FirstOrDefault(p => p.Id == id);
@@ -187,7 +180,7 @@ namespace E_commerce.Controllers
             getTableData();
 
             return Redirect("/UserInfo");
->>>>>>> Stashed changes
+
         }
 
     }
