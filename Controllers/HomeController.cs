@@ -56,7 +56,14 @@ namespace E_commerce.Controllers
             {
                 if (product.UserId != null)
                 {
-                    product.UserId = db.Users.FirstOrDefault(u => u.Id == product.UserId)?.UsersId;
+                    User user = db.Users.FirstOrDefault(u => u.Id == product.UserId);
+                    if(user != null)
+                    {
+                        product.UserId = user.JobName == "عميل" ? 1 : 0;
+                    }
+                } else
+                {
+                    product.UserId = 0;
                 }
                 List<ImagesProduct> image = db.ImagesProducts.Where(img => img.ProductId == product.Id).ToList();
                 newProducts.Add(new ProductsWithImages()

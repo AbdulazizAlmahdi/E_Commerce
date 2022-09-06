@@ -62,9 +62,13 @@
                         <P>
                             سجل دخولك واستمتع بالعروض
                         </P>
-                        <a href="/Login" class=" text-decoration-none  ">
-                            <button type="button" class="btn btncarousel rounded-pill p-auto  px-sm-3  py-sm-1 px-md-5  py-md-1 px-lg-5  py-lg-1">اشتري الان</button>
+                        @if(ViewBag.userS == null)
+                        {
+                             <a href="/Login" class=" text-decoration-none  ">
+                            <button type="button" class="btn btncarousel rounded-pill p-auto  px-sm-3  py-sm-1 px-md-5  py-md-1 px-lg-5  py-lg-1">اشترك الان</button>
                         </a>
+                        }
+                       
                     </div>
                 </div>
                 <div class="carousel-item  rounded-pill">
@@ -79,9 +83,13 @@
                         <P>
                             سجل دخولك واستمتع بالعروض
                         </P>
-                        <a href="/Login" class=" text-decoration-none  ">
+                        @if(ViewBag.userS == null)
+                        {
+                             <a href="/Login" class=" text-decoration-none  ">
                             <button type="button" class="btn btncarousel rounded-pill p-auto  px-sm-3  py-sm-1 px-md-5  py-md-1 px-lg-5  py-lg-1"> اشترك الان</button>
                         </a>
+                        }
+                       
 
                     </div>
                 </div>
@@ -95,9 +103,15 @@
                         <p>
                             سجل دخولك واستمتع بالعروض
                         </p>
+                       
+                        @if(ViewBag.userS == null)
+                        {
                         <a href="/Login" class=" text-decoration-none  ">
-                            <button type="button" class="btn btncarousel rounded-pill p-auto  px-sm-3  py-sm-1 px-md-5  py-md-1 px-lg-5  py-lg-1">اشتري الان</button>
+                            <button type="button" class="btn btncarousel rounded-pill p-auto  px-sm-3  py-sm-1 px-md-5  py-md-1 px-lg-5  py-lg-1">اشترك الان</button>
                         </a>
+
+                        }
+                        
                     </div>
                 </div>
             </div>

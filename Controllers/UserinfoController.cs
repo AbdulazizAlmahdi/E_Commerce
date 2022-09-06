@@ -27,14 +27,14 @@ namespace E_commerce.Controllers
             this.hosting = hosting;
         }
 
-      private void initLayout()
+        private void initLayout()
         {
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
             ViewBag.phones = HttpContext.Session.GetString("phoneS");
             ViewBag.userAddress = HttpContext.Session.GetString("userAddress");
             ViewBag.userImage = HttpContext.Session.GetString("userImage");
             ViewBag.cartCount = Cart.getInstance().Count;
-        }    
+        }
         public IActionResult Index()
         {
             initLayout();
@@ -43,15 +43,12 @@ namespace E_commerce.Controllers
                 return Redirect("/home");
             }
 
-            var vm = new UserInfoViewModel
-            {
-                GetProducts = db.Products.Include(p=>p.Category).Where(p => p.Status == "فعال")
-            };
+            getTableData();
 
-            return View(vm);
+            return View();
         }
 
-                
+
         [HttpPost]
         public IActionResult index([FromForm] IFormFile image, [FromForm] string newName, [FromForm] string newAddress)
         {
@@ -61,10 +58,11 @@ namespace E_commerce.Controllers
                 return Redirect("/home");
             }
 
+            int userId = HttpContext.Session.GetInt32("idS") ?? 0;
+
             // Update image
             if (image != null)
             {
-                int userId = Convert.ToInt32(HttpContext.Session.GetInt32("idS"));
                 string imageName = UpoadImages(userId + "_", image);
                 if (!string.IsNullOrEmpty(imageName))
                 {
@@ -84,7 +82,6 @@ namespace E_commerce.Controllers
             //Update user info
             else if (newName != null && newAddress != null)
             {
-                int userId = HttpContext.Session.GetInt32("idS") ?? 0;
                 User user = db.Users.FirstOrDefault(u => u.Id == userId);
                 if (user != null)
                 {
@@ -103,10 +100,27 @@ namespace E_commerce.Controllers
             }
 
             initLayout();
+            getTableData();
 
             return View();
         }
 
+        private void getTableData()
+        {
+            int userId = HttpContext.Session.GetInt32("idS") ?? 0;
+            ViewBag.prodActive = db.Products.Where(p => p.Status == "فعال" && p.UserId == userId).ToList();
+            ViewBag.prodStop = db.Products.Where(p => p.Status == "متوقف" && p.UserId == userId).ToList();
+            ViewBag.prodOrder = db.Products.Where(p => p.PurchaseId != null && p.UserId == userId).ToList();
+            ViewBag.prodPurchased = db.Products.Join( // first table 
+                db.Payments, //second table
+                a => a.PurchaseId, // first table key
+                p => p.PurchaseId, // second table key
+                (a, p) => a // new data
+                )
+                .Where(p => p.PurchaseId != null && p.UserId == userId) // where condition
+                .ToList();// converto to list, so we can use it in for
+
+        }
         private string UpoadImages(string pref, IFormFile image)
         {
             string imageName = "default.png";
@@ -131,18 +145,49 @@ namespace E_commerce.Controllers
             return "users/" + imageName;
         }
 
-        public JsonResult GetProduct(string state)
+        
+        public IActionResult Delete(int? id)
         {
-            var id = HttpContext.Session.GetString("_UserId");
-            var p = db.Products.Include(p => p.Category).Where(p => p.Status == state && p.PurchaseId==null && p.UserId == int.Parse(id));
-            return Json(new {  html = Helper.RenderRazorViewToString(this, "_ProductTable",p) });
-        }
+            initLayout();
+            if (ViewBag.userS == null)
+            {
+                return Redirect("/home");
+            }
 
+<<<<<<< Updated upstream
         public JsonResult GetProductPurchase()
         {
             var id = HttpContext.Session.GetString("_UserId");
             var p = db.Products.Include(p => p.Category).Where(p => p.Status == "فعال" && p.PurchaseId >0 && p.UserId == int.Parse(id));
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ProductTable", p) });
+=======
+            if(id != null && id > 0)
+            {
+                Product product = db.Products.FirstOrDefault(p => p.Id == id);
+                if(product != null)
+                {
+                    List<ImagesProduct> images = db.ImagesProducts.Where(p => p.ProductId == id).ToList();
+                    foreach (var img in images)
+                    {
+                        db.ImagesProducts.Remove(img);
+                    }
+                    db.SaveChanges();
+
+                    List<Comment> comments = db.Comments.Where(p => p.ProductId == id).ToList();
+                    foreach (var cmt in comments)
+                    {
+                        db.Comments.Remove(cmt);
+                    }
+                    db.SaveChanges();
+
+                    db.Products.Remove(product);
+                    db.SaveChanges();
+                }
+            }
+            getTableData();
+
+            return Redirect("/UserInfo");
+>>>>>>> Stashed changes
         }
 
     }

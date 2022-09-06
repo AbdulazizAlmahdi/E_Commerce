@@ -110,7 +110,7 @@ namespace E_commerce.Controllers
                 CreatedAt = DateTime.Now,
                 UsersId = null,
                 JobName="عميل",
-                Status="موقف"
+                Status="موقف",
             });
 
             db.SaveChanges();

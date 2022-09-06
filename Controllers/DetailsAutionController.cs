@@ -79,7 +79,7 @@ namespace E_commerce.Controllers
                 int autionId = Convert.ToInt32(id);
                 int ammount = Convert.ToInt32(bidding);
 
-                AuctionsUser auctions = db.AuctionsUsers.FirstOrDefault(a => a.AuctionId == autionId);
+                AuctionsUser auctions = db.AuctionsUsers.FirstOrDefault(a => a.AuctionId == autionId && a.UserId == userId);
                 if(auctions == null)
                 {
                     db.AuctionsUsers.Add(new AuctionsUser()
@@ -126,7 +126,14 @@ namespace E_commerce.Controllers
                 if (data != null)
                 {
                     ViewBag.Auction = new AutionsProduct() { Auctions = data.aution, Products = data.product };
-                    ViewBag.maxAmount = db.AuctionsUsers.FirstOrDefault(au => au.AuctionId == auctionId)?.Amount;
+                    try
+                    {
+                        ViewBag.maxAmount = db.AuctionsUsers.Where(au => au.AuctionId == auctionId).Max(au => au.Amount);
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.maxAmount = null;
+                    }
                     List<Comment> comments = db.Comments.Where(cmd => cmd.ProductId == data.product.Id).Take(10).OrderByDescending(cmd => cmd.Id).ToList();
                     List<UsersWithComments> commentsList = new List<UsersWithComments>();
                     foreach (var comment in comments)

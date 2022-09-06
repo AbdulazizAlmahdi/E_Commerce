@@ -47,7 +47,7 @@
                         <div class="modal-content">
                             <div class="modal-header   ">
                                 <h5 class="modal-title text-center " id="autoinParticipantLabel">  اتمام عملية الشؤاء</h5>
-                                <button type="button " class=" bg-white rounded-circle " data-bs-dismiss="modal" aria-label="Close">
+                                <button type="button" class=" bg-white rounded-circle " data-bs-dismiss="modal" aria-label="Close">
                                     <i class="fa-solid fa-close p-1 fs-4 "></i>
                                 </button>
                             </div>
@@ -105,11 +105,19 @@
             <table id="basketTable" class=" basketTable table fs-5">
                 <thead class="tableHead  ">
                     <tr>
+<<<<<<< Updated upstream
                         <th scope="col" class="text-start">الصوره</th>
                         <th scope="col"class="text-start">اسم المنتج</th>
                         <th scope="col"class="text-start">السعر</th>
                         <th scope="col"class="text-start">التراجع</th>
                         <th scope="col" class="text-start">
+=======
+                        <th scope="col" style="text-align: start;">الصوره</th>
+                        <th scope="col" style="text-align: start;">اسم المنتج</th>
+                        <th scope="col" style="text-align: start;">السعر</th>
+                        <th scope="col" style="text-align: start;">الكمية</th>
+                        <th scope="col" class="text-right">
+>>>>>>> Stashed changes
                             <span id="amount">الاجمالي</span>
                         </th>
                     </tr>
@@ -121,7 +129,14 @@
                             <td>
                                 <div class="productImg">
                                     <div class="imgPro">
+                                        @if(cart.ImageURL != null)
+                                        {
+                                            <img src="~/uploads/@cart.ImageURL" alt="">
+                                        } else
+                                        {
                                         <img src="../imgs/tomato.png" alt="">
+                                            
+                                        }
                                     </div>
                                 </div>
                             </td>

@@ -22,13 +22,17 @@
                                             <h5 class="fs-3 pt-3"><span>@prodJoinImage.product.NameAr</span></h5>
                                             <div class="col-6">
 
-                                                <div class="">
-                                                    <p><i class="fa-solid fa-square-check me-2"></i>الاتحاد التعاوني الزراعي</p>
-                                                </div>
 
+                                                @if (prodJoinImage.product.UserId != null && prodJoinImage.product.UserId != 1)
+                                                {
+                                                    <div class="">
+                                                        <p><i class="fa-solid fa-square-check me-2"></i>الاتحاد التعاوني الزراعي</p>
+                                                    </div>
+                                                }
                                                 <div class="">
                                                     <p><i class="fa-solid fa-location-dot me-2"></i>@prodJoinImage.product.Address</p>
                                                 </div>
+
 
                                             </div>
                                             <div class="col-6">
@@ -79,12 +83,15 @@
                                     </div>
                                     <div class="col clearfix">
                                         <form action="/Details/AddToCart" method="post">
-                                            <button id="liveToastBtn" type="submit" class=" btn float-end btAddToBasket me-3  px-lg-5 px-md-3   py-0 ">
-                                                <h5 class="pt-2 ">
-                                                    اضافة الى السلة
-                                                </h5>
+                                            @if (prodJoinImage.product.UserId != null && prodJoinImage.product.UserId != 1)
+                                            {
+                                                <button id="liveToastBtn" type="submit" class=" btn float-end btAddToBasket me-3  px-lg-5 px-md-3   py-0 ">
+                                                    <h5 class="pt-2 ">
+                                                        اضافة الى السلة
+                                                    </h5>
+                                                </button>
+                                            }
 
-                                            </button>
 
                                             <input type="hidden" value="@prodJoinImage.product.Id" name="id" />
                                             <input type="hidden" value="@prodJoinImage.product.NameAr" name="name" />
@@ -155,7 +162,7 @@
                                         <i class="fa fa-star fa-lg" aria-hidden="true" id="st3"></i>
                                         <i class="fa fa-star fa-lg" aria-hidden="true" id="st4"></i>
                                         <i class="fa fa-star fa-lg" aria-hidden="true" id="st5"></i>
-                                    </div>*@
+                                        </div>*@
 
                                     <textarea class="form-control my-2 my-sm-2 my-md-2 my-lg-2 pb-5 " id="validationTextarea" name="comment" placeholder=" اكتب تعليقك هنا" required></textarea>
                                     <button class=" btAddComment btn  fs-5 me-3  px-lg-5 px-md-3   py-0  " type="submit"> ارسال</button>
