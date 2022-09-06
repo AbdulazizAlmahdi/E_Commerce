@@ -10,17 +10,19 @@ namespace E_commerce.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "تاريخ بداء المزاد مطلوب")]
-        [Display(Name = "تاريخ بداء المزاد")]        
+        [Display(Name = "تاريخ بداء المزاد")]
+        [DataType(DataType.DateTime)]
         public DateTime StartDate { get; set; }
         [Required(ErrorMessage = "تاريخ نهاية المزاد مطلوب")]
         [Display(Name = "تاريخ نهاية المزاد")]
+        [DataType(DataType.DateTime)]
         public DateTime EndDate { get; set; }
         [Required(ErrorMessage = "سعر المزاد مطلوب")]
         [Display(Name = "سعر المزاد")]
-        public decimal StartPrice { get; set; }
-        [Required(ErrorMessage = "المنتج مطلوب")]
+        [Range(1000, 10000000, ErrorMessage = "السعر يجب أن يكون بين 1000 و 10000000")]
+        public decimal? StartPrice { get; set; }
         [Display(Name = "المنتج")]
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
 
         public virtual Product Product { get; set; }
         public virtual ICollection<AuctionsUser> AuctionsUsers { get; set; }

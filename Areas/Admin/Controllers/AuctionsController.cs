@@ -50,6 +50,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 {
                     auction = new Auction
                     {
+                        Id=0,
                         Product = new Product()
                     },
 
@@ -83,7 +84,7 @@ namespace E_commerce.Areas.Admin.Controllers
                         if (auctionsViewModel.auction.ProductId != null)
                         {
 
-                        Product product=    productsRepository.Find(auctionsViewModel.auction.ProductId);
+                        Product product=    productsRepository.Find(auctionsViewModel.auction.ProductId??0);
                             product.Status = "متوقف";
                             productsRepository.Update(product);
                         }
@@ -109,10 +110,7 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 var model = new AuctionsViewModel
                 {
-                    auction = new Auction
-                    {
-                        Id = 0
-                    }
+                    auction = auctionsViewModel.auction
                 };
                 return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
             }

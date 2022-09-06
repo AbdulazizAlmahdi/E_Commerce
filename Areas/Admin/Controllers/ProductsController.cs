@@ -144,9 +144,9 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 var model = new ProductsViewModel
                 {
-                    product = new Product
+                    product = productViewModel.product?? new Product
                     {
-                        Id = 0
+                        Id=id
                     },
 
                 };

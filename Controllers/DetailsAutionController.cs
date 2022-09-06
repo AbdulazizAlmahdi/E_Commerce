@@ -50,7 +50,7 @@ namespace E_commerce.Controllers
             if (!string.IsNullOrEmpty(comment))
             {
                 int auctionId = Convert.ToInt32(id);
-                int productId = db.Auctions.FirstOrDefault(a => a.Id == auctionId).ProductId;
+                int productId = (int)db.Auctions.FirstOrDefault(a => a.Id == auctionId).ProductId;
                 db.Comments.Add(new Comment()
                 {
                     Text = comment,
