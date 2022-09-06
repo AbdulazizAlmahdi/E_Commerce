@@ -131,10 +131,10 @@ namespace E_commerce.Controllers
 
                         });
                     } 
-                    else
-                    {
-                        cart.Quantity++;
-                    }
+                    //else
+                    //{
+                    //    cart.Quantity++;
+                    //}
                     
                 }
 

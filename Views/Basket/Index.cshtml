@@ -105,11 +105,11 @@
             <table id="basketTable" class=" basketTable table fs-5">
                 <thead class="tableHead  ">
                     <tr>
-                        <th scope="col">الصوره</th>
-                        <th scope="col">اسم المنتج</th>
-                        <th scope="col">السعر</th>
-                        <th scope="col">الكمية</th>
-                        <th scope="col" class="text-right">
+                        <th scope="col" class="text-start">الصوره</th>
+                        <th scope="col"class="text-start">اسم المنتج</th>
+                        <th scope="col"class="text-start">السعر</th>
+                        <th scope="col"class="text-start">التراجع</th>
+                        <th scope="col" class="text-start">
                             <span id="amount">الاجمالي</span>
                         </th>
                     </tr>
@@ -136,7 +136,7 @@
 
                             <td>
                                 <div class="button-container fs-4 ">
-                                    <form action="/Basket/Increment" method="post">
+                                    @*<form action="/Basket/Increment" method="post">
                                         <button class="cartQtyPlus " type="submit"> + </button>
                                         <input type="hidden" name="id" value="@cart.Id" />
                                     </form>
@@ -146,7 +146,7 @@
                                     <form action="/Basket/Decrement" method="post">
                                         <button class="cartQtyMinus" type="submit" value="-">- </button>
                                         <input type="hidden" name="id" value="@cart.Id" />
-                                    </form>
+                                    </form>*@
 
                                     <form action="/Basket/Remove" method="post">
                                         <button id="btnDelete1" class="btnDelete ms-5 " type="submit">
