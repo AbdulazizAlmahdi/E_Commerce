@@ -10,14 +10,14 @@
             </h5>
 
         </div>
-        <div class="row mypaginationindex" style="display: none;">
+        <div class="row  mypaginationindex" style="display: none;">
 
             @foreach (var item in Model)
             {
 
                 <div class="col-sm-6 col-md-4  col-lg-4 data">
                     <a href="/DetailsAution?id=@item.Auctions.Id" class="text-decoration-none">
-                        <div class="card">
+                        <div class="card my-2">
                             <img src="../imgs/tomato.png" class=" img-fluid card-img-top" alt="tomato">
                             <div class="card-body">
 
@@ -67,7 +67,7 @@
 
             }
         </div>
-        <nav aria-label="pages   " class=" pages mt-4 ">
+        <nav aria-label="pages   " class=" pages mt-4  d-flex justify-content-center">
             <ul class="pagination ">
                 <!--<li class="page-item previous-page  disable ">
               <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>

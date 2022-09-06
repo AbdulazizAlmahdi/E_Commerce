@@ -3,7 +3,7 @@ $(document).ready(function () {
 
 
 
-        iewImage(this, 'previewImage1');
+        previewImage(this, 'previewImage1');
     });
 
 

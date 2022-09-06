@@ -39,7 +39,53 @@
      background-color:var(--green-color-light) ;
      font-weight: bold;
   }
-  
+
+/*start style paginaton*/
+.DivAution .pages {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.DivAution .previous-page a,
+.DivAution .next-page a {
+    background-color: var(--green-color);
+    color: white;
+}
+
+.DivAution .pages .active a {
+    background-color: var(--green-color2-d);
+    color: white;
+}
+
+.DivAution .pages .disable a {
+    background-color: var(--green-color-light);
+    color: var(--green-color-dark);
+}
+
+.DivAution .previous-page a:hover,
+.DivAution .previous-page a:focus,
+.DivAution .next-page a:hover,
+.DivAution .next-page a:focus {
+    background-color: var(--green-color2-d);
+    color: white;
+}
+
+.DivAution .current-page a,
+.DivAution .dots a {
+    background-color: var(--green-color-light);
+    color: var(--green-color-dark);
+}
+
+    .DivAution .current-page a:hover,
+    .DivAution .dots a:hover {
+        background-color: white;
+        color: var(--green-color-dark);
+    }
+
+
+
+/*end style paginaton*/
 
   
   

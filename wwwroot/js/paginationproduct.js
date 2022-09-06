@@ -50,8 +50,8 @@ function getPageList(totalPages, page ,maxLength){
         return true
     }
     $(".pagination").append(
-        $("<li>").addClass("page-item").addClass("previous-page").append($("<a>").addClass("page-link").attr({href: "javascript:void(0)"}).text("prev")),
-        $("<li>").addClass("page-item").addClass("next-page").append($("<a>").addClass("page-link").attr({href: "javascript:void(0)"}).text("next")),
+        $("<li>").addClass("page-item").addClass("previous-page").append($("<a>").addClass("page-link").attr({href: "javascript:void(0)"}).text("«·”«»ﬁ")),
+        $("<li>").addClass("page-item").addClass("next-page").append($("<a>").addClass("page-link").attr({href: "javascript:void(0)"}).text("«· «·Ì")),
 
         );
     $(".mypaginationindex").show();
