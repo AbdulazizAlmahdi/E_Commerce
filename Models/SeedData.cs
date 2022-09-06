@@ -116,7 +116,7 @@ namespace E_commerce.Models
                         Status = "active",
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow,
-                        JobName="فعال"
+                        JobName="مشرف عام"
                     }
                     );
 

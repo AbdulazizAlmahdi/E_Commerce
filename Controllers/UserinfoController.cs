@@ -140,7 +140,8 @@ namespace E_commerce.Controllers
 
         public JsonResult GetProductPurchase()
         {
-            var p = db.Products.Include(p => p.Category).Where(p => p.Status == "فعال" && p.PurchaseId >0);
+            var id = HttpContext.Session.GetString("_UserId");
+            var p = db.Products.Include(p => p.Category).Where(p => p.Status == "فعال" && p.PurchaseId >0 && p.UserId == int.Parse(id));
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ProductTable", p) });
         }
 
