@@ -81,7 +81,7 @@ namespace E_commerce.Areas.Admin.Controllers
                     if (id == 0)
                     {
                         productViewModel.product.Id = id;
-                        foreach (IFormFile item in productViewModel.Files)
+                        foreach (IFormFile item in productViewModel.Files?? new List<IFormFile>())
                         {
                             productViewModel.product.ImagesProducts.Add(new ImagesProduct
                             {
