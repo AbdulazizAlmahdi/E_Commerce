@@ -12,6 +12,7 @@ namespace E_commerce.ViewModel
     {
         public Product product {  get; set; }      
         [Required(ErrorMessage = "الصورة مطلوبة")]
+        [FileExtensions(Extensions = "jpg,png,gif,jpeg")]
         public IList<IFormFile> Files { get; set; }
 
 

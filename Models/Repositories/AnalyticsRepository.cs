@@ -34,7 +34,7 @@ namespace E_commerce.Models.Repositories
 
         public decimal GetPurchaseCount(int year)
         {
-            return  context.Purchases.Where(P => P.CreatedAt.Year == year).Sum(p=>p.Amount*p.ExtraAmount);
+            return (decimal)context.Purchases.Where(P => P.CreatedAt.Year == year).Sum(p => p.Amount * p.ExtraAmount);
         }
 
     }

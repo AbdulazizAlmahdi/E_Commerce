@@ -584,7 +584,7 @@ purchaseDatatable = () => {
                 text: '<i class="bx bx-plus me-sm-2"></i><span class="d-none d-sm-inline-block">إضافة طلب</span>',
                 className: 'dt-button create-new btn btn-primary m-2',
                 action: function (e, dt, node, config) {
-                    showInPopup('/Admin/Auctions/CreateOrEdit', 'إضافة طلب');
+                    showInPopup('/Admin/Purchase/CreateOrEdit', 'إضافة طلب');
                 },
             },
             {
@@ -708,6 +708,8 @@ jQueryAjaxPost = form => {
                         categoryDatatable();
                     else if (res.type == "auctions")
                         auctionDatatable();
+                    else if (res.type == "purchase")
+                        purchaseDatatable();
 
                     $('#success-toast .success-toast-title').html(res.messgaeTitle);
                     $('#success-toast .success-toast-body').html(res.messageBody);
@@ -732,6 +734,8 @@ jQueryAjaxPost = form => {
                         categoryDatatable();
                     else if (res.type == "auctions")
                         auctionDatatable();
+                    else if (res.type == "purchase")
+                        purchaseDatatable();
                     $('#error-toast .error-toast-title').html(res.messgaeTitle);
                     $('#error-toast .error-toast-body').html(res.messageBody);
                     new bootstrap.Toast(document.getElementById('error-toast')).show();

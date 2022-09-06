@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -21,12 +22,16 @@ namespace E_commerce.Models
         [Required(ErrorMessage = "إجمالي الطلب مطلوب")]
         [Display(Name = "إجمالي الطلب")]
         public decimal Amount { get; set; }
+        [Required(ErrorMessage = "المبلغ الاضافي مطلوب")]
         [Display(Name = "مبالغ اضافية")]
-        public decimal ExtraAmount { get; set; }
+        [Range(minimum: 0.0, maximum: 1000000, ErrorMessage = "المبلغ الاضافي يجب أن يكون بين 0.0 و 1000000")]
+        [DefaultValue(0.00)]
+        public decimal? ExtraAmount { get; set; }
         [Required(ErrorMessage = "العنوان مطلوب")]
         [Display(Name = "العنوان")]
         public string Address { get; set; }
         [Required(ErrorMessage = "رقم الهاتف مطلوب")]
+        [StringLength(maximumLength: 9,MinimumLength =9, ErrorMessage = "رقم الهاتف لايزيد او ينقص عن 9 ارقام")]
         [Display(Name = "رقم الهاتف")]
         public string Phone { get; set; }
         [Required(ErrorMessage = "التفاصيل مطلوب")]

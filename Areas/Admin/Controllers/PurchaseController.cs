@@ -89,7 +89,7 @@ namespace E_commerce.Areas.Admin.Controllers
                         }
                         purchaseViewModel.purchase.Products = list;
                         purchaseRepository.Add(purchaseViewModel.purchase);
-                        return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "إضافة فاتورة", messageBody = "تمت إضافة الفاتورة بنجاح" });
+                        return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "إضافة طلب", messageBody = "تمت إضافة الطلب بنجاح" });
                     }
                     else
                     {
@@ -104,14 +104,14 @@ namespace E_commerce.Areas.Admin.Controllers
                         }
                         purchaseViewModel.purchase.Products = list;                    
                         purchaseRepository.Update(purchaseViewModel.purchase);
-                        return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "تعديل فاتورة", messageBody = "تمت تعديل الفاتورة بنجاح" });
+                        return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "تعديل طلب", messageBody = "تمت تعديل الطلب بنجاح" });
 
                     }
                 }
                 catch (Exception e)
                 {
                     var exception = e.InnerException.Message;
-                    return Json(new { status = "error", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "إضافة فاتورة", messageBody = "حدث خطأ أثناء إضافة/تعديل فاتورة" });
+                    return Json(new { status = "error", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "إضافة طلب", messageBody = "حدث خطأ أثناء إضافة/تعديل الطلب" });
                     //return Json(new { status = "error", html = Helper.RenderRazorViewToString(this, "ProductsTable") });
 
                 }
@@ -153,12 +153,12 @@ namespace E_commerce.Areas.Admin.Controllers
             try
             {
                 purchaseRepository.Delete(id);
-                return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable", null), messgaeTitle = "حذف الفاتورة", messageBody = "تم حذف الفاتورة بنجاح" });
+                return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable", null), messgaeTitle = "حذف طلب", messageBody = "تم حذف الطلب بنجاح" });
 
             }
             catch (Exception e)
             {
-                return Json(new { status = "error", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف المنتج", messageBody = "حدث خطأ أثناء حذف المنتج" });
+                return Json(new { status = "error", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable", null), messgaeTitle = "حذف طلب", messageBody = "حدث خطأ أثناء حذف الطلب" });
             }
         }
         public IActionResult GetProducts(string q)
