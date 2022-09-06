@@ -17,7 +17,7 @@ namespace E_commerce.Models
         [Key]
         public int Id { get; set; }
         [Required (ErrorMessage = "رقم الهاتف مطلوب")]
-        [StringLength(9)]
+        [StringLength(maximumLength: 9, MinimumLength = 9, ErrorMessage = "رقم الهاتف لايزيد او ينقص عن 9 ارقام")]
         [Display(Name = "رقم الهاتف")]
         [Index(IsUnique = true)]
         public string Number { get; set; }

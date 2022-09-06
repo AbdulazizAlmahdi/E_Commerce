@@ -101,9 +101,10 @@ namespace E_commerce.Areas.Admin.Controllers
             }
             else
             {
+                categoryViewModel.category.Id = id;
                 var model = new CategoryViewModel
                 {
-                    category = new Category
+                    category = categoryViewModel.category??new Category
                     {
                         Id=0,
                     }

@@ -120,11 +120,11 @@ namespace E_commerce.Areas.Admin.Controllers
             }
             else
             {
+                    purchaseViewModel.purchase.Id = id;
                 var model = new PurchaseViewModel
                 {
-
                     products = productRepository.show(null).ToList(),
-                    purchase = new Purchase
+                    purchase =purchaseViewModel.purchase?? new Purchase
                     {
                     },
 

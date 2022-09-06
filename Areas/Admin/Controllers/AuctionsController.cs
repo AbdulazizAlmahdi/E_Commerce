@@ -108,9 +108,14 @@ namespace E_commerce.Areas.Admin.Controllers
             }
             else
             {
+                auctionsViewModel.auction.Id = id;
                 var model = new AuctionsViewModel
                 {
-                    auction = auctionsViewModel.auction
+                    auction = auctionsViewModel.auction??new Auction
+                    {
+                        Id = 0,
+                        Product = new Product()
+                    }
                 };
                 return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
             }

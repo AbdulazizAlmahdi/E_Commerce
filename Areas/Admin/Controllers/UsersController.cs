@@ -75,6 +75,54 @@ namespace e_commerce.Areas.Admin.Controllers
 
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateOrEdit(int id, UserViewModel userViewModel, string parentUserId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (id == 0)
+                    {
+                        var userId = HttpContext.Session.GetString("_UserId");
+                        userViewModel.user.UsersId = Convert.ToInt32(parentUserId ?? userId);
+                        userViewModel.user.CreatedAt = DateTime.Now;
+                        usersRepository.Add(userViewModel.user);
+                        return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = "إضافة مستخدم", messageBody = "تمت إضافة المستخدم بنجاح" });
+                    }
+                    else
+                    {
+                        var userId = HttpContext.Session.GetString("_UserId");
+                        userViewModel.user.UsersId = Convert.ToInt32(parentUserId ?? userId);
+                        userViewModel.user.Id = Convert.ToInt32(id);
+                        userViewModel.user.UpdatedAt = DateTime.Now;
+                        usersRepository.Update(userViewModel.user);
+                        return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = "تعديل مستخدم", messageBody = "تمت تعديل المستخدم بنجاح" });
+                    }
+                }
+                catch (Exception e)
+                {
+                    var exception = e.InnerException.Message;
+                    return Json(new { status = "error", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = "إضافة مستخدم", messageBody = "حدث خطأ أثناء إضافة/تعديل مستخدم" });
+                }
+
+            }
+            else
+            {
+                    userViewModel.user.Id = id;
+                var model = new UserViewModel
+                {
+                    places = places.show(null).ToList(),
+                    user = userViewModel.user??new User
+                    {
+                        Id = 0
+                    },
+
+                };
+                return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
+            }
+        }
 
         public IActionResult UserProfile(int id = 0)
         {
@@ -130,53 +178,6 @@ namespace e_commerce.Areas.Admin.Controllers
             }
             return RedirectToAction("UserProfile");
 
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, UserViewModel userViewModel, string UsersId)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    if (id == 0)
-                    {
-                        var userId = HttpContext.Session.GetString("_UserId");
-                        userViewModel.user.UsersId = Convert.ToInt32(UsersId??userId);
-                        userViewModel.user.CreatedAt = DateTime.Now;
-                        usersRepository.Add(userViewModel.user);
-                        return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = "إضافة مستخدم", messageBody = "تمت إضافة المستخدم بنجاح" });
-                    }
-                    else
-                    {
-                        userViewModel.user.UsersId = Convert.ToInt32(UsersId);
-                        userViewModel.user.Id = Convert.ToInt32(id);
-                        userViewModel.user.UpdatedAt = DateTime.Now;
-                        usersRepository.Update(userViewModel.user);
-                        return Json(new { status = "success", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = "تعديل مستخدم", messageBody = "تمت تعديل المستخدم بنجاح" });
-                    }
-                }
-                catch (Exception e)
-                {
-                    var exception = e.InnerException.Message;
-                    return Json(new { status = "error", type = "user", html = Helper.RenderRazorViewToString(this, "UserTable"), messgaeTitle = "إضافة مستخدم", messageBody = "حدث خطأ أثناء إضافة/تعديل مستخدم" });
-                }
-
-            }
-            else
-            {
-                var model = new UserViewModel
-                {
-                    places = places.show(null).ToList(),
-                    user = new User
-                    {
-                        Id = 0
-                    },
-
-                };
-                return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
-            }
         }
         public IActionResult GetUser(string q)
         {

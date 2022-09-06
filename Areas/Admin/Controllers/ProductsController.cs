@@ -142,6 +142,7 @@ namespace E_commerce.Areas.Admin.Controllers
             }
             else
             {
+                productViewModel.product.Id = id;
                 var model = new ProductsViewModel
                 {
                     product = productViewModel.product?? new Product

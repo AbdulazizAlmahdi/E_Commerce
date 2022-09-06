@@ -10,12 +10,12 @@ namespace E_commerce.Models
     public partial class Help
     {
         public int Id { get; set; }
-        [Required]
-        [StringLength(50)]
+        [Required(ErrorMessage = "موضوع الرسالة مطلوب")]
+        [StringLength(maximumLength: 100, ErrorMessage = "موضوع الرسالة لا يزيد عن 100 حرف")]
         [Display(Name = "موضوع الرسالة")]
         public string Subject { get; set; }
-        [Required]
-        [StringLength(50)]
+        [Required(ErrorMessage = "نص الرسالة مطلوب")]
+        [StringLength(maximumLength: 500, ErrorMessage = "نص الرسالة لا يزيد عن 500 حرف")]
         [Display(Name = "نص الرسالة")]
         public string Details { get; set; }
         public int? PhoneId { get; set; }

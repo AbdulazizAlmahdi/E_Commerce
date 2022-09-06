@@ -57,14 +57,14 @@ namespace E_commerce.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(HelpViewModel model)
+        public IActionResult CreateOrEdit(int id, HelpViewModel helpViewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    model.help.CreatedAt = DateTime.Now;
-                    helpRepository.Add(model.help);
+                    helpViewModel.help.CreatedAt = DateTime.Now;
+                    helpRepository.Add(helpViewModel.help);
                     return Json(new { status = "success", type = "help", html = RenderRazorViewToString(this, "HelpTable"), messgaeTitle = "إضافة مساعدة", messageBody = "تمت إضافة المساعدة بنجاح" });
                 }
                 catch (Exception ex)
@@ -74,7 +74,19 @@ namespace E_commerce.Areas.Admin.Controllers
                 }
 
             }
-            return View(model);
+            else
+            {
+                helpViewModel.help.Id = id;
+                var model = new HelpViewModel
+                {
+                    help = helpViewModel.help ?? new Help
+                    {
+                        Id = id
+                    },
+
+                };
+                return Json(new { status = "validation-error", html = Helper.RenderRazorViewToString(this, "CreateOrEdit", model) });
+            }
         }
         public IActionResult GetHelpData()
         {
