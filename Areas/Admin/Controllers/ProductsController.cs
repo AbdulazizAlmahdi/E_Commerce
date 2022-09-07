@@ -97,7 +97,7 @@ namespace E_commerce.Areas.Admin.Controllers
                         productViewModel.product.Views = 0;
                         productViewModel.product.Evaluation = 5;
                         products.Add(productViewModel.product);
-                        return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "إضافة مستخدم", messageBody = "تمت إضافة المستخدم بنجاح" });
+                        return Json(new { status = "success", type = "product", html = Helper.RenderRazorViewToString(this, "ProductsTable"), messgaeTitle = "إضافة المنتج", messageBody = "تمت إضافة المنتج بنجاح" });
                     }
                     else
                     {
