@@ -1,20 +1,22 @@
-﻿using E_commerce.Models;
+﻿using E_commerce.Infersructure;
+using E_commerce.Infersructure.Interface;
+using E_commerce.Models;
 using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_commerce.Controllers
 {
     public class LoginController : Controller
     {
-        WebContext db;
-        public LoginController(WebContext db)
+        // WebContext db;
+        private readonly IUnitOfWork _unitOfWork;
+        public LoginController(/*WebContext db*/IUnitOfWork unitOfWork)
         {
-            this.db = db;
+            // this.db = db;
+            _unitOfWork = unitOfWork;
+
         }
         public IActionResult Index()
         {
@@ -50,29 +52,38 @@ namespace E_commerce.Controllers
                 return View();
             }
 
-            Phone phoneRow = db.Phones.FirstOrDefault(ph => ph.Number == phone);
+            var phoneRow = _unitOfWork.GetRepository<Phone>().FirstOrDefault(ph => ph.Number == phone);
 
             if (phoneRow == null)
             {
-                ViewBag.Error = "رقم الهاتف أو كلمة المرور غير صحيح";
+                ViewBag.Error = "رقم الهاتف غير مسجل بعد";
 
                 return View();
             }
-            User user = db.Users.FirstOrDefault(i => i.PhoneId == phoneRow.Id);
-            if (user == null || user.Password != password)
+            var user = _unitOfWork.GetRepository<User>().Include(d => d.Directorate.Governorate).FirstOrDefault(i => i.PhoneId == phoneRow.Id);
+            if (user == null || !(Hashpassword.Verify(password, user.Password)))
             {
                 ViewBag.Error = "رقم الهاتف أو كلمة المرور غير صحيح";
 
                 return View();
             }
+            if (user.Status == "متوقف")
+            {
+                ViewBag.Error = "يرجى تفعيل الحساب من قبل الادمن";
+
+                return View();
+            }
+
 
             HttpContext.Session.SetString("phoneS", phone);
             HttpContext.Session.SetInt32("phoneId", phoneRow.Id);
             HttpContext.Session.SetString("userNameS", user.Name ?? "مستخدم");
             HttpContext.Session.SetInt32("idS", user.Id);
             HttpContext.Session.SetString("userAddress", user.Address ?? "لايوجد عنوان");
+            HttpContext.Session.SetString("userAddressD", user.Directorate.Name ?? "لايوجد عنوان");
+            HttpContext.Session.SetString("userAddressG", user.Directorate.Governorate.Name ?? "لايوجد عنوان");
 
-            ImagesUser imageRow = db.ImagesUsers.Where(img => img.UserId == user.Id).ToList().LastOrDefault();
+            var imageRow = _unitOfWork.GetRepository<ImagesUser>().Find(img => img.UserId == user.Id).ToList().LastOrDefault();
             if (imageRow != null)
                 HttpContext.Session.SetString("userImage", imageRow.ImageUrl);
             else

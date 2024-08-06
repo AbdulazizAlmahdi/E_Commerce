@@ -194,15 +194,15 @@
                     <div class="col-12">
                         <p>
                             العنوان:
-                            <span class="">@ViewBag.userAddress</span>
+                            <span class="">@ViewBag.userAddressG @ViewBag.userAddressD @ViewBag.userAddress</span>
                         </p>
                     </div>
                 </div>
 
             </div>
             <div class="col-lg-6 col-md-6  m-4 ">
-                <a href="/addproduct"><button class=" m-2 px-2 py-1">اضافة منتج</button></a>
-                <button class=" m-2 px-2 py-1" data-bs-toggle="modal" data-bs-target="#editModle">تعديل البيانات الشخصية</button>
+@*                <a href="/addproduct"><button class=" m-2 px-2 py-1">اضافة منتج</button></a>
+*@                <button class=" m-2 px-2 py-1" data-bs-toggle="modal" data-bs-target="#editModle">تعديل البيانات الشخصية</button>
                 <a href="/changepass"><button class=" m-2 px-2 py-1">تغيير كلمة المرور</button></a>
                 <a href="/changephone"><button class=" m-2 px-2 py-1">تغيير رقم الهاتف</button></a>
                 <!-- Modal edit personal info -->
@@ -241,10 +241,9 @@
     </div>
 
     @{
-        List<Product> prodActive = ViewBag.prodActive;
-        List<Product> prodStop = ViewBag.prodStop;
-        List<Product> prodOrder = ViewBag.prodOrder;
-        List<Product> prodPurchased = ViewBag.prodPurchased;
+        List<Purchase> prodActive = ViewBag.prodActive;
+        List<Purchase> prodStop = ViewBag.prodStop;
+        
 
     }
 
@@ -253,17 +252,12 @@
         <nav class=" ">
             <ul class="  nav justify-content-center gap-2 ">
                 <li class="nav-item mx-2">
-                    <button id="btnActive" class="active px-2 py-1">اعلانات فعالة</button>
+                   <button id="btnActive" class="active px-2 py-1">طلبات في الانتظار</button>
                 </li>
                 <li class="nav-item mx-2">
-                    <button id="btnStop" class="px-2 py-1">اعلانات تم ايقافها</button>
+                    <button id="btnStop" class="px-2 py-1">طلبات تم شراءها</button>
                 </li>
-                <li class="nav-item mx-2">
-                    <button id="btnOrder" class="px-2 py-1 ">طلبات الشراء</button>
-                </li>
-                <li class="nav-item mx-2">
-                    <button id="btnPurchased" class="px-2 py-1 ">طلبات تم شرائها</button>
-                </li>
+                
             </ul>
         </nav>
     </div>
@@ -271,15 +265,14 @@
     <!--start table details data-->
     <div class="divTable container pt-3 pb-4 table-responsive">
         <table id="tableActive" class="table tableActive mt-4 table-borderless">
-            <caption class="p-2 text-center">اعلانات الفعالة</caption>
+            <caption class="p-2 text-center">طلبات في الانتظار</caption>
             <thead class="tableHead">
                 <tr class="">
-                    <th class="thStart" scope="col" style="text-align: start;">رقم الاعلان</th>
-                    <th scope="col" style="text-align: start;">اسم الاعلان</th>
+                    <th class="thStart" scope="col" style="text-align: start;">رقم الطلب</th>
+                    <th scope="col" style="text-align: start;">العنوان</th>
+                    <th scope="col" style="text-align: start;">التفاصيل</th>
                     <th scope="col" style="text-align: start;">السعر</th>
-                    <th scope="col" style="text-align: start;">الكمية</th>
-                    <th scope="col" style="text-align: start;">الوحدة</th>
-                    <th scope="col" style="text-align: start;">المشاهدات</th>
+                    <th scope="col" style="text-align: start;">رقم الهاتف</th>
                     <th class="thEnd" style="text-align: start;"> الاجراءات</th>
                 </tr>
             </thead>
@@ -288,11 +281,10 @@
                 {
                     <tr>
                         <th scope="row">@prod.Id</th>
-                        <td>@prod.NameAr</td>
-                        <td>@prod.Price</td>
-                        <td>@prod.Quantity</td>
-                        <td>@prod.Unit</td>
-                        <td>@(prod.Views ?? 0)</td>
+                        <td>@prod.Address</td>
+                        <td>@prod.Detials</td>
+                        <td>@prod.Amount</td>
+                        <td>@prod.Phone</td>
                         <td class=" ">
                             <div class="dropdown dropleft btn-group  d-flex ">
                                 <a class="nav-link" href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -300,7 +292,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
                                     <li>
-                                        <a class="dropdown-item" href="/Details?id=@prod.Id" target="_blank">
+                                        <a class="dropdown-item" href="Userinfo/Details?id=@prod.Id" target="_blank">
                                             <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
                                             <span class="ps-1">تفاصيل</span>
                                         </a>
@@ -320,15 +312,15 @@
         </table>
 
         <table id="tableStop" class="table tableStop table-borderless">
-            <caption class="p-2 text-center">اعلانات التي تم ايقافها</caption>
+            <caption class="p-2 text-center">طلبات تم شراءها</caption>
             <thead class="tableHead  ">
                 <tr>
-                    <th class="thStart" scope="col" style="text-align: start;">رقم الاعلان</th>
-                    <th scope="col" style="text-align: start;">اسم الاعلان</th>
+                    <th class="thStart" scope="col" style="text-align: start;">رقم الطلب</th>
+                    <th scope="col" style="text-align: start;">العنوان</th>
+                    <th scope="col" style="text-align: start;">التفاصيل</th>
                     <th scope="col" style="text-align: start;">السعر</th>
-                    <th scope="col" style="text-align: start;">الكمية</th>
-                    <th scope="col" style="text-align: start;">الوحدة</th>
-                    <th scope="col" style="text-align: start;">المشاهدات</th>
+                    <th scope="col" style="text-align: start;">رقم الهاتف</th>
+                     <th class="thEnd" style="text-align: start;"> الاجراءات</th>
                 </tr>
             </thead>
             <tbody>
@@ -336,72 +328,37 @@
                 {
                     <tr>
                         <th scope="row">@prod.Id</th>
-                        <td>@prod.NameAr</td>
-                        <td>@prod.Price</td>
-                        <td>@prod.Quantity</td>
-                        <td>@prod.Unit</td>
-                        <td>@(prod.Views ?? 0)</td>
+                        <td>@prod.Address</td>
+                        <td>@prod.Detials</td>
+                        <td>@prod.Amount</td>
+                        <td>@prod.Phone</td>
+                        <td class=" ">
+                            <div class="dropdown dropleft btn-group  d-flex ">
+                                <a class="nav-link" href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-navicon fa-lg  rounded-circle"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+                                    <li>
+                                        <a class="dropdown-item" href="Userinfo/Details?id=@prod.Id" target="_blank">
+                                            <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                            <span class="ps-1">تفاصيل</span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="dropdown-item delete" href="./UserInfo/Delete?id=@prod.Id">
+                                            <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                            <span class="ps-1">حذف</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
 
-        <table id="tableOrder" class="table tableOrder table-borderless">
-            <caption class="p-2 text-center"> طلبات الشراء</caption>
-            <thead class="tableHead ">
-                <tr>
-                    <th class="thStart" scope="col" style="text-align: start;">رقم الاعلان</th>
-                    <th scope="col" style="text-align: start;">اسم الاعلان</th>
-                    <th scope="col" style="text-align: start;">السعر</th>
-                    <th scope="col" style="text-align: start;">الكمية</th>
-                    <th scope="col" style="text-align: start;">الوحدة</th>
-                    <th scope="col" style="text-align: start;">المشاهدات</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var prod in prodOrder)
-                {
-
-                    <tr>
-                        <th scope="row">@prod.Id</th>
-                        <td>@prod.NameAr</td>
-                        <td>@prod.Price</td>
-                        <td>@prod.Quantity</td>
-                        <td>@prod.Unit</td>
-                        <td>@(prod.Views ?? 0)</td>
-                    </tr>
-                }
-
-            </tbody>
-        </table>
-
-        <table id="tablePurchased" class="table tablePurchased table-borderless">
-            <caption class="p-2 text-center">طلبات  تم شرائها</caption>
-            <thead class="tableHead ">
-                <tr>
-                    <th class="thStart" scope="col" style="text-align: start;">رقم الاعلان</th>
-                    <th scope="col" style="text-align: start;">اسم الاعلان</th>
-                    <th scope="col" style="text-align: start;">السعر</th>
-                    <th scope="col" style="text-align: start;">الكمية</th>
-                    <th scope="col" style="text-align: start;">الوحدة</th>
-                    <th scope="col" style="text-align: start;">المشاهدات</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var prod in prodPurchased)
-                {
-
-                    <tr>
-                        <th scope="row">@prod.Id</th>
-                        <td>@prod.NameAr</td>
-                        <td>@prod.Price</td>
-                        <td>@prod.Quantity</td>
-                        <td>@prod.Unit</td>
-                        <td>@(prod.Views ?? 0)</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+       
 
 
     </div>

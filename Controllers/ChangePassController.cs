@@ -1,20 +1,20 @@
-﻿using E_commerce.Models;
+﻿using E_commerce.Infersructure;
+using E_commerce.Infersructure.Interface;
+using E_commerce.Models;
 using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_commerce.Controllers
 {
     public class ChangePassController : Controller
     {
-        WebContext db;
-        public ChangePassController(WebContext db)
+        // WebContext db;
+        private readonly IUnitOfWork _unitOfWork;
+        public ChangePassController(/*WebContext db,*/IUnitOfWork unitOfWork)
         {
-            this.db = db;
+            // this.db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
@@ -55,7 +55,7 @@ namespace E_commerce.Controllers
                 return View();
             }
 
-            if (newPass.Length <6)
+            if (newPass.Length < 6)
             {
                 ViewBag.ErrorNewPass = "عزيزي المستخدم يجب أن تكون كلمة المرور أكثر من خمسة أرقام";
                 return View();
@@ -76,7 +76,7 @@ namespace E_commerce.Controllers
 
             int? userId = HttpContext.Session.GetInt32("idS");
 
-            User user = db.Users.FirstOrDefault(u => u.Id == userId);
+            User user = _unitOfWork.GetRepository<User>().FirstOrDefault(u => u.Id == userId);
 
             if (user == null)
             {
@@ -84,15 +84,16 @@ namespace E_commerce.Controllers
                 return View();
             }
 
-            if (user.Password != oldPass)
+            if (!Hashpassword.Verify(oldPass, user.Password))
             {
                 ViewBag.ErrorOldPass = "كلمة المرور الحالية غير صحيحة";
                 return View();
             }
 
-            user.Password = newPass;
-            int result = db.SaveChanges();
-            if (result == 0)
+            user.Password = Hashpassword.Hashedpassword(newPass);
+            _unitOfWork.GetRepository<User>().Update(user);
+            bool result = _unitOfWork.GetRepository<User>().SaveChanges();
+            if (!result)
             {
                 ViewBag.Error = "عذراً لم يتم تغيير كلمة المرور يرجى التواصل مع الدعم الفني";
                 return View();

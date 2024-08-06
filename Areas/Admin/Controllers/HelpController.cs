@@ -1,15 +1,13 @@
+using e_commerce;
+using E_commerce.Infersructure.Interface;
 using E_commerce.Models;
 using E_commerce.ViewModel;
-using E_commerce.Models.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using static e_commerce.Helper;
-using e_commerce;
-using Microsoft.AspNetCore.Http;
 
 namespace E_commerce.Areas.Admin.Controllers
 {
@@ -18,20 +16,24 @@ namespace E_commerce.Areas.Admin.Controllers
     {
 
 
-        private IRepository<Help> helpRepository;
+        // private IRepository<Help> helpRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HelpController(IRepository<Help> helpRepository)
+        public HelpController(/*IRepository<Help> helpRepository*/ IUnitOfWork unitOfWork)
         {
-            this.helpRepository = helpRepository;
+            //this.helpRepository = helpRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult index()
         {
+                        ViewBag.Notificatins= _unitOfWork.GetRepository<Notification>().Include(u=>u.user).Where(a => a.IsRead == false).ToList();
+
             var userId = HttpContext.Session.GetString("_UserId");
 
             if (userId == null)
             {
-                return RedirectToAction("Index", "Login");
+                return Redirect("Login/Index");
             }
 
             return View();
@@ -50,7 +52,7 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 var model = new HelpViewModel
                 {
-                    help = helpRepository.Find(id),
+                    help = _unitOfWork.GetRepository<Help>().GetById(id),
                 };
                 return View(model);
             }
@@ -64,7 +66,8 @@ namespace E_commerce.Areas.Admin.Controllers
                 try
                 {
                     helpViewModel.help.CreatedAt = DateTime.Now;
-                    helpRepository.Add(helpViewModel.help);
+                    _unitOfWork.GetRepository<Help>().Add(helpViewModel.help);
+                    _unitOfWork.GetRepository<Help>().SaveChanges();
                     return Json(new { status = "success", type = "help", html = RenderRazorViewToString(this, "HelpTable"), messgaeTitle = "إضافة مساعدة", messageBody = "تمت إضافة المساعدة بنجاح" });
                 }
                 catch (Exception ex)
@@ -101,7 +104,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                IQueryable<Help> helpData = helpRepository.show(1);
+                IQueryable<Help> helpData = _unitOfWork.GetRepository<Help>().GetAll().AsQueryable();
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
                     helpData = helpData.OrderBy(sortColumn + " " + sortColumnDirection);
@@ -118,13 +121,13 @@ namespace E_commerce.Areas.Admin.Controllers
                             break;
                         case "تم تجاهل المشكلة":
                             searchValue = "Unsolved";
-                            break;                    
+                            break;
                         default:
                             break;
                     }
                     helpData = helpData.Where(h => h.Subject.Contains(searchValue)
                                                 || h.Details.Contains(searchValue)
-                                                || h.Phone.Number.Contains(searchValue)
+                                                || h.Phone.Contains(searchValue)
                                                 || h.Status.Contains(searchValue));
                 }
                 recordsTotal = helpData.Count();
@@ -150,9 +153,10 @@ namespace E_commerce.Areas.Admin.Controllers
         {
             try
             {
-                Help help = helpRepository.Find(id);
+                Help help = _unitOfWork.GetRepository<Help>().GetById(id);
                 help.Status = "Unsolved";
-                helpRepository.Update(help);
+                _unitOfWork.GetRepository<Help>().Update(help);
+                _unitOfWork.GetRepository<Help>().SaveChanges();
                 return Json(new { status = "success", type = "help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "تجاهل طلب المساعدة", messageBody = "تم تجاهل طلب المساعدة" });
             }
             catch (Exception ex)
@@ -170,9 +174,10 @@ namespace E_commerce.Areas.Admin.Controllers
         {
             try
             {
-                Help help = helpRepository.Find(id);
+                Help help = _unitOfWork.GetRepository<Help>().GetById(id);
                 help.Status = "Solved";
-                helpRepository.Update(help);
+                _unitOfWork.GetRepository<Help>().Update(help);
+                _unitOfWork.GetRepository<Help>().SaveChanges();
                 return Json(new { status = "success", type = "help", html = Helper.RenderRazorViewToString(this, "HelpTable", null), messgaeTitle = "حل طلب المساعدة", messageBody = "تم حل طلب المساعدة" });
             }
             catch (Exception ex)

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace E_commerce.Models.Custome
+﻿namespace E_commerce.Models.Custome
 {
     public class UsersWithComments
     {

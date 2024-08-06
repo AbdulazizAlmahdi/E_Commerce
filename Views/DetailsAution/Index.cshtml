@@ -1,14 +1,15 @@
-﻿@using E_commerce.Models.Custome
+﻿@using E_commerce.Models
+@using E_commerce.Models.Custome
 <title>تفاصيل المزاد</title>
 
 
 <div class="details detailsaution container  mt-4  bg-white py-2">
 
-    <div class="  divinfo   my-2  ">
+    <div class="divinfo my-2  ">
 
         @{
 
-            E_commerce.Models.Custome.AutionsProduct auction = ViewBag.Auction;
+            E_commerce.Models.Auction auction = ViewBag.Auction;
             string user = ViewBag.userS;
             decimal? amount = ViewBag.maxAmount;
         }
@@ -16,24 +17,27 @@
         {
             <div class="row">
 
-                <div class="  col-sm-6 col-md-4 col-lg-4     ">
+                <div class="  col-sm-6 col-md-4 col-lg-4">
                     <div class=" m-2 p-2 ">
 
-                        <h5 class="fs-2 "><span>@auction.Products.NameAr</span></h5>
+                        <h5 class="fs-2 "><span>@auction.Product.NameAr</span></h5>
                         <div class="">
                             <p><i class="fa-solid fa-square-check me-2"></i>الاتحاد التعاوني الزراعي</p>
                         </div>
+                        
                         <div class="">
-                            <p><i class="fa-solid fa-location-dot me-2"></i>@auction.Products.Address</p>
+                            <p><i class="fa-solid fa-location-dot me-2"></i>@auction.Product.Directorate.Governorate.Name - @auction.Product.Directorate.Name</p>
+                        </div>   
+                        <div class="">
+                            <p><i class="fa-solid fa-location-dot me-2"></i>@auction.Product.Address</p>
                         </div>
-
                     </div>
                 </div>
                 <div class=" col-sm-6 col-md-4 col-lg-4    ">
                     <div class="m-2 p-2 bg-white divinfocolorwhite">
                         <div class="row justify-content-center">
                             <div class="col">
-                                <p> <span class="me-2">50</span>@auction.Products.Unit</p>
+                                <p> <span class="me-2">@auction.Product.Quantity</span>@auction.Product.Unit</p>
                             </div>
                             <div class="col  mx-2 ">
                                 <p>
@@ -43,23 +47,23 @@
                         </div>
                         <div class="row justify-content-center ">
                             <div class="col ">
-                                <p class=""><span class="me-2">@auction.Products.Duration</span>ايام</p>
+                                <p class=""><span class="me-2">@auction.Product.Duration</span>ايام</p>
 
                             </div>
-                            <div class="col  ">
+                            <div class="col">
                                 <p>
                                     <span>
-                                        @auction.Auctions.StartDate
+                                        @auction.StartDate
                                     </span>
                                 </p>
                             </div>
                         </div>
                         <div class="row justify-content-center ">
                             <div class="col">
-                                <p><i class="fa-solid fa-eye me-2"></i><span>@(auction.Products.Views ?? 0)</span></p>
+                                <p><i class="fa-solid fa-eye me-2"></i><span>@(auction.Product.Views ?? 0)</span></p>
                             </div>
                             <div class="col">
-                                <p class=""><span>@auction.Auctions.EndDate</span></p>
+                                <p class=""><span>@auction.EndDate</span></p>
                             </div>
 
                         </div>
@@ -70,10 +74,10 @@
                         <div class="row justify-content-between ">
                             <div class="col">
                                 <div>يبدأ المزاد بمبلغ</div>
-                                <h5 class="fs-1 pt-2 pb-md-2 pb-lg-3"> <span>@auction.Auctions.StartPrice</span>  <span>  ريال  </span></h5>
+                                <h5 class="fs-1 pt-2 pb-md-2 pb-lg-3"> <span>@auction.StartPrice</span>  <span>  ريال  </span></h5>
                                     
                                  <div>اعلى قيمه تمت المزايده عليها</div>
-                                <h5 class="fs-1 pt-2 pb-md-2 pb-lg-3"> <span>@(amount ?? auction.Auctions.StartPrice)</span>  <span>  ريال  </span></h5>
+                                <h5 class="fs-1 pt-2 pb-md-2 pb-lg-3"> <span>@(amount ?? auction.StartPrice)</span>  <span>  ريال  </span></h5>
                                 
                             </div>
                         </div>
@@ -89,7 +93,7 @@
             <div class="col ">
                 <p>
                     <span>
-                        @auction.Products.NameAr
+                        @auction.Product.NameAr
                     </span>
                 </p>
             </div>
@@ -118,7 +122,7 @@
                             <div class="modal-body">
                                 <form class="needs-validation mt-5 mt-sm-5 mt-md-1 mt-lg-5 mx-4" action="./DetailsAution/Bidding?id=@ViewBag.autionId" novalidate method="post">
                                     <label class="">مبلغ المزايده:</label>
-                                    <input type="number" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder="قيمة المزايده" id="validationCustom01" name="bidding" min="@auction.Auctions.StartPrice" required>
+                                    <input type="number" class="form-control my-2 my-sm-2 my-md-2 my-lg-2" placeholder="قيمة المزايده" id="validationCustom01" name="bidding" min="@auction.StartPrice" required>
 
                                     <div >
                                         <button id="cuccessNoticeaution" class=" btnsubmit btn  fs-5 w-100" type="submit"> تاكيد المزايده</button>
@@ -164,17 +168,17 @@
     </div>
 
     @{
-        List<ImagesProduct> images = ViewBag.images;
+      //  List<ImagesProduct> images = ViewBag.images;
     }
-    @if (images != null && images.Count > 0)
+    @if (auction.Product.ImagesProducts != null && auction.Product.ImagesProducts.Count > 0)
     {
         <div class="row ">
             <div class="col-lg-9 col-md-9 col-sm-12 main ">
                 <div class="row">
-                    @foreach (var img in images)
+                    @foreach (var img in auction.Product.ImagesProducts)
                     {
                         <div class="col-12">
-                            <img src="~/uploads/@img.ImageUrl" class="img-fluid mb-3 " alt="@auction.Products.NameAr">
+                            <img src="~/uploads/@img.ImageUrl" class="img-fluid mb-3 " alt="@auction.Product.NameAr">
                         </div>
                     }
                 </div>

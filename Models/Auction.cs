@@ -19,7 +19,7 @@ namespace E_commerce.Models
         public DateTime EndDate { get; set; }
         [Required(ErrorMessage = "سعر المزاد مطلوب")]
         [Display(Name = "سعر المزاد")]
-        [Range(1000, 10000000, ErrorMessage = "السعر يجب أن يكون بين 1000 و 10000000")]
+        [Range(0, 100000000, ErrorMessage = "السعر يجب أن يكون بين 0 و 100000000")]
         public decimal? StartPrice { get; set; }
         [Display(Name = "المنتج")]
         public int? ProductId { get; set; }

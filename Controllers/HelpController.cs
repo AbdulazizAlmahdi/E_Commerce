@@ -1,19 +1,19 @@
-﻿using E_commerce.Models;
+﻿using E_commerce.Infersructure.Interface;
+using E_commerce.Models;
 using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 namespace E_commerce.Controllers
 {
     public class HelpController : Controller
     {
-        WebContext db;
-        public HelpController(WebContext db)
+        //WebContext db;
+        private readonly IUnitOfWork _unitOfWork;
+        public HelpController(/*WebContext db*/IUnitOfWork unitOfWork)
         {
-            this.db = db;
+            // this.db = db;
+            _unitOfWork = unitOfWork;
         }
 
         private void initLayout()
@@ -32,7 +32,7 @@ namespace E_commerce.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromForm]string phone, [FromForm] string subject, [FromForm] string details)
+        public IActionResult Index([FromForm] string phone, [FromForm] string subject, [FromForm] string details)
         {
             initLayout();
 
@@ -73,31 +73,31 @@ namespace E_commerce.Controllers
                 return View();
             }
 
-            Phone phoneRow = db.Phones.FirstOrDefault(ph => ph.Number == phone);
+            //Phone phoneRow = _unitOfWork.GetRepository<Phone>().FirstOrDefault(ph => ph.Number == phone);
 
-            if (phoneRow == null)
+            /*if (phoneRow == null)
             {
                 ViewBag.Phone = "رقم الهاتف غير مسجل،يرجى التسجيل اولاً";
 
                 return View();
-            }
-
-            db.Helps.Add(new Help()
+            }*/
+            var help = new Help()
             {
-                Phone = phoneRow,
+                Phone = phone,
                 Subject = subject,
                 Details = details,
                 //Adding datatime for help
                 CreatedAt = DateTime.Now,
-            });
-
-            db.SaveChanges();
+            };
+            _unitOfWork.GetRepository<Help>().Add(help);
+            _unitOfWork.GetRepository<Notification>().Add(new Notification { Titel = "طلب مساعدة جديد", Text = "هناك طلب مساعدة جديد برقم" +help.Id.ToString() , Url = "Help/Index" });
+            _unitOfWork.SaveChanges();
 
             ViewBag.Success = "تمت طلب المساعده بنجاح";
-            
+
             return View();
         }
 
-    
+
     }
 }

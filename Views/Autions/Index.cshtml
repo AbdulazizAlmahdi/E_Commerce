@@ -1,4 +1,4 @@
-﻿@model IEnumerable<E_commerce.Models.Custome.AutionsProduct>
+﻿@model IEnumerable<E_commerce.Models.Auction>
     <title> المزادات</title>
 
 
@@ -16,32 +16,32 @@
             {
 
                 <div class="col-sm-6 col-md-4  col-lg-4 data">
-                    <a href="/DetailsAution?id=@item.Auctions.Id" class="text-decoration-none">
+                    <a href="/DetailsAution?id=@item.Id" class="text-decoration-none">
                         <div class="card my-2">
-                            <img src="../imgs/tomato.png" class=" img-fluid card-img-top" alt="tomato">
+                            <img src="~/uploads/@item.Product.ImagesProducts.First().ImageUrl" class=" img-fluid card-img-top" alt="tomato">
                             <div class="card-body">
 
                                 <div class="row justify-content-center my-1">
                                     <div class="col">
-                                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Products.NameAr)</h5>
+                                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Product.NameAr)</h5>
                                     </div>
                                     <div class="col autionTime m-1 ">
                                         <p>
                                             يبدأ السعر من
                                             <br />
-                                            <span>@Html.DisplayFor(modelItem => item.Auctions.StartPrice) ريال</span>
+                                            <span>@Html.DisplayFor(modelItem => item.StartPrice) ريال</span>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center my-1">
                                     <div class="col ">
-                                        <p class="pt-2">@Html.DisplayFor(modelItem => item.Products.Quantity) @Html.DisplayFor(modelItem => item.Products.Unit)</p>
+                                        <p class="pt-2">@Html.DisplayFor(modelItem => item.Product.Quantity) @Html.DisplayFor(modelItem => item.Product.Unit)</p>
                                     </div>
                                     <div class="col autionTime m-1">
                                         <p>
-                                            <span>@Html.DisplayFor(modelItem => item.Auctions.StartDate)</span>
+                                            <span>@Html.DisplayFor(modelItem => item.StartDate)</span>
                                             <br>
-                                            <span>@Html.DisplayFor(modelItem => item.Auctions.EndDate)</span>
+                                            <span>@Html.DisplayFor(modelItem => item.EndDate)</span>
                                         </p>
                                     </div>
                                 </div>
@@ -49,11 +49,13 @@
                                     <div class="col">
                                         <p class="pt-2  ">
                                             <i class="fa-solid fa-location-dot me-2"></i>
-                                            ذمار- قاع جهران
+                                            @Html.DisplayFor(modelItem => item.Product.Directorate.Governorate.Name) -
+                                            @Html.DisplayFor(modelItem => item.Product.Directorate.Name) -
+                                            @Html.DisplayFor(modelItem => item.Product.Address)
                                         </p>
                                     </div>
                                     <div class="col">
-                                        <p class="pt-2">7 ايام</p>
+                                        <p class="pt-2">@Html.DisplayFor(modelItem => item.Product.Duration) ايام</p>
                                     </div>
 
                                 </div>
@@ -66,7 +68,10 @@
 
 
             }
-        </div>
+                </div>
+
+            @if(Model.Count()!=0)
+            {
         <nav aria-label="pages   " class=" pages mt-4  d-flex justify-content-center">
             <ul class="pagination ">
                 <!--<li class="page-item previous-page  disable ">
@@ -94,7 +99,15 @@
               <a class="page-link" href="#">Next</a>
             </li>-->
             </ul>
-        </nav>
+            </nav>
+        }
+        else
+        {
+            <h1>لايوجد مزادات في الوقت الحالي</h1>
+        }
+
+           
+        
 
 
     </div>

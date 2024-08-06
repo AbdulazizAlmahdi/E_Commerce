@@ -1,8 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
-using test_app.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
@@ -27,7 +23,7 @@ namespace E_commerce.Models
         public virtual DbSet<Help> Helps { get; set; }
         public virtual DbSet<ImagesProduct> ImagesProducts { get; set; }
         public virtual DbSet<ImagesUser> ImagesUsers { get; set; }
-        public virtual DbSet<Payment> Payments { get; set; }
+        public virtual DbSet<PaymentItem> PaymentItems { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Phone> Phones { get; set; }
         public virtual DbSet<Place> Places { get; set; }
@@ -36,6 +32,10 @@ namespace E_commerce.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RolesUser> RolesUsers { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Directorate> Directorates { get; set; }
+        public virtual DbSet<Governorate> Governorates { get; set; }
+        public virtual DbSet<Farmer> Farmers { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -63,18 +63,18 @@ namespace E_commerce.Models
 
                 entity.HasOne(d => d.Product)
                     .WithOne(p => p.Auction)
-                    .HasForeignKey<Auction>(d => d.ProductId);
+                    .HasForeignKey<Auction>(d => d.ProductId).OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasMany(a => a.AuctionsUsers)
                 .WithOne(a => a.Auction)
-                .HasForeignKey(a => a.AuctionId);
+                .HasForeignKey(a => a.AuctionId).OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<AuctionsUser>(entity =>
             {
-                entity.HasIndex(e => e.AuctionId, "IX_AuctionsUsers_AuctionID");
+                /*                entity.HasIndex(e => e.AuctionId, "IX_AuctionsUsers_AuctionID");
 
-                entity.HasIndex(e => e.UserId, "IX_AuctionsUsers_UserID");
+                                entity.HasIndex(e => e.UserId, "IX_AuctionsUsers_UserID");*/
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
@@ -85,26 +85,26 @@ namespace E_commerce.Models
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.HasOne(a => a.Auction)
-                    .WithMany(u=>u.AuctionsUsers);
+                    .WithMany(u => u.AuctionsUsers).OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasOne(d => d.User)
                     .WithOne(p => p.AuctionsUser)
-                    .HasForeignKey<AuctionsUser>(d => d.UserId);
+                    .HasForeignKey<AuctionsUser>(d => d.UserId).OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Category>(entity =>
             {
-              
+
                 entity.HasIndex(e => e.CategoryId, "IX_Categoreis_CategoryId");
                 entity.Property(e => e.CategoryId).HasColumnName("CategoryId");
-        
+
                 entity.HasOne(d => d.categories)
                     .WithMany(p => p.InverseCategory)
-                    .HasForeignKey(d => d.CategoryId);
+                    .HasForeignKey(d => d.CategoryId).OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(c => c.User)
-                    .WithMany(u =>u.Categories)
-                    .HasForeignKey(d => d.UserId);
+                    .WithMany(u => u.Categories)
+                    .HasForeignKey(d => d.UserId).OnDelete(DeleteBehavior.SetNull);
 
 
             });
@@ -125,24 +125,24 @@ namespace E_commerce.Models
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Comments)
-                    .HasForeignKey(d => d.ProductId);
+                    .HasForeignKey(d => d.ProductId).OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Comments)
-                    .HasForeignKey(d => d.UserId);
+                    .HasForeignKey(d => d.UserId).OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Help>(entity =>
             {
-                entity.HasIndex(e => e.PhoneId, "IX_Helps_PhoneID");
+                //entity.HasIndex(e => e.PhoneId, "IX_Helps_PhoneID");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.PhoneId).HasColumnName("PhoneID");
+                //entity.Property(e => e.PhoneId).HasColumnName("PhoneID");
 
-                entity.HasOne(d => d.Phone)
+                /*entity.HasOne(d => d.Phone)
                     .WithMany(p => p.Helps)
-                    .HasForeignKey(d => d.PhoneId);
+                    .HasForeignKey(d => d.PhoneId).OnDelete(DeleteBehavior.Cascade);*/
             });
 
             modelBuilder.Entity<ImagesProduct>(entity =>
@@ -157,7 +157,7 @@ namespace E_commerce.Models
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ImagesProducts)
-                    .HasForeignKey(d => d.ProductId);
+                    .HasForeignKey(d => d.ProductId).OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<ImagesUser>(entity =>
@@ -172,12 +172,12 @@ namespace E_commerce.Models
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.ImagesUsers)
-                    .HasForeignKey(d => d.UserId);
+                    .HasForeignKey(d => d.UserId).OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<Payment>(entity =>
+            modelBuilder.Entity<PaymentItem>(entity =>
             {
-                entity.HasIndex(e => e.PurchaseId, "IX_Payments_PurchaseID");
+                entity.HasIndex(e => e.PurchaseId, "IX_PaymentItems_PurchaseID");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
@@ -214,7 +214,7 @@ namespace E_commerce.Models
 
                 entity.HasOne(d => d.PlaceNavigation)
                     .WithMany(p => p.InversePlaceNavigation)
-                    .HasForeignKey(d => d.PlaceId);
+                    .HasForeignKey(d => d.PlaceId).OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -239,14 +239,14 @@ namespace E_commerce.Models
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.CategoryId);
+                    .HasForeignKey(d => d.CategoryId).OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasOne(d => d.Purchase)
                     .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.PurchaseId);
+                    .HasForeignKey(d => d.PurchaseId).OnDelete(DeleteBehavior.SetNull);
 
 
-          
+
 
             });
 
@@ -265,13 +265,13 @@ namespace E_commerce.Models
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.HasMany(d => d.Products)
-                    .WithOne(p => p.Purchase);
+                    .WithOne(p => p.Purchase).OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Purchases)
-                    .HasForeignKey(d => d.UserId);
+                    .HasForeignKey(d => d.UserId).OnDelete(DeleteBehavior.SetNull);
 
-              
+
 
             });
 
@@ -285,7 +285,7 @@ namespace E_commerce.Models
 
                 entity.HasOne(d => d.Permissions)
                     .WithMany(p => p.Roles)
-                    .HasForeignKey(d => d.PermissionsId);
+                    .HasForeignKey(d => d.PermissionsId).OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<RolesUser>(entity =>
@@ -307,7 +307,7 @@ namespace E_commerce.Models
                     .HasForeignKey(d => d.UsersId);
             });
 
-           
+
 
             modelBuilder.Entity<User>(entity =>
             {
@@ -331,17 +331,17 @@ namespace E_commerce.Models
 
                 entity.HasOne(d => d.Phone)
                     .WithOne(p => p.User)
-                    .HasForeignKey<User>(d => d.PhoneId);
+                    .HasForeignKey<User>(d => d.PhoneId).OnDelete(DeleteBehavior.ClientCascade);
 
                 entity.HasOne(d => d.Place)
                     .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.PlaceId);
+                    .HasForeignKey(d => d.PlaceId).OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasOne(d => d.Users)
                     .WithMany(p => p.InverseUsers)
-                    .HasForeignKey(d => d.UsersId);
+                    .HasForeignKey(d => d.UsersId).OnDelete(DeleteBehavior.NoAction);
 
-           
+
             });
 
 

@@ -1,0 +1,23 @@
+﻿@model Int32;
+@{
+    ViewData["Title"] = "ActiveUser";
+    Layout = null;
+}
+<div class="card-header pb-0 bg-white border-0 ">
+    <p class="font-weight-bold mb-2"> هل أنت متأكد أنك تريد تفعيل/الغاء هذا؟</p>
+    <p class="text-muted "> سينعكس هذا التغيير في حسابك حالاً.</p>
+</div>
+<div class="card-body px-sm-4 mb-2 pt-1 pb-0">
+    <div class="row justify-content-end no-gutters">
+        <div class="col-auto">
+        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                data-dismiss="modal">الغاء</button></div>
+        <div class="col-auto">
+            <Form asp-action="ActiveUser"
+            onsubmit="return jQueryAjaxPost(this);">
+                <input type="hidden" name="id" value="@Model" />
+                <button type="submit" class="btn btn-label-info" data-dismiss="modal">تفعيل/الغاء</button>
+            </Form>
+        </div>
+    </div>
+</div>

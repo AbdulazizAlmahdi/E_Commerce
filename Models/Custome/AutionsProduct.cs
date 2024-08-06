@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace E_commerce.Models.Custome
+﻿namespace E_commerce.Models.Custome
 {
     public class AutionsProduct
     {

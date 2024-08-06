@@ -1,20 +1,22 @@
-﻿using E_commerce.Models;
+﻿using E_commerce.Infersructure.Interface;
+using E_commerce.Models;
 using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_commerce.Controllers
 {
     public class DetailsAutionController : Controller
     {
-        WebContext db;
-        public DetailsAutionController(WebContext db)
+        // WebContext db;
+        private readonly IUnitOfWork _unitOfWork;
+        public DetailsAutionController(/*WebContext db,*/IUnitOfWork unitOfWork)
         {
-            this.db = db;
+            //this.db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index(string id)
         {
@@ -50,14 +52,14 @@ namespace E_commerce.Controllers
             if (!string.IsNullOrEmpty(comment))
             {
                 int auctionId = Convert.ToInt32(id);
-                int productId = (int)db.Auctions.FirstOrDefault(a => a.Id == auctionId).ProductId;
-                db.Comments.Add(new Comment()
+                int productId = (int)_unitOfWork.GetRepository<Auction>().FirstOrDefault(a => a.Id == auctionId).ProductId;
+                _unitOfWork.GetRepository<Comment>().Add(new Comment()
                 {
                     Text = comment,
                     ProductId = productId,
                     UserId = userId,
                 });
-                db.SaveChanges();
+                _unitOfWork.GetRepository<Comment>().SaveChanges();
             }
 
             getAutionData(id);
@@ -79,30 +81,36 @@ namespace E_commerce.Controllers
                 int autionId = Convert.ToInt32(id);
                 int ammount = Convert.ToInt32(bidding);
 
-                AuctionsUser auctions = db.AuctionsUsers.FirstOrDefault(a => a.AuctionId == autionId && a.UserId == userId);
-                if(auctions == null)
+                AuctionsUser auctions = _unitOfWork.GetRepository<AuctionsUser>().FirstOrDefault(a => a.AuctionId == autionId && a.UserId == userId);
+                if (auctions == null)
                 {
-                    db.AuctionsUsers.Add(new AuctionsUser()
+                    _unitOfWork.GetRepository<AuctionsUser>().Add(new AuctionsUser()
                     {
                         AuctionId = autionId,
                         UserId = userId,
                         Amount = ammount
                     });
-                    db.SaveChanges();
+                    _unitOfWork.GetRepository<Notification>().Add(new Notification { Titel = "مشاركة جديدة في المزاد", Text = "هناك مشاركة جدبدة في المزاد رقم" + id, UserId = userId, Url = "Auctions/Index" });
+
+                    _unitOfWork.GetRepository<AuctionsUser>().SaveChanges();
                 }
                 else
                 {
-                    if(ammount > auctions.Amount)
+                    if (ammount > auctions.Amount)
                     {
                         auctions.UserId = userId;
                         auctions.Amount = ammount;
+                        _unitOfWork.GetRepository<AuctionsUser>().Update(auctions);
+                        _unitOfWork.GetRepository<Notification>().Add(new Notification { Titel = "مشاركة جديدة في المزاد", Text = "هناك مشاركة جدبدة في المزاد رقم" + id, UserId = userId, Url = "Auctions/Index" });
+                        _unitOfWork.GetRepository<AuctionsUser>().SaveChanges();
                     }
                 }
-                
-                db.SaveChanges();
+
             }
-            catch (Exception)
-            { }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
 
             return Redirect("/DetailsAution?id=" + id);
         }
@@ -114,33 +122,27 @@ namespace E_commerce.Controllers
 
                 int auctionId = Convert.ToInt32(id);
 
-                var data = db.Auctions.Join( // first table 
-              db.Products, //second table
-              a => a.ProductId, // first table key
-              p => p.Id, // second table key
-              (a, p) => new { product = p, aution = a } // new data
-              )
-              .FirstOrDefault(ss => ss.aution.Id == auctionId); // where condition
+                Auction auction = _unitOfWork.GetRepository<Auction>().Include(a => a.Product.ImagesProducts, d => d.Product.Directorate.Governorate).FirstOrDefault(ss => ss.Id == auctionId); // where condition
 
-                ViewBag.images = db.ImagesProducts.Where(ip => ip.ProductId == data.product.Id).ToList();
-                if (data != null)
+                //ViewBag.images = _unitOfWork.GetRepository<ImagesProduct>().Find(ip => ip.ProductId == auction.Product.Id).ToList();
+                if (auction != null)
                 {
-                    ViewBag.Auction = new AutionsProduct() { Auctions = data.aution, Products = data.product };
+                    ViewBag.Auction = auction;
                     try
                     {
-                        ViewBag.maxAmount = db.AuctionsUsers.Where(au => au.AuctionId == auctionId).Max(au => au.Amount);
+                        ViewBag.maxAmount = _unitOfWork.GetRepository<AuctionsUser>().Find(au => au.AuctionId == auctionId).Max(au => au.Amount);
                     }
                     catch (Exception)
                     {
                         ViewBag.maxAmount = null;
                     }
-                    List<Comment> comments = db.Comments.Where(cmd => cmd.ProductId == data.product.Id).Take(10).OrderByDescending(cmd => cmd.Id).ToList();
-                    List<UsersWithComments> commentsList = new List<UsersWithComments>();
+                    List<Comment> comments = _unitOfWork.GetRepository<Comment>().Find(cmd => cmd.ProductId == auction.Product.Id).Take(10).OrderByDescending(cmd => cmd.Id).ToList();
+                    List<UsersWithComments> commentsList = new();
                     foreach (var comment in comments)
                     {
                         commentsList.Add(new UsersWithComments()
                         {
-                            user = db.Users.FirstOrDefault(us => us.Id == comment.UserId),
+                            user = _unitOfWork.GetRepository<User>().FirstOrDefault(us => us.Id == comment.UserId),
                             comment = comment,
                         });
 

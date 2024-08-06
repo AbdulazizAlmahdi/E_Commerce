@@ -42,7 +42,7 @@ namespace E_commerce.Models
         [Column(TypeName = "decimal(8, 2)")]
         [Display(Name = "سعر المنتج")]
         [Required(ErrorMessage = "سعر المنتج مطلوب")]
-        [Range(1000, 10000000, ErrorMessage = "السعر يجب أن يكون بين 1000 و 10000000")]
+        [Range(100, 100000000, ErrorMessage = "السعر يجب أن يكون بين 100 و 100000000")]
         public decimal? Price { get; set; }
         [Display(Name = "المدة/يوم")]
         [Required(ErrorMessage = "المدة مطلوبة")]
@@ -71,14 +71,22 @@ namespace E_commerce.Models
         public DateTime? UpdatedAt { get; set; }
         [AllowNull]
         public DateTime? DeletedAt { get; set; }
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         [ForeignKey("PurchaseId")]
         public int? PurchaseId { get; set; }
-
+        [ForeignKey("DirectorateId")]
+        [AllowNull]
+        public virtual int? DirectorateId { get; set; }
+        [ForeignKey("FarmerId")]
+        [AllowNull]
+        public virtual int? FarmerId { get; set; }
         public virtual Category Category { get; set; }
         public virtual User User { get; set; }
         public virtual Auction Auction { get; set; }
+        public virtual ICollection<PaymentItem> PaymentItems { get; set; }
         public virtual Purchase Purchase { get; set; }
+        public virtual Directorate Directorate { get; set; }
+        public virtual Farmer Farmer { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<ImagesProduct> ImagesProducts { get; set; }
     }

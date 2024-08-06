@@ -1,9 +1,9 @@
 ﻿//using E_commerce.Migrations;
+using E_commerce.Infersructure.Interface;
 using E_commerce.Models;
 using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,34 +12,37 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Controllers
 {
-   
+
     public class HomeController : Controller
     {
-        WebContext db;
-        public HomeController(WebContext db)
+        //WebContext db;
+        private readonly IUnitOfWork _unitOfWork;
+        public HomeController(/*WebContext db,*/IUnitOfWork unitOfWork)
         {
-            this.db = db;
+            //  this.db = db;
+            this._unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index([FromQuery] string search, [FromQuery] string catId)
+        public async Task<IActionResult> Index([FromQuery] string search, [FromQuery] string catId)
         {
             List<Product> products = new List<Product>();
 
             if (search != null)
-                products = db.Products.Where(prod =>
-                prod.PurchaseId == null &&
-                prod.Status == "فعال"
-                && (prod.NameAr.Trim().Contains(search.Trim())
-                || prod.DetailsAr.Trim().Contains(search.Trim()))
+                products = _unitOfWork.GetRepository<Product>().Find(prod =>
+               prod.Quantity != 0 &&
+               prod.Status == "فعال"
+               && (prod.NameAr.Trim().Contains(search.Trim())
+               || prod.DetailsAr.Trim().Contains(search.Trim()))
                 ).OrderByDescending(p => p.CreatedAt).ToList();
             else if (!string.IsNullOrEmpty(catId))
             {
                 try
                 {
                     int catIdInt = Convert.ToInt32(catId);
-                    products = db.Products.Where(prod =>
-                    prod.PurchaseId == null && 
-                    prod.Status == "فعال" && 
+                    products = _unitOfWork.GetRepository<Product>().Find(prod =>
+                    prod.PurchaseId == null &&
+                    prod.Status == "فعال" &&
+                    prod.Quantity!=0&&
                     prod.CategoryId == catIdInt)
                         .OrderByDescending(p => p.CreatedAt)
                         .ToList();
@@ -47,7 +50,7 @@ namespace E_commerce.Controllers
                 catch (Exception) { }
             }
             else
-                products = db.Products.Where(prod => prod.PurchaseId == null && prod.Status == "فعال")
+                products = _unitOfWork.GetRepository<Product>().Find(prod => prod.Quantity != 0 && prod.Status == "فعال")
                     .OrderByDescending(p => p.CreatedAt)
                     .ToList();
 
@@ -56,16 +59,17 @@ namespace E_commerce.Controllers
             {
                 if (product.UserId != null)
                 {
-                    User user = db.Users.FirstOrDefault(u => u.Id == product.UserId);
-                    if(user != null)
+                    User user = _unitOfWork.GetRepository<User>().FirstOrDefault(u => u.Id == product.UserId);
+                    if (user != null)
                     {
                         product.UserId = user.JobName == "عميل" ? 1 : 0;
                     }
-                } else
+                }
+                else
                 {
                     product.UserId = 0;
                 }
-                List<ImagesProduct> image = db.ImagesProducts.Where(img => img.ProductId == product.Id).ToList();
+                List<ImagesProduct> image = _unitOfWork.GetRepository<ImagesProduct>().Find(img => img.ProductId == product.Id).ToList();
                 newProducts.Add(new ProductsWithImages()
                 {
                     product = product,
@@ -76,13 +80,13 @@ namespace E_commerce.Controllers
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
             ViewBag.userImage = HttpContext.Session.GetString("userImage");
             ViewBag.cartCount = Cart.getInstance().Count;
+            var cate = _unitOfWork.GetRepository<Category>();
 
-
-            List<Category> mainCat = db.Categories.Where(cat => cat.CategoryId == null).ToList();
+            List<Category> mainCat = cate.Find(cat => cat.CategoryId == null).ToList();
             List<MainCategory> categories = new List<MainCategory>();
             foreach (Category cat in mainCat)
             {
-                List<Category> subCat = db.Categories.Where(sub => sub.CategoryId == cat.Id).ToList();
+                List<Category> subCat = _unitOfWork.GetRepository<Category>().Find(sub => sub.CategoryId == cat.Id).ToList();
 
                 categories.Add(new MainCategory()
                 {
@@ -105,10 +109,10 @@ namespace E_commerce.Controllers
             return Redirect("/home");
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy()
         {
-            List<Help> help = db.Helps.ToList();
-            List<Phone> users = db.Phones.ToList();
+            var help = _unitOfWork.GetRepository<Help>().GetAll().ToList();
+            var users = _unitOfWork.GetRepository<Phone>().GetAll().ToList();
 
             return View(users);
         }
@@ -119,6 +123,6 @@ namespace E_commerce.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        
+
     }
 }

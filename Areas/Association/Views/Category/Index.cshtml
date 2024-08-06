@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "الاصناف";
+    Layout = "_Layout";
+}
+<!-- Layout container -->
+<div class="layout-page">
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <span class="d-none d-lg-inline-block" style="font-size: 25px;">الأصناف/</span>
+        </div>
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <!-- Toast with Placements -->
+            @await Html.PartialAsync("_Toast", null)
+            <!-- Toast with Placements -->
+            <!-- Basic Bootstrap Table -->
+            <div class="card  p-4">
+                <div class="card-header border-bottom">
+                    <span class="d-none d-lg-inline-block" style="font-size: 20px;">عرض الأصناف</span>
+                </div>           
+                <div id="view-all">
+                    @await Html.PartialAsync("CategoryTable", null)
+                </div>
+            </div>
+            <!--/ Basic Bootstrap Table -->
+        </div>
+    </div>
+</div>

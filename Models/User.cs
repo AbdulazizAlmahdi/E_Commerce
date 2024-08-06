@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 
 #nullable disable
@@ -24,7 +23,7 @@ namespace E_commerce.Models
             RolesUsers = new HashSet<RolesUser>();
         }
         [Key]
-        public int  Id { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "الاسم مطلوب")]
         [StringLength(50, ErrorMessage = "الاسم لا يزيد عن 50 حرف")]
         [DisplayName("الاسم")]
@@ -41,6 +40,7 @@ namespace E_commerce.Models
         [Column(TypeName = "nvarchar(max)")]
         public string JobName { get; set; }
         [Display(Name = "كلمة المرور")]
+        [StringLength(maximumLength: 1000, MinimumLength = 6, ErrorMessage = "يجب ان لاتقل كلمة المرور على ستة حروف")]
         [Column(TypeName = "nvarchar(max)")]
         public string Password { get; set; }
         [Required(ErrorMessage = "حالة المستخدم مطلوب")]
@@ -60,12 +60,18 @@ namespace E_commerce.Models
         public int? PlaceId { get; set; }
         [Display(Name = "المستخدم الاعلى")]
         [Column(TypeName = "int")]
-        public int? UsersId { get; set; }   
+        public int? UsersId { get; set; }
+        [ForeignKey("DirectorateId")]
+        [AllowNull]
+        [Display(Name = " المديرية")]
+
+        public virtual int? DirectorateId { get; set; }
         public virtual Phone Phone { get; set; }
         public virtual Place Place { get; set; }
         [JsonIgnore]
         [IgnoreDataMember]
         public virtual User Users { get; set; }
+        public virtual Directorate Directorate { get; set; }
         public virtual AuctionsUser AuctionsUser { get; set; }
         [JsonIgnore]
         [IgnoreDataMember]
@@ -85,7 +91,8 @@ namespace E_commerce.Models
         [JsonIgnore]
         [IgnoreDataMember]
         public virtual ICollection<Category> Categories { get; set; }
-  
+
+
 
     }
 }
