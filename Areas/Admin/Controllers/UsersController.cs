@@ -81,7 +81,7 @@ namespace e_commerce.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, UserViewModel userViewModel, string parentUserId)
+        public IActionResult CreateOrEdit(int id, UserViewModel userViewModel,[FromForm] string UsersId)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace e_commerce.Areas.Admin.Controllers
                         if (_unitOfWork.GetRepository<Phone>().FirstOrDefault(n => n.Number == userViewModel.user.Phone.Number) == null)
                         {
                             var userId = HttpContext.Session.GetString("_UserId");
-                            userViewModel.user.UsersId = Convert.ToInt32(parentUserId ?? userId);
+                            userViewModel.user.UsersId = Convert.ToInt32(UsersId ?? userId);
                             userViewModel.user.CreatedAt = DateTime.Now;
                             userViewModel.user.Password = Hashpassword.Hashedpassword(userViewModel.user.Password);
                             _unitOfWork.GetRepository<User>().Add(userViewModel.user);
@@ -109,7 +109,7 @@ namespace e_commerce.Areas.Admin.Controllers
                     else
                     {
                         var userId = HttpContext.Session.GetString("_UserId");
-                        userViewModel.user.UsersId = Convert.ToInt32(parentUserId ?? userId);
+                        userViewModel.user.UsersId = Convert.ToInt32(UsersId ?? userId);
                         userViewModel.user.Id = Convert.ToInt32(id);
                         userViewModel.user.UpdatedAt = DateTime.Now;
                         userViewModel.user.Password = Hashpassword.Hashedpassword(userViewModel.user.Password);

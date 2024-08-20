@@ -12,6 +12,8 @@
             asp-route-id="@Model.purchase.Id" onsubmit="return jQueryAjaxPost(this);">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.purchase.Id" name="id" />
+             <input type="hidden" asp-for="@Model.purchase.UserId" name="UserId" />
+
             <div class="form-group">
                 <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Amount"></label>
                 <div class="input-group input-group-merge">

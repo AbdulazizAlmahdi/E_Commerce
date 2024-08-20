@@ -77,7 +77,7 @@ namespace E_commerce.Areas.Association.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, PurchaseViewModel purchaseViewModel, string[] products)
+        public IActionResult CreateOrEdit(int id, PurchaseViewModel purchaseViewModel, string[] products, [FromForm] int UserId)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,8 @@ namespace E_commerce.Areas.Association.Controllers
                     if (id == 0)
                     {
                         purchaseViewModel.purchase.Id = id;
-                        purchaseViewModel.purchase.UserId = 1;
+                        purchaseViewModel.purchase.UserId = UserId;
+                        purchaseViewModel.purchase.CreatedAt = DateTime.Now;
                         List<Product> list = new List<Product>();
 
                         foreach (var item in products)
@@ -104,7 +105,8 @@ namespace E_commerce.Areas.Association.Controllers
                     else
                     {
                         purchaseViewModel.purchase.Id = id;
-                        purchaseViewModel.purchase.UserId = 1;
+                        purchaseViewModel.purchase.UserId = UserId;
+                        purchaseViewModel.purchase.CreatedAt = DateTime.Now;
                         List<Product> list = new List<Product>();
                         foreach (var item in products)
                         {
@@ -213,7 +215,7 @@ namespace E_commerce.Areas.Association.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                IQueryable<Purchase> purchaseData = _unitOfWork.GetRepository<Purchase>().Include(p => p.Products, u => u.User).Where(a=>a.User.Id== int.Parse(HttpContext.Session.GetString("_AssUserId")));
+                IQueryable<Purchase> purchaseData = _unitOfWork.GetRepository<Purchase>().Include(p => p.Products, u => u.User).Where(a=>a.User.Id== int.Parse(HttpContext.Session.GetString("_AssUserId"))||a.User.UsersId== int.Parse(HttpContext.Session.GetString("_AssUserId")));
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
                     purchaseData = purchaseData.OrderBy(sortColumn + " " + sortColumnDirection);

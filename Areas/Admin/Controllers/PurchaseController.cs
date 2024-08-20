@@ -76,7 +76,7 @@ namespace E_commerce.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, PurchaseViewModel purchaseViewModel, string[] products)
+        public IActionResult CreateOrEdit(int id, PurchaseViewModel purchaseViewModel, string[] products,[FromForm]int UserId)
         {
             if (ModelState.IsValid)
             {
@@ -86,8 +86,8 @@ namespace E_commerce.Areas.Admin.Controllers
                     if (id == 0)
                     {
                         purchaseViewModel.purchase.Id = id;
-                        purchaseViewModel.purchase.UserId  =int.Parse(HttpContext.Session.GetString("_UserId"));
-                        ;
+                        purchaseViewModel.purchase.UserId  =UserId;
+                       purchaseViewModel.purchase.CreatedAt = DateTime.Now;
                         List<Product> list = new List<Product>();
 
                         foreach (var item in products)
@@ -104,6 +104,8 @@ namespace E_commerce.Areas.Admin.Controllers
                     else
                     {
                         purchaseViewModel.purchase.Id = id;
+                        purchaseViewModel.purchase.UserId = UserId;
+                        purchaseViewModel.purchase.CreatedAt = DateTime.Now;
                         List<Product> list = new List<Product>();
                         foreach (var item in products)
                         {
@@ -131,7 +133,7 @@ namespace E_commerce.Areas.Admin.Controllers
             else
             {
                 List<Product> productslist = new List<Product>();
-                var users = _unitOfWork.GetRepository<User>().Find(a => (a.UsersId == int.Parse(HttpContext.Session.GetString("_UserId"))) || (a.Id == int.Parse(HttpContext.Session.GetString("_UserId"))));
+                var users = _unitOfWork.GetRepository<User>().GetAll();
                 foreach (var user in users)
                 {
                     productslist.AddRange(_unitOfWork.GetRepository<Product>().Include(c => c.Category, i => i.ImagesProducts).Where(i => i.UserId == user.Id));

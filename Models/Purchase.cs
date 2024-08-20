@@ -38,7 +38,7 @@ namespace E_commerce.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime DeletedAt { get; set; }
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<PaymentItem> PaymentItems { get; set; }
         public virtual User User { get; set; }

@@ -1,4 +1,4 @@
-﻿/*using E_commerce.Infersructure.Interface;
+﻿using E_commerce.Infersructure.Interface;
 using E_commerce.Models;
 using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Hosting;
@@ -20,7 +20,7 @@ namespace E_commerce.Controllers
         private readonly IUnitOfWork _unitOfWork;
 
         [Obsolete]
-        public AddProductController(*//*WebContext db,*//* IHostingEnvironment hosting,IUnitOfWork unitOfWork)
+        public AddProductController(WebContext db, IHostingEnvironment hosting, IUnitOfWork unitOfWork)
         {
             *//*this.db = db;*//*
             this.hosting = hosting;

@@ -147,7 +147,16 @@ namespace E_commerce.Controllers
             });
 
             _unitOfWork.GetRepository<User>().SaveChanges();
-
+            _unitOfWork.GetRepository<Notification>().Add(new Notification() {
+                CreatedAt = DateTime.Now ,
+                IsRead=false,
+                Titel="تسجيل حساب جديد"
+                ,
+                Text="هناك تسجيل حساب جديد برقم هاتف"+phoneRow.Number+"للمستخدم "+name
+            ,Url= "Users/Index"
+            }
+            );
+            _unitOfWork.GetRepository<Notification>().SaveChanges();
             ViewBag.success = true;
 
             return View();

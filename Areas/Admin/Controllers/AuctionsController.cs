@@ -134,6 +134,8 @@ namespace E_commerce.Areas.Admin.Controllers
             try
             {
                 _unitOfWork.GetRepository<Auction>().Remove(_unitOfWork.GetRepository<Auction>().GetById(id));
+                _unitOfWork.GetRepository<Auction>().SaveChanges();
+                
                 return Json(new { status = "success", type = "auctions", html = Helper.RenderRazorViewToString(this, "AuctionsTable", null), messgaeTitle = "حذف المزاد", messageBody = "تم حذف المزاد بنجاح" });
 
             }

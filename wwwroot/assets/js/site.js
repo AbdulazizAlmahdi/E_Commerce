@@ -127,7 +127,7 @@ userDatatable = () => {
                     return `<button onClick="showInPopup('/Admin/Users/CreateOrEdit/' + ${row.id}, 'تعديل المستخدم')" class="btn btn-primary btn-sm">تعديل</button>` +
                         `<span>&nbsp;</span>` +
            
-                        `<button onClick="showInPopup('/Admin/Users/ActiveUser/' + ${row.id}, 'تفعيل/ايقاف المستخدم')" class="btn btn-info btn-sm">تفعيل/ايقاف</button><button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</button>`;
+                        `<button onClick="showInPopup('/Admin/Users/ActiveUser/' + ${row.id}, 'تفعيل/ايقاف المستخدم')" class="btn btn-info btn-sm">تفعيل/ايقاف</button><span>&nbsp;</span><button onClick="showInPopup('/Admin/Users/Delete/' + ${row.id}, 'حذف المستخدم')" class="btn btn-danger btn-sm">حذف</button>`;
                 },
                 "name": "action",
                 "autoWidth": true,

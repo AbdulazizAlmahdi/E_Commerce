@@ -72,7 +72,7 @@ namespace E_commerce.Areas.Association.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, ProductsViewModel productViewModel, string CategoryId)
+        public IActionResult CreateOrEdit(int id, ProductsViewModel productViewModel, string CategoryId, [FromForm] string FarmerId)
         {
             if (ModelState.IsValid)
             {
@@ -90,6 +90,7 @@ namespace E_commerce.Areas.Association.Controllers
                             });
                         }
                         productViewModel.product.CategoryId = Convert.ToInt32(CategoryId);
+                        productViewModel.product.FarmerId = Convert.ToInt32(FarmerId);
                         productViewModel.product.Id = 0;
                         productViewModel.product.UserId = int.Parse(HttpContext.Session.GetString("_AssUserId"));
                         productViewModel.product.CreatedAt = DateTime.Now;
@@ -122,6 +123,7 @@ namespace E_commerce.Areas.Association.Controllers
                                 });
                             }
                         }
+                        product.FarmerId = Convert.ToInt32(FarmerId);
                         product.NameEn = productViewModel.product.NameEn;
                         product.NameAr = productViewModel.product.NameAr;
                         product.DetailsEn = productViewModel.product.DetailsEn;
