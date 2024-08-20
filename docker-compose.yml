@@ -1,0 +1,31 @@
+version: '3.4'
+networks:
+  e_commerce_network:
+
+services:
+  demoappdb:
+    container_name: app-db
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 8002:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=password@123
+    networks:
+      - e_commerce_network
+  e_commerce:
+    container_name: e-commerce
+    image: ${DOCKER_REGISTRY-}ecommerce
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8001:80
+    depends_on:
+      - demoappdb
+    environment:
+      - DB_HOST=demoappdb
+      - DB_NAME=e_commerce
+      - DB_SA_PASSWORD=password@123
+    networks:
+      - e_commerce_network

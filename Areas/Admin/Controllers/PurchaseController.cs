@@ -1,14 +1,13 @@
-﻿using E_commerce.Models;
+﻿using e_commerce;
+using E_commerce.Infersructure.Interface;
+using E_commerce.Models;
 using E_commerce.ViewModel;
-using E_commerce.Models.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using e_commerce;
-using Microsoft.AspNetCore.Http;
 using static e_commerce.Helper;
 
 namespace E_commerce.Areas.Admin.Controllers
@@ -16,17 +15,21 @@ namespace E_commerce.Areas.Admin.Controllers
     [Area("Admin")]
     public class PurchaseController : Controller
     {
-        private IRepository<Purchase> purchaseRepository;
-        private IRepository<Product> productRepository;
+        /*  private IRepository<Purchase> purchaseRepository;
+          private IRepository<Product> productRepository;*/
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PurchaseController(IRepository<Purchase> purchaseRepository, IRepository<Product> productRepository)
+        public PurchaseController(/*IRepository<Purchase> purchaseRepository, IRepository<Product> productRepository,*/ IUnitOfWork unitOfWork)
         {
-            this.purchaseRepository = purchaseRepository;
-            this.productRepository = productRepository;
+            /*this.purchaseRepository = purchaseRepository;
+            this.productRepository = productRepository;*/
+            _unitOfWork = unitOfWork;
+
         }
 
         public IActionResult index()
         {
+                        ViewBag.Notificatins= _unitOfWork.GetRepository<Notification>().Include(u=>u.user).Where(a => a.IsRead == false).ToList();
             var userId = HttpContext.Session.GetString("_UserId");
             if (userId == null)
             {
@@ -39,15 +42,20 @@ namespace E_commerce.Areas.Admin.Controllers
         [NoDirectAccess]
         public IActionResult CreateOrEdit(int id = 0)
         {
-
+            List<Product> products = new List<Product>();
+            var users = _unitOfWork.GetRepository<User>().Find(a => (a.UsersId == int.Parse(HttpContext.Session.GetString("_UserId"))) || (a.Id == int.Parse(HttpContext.Session.GetString("_UserId"))));
+            foreach (var user in users)
+            {
+                products.AddRange(_unitOfWork.GetRepository<Product>().Include(c => c.Category, i => i.ImagesProducts).Where(i => i.UserId == user.Id));
+            }
             if (id == 0)
             {
                 var model = new PurchaseViewModel
                 {
-                    products = productRepository.show(null).ToList(),
+                    products = products.ToList(),
                     purchase = new Purchase
                     {
-                        Id=id
+                        Id = id
                     },
 
                 };
@@ -57,8 +65,8 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 var model = new PurchaseViewModel
                 {
-                    products = productRepository.show(null).ToList(),
-                    purchase = purchaseRepository.Find(id),
+                    products = products.ToList(),
+                    purchase = _unitOfWork.GetRepository<Purchase>().Include(p => p.Products, c => c.PaymentItems).SingleOrDefault(a => a.Id == id),
                 };
                 return View(model);
             }
@@ -68,7 +76,7 @@ namespace E_commerce.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrEdit(int id, PurchaseViewModel purchaseViewModel, string[] products)
+        public IActionResult CreateOrEdit(int id, PurchaseViewModel purchaseViewModel, string[] products,[FromForm]int UserId)
         {
             if (ModelState.IsValid)
             {
@@ -78,32 +86,36 @@ namespace E_commerce.Areas.Admin.Controllers
                     if (id == 0)
                     {
                         purchaseViewModel.purchase.Id = id;
-                        purchaseViewModel.purchase.UserId = 1;
+                        purchaseViewModel.purchase.UserId  =UserId;
+                       purchaseViewModel.purchase.CreatedAt = DateTime.Now;
                         List<Product> list = new List<Product>();
 
                         foreach (var item in products)
                         {
                             int productId = int.Parse(item.Substring(0, item.LastIndexOf('-')));
-                            var product = productRepository.Find(productId);
+                            var product = _unitOfWork.GetRepository<Product>().Include(c => c.Category, i => i.ImagesProducts).FirstOrDefault(i => i.Id == productId);
                             list.Add(product);
                         }
                         purchaseViewModel.purchase.Products = list;
-                        purchaseRepository.Add(purchaseViewModel.purchase);
+                        _unitOfWork.GetRepository<Purchase>().Add(purchaseViewModel.purchase);
+                        _unitOfWork.GetRepository<Purchase>().SaveChanges();
                         return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "إضافة طلب", messageBody = "تمت إضافة الطلب بنجاح" });
                     }
                     else
                     {
                         purchaseViewModel.purchase.Id = id;
-                        purchaseViewModel.purchase.UserId = 1;    
+                        purchaseViewModel.purchase.UserId = UserId;
+                        purchaseViewModel.purchase.CreatedAt = DateTime.Now;
                         List<Product> list = new List<Product>();
                         foreach (var item in products)
                         {
                             int productId = int.Parse(item.Substring(0, item.LastIndexOf('-')));
-                            var product = productRepository.Find(productId);
+                            var product = _unitOfWork.GetRepository<Product>().Include(c => c.Category, i => i.ImagesProducts).FirstOrDefault(i => i.Id == productId);
                             list.Add(product);
                         }
-                        purchaseViewModel.purchase.Products = list;                    
-                        purchaseRepository.Update(purchaseViewModel.purchase);
+                        purchaseViewModel.purchase.Products = list;
+                        _unitOfWork.GetRepository<Purchase>().Update(purchaseViewModel.purchase);
+                        _unitOfWork.GetRepository<Purchase>().SaveChanges();
                         return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable"), messgaeTitle = "تعديل طلب", messageBody = "تمت تعديل الطلب بنجاح" });
 
                     }
@@ -120,11 +132,17 @@ namespace E_commerce.Areas.Admin.Controllers
             }
             else
             {
-                    purchaseViewModel.purchase.Id = id;
+                List<Product> productslist = new List<Product>();
+                var users = _unitOfWork.GetRepository<User>().GetAll();
+                foreach (var user in users)
+                {
+                    productslist.AddRange(_unitOfWork.GetRepository<Product>().Include(c => c.Category, i => i.ImagesProducts).Where(i => i.UserId == user.Id));
+                }
+                purchaseViewModel.purchase.Id = id;
                 var model = new PurchaseViewModel
                 {
-                    products = productRepository.show(null).ToList(),
-                    purchase =purchaseViewModel.purchase?? new Purchase
+                    products = productslist.ToList(),
+                    purchase = purchaseViewModel.purchase ?? new Purchase
                     {
                     },
 
@@ -138,10 +156,10 @@ namespace E_commerce.Areas.Admin.Controllers
 
         public IActionResult ShowProducts(int? id)
         {
-            var products = purchaseRepository.Find(id ?? 0).Products;
-            return View(products);
+            var paymentItems = _unitOfWork.GetRepository<PaymentItem>().Include(p => p.Product, Pu => Pu.Purchase).Where(a => a.PurchaseId == id);
+            return View(paymentItems);
         }
-          [NoDirectAccess]
+        [NoDirectAccess]
         public ActionResult Delete(int? id)
         {
             return View(id);
@@ -152,7 +170,8 @@ namespace E_commerce.Areas.Admin.Controllers
         {
             try
             {
-                purchaseRepository.Delete(id);
+                _unitOfWork.GetRepository<Purchase>().Remove(_unitOfWork.GetRepository<Purchase>().GetById(id));
+                _unitOfWork.GetRepository<Purchase>().SaveChanges();
                 return Json(new { status = "success", type = "purchase", html = Helper.RenderRazorViewToString(this, "PurchaseTable", null), messgaeTitle = "حذف طلب", messageBody = "تم حذف الطلب بنجاح" });
 
             }
@@ -163,9 +182,15 @@ namespace E_commerce.Areas.Admin.Controllers
         }
         public IActionResult GetProducts(string q)
         {
+            /*  List<Product> products = new List<Product>();
+              var users = _unitOfWork.GetRepository<User>().Find(a => (a.UsersId == int.Parse(HttpContext.Session.GetString("_UserId"))) || (a.Id == int.Parse(HttpContext.Session.GetString("_UserId"))));
+              foreach (var user in users)
+              {
+                  products.AddRange();
+              }*/
             IEnumerable<Models.SelectListItem> productsList = Enumerable.Empty<Models.SelectListItem>();
             if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-                productsList = productRepository.show(null).Where(p => p.NameAr.Contains(q)).Select(
+                productsList = _unitOfWork.GetRepository<Product>().Include(c => c.Category, i => i.ImagesProducts).Where(p => p.NameAr.Contains(q)).Select(
                    u => new Models.SelectListItem
                    {
                        Text = u.NameAr,
@@ -188,7 +213,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                IQueryable<Purchase> purchaseData = purchaseRepository.show(1);
+                IQueryable<Purchase> purchaseData = _unitOfWork.GetRepository<Purchase>().Include(p => p.Products, u => u.User);
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
                     purchaseData = purchaseData.OrderBy(sortColumn + " " + sortColumnDirection);

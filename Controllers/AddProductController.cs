@@ -1,4 +1,5 @@
-﻿using E_commerce.Models;
+﻿using E_commerce.Infersructure.Interface;
+using E_commerce.Models;
 using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,12 +17,14 @@ namespace E_commerce.Controllers
         WebContext db;
         [Obsolete]
         private readonly IHostingEnvironment hosting;
+        private readonly IUnitOfWork _unitOfWork;
 
         [Obsolete]
-        public AddProductController(WebContext db, IHostingEnvironment hosting)
+        public AddProductController(WebContext db, IHostingEnvironment hosting, IUnitOfWork unitOfWork)
         {
             this.db = db;
             this.hosting = hosting;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
@@ -122,16 +125,16 @@ namespace E_commerce.Controllers
                 CategoryId = categoryIdInt,
                 UserId = userId,
             };
-            db.Products.Add(product);
+            _unitOfWork.GetRepository<Product>().Add(product);
 
-            if (db.SaveChanges() > 0)
+            if (_unitOfWork.GetRepository<Product>().SaveChanges())
             {
                 if (image1 != null)
                 {
                     string fileNameImage1 = UpoadImages("f_", image1);
                     if (!string.IsNullOrEmpty(fileNameImage1))
                     {
-                        db.ImagesProducts.Add(new ImagesProduct()
+                        _unitOfWork.GetRepository<ImagesProduct>().Add(new ImagesProduct()
                         {
                             ImageUrl = fileNameImage1,
                             ProductId = product.Id,
@@ -144,7 +147,7 @@ namespace E_commerce.Controllers
                     string fileNameImage2 = UpoadImages("s_", image2);
                     if (!string.IsNullOrEmpty(fileNameImage2))
                     {
-                        db.ImagesProducts.Add(new ImagesProduct()
+                        _unitOfWork.GetRepository<ImagesProduct>().Add(new ImagesProduct()
                         {
                             ImageUrl = fileNameImage2,
                             ProductId = product.Id,
@@ -157,15 +160,15 @@ namespace E_commerce.Controllers
                     string fileNameImage3 = UpoadImages("th_", image3);
                     if (!string.IsNullOrEmpty(fileNameImage3))
                     {
-                        db.ImagesProducts.Add(new ImagesProduct()
+                        _unitOfWork.GetRepository<ImagesProduct>().Add(new ImagesProduct()
                         {
                             ImageUrl = fileNameImage3,
                             ProductId = product.Id,
                         });
                     }
                 }
+                _unitOfWork.GetRepository<ImagesProduct>().SaveChanges();
 
-                db.SaveChanges();
             }
 
 
@@ -175,11 +178,11 @@ namespace E_commerce.Controllers
         }
         private void getCategories()
         {
-            List<Category> mainCat = db.Categories.Where(cat => cat.CategoryId == null).ToList();
+            List<Category> mainCat = _unitOfWork.GetRepository<Category>().Find(cat => cat.CategoryId == null).ToList();
             List<MainCategory> categories = new List<MainCategory>();
             foreach (Category cat in mainCat)
             {
-                List<Category> subCat = db.Categories.Where(sub => sub.CategoryId == cat.Id).ToList();
+                List<Category> subCat = _unitOfWork.GetRepository<Category>().Find(sub => sub.CategoryId == cat.Id).ToList();
 
                 categories.Add(new MainCategory()
                 {

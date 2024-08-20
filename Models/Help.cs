@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,11 +17,11 @@ namespace E_commerce.Models
         [StringLength(maximumLength: 500, ErrorMessage = "نص الرسالة لا يزيد عن 500 حرف")]
         [Display(Name = "نص الرسالة")]
         public string Details { get; set; }
-        public int? PhoneId { get; set; }
+        // public int? PhoneId { get; set; }
         [DefaultValue("Pending")]
         public string Status { get; set; }
-        public virtual Phone Phone { get; set; }
-         public DateTime? CreatedAt { get; set; }
+        public string Phone { get; set; }
+        public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }
 }

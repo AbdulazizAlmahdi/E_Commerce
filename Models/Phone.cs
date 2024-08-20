@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 #nullable disable
@@ -16,12 +15,12 @@ namespace E_commerce.Models
         }
         [Key]
         public int Id { get; set; }
-        [Required (ErrorMessage = "رقم الهاتف مطلوب")]
+        [Required(ErrorMessage = "رقم الهاتف مطلوب")]
         [StringLength(maximumLength: 9, MinimumLength = 9, ErrorMessage = "رقم الهاتف لايزيد او ينقص عن 9 ارقام")]
         [Display(Name = "رقم الهاتف")]
-        [Index(IsUnique = true)]
+        //[Index(IsUnique = true)]
         public string Number { get; set; }
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         [JsonIgnore]
         [IgnoreDataMember]

@@ -1,0 +1,384 @@
+﻿
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Access
+@inject WebContext web
+@{ 
+    var userId = Access.HttpContext.Session.GetString("_AssUserId");
+    List<Notification> notifications = ViewBag.Notificatins;
+    User user = null;
+    if (userId != null)
+    {
+         user = web.Users.Find(int.Parse(userId));
+    }
+
+
+}
+
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="rtl" data-theme="theme-default"
+      data-assets-path="assets/" data-template="vertical-menu-template-no-customizer">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>@(ViewData["Title"])</title>
+
+    <meta name="description" content="" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="~/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="~/assets/vendor/fonts/fontawesome.css" />
+    <link rel="stylesheet" href="~/assets/vendor/fonts/flag-icons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/css/rtl/core.css" />
+    <link rel="stylesheet" href="~/assets/vendor/css/rtl/theme-default.css" />
+    <link rel="stylesheet" href="~/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/typeahead-js/typeahead.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/dropzone/dropzone.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/flatpickr/flatpickr.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/select2/select2.css" />
+    <!-- Row Group CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css" />
+    <!-- Form Validation -->
+    <link rel="stylesheet" href="~/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
+
+    <!-- Page CSS -->
+    <!-- Helpers -->
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+    <script src="~/assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="~/assets/js/config.js"></script>
+
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="">
+
+            <!-- Menu -->
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo" style="height:130px">
+                       <a href="" class="app-brand-link">
+                       <img src="~/imgs/ISLogo.PNG" width=60% class="rounded-circle"/>
+                    </a>
+
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+                        <i class="bx menu-toggle-icon fs-4 d-none d-xl-block align-middle"></i>
+                        <i class="bx bx-x bx-sm d-xl-none d-block align-middle"></i>
+                    </a>
+                </div>
+
+                <div class="menu-divider mt-0"></div>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1">
+                    <!-- Dashboards -->
+                 
+
+
+                    <li class="fa-solid fa-house menu-item @(ViewData["Title"].ToString() == "الإحصائيات"?"active":" ")">
+                        <a href="~/Association/Analytics" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home"></i>
+                            <div data-i18n="الصفحة الرئيسية">الصفحة الرئيسية</div>
+                        </a>
+                    </li>
+
+                    <!-- Layouts -->
+                   
+                    <li class="menu-item accordion active @(ViewData["Title"].ToString() == "المنتجات" || (ViewData["Title"].ToString() == "الاصناف")?"open":" ")">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bxl-apple"></i>
+                            <div data-i18n="المنتجات والاصناف">المنتجات والاصناف</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item  @(ViewData["Title"].ToString() == "المنتجات"?"active":" ") ">
+                                <a href="~/Association/products" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bxl-product-hunt"></i>
+                                    <div data-i18n="المنتجات">المنتجات</div>
+                                </a>
+                            </li>
+                            <li class="menu-item  @(ViewData["Title"].ToString()== "الاصناف"?"active":" ") ">
+                                <a href="~/Association/category" class="menu-link ">
+                                    <div data-i18n="الاصناف">الاصناف</div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-item  @(ViewData["Title"].ToString()== "الزارعين"?"active":" ")">
+                        <a href="~/Association/farmer" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-help-circle"></i>
+                            <div data-i18n="المزارعين">المزارعين</div>
+                        </a>
+                    </li>
+                    <li class="menu-item accordion active @(ViewData["Title"].ToString() == "الطلبات" || (ViewData["Title"].ToString() == "الطلبات")?"open":" ")">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bxl-blogger"></i>
+                            <div data-i18n="الطلبات">الطلبات</div>
+                        </a>
+
+                            <ul class="menu-sub">
+                                <li class="menu-item  @(ViewData["Title"].ToString()== "الطلبات"?"active":" ") ">
+                                    <a href="~/Association/Purchase" class="menu-link ">
+                                        <div data-i18n="الطلبات">الطلبات</div>
+                                    </a>
+                                </li>
+
+                            </ul>
+                    </li>
+                   
+                   
+                   
+
+                </ul>
+            </aside>
+            <!-- / Menu -->
+            <!-- Navbar -->
+            <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+                <div class="container-fluid">
+                    <div class="layout-menu-toggle navbar-nav d-xl-none align-items-xl-center me-3 me-xl-0">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                            <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
+
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <!-- Search -->
+          
+                        <!-- /Search -->
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- Language -->
+                          <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                      <i class="bx bx-bell bx-sm"></i>
+                       @if(notifications!=null)
+                                    {
+                                         @if(notifications.Count()>0)
+                                        {
+                                        
+                                      <span class="badge rounded-pill badge-notifications bg-danger">@notifications.Count()</span>
+
+                                        }
+                                    }
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end py-0">
+                      <li class="dropdown-menu-header border-bottom">
+                        <div class="dropdown-header d-flex align-items-center py-3">
+                          <h5 class="text-body me-auto mb-0">الإشعارات</h5>
+                          <a href="javascript:void(0)" class="dropdown-notifications-all text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="mark all as read" aria-label="mark all as read"><i class="bx fs-4 bx-envelope-open"></i></a>
+                        </div>
+                      </li>
+                      <li class="dropdown-notifications-list scrollable-container ps ps__rtl">
+                        <ul class="list-group list-group-flush">
+                             @if(notifications!=null)
+                            @if(notifications.Count()!=0)
+                                            {
+                                         @foreach(var item in notifications)
+                                            {
+                             <a href="~/Association/Notification/Index?id=@item.Id"> 
+                             <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                            <div class="d-flex">
+                             
+                              <div class="flex-grow-1">
+                                <h6 class="mb-1">@item.Titel</h6>
+                                <p class="mb-0">@item.Text</p>
+                                <small class="text-muted">@item.CreatedAt</small>
+                              </div>
+                             
+                            </div>
+                          </li></a> 
+                              }
+           
+                           }
+                             </ul>
+                      <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: -13px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></li>
+                      <li class="dropdown-menu-footer border-top">
+                      @*  <a href="javascript:void(0);" class="dropdown-item d-flex justify-content-center p-3">
+                          View all notifications
+                        </a>*@
+                      </li>
+                    </ul>
+                  </li>
+                            <!--/ Language -->
+                            <!-- Style Switcher -->
+                            <li class="nav-item me-2 me-xl-0">
+                                <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
+                                    <i class="bx bx-sm"></i>
+                                </a>
+                            </li>
+                            <!--/ Style Switcher -->
+                            <!-- Quick links  -->
+                         
+                            <!-- Quick links -->
+                            <!-- Notification -->
+                            <!--/ Notification -->
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                                   data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img class="rounded-circle" width="100px" src="~/assets/img/avatar/profile.jpg">
+
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img src="~/assets/img/avatar/profile.jpg" 
+                                                             class="rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="lh-1 d-block fw-semibold">@user?.Name</span>
+                                                    <small>@user?.JobName</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        @if (@Access.HttpContext.Session.GetString("_AssUserId") != null)
+                                        {
+                                            <a class="dropdown-item"  href="~/Association/Users/UserProfile">
+                                                <i class="bx bx-user me-2"></i>
+                                                <span class="align-middle">My Profile</span>
+                                            </a>
+                                        }
+                                    </li>
+                                
+                                    <li>
+                                       
+                                        <a class="dropdown-item" href="~/Association/Users/LogOut">
+                                            <i class="bx bx-power-off me-2"></i>
+                                            <span class="align-middle">Log Out</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
+
+                    <!-- Search Small Screens -->
+                    <div class="navbar-search-wrapper search-input-wrapper d-none">
+                        <input type="text" class="form-control search-input container-fluid border-0"
+                               placeholder="Search..." aria-label="Search..." />
+                        <i class="bx bx-x bx-sm search-toggler cursor-pointer"></i>
+                    </div>
+                </div>
+            </nav>
+            <!-- / Navbar -->
+            <!-- Modal -->
+            <div id="form-modal" class="modal fade" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span class="d-none d-lg-inline-block modal-title" id="exampleModalLabel"
+                                  style="font-size: 20px;"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="modal-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            //
+        </div>
+        @RenderBody()
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+
+    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+    <div class="drag-target"></div>
+    </div>
+    <!-- / Layout wrapper -->
+    <!-- / js -->
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="~/assets/vendor/libs/popper/popper.js"></script>
+    <script src="~/assets/vendor/js/bootstrap.js"></script>
+    <script src="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>   
+@*    <script src="~/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
+*@
+    <script src="~/assets/vendor/libs/hammer/hammer.js"></script>
+@*    <script src="~/assets/vendor/libs/i18n/i18n.js"></script>
+*@    <script src="~/assets/vendor/libs/typeahead-js/typeahead.js"></script>
+
+    <script src="~/assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+    <!-- Vendors JS -->
+    <script src="~/assets/vendor/libs/datatables/jquery.dataTables.js"></script>
+    <script src="~/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+    <script src="~/assets/vendor/libs/datatables-responsive/datatables.responsive.js"></script>
+    <script src="~/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js"></script>
+    <script src="~/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.js"></script>
+    <script src="~/assets/vendor/libs/datatables-buttons/datatables-buttons.js"></script>
+    <script src="~/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.js"></script>
+    <script src="~/assets/vendor/libs/jszip/jszip.js"></script>
+    <script src="~/assets/vendor/libs/pdfmake/pdfmake.js"></script>
+    <script src="~/assets/vendor/libs/datatables-buttons/buttons.html5.js"></script>
+    <script src="~/assets/vendor/libs/datatables-buttons/buttons.print.js"></script>
+    <script src="~/assets/vendor/libs/select2/select2.js"></script>
+    <!-- Flat Picker -->
+    <script src="~/assets/vendor/libs/moment/moment.js"></script>
+    <script src="~/assets/vendor/libs/flatpickr/flatpickr.js"></script>
+    <!-- Row Group JS -->
+    <script src="~/assets/vendor/libs/datatables-rowgroup/datatables.rowgroup.js"></script>
+    <script src="~/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.js"></script>
+    <!-- Form Validation -->
+@*    <script src="~/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
+    <script src="~/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>*@
+
+    <!-- Main JS -->
+    <script src="~/assets/js/main.js"></script>
+    <script src="~/assets/js/site.js" asp-append-version="true"></script>
+
+    <!-- Page JS -->
+@*    <script src="~/assets/js/tables-datatables-basic.js"></script>
+*@ @*   <script src="~/assets/vendor/libs/dropzone/dropzone.js"></script>
+    <script src="~/assets/js/forms-file-upload.js"></script>*@
+
+
+    <!-- Vendors JS -->
+    <script src="~/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+    <!-- Page JS -->
+    <script src="~/assets/js/dashboards-analytics.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

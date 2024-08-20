@@ -1,35 +1,33 @@
-﻿
+﻿using e_commerce;
+using E_commerce.Infersructure.Interface;
 using E_commerce.Models;
-using E_commerce.Models.Repositories;
+using E_commerce.ViewModel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Http;
 using System.Linq.Dynamic.Core;
 using static e_commerce.Helper;
-using e_commerce;
-using E_commerce.ViewModel;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
 
 namespace E_commerce.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class AuctionsController : Controller
     {
-        IRepository<Auction> auctionRepository;
-        IRepository<Product> productsRepository;
+        /* IRepository<Auction> auctionRepository;
+         IRepository<Product> productsRepository;*/
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AuctionsController(IRepository<Auction> auctionRepository, IRepository<Product> productsRepository)
+        public AuctionsController(/*IRepository<Auction> auctionRepository, IRepository<Product> productsRepository, */IUnitOfWork unitOfWork)
         {
-            this.productsRepository = productsRepository;
-            this.auctionRepository = auctionRepository;
+            /*this.productsRepository = productsRepository;
+            this.auctionRepository = auctionRepository;*/
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
+            ViewBag.Notificatins = _unitOfWork.GetRepository<Notification>().Include(u => u.user).Where(a => a.IsRead == false).ToList();
 
             var userId = HttpContext.Session.GetString("_UserId");
 
@@ -50,7 +48,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 {
                     auction = new Auction
                     {
-                        Id=0,
+                        Id = 0,
                         Product = new Product()
                     },
 
@@ -61,7 +59,7 @@ namespace E_commerce.Areas.Admin.Controllers
             {
                 var model = new AuctionsViewModel
                 {
-                    auction = auctionRepository.Find(id),
+                    auction = _unitOfWork.GetRepository<Auction>().Include(p => p.Product).FirstOrDefault(i => i.Id == id),
 
                 };
                 return View(model);
@@ -80,13 +78,16 @@ namespace E_commerce.Areas.Admin.Controllers
                     if (id == 0)
                     {
                         auctionsViewModel.auction.ProductId = Convert.ToInt32(ProductId);
-                        auctionRepository.Add(auctionsViewModel.auction);
+                        _unitOfWork.GetRepository<Auction>().Add(auctionsViewModel.auction);
+                        _unitOfWork.GetRepository<Auction>().SaveChanges();
+
                         if (auctionsViewModel.auction.ProductId != null)
                         {
 
-                        Product product=    productsRepository.Find(auctionsViewModel.auction.ProductId??0);
+                            Product product = _unitOfWork.GetRepository<Product>().Include(c => c.Category, i => i.ImagesProducts).FirstOrDefault(i => i.Id == auctionsViewModel.auction.ProductId);
                             product.Status = "متوقف";
-                            productsRepository.Update(product);
+                            _unitOfWork.GetRepository<Product>().Update(product);
+                            _unitOfWork.GetRepository<Product>().SaveChanges();
                         }
                         return Json(new { status = "success", type = "auctions", html = Helper.RenderRazorViewToString(this, "AuctionsTable"), messgaeTitle = "إضافة مزاد", messageBody = "تمت إضافة المزاد بنجاح" });
                     }
@@ -94,7 +95,8 @@ namespace E_commerce.Areas.Admin.Controllers
                     {
                         auctionsViewModel.auction.Id = id;
                         auctionsViewModel.auction.ProductId = Convert.ToInt32(ProductId);
-                        auctionRepository.Update(auctionsViewModel.auction);
+                        _unitOfWork.GetRepository<Auction>().Update(auctionsViewModel.auction);
+                        _unitOfWork.GetRepository<Auction>().SaveChanges();
                         return Json(new { status = "success", type = "auctions", html = Helper.RenderRazorViewToString(this, "AuctionsTable"), messgaeTitle = "تعديل مستخدم", messageBody = "تمت تعديل المستخدم بنجاح" });
                     }
 
@@ -111,7 +113,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 auctionsViewModel.auction.Id = id;
                 var model = new AuctionsViewModel
                 {
-                    auction = auctionsViewModel.auction??new Auction
+                    auction = auctionsViewModel.auction ?? new Auction
                     {
                         Id = 0,
                         Product = new Product()
@@ -131,7 +133,9 @@ namespace E_commerce.Areas.Admin.Controllers
         {
             try
             {
-                auctionRepository.Delete(id);
+                _unitOfWork.GetRepository<Auction>().Remove(_unitOfWork.GetRepository<Auction>().GetById(id));
+                _unitOfWork.GetRepository<Auction>().SaveChanges();
+                
                 return Json(new { status = "success", type = "auctions", html = Helper.RenderRazorViewToString(this, "AuctionsTable", null), messgaeTitle = "حذف المزاد", messageBody = "تم حذف المزاد بنجاح" });
 
             }
@@ -145,7 +149,7 @@ namespace E_commerce.Areas.Admin.Controllers
         {
             IEnumerable<Models.SelectListItem> productsList = Enumerable.Empty<Models.SelectListItem>();
             if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-                productsList = productsRepository.show(int.Parse(HttpContext.Session.GetString("_UserId"))).Where(p => p.NameAr.Contains(q)).Select(
+                productsList = _unitOfWork.GetRepository<Product>().GetAll().Where(p => p.NameAr.Contains(q)).Select(
                    p => new Models.SelectListItem
                    {
                        Text = p.NameAr,
@@ -168,7 +172,7 @@ namespace E_commerce.Areas.Admin.Controllers
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                IQueryable<Auction> auctionsData = auctionRepository.show(int.Parse(HttpContext.Session.GetString("_UserId")));
+                IQueryable<Auction> auctionsData = _unitOfWork.GetRepository<Auction>().Include(a => a.AuctionsUsers, p => p.Product);
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
                     auctionsData = auctionsData.OrderBy(sortColumn + " " + sortColumnDirection);
@@ -192,9 +196,24 @@ namespace E_commerce.Areas.Admin.Controllers
         public IActionResult ShowParticipants(int id)
 
         {
-            Auction auth = auctionRepository.show(null).FirstOrDefault(a => a.Id == id);
+            //Auction auth = _unitOfWork.GetRepository<Auction>().Include(u => u.AuctionsUsers).FirstOrDefault(a => a.Id == id);
+            var users = _unitOfWork.GetRepository<AuctionsUser>().Include(u => u.User.Phone).Where(u => u.AuctionId == id).ToList();
+            //  List<User> users=new List<User>();
+            //List<AuctionsViewModel> auctionsViewModel=new List<AuctionsViewModel>();
+            /*   foreach(var useraution in usersautions)
+               {
+                   auctionsViewModel.Add(new AuctionsViewModel
+                   {
+                       user = _unitOfWork.GetRepository<User>().Include(u => u.Phone).FirstOrDefault(u => u.Id == useraution.UserId),
+                       auctionUser = useraution,
+                       auction = null
 
-            return View(auth);
+                   });
+
+               }*/
+
+
+            return View(users);
         }
 
 

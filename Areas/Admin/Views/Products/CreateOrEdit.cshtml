@@ -5,6 +5,7 @@
 }
 <script type="text/javascript">
     $.fn.select2.defaults.set("dropdownParent", $('#select'));
+    $.fn.select2.defaults.set("dropdownParent", $('#selectF'));
     $(document).ready(function () {
         $("#category-product").select2({
             ajax: {
@@ -42,6 +43,136 @@
         $('#category-product').append(newOption).trigger('change');
         }
         });
+
+$(document).ready(function () {
+        $("#farmer-product").select2({
+            ajax: {
+                url: '/Admin/Farmer/GetFarmer',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: $.map(data.items, function (item) {
+                            console.log(item);
+
+                            return {
+                                id: item.id,
+                                text: item.text,
+                            };
+                        }),
+                    };
+                },
+                cache: true,
+                onError: function (err) {
+                    console.log(err);
+                }
+            },
+            minimumInputLength: 1,
+            placeholder: "حدد المزارع",
+        });
+    if ("@Model.product.Farmer" != "") {
+        var newOption = new Option("@Model.product.Farmer?.Name", "@Model.product.Farmer?.Id", false, false);
+        $('#farmer-product').append(newOption).trigger('change');
+        }
+        });
+
+              $(document).ready(function () {
+    // تفعيل Select2 على القائمة المنسدلة الأولى
+    //$("#GovernorateSelect").select2();
+
+    // إجراء طلب Ajax لجلب البيانات من الدالة GetGovernorate عند تحميل الصفحة
+    $.ajax({
+        url: "/Register/GetGovernorate", // تأكد من تعديل المسار بناءً على الهيكل الخاص بمشروعك
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            // تحديث القائمة المنسدلة الأولى بالبيانات المستلمة
+            $.each(data.items, function (index, item) {
+                $(".GovernorateSelect").append(new Option(item.text, item.id));
+            });
+        },
+        error: function (error) {
+            console.error("Error:", error);
+        }
+    });
+
+    // عند تغيير القيمة في القائمة المنسدلة الأولى
+    $(".GovernorateSelect").on("change", function () {
+        var selectedValue = $(this).val();
+
+        // إجراء طلب Ajax لجلب البيانات من الدالة GetDirectorate
+        $.ajax({
+            url: "/Register/GetDirectorate/" + selectedValue, // تأكد من تعديل المسار بناءً على الهيكل الخاص بمشروعك
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                // تحديث القائمة المنسدلة الثانية بالبيانات المستلمة
+                $(".GovernorateSelect2").empty();
+                $.each(data.items, function (index, item) {
+                    $(".GovernorateSelect2").append(new Option(item.text, item.id));
+                });
+
+                // إعادة تفعيل Select2 على القائمة المنسدلة الثانية
+               // $("#GovernorateSelect2").select2();
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            }
+        });
+    });
+});
+
+ $(document).ready(function () {
+    // تفعيل Select2 على القائمة المنسدلة الأولى
+    //$("#GovernorateSelect").select2();
+
+    // إجراء طلب Ajax لجلب البيانات من الدالة GetGovernorate عند تحميل الصفحة
+    $.ajax({
+        url: "/Register/GetGovernorate", // تأكد من تعديل المسار بناءً على الهيكل الخاص بمشروعك
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            // تحديث القائمة المنسدلة الأولى بالبيانات المستلمة
+            $.each(data.items, function (index, item) {
+                $(".GovernorateSelect").append(new Option(item.text, item.id));
+            });
+        },
+        error: function (error) {
+            console.error("Error:", error);
+        }
+    });
+
+    // عند تغيير القيمة في القائمة المنسدلة الأولى
+    $(".GovernorateSelect").on("change", function () {
+        var selectedValue = $(this).val();
+
+        // إجراء طلب Ajax لجلب البيانات من الدالة GetDirectorate
+        $.ajax({
+            url: "/Register/GetDirectorate/" + selectedValue, // تأكد من تعديل المسار بناءً على الهيكل الخاص بمشروعك
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                // تحديث القائمة المنسدلة الثانية بالبيانات المستلمة
+                $(".GovernorateSelect2").empty();
+                $.each(data.items, function (index, item) {
+                    $(".GovernorateSelect2").append(new Option(item.text, item.id));
+                });
+
+                // إعادة تفعيل Select2 على القائمة المنسدلة الثانية
+               // $("#GovernorateSelect2").select2();
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            }
+        });
+    });
+});
 </script>
 
 <div class="row">
@@ -69,6 +200,16 @@
                     </select>
                 </div>
                 <span asp-validation-for="@Model.product.CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="selectF">
+                <label class="form-label w-100" for="farmer-product" asp-for="@Model.product.Farmer.Name"></label>
+                <div class="input-group input-group-merge">
+                    <select id="farmer-product" asp-for="@Model.product.FarmerId" class="select2 form-select" required
+                            name="FarmerId" style="width: 100%;" data-placeholder="حدد المزارع"
+                            aria-describedby="modalAddCard2">
+                    </select>
+                </div>
+                <span asp-validation-for="@Model.product.FarmerId" class="text-danger"></span>
             </div>
             <!-- /select2 -->
             <div class="form-group">
@@ -98,6 +239,26 @@
                     <textarea asp-for="@Model.product.DetailsAr" class="form-control" placeholder=""></textarea>
                 </div>
                 <span asp-validation-for="@Model.product.DetailsAr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="modalAddCard">المحافظة</label>
+                <div class="input-group input-group-merge">
+                    <select required id="modalAddCard"  class="form-control GovernorateSelect"
+                           aria-describedby="modalAddCard2">
+
+                       </select>
+                </div>
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="modalAddCard">المديرية</label>
+                <div class="input-group input-group-merge">
+                    <select required id="modalAddCard" asp-for="@Model.product.DirectorateId" class="form-control GovernorateSelect2"
+                           aria-describedby="modalAddCard2">
+
+                       </select>
+                </div>
+                <span asp-validation-for="@Model.product.DirectorateId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="form-label w-100" for="price-id" asp-for="@Model.product.Address"></label>

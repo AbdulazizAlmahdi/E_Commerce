@@ -5,57 +5,55 @@
 }
 <script type="text/javascript">
 
-    $.fn.select2.defaults.set("dropdownParent", $('#select'));
-    $(document).ready(function () {
+    //$.fn.select2.defaults.set("dropdownParent", $('#select'));
+    //$(document).ready(function () {
 
-        $("#products").select2({
-            ajax: {
-                url: '/Admin/Purchase/GetProducts',
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    return {
-                        q: params.term, // search term
-                        page: params.page
-                    };
-                },
-                processResults: function (data, params) {
-                    return {
-                        results: $.map(data.items, function (item) {
-                            return {
-                                id: item.id + "-" + item.amount,
-                                text: item.text,
-                            };
-                        }),
-                    };
-                },
-                cache: true,
-                onError: function (err) {
-                }
-            },
-            minimumInputLength: 1,
-            placeholder: "حدد الصنف",
-        });
-    @if (@Model.purchase.Id != 0 && @Model.purchase.Products?.Count() > 0)
-    {
-        @foreach (var item in Model.purchase.Products)
-        {
-            @:var newOption = new Option('@item.NameAr', '@item.Id-@item.Price', false, true);
-            @:$('#products').append(newOption).trigger('change');
-        }
-    }
+    //    $("#products").select2({
+    //        ajax: {
+    //            url: '/Admin/Purchase/GetProducts',
+    //            dataType: 'json',
+    //            delay: 250,
+    //            data: function (params) {
+    //                return {
+    //                    q: params.term, // search term
+    //                    page: params.page
+    //                };
+    //            },
+    //            processResults: function (data, params) {
+    //                return {
+    //                    results: $.map(data.items, function (item) {
+    //                        return {
+    //                            id: item.id + "-" + item.amount,
+    //                            text: item.text,
+    //                        };
+    //                    }),
+    //                };
+    //            },
+    //            cache: true,
+    //            onError: function (err) {
+    //            }
+    //        },
+    //        minimumInputLength: 1,
+    //        placeholder: "حدد الصنف",
+    //    });
+    //{
+    //    foreach (var item in Model.purchase.Products)
+    //    {
+    //        
+    //    }
+    //}
     
-        $('#products').on('select2:select', function (e) {
-            var data = e.params.data.id.split('-')[1];
-            var amountInput = $('#amount-id')
-            amountInput.val(parseFloat(amountInput.val()) + parseFloat(data));        
-        });
-        $('#products').on('select2:unselecting', function (e) {
-            var data = e.params.args.data.id.split('-')[1];
-            var amountInput = $('#amount-id')
-            amountInput.val(parseFloat(amountInput.val()) - parseFloat(data));  
-        });
-    });
+    //    $('#products').on('select2:select', function (e) {
+    //        var data = e.params.data.id.split('-')[1];
+    //        var amountInput = $('#amount-id')
+    //        amountInput.val(parseFloat(amountInput.val()) + parseFloat(data));        
+    //    });
+    //    $('#products').on('select2:unselecting', function (e) {
+    //        var data = e.params.args.data.id.split('-')[1];
+    //        var amountInput = $('#amount-id')
+    //        amountInput.val(parseFloat(amountInput.val()) - parseFloat(data));  
+    //    });
+    //});
 </script>
 
 <div class="row">
@@ -65,6 +63,7 @@
             asp-route-id="@Model.purchase.Id" onsubmit="return jQueryAjaxPost(this);">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.purchase.Id" name="id" />
+            <input type="hidden" asp-for="@Model.purchase.UserId" name="UserId" />
             <div class="form-group">
                 <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Amount"></label>
                 <div class="input-group input-group-merge">
@@ -113,14 +112,14 @@
                 <span asp-validation-for="@Model.purchase.Detials" class="text-danger"></span>
             </div>
             <!-- select2 -->
-            <div class="form-group" id="select">
+           @* <div class="form-group" id="select">
                 <label class="form-label w-100" for="product">المنتجات</label>
                 <div class="input-group input-group-merge">
                     <select id="products" class="select2 form-select" name="products" style="width: 100%;" required
                         data-placeholder="حدد المنتج" aria-describedby="modalAddCard2" multiple>
                     </select>
                 </div>
-            </div>
+            </div>*@
             <!-- /select2 -->
             <div class="form-group">
                 <div class="d-grid gap-2">

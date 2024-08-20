@@ -1,23 +1,25 @@
-﻿using E_commerce.Models;
-using E_commerce.Models.Repositories;
+﻿using E_commerce.Infersructure;
+using E_commerce.Infersructure.Interface;
+using E_commerce.Models;
 using E_commerce.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_commerce.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class LoginController : Controller
     {
-        private IRepository<Phone> phoneRepository;
+        // private IRepository<Phone> phoneRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public LoginController(IRepository<Phone> phoneRepository)
+
+        public LoginController(/*IRepository<Phone> phoneRepository,*/IUnitOfWork unitOfWork)
         {
-            this.phoneRepository = phoneRepository;
+            // this.phoneRepository = phoneRepository;
+            _unitOfWork = unitOfWork;
 
         }
         public IActionResult Index()
@@ -28,14 +30,14 @@ namespace E_commerce.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(LoginViewModel loginViewModel)
         {
-
             try
             {
-                Phone phoneUser = phoneRepository.Find(loginViewModel.Number);
-                if (phoneUser == null) {
-                    return View(new LoginViewModel { Status=false});
+                Phone phoneUser = _unitOfWork.GetRepository<Phone>().Include(u => u.User).FirstOrDefault(n => n.Number == loginViewModel.Number);
+                if (phoneUser == null)
+                {
+                    return View(new LoginViewModel { Status = false });
                 }
-               else if (phoneUser.User.Password == loginViewModel.Password&& phoneUser.User.JobName!="عميل"&& phoneUser.User.Status!="متوقف")
+                else if (Hashpassword.Verify(loginViewModel.Password, phoneUser.User.Password) && phoneUser.User.JobName == "مشرف عام" && phoneUser.User.Status != "متوقف")
                 {
                     HttpContext.Session.SetString("_UserId", phoneUser.User.Id.ToString());
                     return RedirectToAction("Index", "Analytics");

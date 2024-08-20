@@ -1,4 +1,5 @@
-﻿@model Auction
+﻿@using E_commerce.Models
+@model IEnumerable<AuctionsUser>
 @{
     Layout = null;
 }
@@ -15,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.AuctionsUsers)
+            @foreach (var item in Model)
             {
                 <tr class="@item.Id%2==0?odd:even">
                     <td class="sorting_1">@item.Id</td>

@@ -1,4 +1,58 @@
-﻿<title>تسجيل حساب</title>
+﻿
+  <script type="text/javascript">
+      $(document).ready(function () {
+    // تفعيل Select2 على القائمة المنسدلة الأولى
+    //$("#GovernorateSelect").select2();
+
+    // إجراء طلب Ajax لجلب البيانات من الدالة GetGovernorate عند تحميل الصفحة
+    $.ajax({
+        url: "/Register/GetGovernorate", // تأكد من تعديل المسار بناءً على الهيكل الخاص بمشروعك
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            // تحديث القائمة المنسدلة الأولى بالبيانات المستلمة
+            $.each(data.items, function (index, item) {
+                $("#GovernorateSelect").append(new Option(item.text, item.id));
+            });
+        },
+        error: function (error) {
+            console.error("Error:", error);
+        }
+    });
+
+    // عند تغيير القيمة في القائمة المنسدلة الأولى
+    $("#GovernorateSelect").on("change", function () {
+        var selectedValue = $(this).val();
+
+        // إجراء طلب Ajax لجلب البيانات من الدالة GetDirectorate
+        $.ajax({
+            url: "/Register/GetDirectorate/" + selectedValue, // تأكد من تعديل المسار بناءً على الهيكل الخاص بمشروعك
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                // تحديث القائمة المنسدلة الثانية بالبيانات المستلمة
+                $("#GovernorateSelect2").empty();
+                $.each(data.items, function (index, item) {
+                    $("#GovernorateSelect2").append(new Option(item.text, item.id));
+                });
+
+                // إعادة تفعيل Select2 على القائمة المنسدلة الثانية
+               // $("#GovernorateSelect2").select2();
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            }
+        });
+    });
+});
+
+
+
+</script>
+
+
+
+<title>تسجيل حساب</title>
 
 <div class="container mt-4 ">
     <div class="row">
@@ -69,7 +123,28 @@
                                     {
                                         <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder=" الاسم" id="validationCustom01" name="name">
                                     }
+                                 
                                     @if (error != null)
+                                    {
+                                        <select id="GovernorateSelect" class="select2 form-control my-2 my-sm-2 my-md-2 my-lg-4">
+                                            <!-- لا تحتاج إلى إضافة أي خيارات هنا لأنها ستتم ملؤها باستخدام Ajax -->
+                                        </select>
+
+                                        <select name="DirectorateId" id="GovernorateSelect2" class="select2 form-control my-2 my-sm-2 my-md-2 my-lg-4">
+                                            <!-- ستتم إضافة الخيارات هنا باستجابة لاختيار المستخدم -->
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <select id="GovernorateSelect" class="select2 form-control my-2 my-sm-2 my-md-2 my-lg-4">
+                                            <!-- لا تحتاج إلى إضافة أي خيارات هنا لأنها ستتم ملؤها باستخدام Ajax -->
+                                        </select>
+
+                                        <select required name="DirectorateId" id="GovernorateSelect2" class="select2 form-control my-2 my-sm-2 my-md-2 my-lg-4">
+                                            <!-- ستتم إضافة الخيارات هنا باستجابة لاختيار المستخدم -->
+                                        </select>                                   
+                                      }
+                                      @if (error != null)
                                     {
                                         <input type="text" class="form-control my-2 my-sm-2 my-md-2 my-lg-4" placeholder=" العنوان" id="validationCustom01" value="@addressOrg" name="address">
                                     }
@@ -113,6 +188,8 @@
     </div>
 
 </div>
+
+
 
 @*
     <script>

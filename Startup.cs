@@ -1,9 +1,10 @@
+using E_commerce.Infersructure;
+using E_commerce.Infersructure.Interface;
 using E_commerce.Models;
-using E_commerce.Models.Repositories;
+//using E_commerce.Models.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Session;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,9 +12,6 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_commerce
 {
@@ -28,19 +26,27 @@ namespace E_commerce
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var host = Environment.GetEnvironmentVariable("DB_HOST");
+            var dbname = Environment.GetEnvironmentVariable("DB_NAME");
+            var sapass = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
             services.AddControllersWithViews();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<WebContext>(options => options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB")));
-            services.AddScoped<IRepository<User>, UserRepository>();
+            // services.AddDbContext<WebContext>(options => options.UseSqlServer("Data Source="+host+";Initial Catalog="+dbname+";User Id=sa;MultipleActiveResultSets=true;Password="+sapass));
+            /* 
             services.AddScoped<IRepository<Place>, PlaceRepository>();
-            services.AddScoped<IRepository<Phone>, PhoneRepository>();
-            services.AddScoped<IRepository<Product>, ProductRepository>();
-            services.AddScoped<IRepository<ImagesProduct>, ImageProductRepository>();
-            services.AddScoped<IRepository<Category>, CategoryRepository>();
-            services.AddScoped<IRepository<Purchase>, PurchaseRepository>();
-            services.AddScoped<IRepository<Help>, HelpRepository>();
-            services.AddScoped<IRepository<Auction>, AuctionsRepository>();
-            services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
+           services.AddScoped<IRepository<Phone>, PhoneRepository>();
+             services.AddScoped<IRepository<Product>, ProductRepository>();
+             services.AddScoped<IRepository<ImagesProduct>, ImageProductRepository>();
+             services.AddScoped<IRepository<Category>, CategoryRepository>();
+             services.AddScoped<IRepository<Purchase>, PurchaseRepository>();
+             services.AddScoped<IRepository<Help>, HelpRepository>();
+             services.AddScoped<IRepository<Auction>, AuctionsRepository>();
+            services.AddScoped<IRepository1<Category>, Repository1<Category>>();  
+             services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
+             services.AddScoped<IRepository<User>, UserRepository>();*/
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
@@ -49,10 +55,10 @@ namespace E_commerce
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-            services.AddDbContext<WebContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB"));
-            });
+            /*  services.AddDbContext<WebContext>(options =>
+              {
+                  options.UseSqlServer(Configuration.GetConnectionString("E_CommerceDB"));
+              });*/
             services.AddRazorPages();
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
@@ -85,6 +91,7 @@ namespace E_commerce
                 endpoints.MapControllerRoute(
                    name: "areas",
                    pattern: "{area:exists}/{controller=Analytics}/{action=Index}/{id?}");
+
 
                 endpoints.MapControllerRoute(
                    name: "default",

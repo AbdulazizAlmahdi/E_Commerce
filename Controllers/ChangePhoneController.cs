@@ -1,20 +1,19 @@
-﻿using E_commerce.Models;
+﻿using E_commerce.Infersructure.Interface;
+using E_commerce.Models;
 using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_commerce.Controllers
 {
     public class ChangePhoneController : Controller
     {
-        WebContext db;
-        public ChangePhoneController(WebContext db)
+        //WebContext db;
+        private readonly IUnitOfWork _unitOfWork;
+        public ChangePhoneController(/*WebContext db*/IUnitOfWork unitOfWork)
         {
-            this.db = db;
+            // this.db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
@@ -74,7 +73,7 @@ namespace E_commerce.Controllers
                 return View();
             }
 
-            Phone phoneRow = db.Phones.FirstOrDefault(ph => ph.Number == newPhone);
+            Phone phoneRow = _unitOfWork.GetRepository<Phone>().FirstOrDefault(ph => ph.Number == newPhone);
 
             if (phoneRow != null)
             {
@@ -85,7 +84,7 @@ namespace E_commerce.Controllers
 
             int? phoneId = HttpContext.Session.GetInt32("phoneId");
 
-            Phone phoneO = db.Phones.FirstOrDefault(p => p.Id == phoneId);
+            Phone phoneO = _unitOfWork.GetRepository<Phone>().FirstOrDefault(p => p.Id == phoneId);
 
             if (phoneO == null)
             {
@@ -94,8 +93,8 @@ namespace E_commerce.Controllers
             }
 
             phoneO.Number = newPhone;
-            int result = db.SaveChanges();
-            if (result == 0)
+            bool result = _unitOfWork.GetRepository<Phone>().SaveChanges();
+            if (result)
             {
                 ViewBag.Error = "عذراً لم يتم تغيير رقم الهاتف يرجى التواصل مع الدعم الفني";
                 return View();

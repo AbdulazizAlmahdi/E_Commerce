@@ -1,0 +1,96 @@
+﻿@model E_commerce.ViewModel.AuctionsViewModel
+
+@{
+    Layout = null;
+}
+<script type="text/javascript">
+
+    $.fn.select2.defaults.set("dropdownParent", $('#select'));
+    $(document).ready(function () {
+        $("#product-auction").select2({
+            ajax: {
+                url: '/Association/Auctions/GetProducts',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: $.map(data.items, function (item) {
+                            console.log(item);
+
+                            return {
+                                id: item.id,
+                                text: item.text,
+                            };
+                        }),
+                    };
+                },
+                cache: true,
+                onError: function (err) {
+                    console.log(err);
+                }
+            },
+            minimumInputLength: 1,
+            placeholder: "حدد المنتج",
+        });
+         if ("@Model.auction.Product" != null&&"@Model.auction.Product" != "") {
+            var newOption = new Option("@Model.auction.Product?.NameAr", "@Model.auction.Product?.Id", false, false);
+            $('#product-auction').append(newOption).trigger('change');
+        }
+    });
+</script>
+
+<div class="row">
+    <!-- Basic -->
+    <div class="col-md-12">
+        <form class="row g-3 needs-validation" asp-action="CreateOrEdit" asp-route-id="@Model.auction.Id"
+            onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.auction.Id" />
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.auction.StartDate"></label>
+                <div class="input-group input-group-merge">
+                    <input   id="name-id" asp-for="@Model.auction.StartDate" class="form-control" />
+                </div>
+                <span asp-validation-for="@Model.auction.StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.auction.EndDate"></label>
+                <div class="input-group input-group-merge">
+                    <input id="name-id" asp-for="@Model.auction.EndDate" class="form-control" />
+                </div>
+                <span asp-validation-for="@Model.auction.EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="price" asp-for="@Model.auction.StartPrice"></label>
+                <div class="input-group input-group-merge">
+                    <input type="number" id="price" asp-for="@Model.auction.StartPrice" class="form-control"
+                        aria-describedby="modalAddCard2" />
+                </div>
+                <span asp-validation-for="@Model.auction.StartPrice" class="text-danger"></span>
+            </div>
+            <!-- select2 -->
+            <div class="form-group" id="select">
+                <label class="form-label w-100" for="product-auction" asp-for="@Model.auction.ProductId"></label>
+                <div class="input-group input-group-merge">
+                    <select id="product-auction" asp-for="@Model.auction.ProductId" class="form-control" required
+                        name="ProductId" style="width: 100%;" data-placeholder="حدد المنتج"
+                        aria-describedby="modalAddCard2">
+                    </select>
+                </div>
+                <span asp-validation-for="@Model.auction.ProductId" class="text-danger"></span>
+                <!-- /select2 -->
+            </div>
+            <div class="form-group">
+                <div class="d-grid gap-2">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

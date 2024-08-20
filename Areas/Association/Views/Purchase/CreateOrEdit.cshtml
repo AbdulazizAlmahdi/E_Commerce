@@ -1,0 +1,81 @@
+﻿@model E_commerce.ViewModel.PurchaseViewModel
+
+@{
+    Layout = null;
+}
+
+
+<div class="row">
+    <!-- Basic -->
+    <div class="col-md-12">
+        <form class="row g-3 needs-validation" asp-action="CreateOrEdit" method="post" enctype="multipart/form-data"
+            asp-route-id="@Model.purchase.Id" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.purchase.Id" name="id" />
+             <input type="hidden" asp-for="@Model.purchase.UserId" name="UserId" />
+
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Amount"></label>
+                <div class="input-group input-group-merge">
+                    <input id="amount-id" type="number" asp-for="@Model.purchase.Amount" class="form-control"
+                        placeholder="250000.0" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.ExtraAmount"></label>
+                <div class="input-group input-group-merge">
+                    <input type="number" id="name-id" asp-for="@Model.purchase.ExtraAmount" class="form-control"
+                           value="0.00" />
+                </div>
+                <span asp-validation-for="@Model.purchase.ExtraAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="price-id" asp-for="@Model.purchase.Status"></label>
+                <div class="input-group input-group-merge">
+                    <select type="text" asp-for="@Model.purchase.Status" class="form-select form-select">
+                        <option value="false">لم يكتم تسجيل الفاتورة</option>
+                        <option value="true">تم اكتمال تسجيل الفاتورة</option>
+                    </select>
+                </div>
+                <span asp-validation-for="@Model.purchase.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Address"></label>
+                <div class="input-group input-group-merge">
+                    <input type="text" id="name-id" asp-for="@Model.purchase.Address" class="form-control" />
+                </div>
+                <span asp-validation-for="@Model.purchase.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Phone"></label>
+                <div class="input-group input-group-merge">
+                    <input type="number" id="name-id" asp-for="@Model.purchase.Phone" class="form-control" />
+                </div>
+                <span asp-validation-for="@Model.purchase.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label w-100" for="name-id" asp-for="@Model.purchase.Detials"></label>
+                <div class="input-group input-group-merge">
+                    <textarea id="name-id" asp-for="@Model.purchase.Detials" class="form-control"
+                        placeholder="تم تسليم المبلغ عبر حوالة برقم 555XXXX"></textarea>
+                </div>
+                <span asp-validation-for="@Model.purchase.Detials" class="text-danger"></span>
+            </div>
+            <!-- select2 -->
+          @*  <div class="form-group" id="select">
+                <label class="form-label w-100" for="product">المنتجات</label>
+                <div class="input-group input-group-merge">
+                    <select id="products" class="select2 form-select" name="products" style="width: 100%;" required
+                        data-placeholder="حدد المنتج" aria-describedby="modalAddCard2" multiple>
+                    </select>
+                </div>
+            </div>*@
+            <!-- /select2 -->
+            <div class="form-group">
+                <div class="d-grid gap-2">
+                    <input type="submit" value="Submit" class="btn btn-primary" id="uploadFile" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

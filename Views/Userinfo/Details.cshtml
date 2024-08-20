@@ -1,0 +1,82 @@
+﻿@model IEnumerable<E_commerce.Models.PaymentItem>
+
+<title> تفاصيل الطلب</title>
+
+<div class=" divMain container-fluid  pt-2 pb-5">
+
+
+    <!--start menu tab-->
+    <div class=" navbarmenu  container my-2 py-2 ">
+        <nav class=" ">
+            <ul class="  nav justify-content-center gap-2 ">
+                <li class="nav-item mx-2">
+                   <button id="btnActive" class="active px-2 py-1">تفاصيل الطلب</button>
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+    <!--end menu tab-->
+    <!--start table details data-->
+    <div class="divTable container pt-3 pb-4 table-responsive">
+        <table id="tableActive" class="table tableActive mt-4 table-borderless">
+            <caption class="p-2 text-center">تفاصيل الطلب </caption>
+            <thead class="tableHead">
+                <tr class="">
+                    <th class="thStart" scope="col" style="text-align: start;">رقم الطلب</th>
+                    <th scope="col" style="text-align: start;">المنتج</th>
+                     <th scope="col" style="text-align: start;">العنوان</th>
+                    <th scope="col" style="text-align: start;">الكمية</th>
+                    <th scope="col" style="text-align: start;">السعر</th>
+                    <th scope="col" style="text-align: start;">الاجمالي</th>
+@*                    <th class="thEnd" style="text-align: start;"> الاجراءات</th>
+*@                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <th scope="row">@order.Purchase.Id</th>
+                        <td>@order.Product.NameAr</td>
+                        <td>@order.Purchase.Address</td>
+                        <td>@order.Quantity</td>
+                        <td>@order.Amount</td>
+                        <td>@order.TotalPrice</td>
+                   @*
+                        <td class=" ">
+                            <div class="dropdown dropleft btn-group  d-flex ">
+                                <a class="nav-link" href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-navicon fa-lg  rounded-circle"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-colo-light " aria-labelledby="dropdownMenuButton2">
+                                    <li>
+                                        <a class="dropdown-item" href="Userinfo/Details?id=@prod.Id" target="_blank">
+                                            <i class="fa-solid fa-info-circle fa-lg  rounded-circle "></i>
+                                            <span class="ps-1">تفاصيل</span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="dropdown-item delete" href="./UserInfo/Delete?id=@prod.Id">
+                                            <i class="fa-solid fa-trash fa-lg  rounded-circle "></i>
+                                            <span class="ps-1">حذف</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        
+       
+
+
+    </div>
+
+    <!--end table details data-->
+</div>
+
+
+

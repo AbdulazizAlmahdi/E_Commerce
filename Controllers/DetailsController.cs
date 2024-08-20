@@ -1,20 +1,23 @@
-﻿using E_commerce.Models;
+﻿using E_commerce.Infersructure.Interface;
+using E_commerce.Models;
 using E_commerce.Models.Custome;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_commerce.Controllers
 {
     public class DetailsController : Controller
     {
-        WebContext db;
-        public DetailsController(WebContext db)
+        //WebContext db;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public DetailsController(/*WebContext db*/IUnitOfWork unitOfWork)
         {
-            this.db = db;
+            _unitOfWork = unitOfWork;
+            // this.db = db;
         }
         public IActionResult Index(string id)
         {
@@ -25,25 +28,25 @@ namespace E_commerce.Controllers
             int productId = Convert.ToInt32(id);
 
             //product details
-            Product product = db.Products.FirstOrDefault(p => p.Id == productId);
+            Product product = _unitOfWork.GetRepository<Product>().Include(d => d.Directorate.Governorate).FirstOrDefault(p => p.Id == productId);
 
-            if(product == null)
+            if (product == null)
             {
                 return Redirect("/home");
             }
 
             //view
             product.Views++;
-            db.SaveChanges();
+            _unitOfWork.GetRepository<Product>().SaveChanges();
 
             ProductsWithImages productDetials = new ProductsWithImages();
 
             if (product.UserId != null)
             {
-                User user = db.Users.FirstOrDefault(u => u.Id == product.UserId);
+                User user = _unitOfWork.GetRepository<User>().FirstOrDefault(u => u.Id == product.UserId);
                 if (user != null)
                 {
-                    product.UserId = user.JobName == "عميل" ? 1 : 0;
+                    product.UserId = user.JobName == "تاجر" ? 1 : 0;
                 }
             }
             else
@@ -51,7 +54,7 @@ namespace E_commerce.Controllers
                 product.UserId = 0;
             }
 
-            List<ImagesProduct> image = db.ImagesProducts.Where(img => img.ProductId == product.Id).ToList();
+            List<ImagesProduct> image = _unitOfWork.GetRepository<ImagesProduct>().Find(img => img.ProductId == product.Id).ToList();
             productDetials.product = product;
             productDetials.image = image;
 
@@ -59,13 +62,13 @@ namespace E_commerce.Controllers
 
 
             //adds products the same
-            List<Product> ProductList = db.Products.Where(pr => pr.NameAr.Trim().Contains(product.NameAr.Trim()) && pr.Id != product.Id).Take(10).ToList();
+            List<Product> ProductList = _unitOfWork.GetRepository<Product>().Find(pr => pr.NameAr.Trim().Contains(product.NameAr.Trim()) && pr.Id != product.Id).Take(10).ToList();
 
             List<ProductsWithImages> newProductsList = new List<ProductsWithImages>();
             foreach (var prod in ProductList)
             {
-                
-                image = db.ImagesProducts.Where(img => img.ProductId == product.Id).ToList();
+
+                image = _unitOfWork.GetRepository<ImagesProduct>().Find(img => img.ProductId == product.Id).ToList();
                 newProductsList.Add(new ProductsWithImages()
                 {
                     product = product,
@@ -75,13 +78,13 @@ namespace E_commerce.Controllers
             ViewBag.ProductList = newProductsList;
 
             //start comments
-            List<Comment> comments = db.Comments.Where(cmd => cmd.ProductId == productId).Take(10).OrderByDescending(cmd => cmd.Id).ToList();
+            List<Comment> comments = _unitOfWork.GetRepository<Comment>().Find(cmd => cmd.ProductId == productId).Take(10).OrderByDescending(cmd => cmd.Id).ToList();
             List<UsersWithComments> commentsList = new List<UsersWithComments>();
             foreach (var comment in comments)
             {
                 commentsList.Add(new UsersWithComments()
                 {
-                    user = db.Users.FirstOrDefault(us => us.Id == comment.UserId),
+                    user = _unitOfWork.GetRepository<User>().FirstOrDefault(us => us.Id == comment.UserId),
                     comment = comment,
                 });
 
@@ -89,7 +92,7 @@ namespace E_commerce.Controllers
             ViewBag.comments = commentsList;
 
 
-            
+
             return View();
         }
 
@@ -113,13 +116,13 @@ namespace E_commerce.Controllers
 
                 if (!string.IsNullOrEmpty(comment))
                 {
-                    db.Comments.Add(new Comment()
+                    _unitOfWork.GetRepository<Comment>().Add(new Comment()
                     {
                         Text = comment,
                         ProductId = productId,
                         UserId = userId,
                     });
-                    db.SaveChanges();
+                    _unitOfWork.GetRepository<Comment>().SaveChanges();
                 }
             }
             catch (Exception)
@@ -131,7 +134,7 @@ namespace E_commerce.Controllers
 
 
         [HttpPost]
-        public IActionResult AddToCart([FromForm] int? id, [FromForm] string name, [FromForm] double? price, [FromForm] string url) 
+        public IActionResult AddToCart([FromForm] int? id, [FromForm] string name, [FromForm] double? price, [FromForm] string url)
         {
             try
             {
@@ -140,7 +143,7 @@ namespace E_commerce.Controllers
                 if (id != null && name != null && price != null /*&& url != null*/)
                 {
                     Cart cart = Cart.getInstance().FirstOrDefault(c => c.Id == id);
-                    if(cart == null)
+                    if (cart == null)
                     {
                         Cart.getInstance().Add(new Cart()
                         {
@@ -151,15 +154,15 @@ namespace E_commerce.Controllers
                             Quantity = 1
 
                         });
-                    } 
+                    }
                     //else
                     //{
                     //    cart.Quantity++;
                     //}
-                    
+
                 }
 
-                
+
             }
             catch (Exception)
             {

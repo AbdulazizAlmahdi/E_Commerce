@@ -1,17 +1,15 @@
 ﻿using E_commerce.Models;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_commerce.ViewModel
 {
     public class ProductsViewModel
     {
-        public Product product {  get; set; }      
+        public Product product { get; set; }
         public IList<IFormFile?> Files { get; set; }
+        public List<Directorate> directorates { get; set; }
+        public List<Governorate> governorates { get; set; }
 
 
     }

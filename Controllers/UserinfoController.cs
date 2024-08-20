@@ -1,29 +1,26 @@
-﻿using e_commerce;
+﻿using E_commerce.Infersructure.Interface;
 using E_commerce.Models;
 using E_commerce.Models.Custome;
-using E_commerce.ViewModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_commerce.Controllers
 {
     public class UserinfoController : Controller
     {
-        WebContext db;
         [Obsolete]
         private readonly IHostingEnvironment hosting;
+        private readonly IUnitOfWork _unitOfWork;
+
 
         [Obsolete]
-        public UserinfoController(WebContext db, IHostingEnvironment hosting)
+        public UserinfoController(IHostingEnvironment hosting, IUnitOfWork unitOfWork)
         {
-            this.db = db;
+            _unitOfWork = unitOfWork;
             this.hosting = hosting;
         }
 
@@ -32,6 +29,8 @@ namespace E_commerce.Controllers
             ViewBag.userS = HttpContext.Session.GetString("userNameS");
             ViewBag.phones = HttpContext.Session.GetString("phoneS");
             ViewBag.userAddress = HttpContext.Session.GetString("userAddress");
+            ViewBag.userAddressD = HttpContext.Session.GetString("userAddressD");
+            ViewBag.userAddressG = HttpContext.Session.GetString("userAddressG");
             ViewBag.userImage = HttpContext.Session.GetString("userImage");
             ViewBag.cartCount = Cart.getInstance().Count;
         }
@@ -67,13 +66,13 @@ namespace E_commerce.Controllers
                 if (!string.IsNullOrEmpty(imageName))
                 {
 
-                    db.ImagesUsers.Add(new ImagesUser()
+                    _unitOfWork.GetRepository<ImagesUser>().Add(new ImagesUser()
                     {
                         ImageUrl = imageName,
                         UserId = userId
                     });
 
-                    db.SaveChanges();
+                    _unitOfWork.GetRepository<ImagesUser>().SaveChanges();
                 }
 
                 HttpContext.Session.SetString("userImage", imageName);
@@ -82,16 +81,17 @@ namespace E_commerce.Controllers
             //Update user info
             else if (newName != null && newAddress != null)
             {
-                User user = db.Users.FirstOrDefault(u => u.Id == userId);
+                User user = _unitOfWork.GetRepository<User>().Include(d => d.Directorate.Governorate).FirstOrDefault(u => u.Id == userId);
                 if (user != null)
                 {
                     user.Name = newName;
                     user.Address = newAddress;
 
-                    if (db.SaveChanges() > 0)
+                    if (_unitOfWork.GetRepository<User>().SaveChanges())
                     {
                         ViewBag.userS = user.Name;
                         ViewBag.userAddress = user.Address;
+
 
                         HttpContext.Session.SetString("userNameS", user.Name ?? "مستخدم");
                         HttpContext.Session.SetString("userAddress", user.Address ?? "لايوجد عنوان");
@@ -108,18 +108,8 @@ namespace E_commerce.Controllers
         private void getTableData()
         {
             int userId = HttpContext.Session.GetInt32("idS") ?? 0;
-            ViewBag.prodActive = db.Products.Where(p => p.Status == "فعال" && p.UserId == userId).ToList();
-            ViewBag.prodStop = db.Products.Where(p => p.Status == "متوقف" && p.UserId == userId).ToList();
-            ViewBag.prodOrder = db.Products.Where(p => p.PurchaseId != null && p.UserId == userId).ToList();
-            ViewBag.prodPurchased = db.Products.Join( // first table 
-                db.Payments, //second table
-                a => a.PurchaseId, // first table key
-                p => p.PurchaseId, // second table key
-                (a, p) => a // new data
-                )
-                .Where(p => p.PurchaseId != null && p.UserId == userId) // where condition
-                .ToList();// converto to list, so we can use it in for
-
+            ViewBag.prodActive = _unitOfWork.GetRepository<Purchase>().Find(p => p.Status == false && p.UserId == userId).ToList();
+            ViewBag.prodStop = _unitOfWork.GetRepository<Purchase>().Find(p => p.Status == true && p.UserId == userId).ToList();
         }
         private string UpoadImages(string pref, IFormFile image)
         {
@@ -144,37 +134,33 @@ namespace E_commerce.Controllers
 
             return "users/" + imageName;
         }
+        public IActionResult Details(int id)
+        {
+            initLayout();
+            var model = _unitOfWork.GetRepository<PaymentItem>().Include(p => p.Purchase, d => d.Product).Where(p => p.PurchaseId == id).ToList();
+            return View(model);
 
-        
+        }
+
         public IActionResult Delete(int? id)
         {
             initLayout();
-            if (ViewBag.userS == null)
-            {
-                return Redirect("/home");
-            }
 
-            if(id != null && id > 0)
+
+            if (id != null && id > 0)
             {
-                Product product = db.Products.FirstOrDefault(p => p.Id == id);
-                if(product != null)
+                Purchase purchase = _unitOfWork.GetRepository<Purchase>().Include(p => p.PaymentItems).FirstOrDefault(p => p.Id == id);
+                if (purchase != null)
                 {
-                    List<ImagesProduct> images = db.ImagesProducts.Where(p => p.ProductId == id).ToList();
-                    foreach (var img in images)
-                    {
-                        db.ImagesProducts.Remove(img);
-                    }
-                    db.SaveChanges();
 
-                    List<Comment> comments = db.Comments.Where(p => p.ProductId == id).ToList();
-                    foreach (var cmt in comments)
-                    {
-                        db.Comments.Remove(cmt);
-                    }
-                    db.SaveChanges();
 
-                    db.Products.Remove(product);
-                    db.SaveChanges();
+                    _unitOfWork.GetRepository<PaymentItem>().RemoveRange(purchase.PaymentItems);
+
+                    _unitOfWork.GetRepository<PaymentItem>().SaveChanges();
+
+
+                    _unitOfWork.GetRepository<Purchase>().Remove(purchase);
+                    _unitOfWork.GetRepository<Product>().SaveChanges();
                 }
             }
             getTableData();

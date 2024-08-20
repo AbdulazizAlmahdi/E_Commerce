@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using E_commerce.Infersructure;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_commerce.Models
 {
@@ -18,7 +18,18 @@ namespace E_commerce.Models
         public static void Seeddb(WebContext webContext)
         {
             webContext.Database.Migrate();
+            if (!webContext.Governorates.Any())
+            {
 
+                webContext.AddRange(StaticData.yemenGovernorates);
+                webContext.SaveChanges();
+            }
+            if (!webContext.Directorates.Any())
+            {
+
+                webContext.AddRange(StaticData.allDirectorates);
+                webContext.SaveChanges();
+            }
             if (!webContext.Permissions.Any())
             {
                 webContext.AddRange(
@@ -46,10 +57,7 @@ namespace E_commerce.Models
                     {
                         Name = "Payment",
                     },
-                    new Permission
-                    {
-                        Name = "Payment",
-                    },
+
                     new Permission
                     {
                         Name = "Purchase",
@@ -79,17 +87,17 @@ namespace E_commerce.Models
                     );
 
                 webContext.SaveChanges();
-            }        
+            }
             if (!webContext.Phones.Any())
             {
-                for(int i = 0; i < 10; i++)
+                for (int i = 0; i < 3; i++)
                 {
 
                     webContext.AddRange(
                         new Phone
                         {
                             Number = "77711111" + i.ToString(),
-                            CreatedAt=DateTime.UtcNow,
+                            CreatedAt = DateTime.UtcNow,
                             UpdatedAt = DateTime.UtcNow
                         }
                         );
@@ -99,10 +107,10 @@ namespace E_commerce.Models
             }
             if (!webContext.Users.Any())
             {
-                
-                for (int i = 0; i < 10; i++)
+
+                for (int i = 0; i < 3; i++)
                 {
-                    Phone phone = webContext.Phones.Single(r => r.Number == "77711111"+i.ToString());
+                    Phone phone = webContext.Phones.Single(r => r.Number == "77711111" + i.ToString());
                     Place place = webContext.Places.Single(r => r.Name == "taiz");
 
                     webContext.AddRange(
@@ -110,13 +118,14 @@ namespace E_commerce.Models
                     {
                         Name = RandomString(20),
                         Address = "sana'a asbahi",
-                        Password = "abc123",
+                        Password = Hashpassword.Hashedpassword("123456"),
                         Phone = phone,
                         Place = place,
-                        Status = "active",
+                        Status = "فعال",
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow,
-                        JobName="مشرف عام"
+                        JobName = StaticData.Roles[i].Name,
+                        DirectorateId = 1
                     }
                     );
 
@@ -125,18 +134,17 @@ namespace E_commerce.Models
             }
             if (!webContext.Helps.Any())
             {
-                
-                for (int i = 0; i < 10; i++)
+
+                for (int i = 0; i < 3; i++)
                 {
-                    Phone phone = webContext.Phones.Single(r => r.Number == "77711111"+i.ToString());
 
                     webContext.AddRange(
                     new Help
                     {
                         Subject = RandomString(20),
                         Details = RandomString(20),
-                        Phone = phone,
-                        Status= "Pending",
+                        Phone = "77711111" + i.ToString(),
+                        Status = "Pending",
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     }
@@ -147,7 +155,7 @@ namespace E_commerce.Models
             }
             if (!webContext.Categories.Any())
             {
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     webContext.AddRange(
                         new Category
@@ -155,7 +163,7 @@ namespace E_commerce.Models
                             Name = RandomString(10),
                             UpdatedAt = DateTime.UtcNow,
                             DeletedAt = DateTime.UtcNow,
-                            UserId=i+1
+                            UserId = i + 1
                         });
 
                     webContext.SaveChanges();
@@ -167,9 +175,9 @@ namespace E_commerce.Models
                 foreach (Category category in categories)
                 {
 
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 3; i++)
                     {
-                        webContext.AddRange(
+                        webContext.Add(
                             new Product
                             {
                                 NameAr = RandomString(15),
@@ -180,40 +188,10 @@ namespace E_commerce.Models
                                 Duration = 3,
                                 Status = "فعال",
                                 Quantity = 20,
-                                Address="صنعاء سوق علي محسن",
+                                Address = "صنعاء سوق علي محسن",
                                 Unit = "سلة",
                                 CreatedAt = DateTime.UtcNow,
-                            }
-                            );
-
-                        webContext.SaveChanges();
-                    }
-                }
-            }  
-            
-            if (!webContext.Products.Any())
-            {
-                IList<Category> categories = webContext.Categories.ToList();
-                foreach (Category category in categories)
-                {
-
-                    for (int i = 0; i < 10; i++)
-                    {
-                        webContext.AddRange(
-                            new Product
-                            {
-                                NameAr = RandomString(15),
-                                CategoryId = category.Id,
-                                Price = 200,
-                                DetailsAr = RandomString(20),
-                                DetailsEn = RandomString(20),
-                                Duration = 3,
-                                Status = "فعال",
-                                Quantity = 20,
-                                Address="صنعاء سوق علي محسن",
-                                Unit = "سلة",
-                                CreatedAt = DateTime.UtcNow,
-                                UserId= category.Id
+                                DirectorateId = 250
                             }
                             );
 
@@ -222,13 +200,45 @@ namespace E_commerce.Models
                 }
             }
 
-            if (!webContext.Auctions.Any())
+            if (!webContext.Products.Any())
+            {
+                IList<Category> categories = webContext.Categories.ToList();
+                foreach (Category category in categories)
+                {
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        webContext.AddRange(
+                            new Product
+                            {
+                                NameAr = RandomString(15),
+                                CategoryId = category.Id,
+                                Price = 200,
+                                DetailsAr = RandomString(20),
+                                DetailsEn = RandomString(20),
+                                Duration = 3,
+                                Status = "فعال",
+                                Quantity = 20,
+                                Address = " سوق علي محسن",
+                                Unit = "سلة",
+                                CreatedAt = DateTime.UtcNow,
+                                UserId = category.Id,
+                                DirectorateId = 250
+                            }
+                            );
+
+                        webContext.SaveChanges();
+                    }
+                }
+            }
+
+            /*if (!webContext.Auctions.Any())
             {
                 IList<Product> products = webContext.Products.ToList();
                 foreach (Product product in products)
                 {
 
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         webContext.AddRange(
                             new Auction
@@ -243,29 +253,31 @@ namespace E_commerce.Models
                         webContext.SaveChanges();
                     }
                 }
-            }
+            }*/
+
             if (!webContext.Purchases.Any())
             {
                 IList<Product> products = webContext.Products.ToList();
                 foreach (Product product in products)
                 {
 
-                        webContext.AddRange(
-                            new Purchase
-                            {
-                                Status=true,
-                                Amount=50,
-                                ExtraAmount=0,
-                                Address="sana'a",
-                                Phone="777339975",
-                                Detials="رقم الحوالة 123456789",
-                                CreatedAt= DateTime.UtcNow,
-                                UserId=1,
-                            }
-                            );
+                    webContext.Add(
+                        new Purchase
+                        {
+                            Status = true,
+                            Amount = 50,
+                            ExtraAmount = 0,
+                            Address = "sana'a",
+                            Phone = "777339975",
+                            Detials = "رقم الحوالة 123456789",
+                            CreatedAt = DateTime.UtcNow,
+                            UserId = 1,
 
-                        webContext.SaveChanges();
-                    
+                        }
+                        );
+
+                    webContext.SaveChanges();
+
                 }
             }
         }
